@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Maly - OBS | Modern ERP for Business</title>
+    <style>
+        :root {
+            --primary: #2563eb;
+            --bg: #0f172a;
+            --text: #f8fafc;
+            --text-muted: #94a3b8;
+            --card-bg: #1e293b;
+        }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            background-color: var(--bg);
+            color: var(--text);
+            margin: 0;
+            line-height: 1.6;
+        }
+        .container { max-width: 1200px; margin: 0 auto; padding: 0 20px; }
+        
+        /* Navbar */
+        nav { padding: 20px 0; border-bottom: 1px solid #334155; }
+        nav .logo { font-size: 1.5rem; font-weight: bold; color: var(--primary); }
+        
+        /* Hero Section */
+        .hero { text-align: center; padding: 100px 0; }
+        .hero h1 { font-size: 3rem; margin-bottom: 20px; background: linear-gradient(to right, #60a5fa, #a78bfa); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        .hero p { font-size: 1.2rem; color: var(--text-muted); max-width: 600px; margin: 0 auto 40px; }
+        .btn { background: var(--primary); color: white; padding: 12px 30px; border-radius: 8px; text-decoration: none; font-weight: bold; transition: 0.3s; }
+        .btn:hover { opacity: 0.9; }
+
+        /* Features */
+        .features { padding: 80px 0; display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px; }
+        .feature-card { background: var(--card-bg); padding: 30px; border-radius: 12px; border: 1px solid #334155; }
+        .feature-card h3 { margin-top: 0; color: #60a5fa; }
+
+        /* Privacy Policy Section */
+        #privacy { background: var(--card-bg); padding: 60px 0; margin-top: 50px; border-top: 1px solid #334155; }
+        .policy-content { max-width: 800px; margin: 0 auto; color: var(--text-muted); font-size: 0.95rem; }
+        .policy-content h2 { color: var(--text); margin-top: 40px; }
+        .policy-content ul { list-style: disc; padding-left: 20px; }
+
+        footer { text-align: center; padding: 40px 0; color: var(--text-muted); font-size: 0.9rem; border-top: 1px solid #334155; }
+    </style>
+</head>
+<body>
+
+    <nav>
+        <div class="logo">
+            <img src="assets/logo.png" alt="Maly Logo" height="50" style="vertical-align: middle;">
+            <span style="margin-left: 10px;">Maly - OBS</span>
+        </div>
+    </nav>
+
+    <header class="hero">
+        <div class="container">
+            <h1>The All-in-One Business OS</h1>
+            <p>Seamlessly integrate POS, Manufacturing, Inventory, and Ads Analytics. Sync your local data securely with Google Sheets.</p>
+            <a href="#" class="btn">Download for Windows</a>
+        </div>
+    </header>
+
+    <section class="container" style="text-align: center; margin-top: -50px; margin-bottom: 80px;">
+        <div style="background: rgba(255,255,255,0.05); padding: 10px; border-radius: 15px; display: inline-block; border: 1px solid #334155;">
+            <img src="assets/dashboard.png" alt="App Screenshot" style="max-width: 100%; border-radius: 10px; display: block;">
+        </div>
+    </section>
+
+    <section class="container">
+        <div class="features">
+            <div class="feature-card">
+                <h3>🏭 Smart Manufacturing</h3>
+                <p>Advanced Bill of Materials (BOM) management. Track raw materials, calculate virtual stock for bundles, and manage production costs efficiently.</p>
+            </div>
+            <div class="feature-card">
+                <h3>📊 Ads Intelligence</h3>
+                <p>Connect your ad spend to real revenue. Built-in tools to calculate ROAS (Return on Ad Spend) and CPO across different platforms.</p>
+            </div>
+            <div class="feature-card">
+                <h3>☁️ Cloud Sync</h3>
+                <p>Keep your data owned by you. Sync local SQLite records to your personal Google Sheets for remote monitoring and backup.</p>
+            </div>
+        </div>
+    </section>
+
+    <section id="privacy">
+        <div class="container policy-content">
+            <h1>Privacy Policy</h1>
+            <p>Last Updated: February 2026</p>
+
+            <h2>1. Introduction</h2>
+            <p>Maly - OBS ("we", "our", or "us") is a desktop application designed to help businesses manage inventory, manufacturing, and sales. We prioritize your privacy and data security.</p>
+
+            <h2>2. Data We Collect</h2>
+            <p>Maly - OBS stores all business data (products, customers, sales) locally on your device using an SQLite database. We do not host your data on our servers.</p>
+
+            <h2>3. Google User Data & Permissions</h2>
+            <p>To provide cloud synchronization features, Maly - OBS requires access to your Google Account. Here is exactly how we use these permissions:</p>
+            <ul>
+                <li><strong>View and manage your spreadsheets (../auth/spreadsheets):</strong> Used solely to export reports (Sales, Inventory, and Financials) generated by you within the app to your personal Google Sheets.</li>
+                <li><strong>View and manage files created by this app (../auth/drive.file):</strong> Used to organize these reports into specific folders within your Drive.</li>
+            </ul>
+            <p><strong>We do not read, delete, or modify any files on your Google Drive other than those created by Maly - OBS. We do not share your Google User Data with any third-party tools or AI models.</strong></p>
+
+            <h2>4. Security</h2>
+            <p>Your Google OAuth tokens are stored locally on your device using secure encryption methods. They are never transmitted to our servers.</p>
+
+            <h2>5. Contact Us</h2>
+            <p>If you have any questions about this Privacy Policy, please contact us at: [Put Your Email Here]</p>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2026 Maly - OBS. All rights reserved.</p>
+            <p><a href="#privacy" style="color: #60a5fa;">Privacy Policy</a></p>
+        </div>
+    </footer>
+
+</body>
+</html>
