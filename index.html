@@ -1,352 +1,1601 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" dir="ltr">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Maly - OBS | The Ultimate Business Control System</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    
-    <style>
-        :root {
-            /* Branding Colors based on Logo/App */
-            --primary: #2563eb;       /* Blue */
-            --primary-dark: #1e40af;
-            --accent: #f59e0b;        /* Gold/Orange for 'Money/Control' */
-            --text-main: #1e293b;
-            --text-muted: #64748b;
-            --bg-light: #f8fafc;
-            --bg-white: #ffffff;
-            --border: #e2e8f0;
-        }
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Maly - OBS | It's not just about money. It's Control.</title>
+  <meta name="description" content="Maly - OBS is a complete desktop ERP for Egyptian e-commerce: inventory, shipping, staff, finances, and advertising — all from one system." />
 
-        * { box-sizing: border-box; scroll-behavior: smooth; }
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;800&family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
 
-        body {
-            font-family: 'Inter', sans-serif;
-            background-color: var(--bg-white);
-            color: var(--text-main);
-            margin: 0;
-            line-height: 1.6;
-        }
+  <style>
+    /* =========================================================
+       ROOT VARIABLES
+    ========================================================= */
+    :root {
+      --primary:       #1B3D6F;   /* Deep Navy – trust, corporate */
+      --primary-light: #2A5498;
+      --accent:        #C5974A;   /* Warm Gold – premium feel     */
+      --accent-light:  #F0DDB8;
+      --bg:            #F5F1EB;   /* Warm Beige page background   */
+      --surface:       #FFFFFF;
+      --surface-alt:   #F9F6F0;   /* Slightly warmer than surface */
+      --text:          #1A1A2E;
+      --text-muted:    #64748B;
+      --text-light:    #94A3B8;
+      --border:        #E2D9CC;
+      --border-light:  #EDE8E0;
+      --shadow-sm:     0 2px 8px rgba(27,61,111,0.07);
+      --shadow-md:     0 8px 32px rgba(27,61,111,0.10);
+      --shadow-lg:     0 20px 60px rgba(27,61,111,0.13);
+      --radius-sm:     8px;
+      --radius-md:     14px;
+      --radius-lg:     20px;
+      --nav-h:         76px;
+      --font-en:       'Inter', sans-serif;
+      --font-ar:       'Cairo', sans-serif;
+      --transition:    0.25s ease;
+    }
 
-        .container { max-width: 1200px; margin: 0 auto; padding: 0 24px; }
-        
-        /* --- Navigation --- */
-        nav {
-            padding: 20px 0;
-            position: fixed;
-            width: 100%;
-            top: 0;
-            background: rgba(255, 255, 255, 0.95);
-            backdrop-filter: blur(10px);
-            border-bottom: 1px solid var(--border);
-            z-index: 1000;
-        }
-        nav .nav-content { display: flex; justify-content: space-between; align-items: center; }
-        nav .logo { display: flex; align-items: center; gap: 12px; font-weight: 700; font-size: 1.3rem; color: var(--text-main); text-decoration: none; }
-        nav .logo img { height: 45px; } /* Logo Size */
-        
-        .nav-links { display: flex; gap: 30px; }
-        .nav-links a { text-decoration: none; color: var(--text-muted); font-weight: 500; transition: 0.3s; font-size: 0.95rem; }
-        .nav-links a:hover { color: var(--primary); }
-        .btn-nav { background: var(--primary); color: white !important; padding: 8px 20px; border-radius: 6px; }
-        .btn-nav:hover { background: var(--primary-dark); }
+    /* =========================================================
+       RESET & BASE
+    ========================================================= */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
-        /* --- Hero Section --- */
-        .hero { padding: 140px 0 80px; text-align: center; background: radial-gradient(circle at 50% 50%, #eff6ff 0%, #ffffff 100%); }
-        .hero h1 { 
-            font-size: 3.5rem; 
-            margin-bottom: 20px; 
-            line-height: 1.2;
-            letter-spacing: -1px;
-        }
-        .hero h1 span { color: var(--primary); }
-        .hero .slogan { 
-            font-size: 1.25rem; 
-            color: var(--text-muted); 
-            margin-bottom: 40px; 
-            max-width: 700px; 
-            margin-left: auto; 
-            margin-right: auto;
-        }
-        .hero-btns { display: flex; justify-content: center; gap: 15px; margin-bottom: 60px; }
-        .btn { 
-            display: inline-block; 
-            padding: 14px 32px; 
-            border-radius: 8px; 
-            font-weight: 600; 
-            text-decoration: none; 
-            transition: all 0.3s ease;
-        }
-        .btn-primary { background: var(--primary); color: white; box-shadow: 0 4px 12px rgba(37, 99, 235, 0.2); }
-        .btn-primary:hover { background: var(--primary-dark); transform: translateY(-2px); }
-        .btn-outline { border: 1px solid var(--border); color: var(--text-main); background: white; }
-        .btn-outline:hover { border-color: var(--text-muted); }
+    html { scroll-behavior: smooth; font-size: 16px; }
 
-        /* --- Laptop Frame (CSS Only) --- */
-        .laptop-wrapper { max-width: 900px; margin: 0 auto; perspective: 1000px; }
-        .laptop-screen {
-            background: #1e293b;
-            padding: 12px 12px 0;
-            border-radius: 12px 12px 0 0;
-            box-shadow: 0 20px 40px rgba(0,0,0,0.15);
-            position: relative;
-        }
-        .laptop-screen img { width: 100%; border-radius: 6px 6px 0 0; display: block; }
-        .laptop-base {
-            background: #e2e8f0;
-            height: 24px;
-            border-radius: 0 0 16px 16px;
-            position: relative;
-        }
-        .laptop-base::after {
-            content: ''; position: absolute; top: 0; left: 50%; transform: translateX(-50%);
-            width: 120px; height: 12px; background: #cbd5e1; border-radius: 0 0 8px 8px;
-        }
+    body {
+      font-family: var(--font-en);
+      background-color: var(--bg);
+      color: var(--text);
+      line-height: 1.65;
+      overflow-x: hidden;
+    }
 
-        /* --- Features Grid --- */
-        .section { padding: 100px 0; }
-        .section-title { text-align: center; margin-bottom: 60px; }
-        .section-title h2 { font-size: 2.5rem; margin-bottom: 10px; }
-        .section-title p { color: var(--text-muted); }
+    html[lang="ar"] body { font-family: var(--font-ar); }
 
-        .features-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 40px; }
-        .feature-card { 
-            padding: 30px; 
-            border: 1px solid var(--border); 
-            border-radius: 12px; 
-            transition: 0.3s;
-            background: white;
-        }
-        .feature-card:hover { border-color: var(--primary); box-shadow: 0 10px 30px rgba(0,0,0,0.05); }
-        .feature-icon { 
-            width: 50px; height: 50px; 
-            background: #eff6ff; color: var(--primary); 
-            display: flex; align-items: center; justify-content: center; 
-            border-radius: 10px; font-size: 1.2rem; margin-bottom: 20px;
-        }
-        .feature-card h3 { margin: 0 0 10px 0; font-size: 1.25rem; }
-        .feature-card p { color: var(--text-muted); font-size: 0.95rem; margin: 0; }
+    img { max-width: 100%; display: block; }
+    a { color: inherit; text-decoration: none; }
+    ul { list-style: none; }
+    button { cursor: pointer; font-family: inherit; }
 
-        /* --- Pricing --- */
-        .pricing-section { background: var(--bg-light); }
-        .pricing-grid { display: flex; justify-content: center; gap: 30px; flex-wrap: wrap; }
-        .pricing-card {
-            background: white;
-            padding: 40px;
-            border-radius: 16px;
-            width: 350px;
-            border: 1px solid var(--border);
-            text-align: center;
-            position: relative;
-        }
-        .pricing-card.pro { border: 2px solid var(--primary); box-shadow: 0 20px 40px rgba(37, 99, 235, 0.1); }
-        .badge { 
-            background: var(--accent); color: white; 
-            padding: 5px 12px; border-radius: 20px; 
-            font-size: 0.8rem; font-weight: bold; 
-            position: absolute; top: -12px; left: 50%; transform: translateX(-50%);
-        }
-        .price { font-size: 2.5rem; font-weight: 700; margin: 20px 0 10px; color: var(--text-main); }
-        .price span { font-size: 1rem; color: var(--text-muted); font-weight: 400; }
-        .features-list { list-style: none; padding: 0; margin: 30px 0; text-align: left; }
-        .features-list li { margin-bottom: 12px; color: var(--text-muted); font-size: 0.95rem; }
-        .features-list li i { color: var(--primary); margin-right: 10px; }
-        .features-list li.disabled { color: #cbd5e1; text-decoration: line-through; }
-        .features-list li.disabled i { color: #cbd5e1; }
+    .container { max-width: 1160px; margin: 0 auto; padding: 0 24px; }
 
-        /* --- Footer --- */
-        footer { background: #1e293b; color: #94a3b8; padding: 60px 0 30px; }
-        .footer-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 40px; margin-bottom: 40px; }
-        .footer-col h4 { color: white; margin-bottom: 20px; }
-        .footer-col ul { list-style: none; padding: 0; }
-        .footer-col ul li { margin-bottom: 10px; }
-        .footer-col ul li a { color: #94a3b8; text-decoration: none; transition: 0.2s; }
-        .footer-col ul li a:hover { color: white; }
-        .social-icons a { color: white; font-size: 1.2rem; margin-right: 15px; }
-        
-        /* Privacy Text */
-        .legal-text { font-size: 0.85rem; line-height: 1.5; margin-top: 20px; }
+    /* =========================================================
+       SECTION LAYOUT
+    ========================================================= */
+    .section { padding: 100px 0; }
+    .section-alt { background: var(--surface); }
 
-        /* Responsive */
-        @media (max-width: 768px) {
-            .hero h1 { font-size: 2.5rem; }
-            .nav-links { display: none; } /* Hide menu on mobile for simplicity */
-        }
-    </style>
+    .section-header { text-align: center; margin-bottom: 64px; }
+    .section-header .eyebrow {
+      display: inline-block;
+      font-size: 0.78rem;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--accent);
+      background: var(--accent-light);
+      padding: 5px 14px;
+      border-radius: 20px;
+      margin-bottom: 16px;
+    }
+    .section-header h2 {
+      font-size: clamp(1.9rem, 3.5vw, 2.75rem);
+      font-weight: 800;
+      color: var(--text);
+      line-height: 1.2;
+      margin-bottom: 14px;
+    }
+    .section-header p {
+      font-size: 1.05rem;
+      color: var(--text-muted);
+      max-width: 560px;
+      margin: 0 auto;
+    }
+
+    /* =========================================================
+       SCROLL ANIMATION
+    ========================================================= */
+    .reveal {
+      opacity: 0;
+      transform: translateY(28px);
+      transition: opacity 0.55s ease, transform 0.55s ease;
+    }
+    .reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* =========================================================
+       NAVIGATION
+    ========================================================= */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      height: var(--nav-h);
+      background: rgba(245, 241, 235, 0.92);
+      backdrop-filter: blur(14px);
+      border-bottom: 1px solid var(--border-light);
+      z-index: 1000;
+      transition: box-shadow var(--transition);
+    }
+    nav.scrolled { box-shadow: var(--shadow-md); }
+
+    .nav-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 100%;
+    }
+
+    .nav-logo {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-weight: 800;
+      font-size: 1.2rem;
+      color: var(--primary);
+    }
+    .nav-logo img {
+      height: 42px;
+      width: auto;
+      object-fit: contain;
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .nav-links a {
+      font-size: 0.9rem;
+      font-weight: 500;
+      color: var(--text-muted);
+      padding: 6px 14px;
+      border-radius: var(--radius-sm);
+      transition: color var(--transition), background var(--transition);
+    }
+    .nav-links a:hover { color: var(--primary); background: rgba(27,61,111,0.06); }
+
+    .nav-right {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    /* Language Toggle */
+    .lang-btn {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 0.82rem;
+      font-weight: 600;
+      color: var(--primary);
+      background: var(--surface);
+      border: 1.5px solid var(--border);
+      padding: 6px 14px;
+      border-radius: 20px;
+      transition: all var(--transition);
+      letter-spacing: 0.03em;
+    }
+    .lang-btn:hover { border-color: var(--primary); background: rgba(27,61,111,0.04); }
+    .lang-btn i { font-size: 0.75rem; }
+
+    .btn-nav-cta {
+      font-size: 0.88rem;
+      font-weight: 600;
+      color: #fff;
+      background: var(--primary);
+      padding: 8px 20px;
+      border-radius: 8px;
+      border: none;
+      transition: background var(--transition), transform var(--transition);
+    }
+    .btn-nav-cta:hover { background: var(--primary-light); transform: translateY(-1px); }
+
+    /* Hamburger (mobile) */
+    .hamburger {
+      display: none;
+      background: none;
+      border: none;
+      font-size: 1.4rem;
+      color: var(--primary);
+    }
+
+    .mobile-menu {
+      display: none;
+      flex-direction: column;
+      background: var(--surface);
+      border-bottom: 1px solid var(--border);
+      padding: 12px 24px 20px;
+      gap: 4px;
+    }
+    .mobile-menu.open { display: flex; }
+    .mobile-menu a {
+      font-size: 0.95rem;
+      font-weight: 500;
+      color: var(--text);
+      padding: 10px 4px;
+      border-bottom: 1px solid var(--border-light);
+    }
+    .mobile-menu a:last-child { border: none; }
+    .mobile-menu .lang-btn { margin-top: 8px; width: fit-content; }
+
+    /* =========================================================
+       HERO
+    ========================================================= */
+    .hero {
+      padding-top: calc(var(--nav-h) + 80px);
+      padding-bottom: 88px;
+      text-align: center;
+      background:
+        radial-gradient(ellipse 70% 60% at 50% -10%, rgba(27,61,111,0.09) 0%, transparent 70%),
+        var(--bg);
+    }
+
+    .hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 0.8rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--primary);
+      background: rgba(27,61,111,0.07);
+      border: 1px solid rgba(27,61,111,0.15);
+      padding: 6px 16px;
+      border-radius: 20px;
+      margin-bottom: 28px;
+    }
+    .hero-badge i { color: var(--accent); }
+
+    .hero h1 {
+      font-size: clamp(2.4rem, 5vw, 4rem);
+      font-weight: 800;
+      line-height: 1.13;
+      letter-spacing: -0.03em;
+      color: var(--text);
+      margin-bottom: 22px;
+      max-width: 820px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+    .hero h1 .highlight { color: var(--primary); }
+
+    .hero-sub {
+      font-size: 1.1rem;
+      color: var(--text-muted);
+      max-width: 620px;
+      margin: 0 auto 18px;
+      line-height: 1.7;
+    }
+
+    .hero-slogan {
+      font-size: 1rem;
+      font-style: italic;
+      font-weight: 600;
+      color: var(--accent);
+      margin-bottom: 40px;
+      font-family: var(--font-en) !important; /* Always English */
+    }
+
+    .hero-ctas {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 14px;
+      flex-wrap: wrap;
+    }
+
+    .btn-primary {
+      display: inline-flex;
+      align-items: center;
+      gap: 9px;
+      padding: 15px 34px;
+      background: var(--primary);
+      color: #fff;
+      border-radius: var(--radius-sm);
+      font-weight: 700;
+      font-size: 0.97rem;
+      border: 2px solid var(--primary);
+      transition: all var(--transition);
+      box-shadow: 0 4px 18px rgba(27,61,111,0.22);
+    }
+    .btn-primary:hover { background: var(--primary-light); border-color: var(--primary-light); transform: translateY(-2px); box-shadow: 0 8px 24px rgba(27,61,111,0.28); }
+
+    .btn-secondary {
+      display: inline-flex;
+      align-items: center;
+      gap: 9px;
+      padding: 15px 30px;
+      background: transparent;
+      color: var(--primary);
+      border-radius: var(--radius-sm);
+      font-weight: 600;
+      font-size: 0.97rem;
+      border: 2px solid var(--border);
+      transition: all var(--transition);
+    }
+    .btn-secondary:hover { border-color: var(--primary); background: rgba(27,61,111,0.04); transform: translateY(-2px); }
+
+    /* Hero stats bar */
+    .hero-stats {
+      display: flex;
+      justify-content: center;
+      gap: 0;
+      margin-top: 68px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      overflow: hidden;
+      box-shadow: var(--shadow-md);
+      max-width: 700px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+    .hero-stat {
+      flex: 1;
+      padding: 24px 16px;
+      text-align: center;
+      border-right: 1px solid var(--border-light);
+    }
+    html[dir="rtl"] .hero-stat { border-right: none; border-left: 1px solid var(--border-light); }
+    .hero-stat:last-child { border: none; }
+    .hero-stat .stat-num {
+      font-size: 1.8rem;
+      font-weight: 800;
+      color: var(--primary);
+      line-height: 1;
+      font-family: var(--font-en);
+    }
+    .hero-stat .stat-label {
+      font-size: 0.78rem;
+      color: var(--text-muted);
+      margin-top: 5px;
+      font-weight: 500;
+    }
+
+    /* =========================================================
+       FEATURES GRID
+    ========================================================= */
+    .features-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 22px;
+    }
+
+    .feature-card {
+      background: var(--surface);
+      border: 1px solid var(--border-light);
+      border-radius: var(--radius-md);
+      padding: 30px 26px;
+      transition: transform var(--transition), box-shadow var(--transition), border-color var(--transition);
+    }
+    .feature-card:hover {
+      transform: translateY(-5px);
+      box-shadow: var(--shadow-md);
+      border-color: rgba(27,61,111,0.18);
+    }
+
+    .feature-icon {
+      width: 52px;
+      height: 52px;
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.25rem;
+      margin-bottom: 18px;
+      background: linear-gradient(135deg, rgba(27,61,111,0.08) 0%, rgba(197,151,74,0.10) 100%);
+      color: var(--primary);
+    }
+
+    .feature-card h3 {
+      font-size: 1.05rem;
+      font-weight: 700;
+      margin-bottom: 10px;
+      color: var(--text);
+    }
+
+    .feature-card p {
+      font-size: 0.9rem;
+      color: var(--text-muted);
+      line-height: 1.7;
+    }
+
+    /* =========================================================
+       PRICING
+    ========================================================= */
+    .trial-banner {
+      text-align: center;
+      background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%);
+      color: #fff;
+      padding: 18px 24px;
+      border-radius: var(--radius-md);
+      margin-bottom: 48px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 14px;
+      flex-wrap: wrap;
+    }
+    .trial-banner .trial-badge {
+      background: var(--accent);
+      padding: 4px 14px;
+      border-radius: 20px;
+      font-size: 0.82rem;
+      font-weight: 800;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      white-space: nowrap;
+    }
+    .trial-banner .trial-text {
+      font-size: 0.97rem;
+      font-weight: 500;
+      opacity: 0.92;
+    }
+
+    .pricing-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 28px;
+      max-width: 860px;
+      margin: 0 auto;
+    }
+
+    .pricing-card {
+      background: var(--surface);
+      border: 1.5px solid var(--border);
+      border-radius: var(--radius-lg);
+      padding: 40px 36px;
+      position: relative;
+    }
+    .pricing-card.pro {
+      border-color: var(--primary);
+      box-shadow: var(--shadow-lg);
+    }
+
+    .plan-badge {
+      position: absolute;
+      top: -14px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: var(--primary);
+      color: #fff;
+      font-size: 0.75rem;
+      font-weight: 800;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      padding: 5px 16px;
+      border-radius: 20px;
+      white-space: nowrap;
+    }
+
+    .plan-name {
+      font-size: 1rem;
+      font-weight: 600;
+      color: var(--text-muted);
+      margin-bottom: 8px;
+    }
+
+    .plan-price {
+      font-size: 2.8rem;
+      font-weight: 800;
+      color: var(--text);
+      line-height: 1;
+      margin-bottom: 4px;
+      font-family: var(--font-en);
+    }
+    .plan-price .currency {
+      font-size: 1rem;
+      font-weight: 600;
+      color: var(--text-muted);
+      vertical-align: super;
+    }
+    .plan-period {
+      font-size: 0.85rem;
+      color: var(--text-light);
+      margin-bottom: 14px;
+    }
+
+    .plan-desc {
+      font-size: 0.9rem;
+      color: var(--text-muted);
+      padding-bottom: 24px;
+      border-bottom: 1px solid var(--border-light);
+      margin-bottom: 24px;
+      line-height: 1.6;
+    }
+
+    .plan-features { margin-bottom: 32px; }
+    .plan-features li {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 0.9rem;
+      color: var(--text);
+      padding: 7px 0;
+    }
+    html[dir="rtl"] .plan-features li { flex-direction: row; }
+    .plan-features li i {
+      width: 18px;
+      flex-shrink: 0;
+      font-size: 0.8rem;
+      text-align: center;
+    }
+    .plan-features li .chk { color: #22c55e; }
+    .plan-features li.disabled { color: var(--text-light); text-decoration: line-through; }
+    .plan-features li.disabled i { color: #CBD5E1; }
+
+    .btn-plan {
+      display: block;
+      width: 100%;
+      text-align: center;
+      padding: 14px;
+      border-radius: var(--radius-sm);
+      font-weight: 700;
+      font-size: 0.97rem;
+      transition: all var(--transition);
+      border: 2px solid var(--primary);
+    }
+    .btn-plan-outline { color: var(--primary); background: transparent; }
+    .btn-plan-outline:hover { background: rgba(27,61,111,0.05); }
+    .btn-plan-fill { color: #fff; background: var(--primary); }
+    .btn-plan-fill:hover { background: var(--primary-light); transform: translateY(-2px); box-shadow: 0 6px 20px rgba(27,61,111,0.22); }
+
+    /* =========================================================
+       PRIVACY SECTION
+    ========================================================= */
+    .privacy-inner {
+      max-width: 800px;
+      margin: 0 auto;
+    }
+
+    .privacy-block {
+      background: var(--surface);
+      border: 1px solid var(--border-light);
+      border-radius: var(--radius-md);
+      padding: 36px 40px;
+      margin-bottom: 22px;
+    }
+    .privacy-block h3 {
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: var(--primary);
+      margin-bottom: 14px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .privacy-block h3 i { color: var(--accent); }
+    .privacy-block p {
+      font-size: 0.93rem;
+      color: var(--text-muted);
+      line-height: 1.75;
+      margin-bottom: 10px;
+    }
+    .privacy-block p:last-child { margin-bottom: 0; }
+    .privacy-block code {
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      padding: 2px 7px;
+      font-size: 0.82rem;
+      color: var(--primary);
+      font-family: 'Courier New', monospace;
+      word-break: break-all;
+    }
+    .privacy-block strong { color: var(--text); }
+
+    /* Google-verified text: ALWAYS English, never translated */
+    .google-verified-text { font-family: var(--font-en) !important; }
+
+    /* =========================================================
+       CONTACT SECTION
+    ========================================================= */
+    .contact-wrapper {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 40px;
+      align-items: start;
+    }
+
+    .contact-intro h2 {
+      font-size: clamp(1.7rem, 3vw, 2.4rem);
+      font-weight: 800;
+      color: var(--text);
+      margin-bottom: 14px;
+      line-height: 1.2;
+    }
+    .contact-intro p {
+      font-size: 1rem;
+      color: var(--text-muted);
+      margin-bottom: 32px;
+      line-height: 1.7;
+    }
+
+    .contact-cards { display: flex; flex-direction: column; gap: 14px; }
+    .contact-card {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      background: var(--surface);
+      border: 1px solid var(--border-light);
+      border-radius: var(--radius-sm);
+      padding: 18px 20px;
+      transition: border-color var(--transition), box-shadow var(--transition);
+    }
+    .contact-card:hover { border-color: var(--primary); box-shadow: var(--shadow-sm); }
+    .contact-card-icon {
+      width: 44px;
+      height: 44px;
+      border-radius: 10px;
+      background: linear-gradient(135deg, rgba(27,61,111,0.08) 0%, rgba(197,151,74,0.10) 100%);
+      color: var(--primary);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.1rem;
+      flex-shrink: 0;
+    }
+    .contact-card-label {
+      font-size: 0.75rem;
+      font-weight: 600;
+      color: var(--text-light);
+      text-transform: uppercase;
+      letter-spacing: 0.07em;
+      margin-bottom: 2px;
+    }
+    .contact-card-value {
+      font-size: 0.95rem;
+      font-weight: 600;
+      color: var(--text);
+      font-family: var(--font-en);
+    }
+
+    .contact-download-box {
+      background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%);
+      border-radius: var(--radius-md);
+      padding: 36px;
+      text-align: center;
+      color: #fff;
+    }
+    .contact-download-box h3 {
+      font-size: 1.4rem;
+      font-weight: 800;
+      margin-bottom: 10px;
+    }
+    .contact-download-box p {
+      font-size: 0.9rem;
+      opacity: 0.85;
+      margin-bottom: 28px;
+      line-height: 1.6;
+    }
+    .btn-download {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      background: var(--accent);
+      color: #fff;
+      padding: 14px 32px;
+      border-radius: var(--radius-sm);
+      font-weight: 700;
+      font-size: 1rem;
+      transition: all var(--transition);
+      box-shadow: 0 4px 14px rgba(0,0,0,0.18);
+    }
+    .btn-download:hover { transform: translateY(-2px); box-shadow: 0 8px 22px rgba(0,0,0,0.22); filter: brightness(1.05); }
+
+    .social-links {
+      display: flex;
+      justify-content: center;
+      gap: 14px;
+      margin-top: 24px;
+    }
+    .social-link {
+      width: 42px;
+      height: 42px;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.15);
+      color: #fff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1rem;
+      transition: background var(--transition), transform var(--transition);
+    }
+    .social-link:hover { background: rgba(255,255,255,0.28); transform: translateY(-2px); }
+
+    /* =========================================================
+       FOOTER
+    ========================================================= */
+    footer {
+      background: #111827;
+      color: #9CA3AF;
+      padding: 60px 0 30px;
+    }
+
+    .footer-grid {
+      display: grid;
+      grid-template-columns: 2fr 1fr 1fr 1fr;
+      gap: 40px;
+      margin-bottom: 50px;
+    }
+
+    .footer-brand .nav-logo { color: #fff; margin-bottom: 14px; }
+    .footer-brand p {
+      font-size: 0.88rem;
+      line-height: 1.7;
+      max-width: 260px;
+      color: #9CA3AF;
+    }
+    .footer-brand .social-row {
+      display: flex;
+      gap: 10px;
+      margin-top: 20px;
+    }
+    .footer-social {
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.08);
+      color: #D1D5DB;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.9rem;
+      transition: background var(--transition), color var(--transition);
+    }
+    .footer-social:hover { background: var(--accent); color: #fff; }
+
+    .footer-col h4 {
+      font-size: 0.85rem;
+      font-weight: 700;
+      color: #E5E7EB;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      margin-bottom: 18px;
+    }
+    .footer-col ul li { margin-bottom: 10px; }
+    .footer-col ul li a {
+      font-size: 0.88rem;
+      color: #9CA3AF;
+      transition: color var(--transition);
+    }
+    .footer-col ul li a:hover { color: #fff; }
+    .footer-col ul li span {
+      font-size: 0.88rem;
+      color: #9CA3AF;
+      font-family: var(--font-en);
+    }
+
+    .footer-bottom {
+      border-top: 1px solid rgba(255,255,255,0.08);
+      padding-top: 28px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+    .footer-bottom p { font-size: 0.82rem; }
+
+    /* =========================================================
+       RTL OVERRIDES
+    ========================================================= */
+    html[dir="rtl"] .nav-logo { flex-direction: row-reverse; }
+    html[dir="rtl"] .hero-badge i { margin-left: 0; }
+    html[dir="rtl"] .contact-card { flex-direction: row-reverse; text-align: right; }
+    html[dir="rtl"] .footer-grid { direction: rtl; }
+    html[dir="rtl"] .footer-brand p { max-width: 100%; }
+    html[dir="rtl"] .footer-bottom { flex-direction: row-reverse; }
+    html[dir="rtl"] .plan-features li { text-align: right; }
+    html[dir="rtl"] .privacy-block h3 { flex-direction: row-reverse; justify-content: flex-end; }
+    html[dir="rtl"] .contact-card-label, html[dir="rtl"] .contact-card-value { text-align: right; }
+
+    /* =========================================================
+       RESPONSIVE
+    ========================================================= */
+    @media (max-width: 1024px) {
+      .features-grid { grid-template-columns: repeat(2, 1fr); }
+      .footer-grid { grid-template-columns: 1fr 1fr; }
+    }
+
+    @media (max-width: 768px) {
+      .section { padding: 72px 0; }
+
+      .nav-links { display: none; }
+      .btn-nav-cta { display: none; }
+      .hamburger { display: block; }
+
+      .hero { padding-top: calc(var(--nav-h) + 48px); padding-bottom: 64px; }
+      .hero h1 { font-size: 2.1rem; letter-spacing: -0.02em; }
+
+      .hero-stats { flex-direction: column; }
+      .hero-stat { border-right: none; border-bottom: 1px solid var(--border-light); }
+      .hero-stat:last-child { border: none; }
+      html[dir="rtl"] .hero-stat { border-left: none; border-bottom: 1px solid var(--border-light); }
+
+      .features-grid { grid-template-columns: 1fr; }
+
+      .pricing-grid { grid-template-columns: 1fr; max-width: 440px; }
+
+      .contact-wrapper { grid-template-columns: 1fr; }
+
+      .footer-grid { grid-template-columns: 1fr 1fr; }
+      .footer-brand { grid-column: 1 / -1; }
+    }
+
+    @media (max-width: 480px) {
+      .container { padding: 0 18px; }
+      .section-header h2 { font-size: 1.7rem; }
+      .pricing-card { padding: 32px 24px; }
+      .privacy-block { padding: 26px 22px; }
+      .contact-download-box { padding: 28px 22px; }
+      .footer-grid { grid-template-columns: 1fr; }
+    }
+  </style>
 </head>
+
 <body>
 
-    <nav>
-        <div class="container nav-content">
-            <a href="#" class="logo">
-                <img src="assets/logo.png" alt="Maly Logo">
-                Maly - OBS
+  <!-- ===================== NAVIGATION ===================== -->
+  <nav id="navbar">
+    <div class="container">
+      <div class="nav-inner">
+        <a href="#" class="nav-logo">
+          <img src="assets/logo.png" alt="Maly OBS Logo" />
+          <span>Maly&nbsp;-&nbsp;OBS</span>
+        </a>
+
+        <div class="nav-links">
+          <a href="#features"  data-i18n="nav_features">Features</a>
+          <a href="#pricing"   data-i18n="nav_pricing">Pricing</a>
+          <a href="#privacy"   data-i18n="nav_privacy">Privacy</a>
+          <a href="#contact"   data-i18n="nav_contact">Contact</a>
+        </div>
+
+        <div class="nav-right">
+          <button class="lang-btn" id="lang-toggle" onclick="toggleLang()">
+            <i class="fa-solid fa-globe"></i>
+            <span id="lang-label">العربية</span>
+          </button>
+          <a href="https://blog.mediafire.com/" target="_blank" rel="noopener" class="btn-nav-cta" data-i18n="nav_download">Download Now</a>
+          <button class="hamburger" onclick="toggleMenu()" aria-label="Menu">
+            <i class="fa-solid fa-bars" id="hamburger-icon"></i>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Mobile menu -->
+    <div class="mobile-menu" id="mobile-menu">
+      <a href="#features"  onclick="closeMenu()" data-i18n="nav_features">Features</a>
+      <a href="#pricing"   onclick="closeMenu()" data-i18n="nav_pricing">Pricing</a>
+      <a href="#privacy"   onclick="closeMenu()" data-i18n="nav_privacy">Privacy</a>
+      <a href="#contact"   onclick="closeMenu()" data-i18n="nav_contact">Contact</a>
+      <a href="https://blog.mediafire.com/" target="_blank" rel="noopener" onclick="closeMenu()" data-i18n="nav_download">Download Now</a>
+      <button class="lang-btn" onclick="toggleLang(); closeMenu();">
+        <i class="fa-solid fa-globe"></i>
+        <span id="lang-label-mobile">العربية</span>
+      </button>
+    </div>
+  </nav>
+
+  <!-- ===================== HERO ===================== -->
+  <header class="hero" id="hero">
+    <div class="container">
+      <div class="hero-badge reveal">
+        <i class="fa-solid fa-star"></i>
+        <span data-i18n="hero_badge">Egypt's Premier E-Commerce ERP</span>
+      </div>
+
+      <h1 class="reveal" style="transition-delay:0.08s">
+        <span data-i18n="hero_title_1">Manage Your Business.</span><br />
+        <span class="highlight" data-i18n="hero_title_2">Own Your Numbers.</span>
+      </h1>
+
+      <p class="hero-sub reveal" style="transition-delay:0.14s" data-i18n="hero_sub">
+        Maly - OBS is a complete desktop ERP built for Egyptian e-commerce businesses. Control inventory, shipping, staff, finances, and advertising — all from one powerful system.
+      </p>
+
+      <!-- Slogan: ALWAYS in English per requirements -->
+      <p class="hero-slogan reveal" style="transition-delay:0.18s">
+        "It's not just about money. It's Control."
+      </p>
+
+      <div class="hero-ctas reveal" style="transition-delay:0.22s">
+        <a href="https://blog.mediafire.com/" target="_blank" rel="noopener" class="btn-primary">
+          <i class="fa-solid fa-download"></i>
+          <span data-i18n="hero_cta">Download Now</span>
+        </a>
+        <a href="#features" class="btn-secondary">
+          <span data-i18n="hero_cta2">Explore Features</span>
+          <i class="fa-solid fa-arrow-down"></i>
+        </a>
+      </div>
+
+      <div class="hero-stats reveal" style="transition-delay:0.28s">
+        <div class="hero-stat">
+          <div class="stat-num">11</div>
+          <div class="stat-label" data-i18n="stat_modules">Integrated Modules</div>
+        </div>
+        <div class="hero-stat">
+          <div class="stat-num">500+</div>
+          <div class="stat-label" data-i18n="stat_translations">Bilingual Strings</div>
+        </div>
+        <div class="hero-stat">
+          <div class="stat-num">1&nbsp;Week</div>
+          <div class="stat-label" data-i18n="stat_trial">Free Trial</div>
+        </div>
+        <div class="hero-stat">
+          <div class="stat-num">100%</div>
+          <div class="stat-label" data-i18n="stat_local">Local & Private</div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- ===================== FEATURES ===================== -->
+  <section id="features" class="section section-alt">
+    <div class="container">
+      <div class="section-header reveal">
+        <div class="eyebrow" data-i18n="feat_eyebrow">Modules</div>
+        <h2 data-i18n="feat_title">Everything Your Business Needs</h2>
+        <p data-i18n="feat_sub">11 integrated modules covering every aspect of your e-commerce operations.</p>
+      </div>
+
+      <div class="features-grid">
+
+        <!-- 1 Dashboard -->
+        <div class="feature-card reveal">
+          <div class="feature-icon"><i class="fa-solid fa-gauge-high"></i></div>
+          <h3 data-i18n="f1_title">Real-time Dashboard</h3>
+          <p data-i18n="f1_desc">Live KPI cards for revenue, delivery rates, returns, and top products. Interactive charts and a custom date-range picker to spot trends before they become problems.</p>
+        </div>
+
+        <!-- 2 Inventory -->
+        <div class="feature-card reveal" style="transition-delay:0.06s">
+          <div class="feature-icon"><i class="fa-solid fa-boxes-stacked"></i></div>
+          <h3 data-i18n="f2_title">Advanced Inventory</h3>
+          <p data-i18n="f2_desc">Full stock lifecycle management: variant tracking, real-time stock levels, quarantine processing for damaged goods, weighted average costing, and a complete audit trail of every movement.</p>
+        </div>
+
+        <!-- 3 Manufacturing -->
+        <div class="feature-card reveal" style="transition-delay:0.12s">
+          <div class="feature-icon"><i class="fa-solid fa-industry"></i></div>
+          <h3 data-i18n="f3_title">Manufacturing & Bundles</h3>
+          <p data-i18n="f3_desc">Build Bills of Materials (BOMs) to assemble product bundles and kits. Track component availability, auto-calculate bundle costs, clone bundles for quick variations, and monitor profitability per bundle.</p>
+        </div>
+
+        <!-- 4 Preparation -->
+        <div class="feature-card reveal" style="transition-delay:0.06s">
+          <div class="feature-icon"><i class="fa-solid fa-clipboard-list"></i></div>
+          <h3 data-i18n="f4_title">Order Preparation</h3>
+          <p data-i18n="f4_desc">A smart warehouse picking queue with automatic shortage alerts, bundle explosion into component lists, deferred order management, and exportable picking sheets for your warehouse team.</p>
+        </div>
+
+        <!-- 5 Shipping -->
+        <div class="feature-card reveal" style="transition-delay:0.12s">
+          <div class="feature-icon"><i class="fa-solid fa-truck-fast"></i></div>
+          <h3 data-i18n="f5_title">Shipping Management</h3>
+          <p data-i18n="f5_desc">Manage multiple couriers from one screen. Track every shipment from dispatch to delivery, bulk-process collections, handle returns and partial deliveries, and reconcile each company's balance automatically.</p>
+        </div>
+
+        <!-- 6 Expenses -->
+        <div class="feature-card reveal" style="transition-delay:0.18s">
+          <div class="feature-icon"><i class="fa-solid fa-wallet"></i></div>
+          <h3 data-i18n="f6_title">Expenses & Treasury</h3>
+          <p data-i18n="f6_desc">Log every business expense by category, watch your real-time treasury balance, and close your books daily with variance tracking between system totals and physical cash-on-hand.</p>
+        </div>
+
+        <!-- 7 Staff & HR -->
+        <div class="feature-card reveal">
+          <div class="feature-icon"><i class="fa-solid fa-users"></i></div>
+          <h3 data-i18n="f7_title">Staff & HR Payroll</h3>
+          <p data-i18n="f7_desc">Full HR suite: role-based access control, fixed or commission-based payroll engine, employee loan tracking, per-moderator performance metrics, bonus and deduction adjustments, and complete payroll history.</p>
+        </div>
+
+        <!-- 8 Ads -->
+        <div class="feature-card reveal" style="transition-delay:0.06s">
+          <div class="feature-icon"><i class="fa-solid fa-bullhorn"></i></div>
+          <h3 data-i18n="f8_title">Ad Campaign Intelligence</h3>
+          <p data-i18n="f8_desc">Link ad spend on Facebook, TikTok, Google, and Instagram to real revenue. Calculate ROAS and Cost-Per-Order per campaign and per platform so you know exactly where every pound is working — and where it isn't.</p>
+        </div>
+
+        <!-- 9 Reports -->
+        <div class="feature-card reveal" style="transition-delay:0.12s">
+          <div class="feature-icon"><i class="fa-solid fa-chart-line"></i></div>
+          <h3 data-i18n="f9_title">Financial Reports & Scenarios</h3>
+          <p data-i18n="f9_desc">P&amp;L statements, partner share calculations, period closing (التقفيل), and interactive scenario simulations — "What if 70% of my pipeline delivers?" — so you can make confident financial decisions before they happen.</p>
+        </div>
+
+        <!-- 10 Google Sync -->
+        <div class="feature-card reveal">
+          <div class="feature-icon"><i class="fa-brands fa-google-drive"></i></div>
+          <h3 data-i18n="f10_title">Google Sheets Sync</h3>
+          <p data-i18n="f10_desc">Bidirectional sync between your local database and Google Sheets. Your team updates orders in the spreadsheet; Maly pulls them in automatically — no extra software, no manual imports.</p>
+        </div>
+
+        <!-- 11 Debts -->
+        <div class="feature-card reveal" style="transition-delay:0.06s">
+          <div class="feature-icon"><i class="fa-solid fa-file-invoice-dollar"></i></div>
+          <h3 data-i18n="f11_title">Debts & Liabilities</h3>
+          <p data-i18n="f11_desc">Consolidated view of every obligation: external loans, courier balances pending collection, employee payroll owed, partner equity, and upcoming payment forecasts with an 7-day alert window.</p>
+        </div>
+
+        <!-- 12 RBAC -->
+        <div class="feature-card reveal" style="transition-delay:0.12s">
+          <div class="feature-icon"><i class="fa-solid fa-shield-halved"></i></div>
+          <h3 data-i18n="f12_title">Role-based Access Control</h3>
+          <p data-i18n="f12_desc">Create multi-user accounts with granular module permissions: managers see everything, staff see only their workspace. Every action is logged in a full audit trail with timestamp and user identity.</p>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== PRICING ===================== -->
+  <section id="pricing" class="section">
+    <div class="container">
+      <div class="section-header reveal">
+        <div class="eyebrow" data-i18n="pricing_eyebrow">Pricing</div>
+        <h2 data-i18n="pricing_title">Transparent Pricing</h2>
+        <p data-i18n="pricing_sub">Start free. Scale confidently.</p>
+      </div>
+
+      <div class="trial-banner reveal">
+        <span class="trial-badge" data-i18n="trial_badge">1 Week Free Trial</span>
+        <span class="trial-text" data-i18n="trial_sub">أسبوع مجاني — No credit card required. Download and start immediately.</span>
+      </div>
+
+      <div class="pricing-grid">
+
+        <!-- Basic -->
+        <div class="pricing-card reveal">
+          <p class="plan-name" data-i18n="basic_name">Basic</p>
+          <div class="plan-price">800 <span class="currency" data-i18n="plan_currency_egp">EGP</span></div>
+          <p class="plan-period" data-i18n="plan_per_month">per month</p>
+          <p class="plan-desc" data-i18n="basic_desc">All operational modules to run your day-to-day business.</p>
+          <ul class="plan-features" id="basic-features">
+            <li><i class="fa-solid fa-check chk"></i><span data-i18n="feat_inv">Advanced Inventory Management</span></li>
+            <li><i class="fa-solid fa-check chk"></i><span data-i18n="feat_mfg">Manufacturing &amp; Bundle Builder</span></li>
+            <li><i class="fa-solid fa-check chk"></i><span data-i18n="feat_prep">Order Preparation Module</span></li>
+            <li><i class="fa-solid fa-check chk"></i><span data-i18n="feat_ship">Shipping Management</span></li>
+            <li><i class="fa-solid fa-check chk"></i><span data-i18n="feat_exp">Expenses &amp; Treasury</span></li>
+            <li><i class="fa-solid fa-check chk"></i><span data-i18n="feat_staff">Staff &amp; HR Payroll</span></li>
+            <li><i class="fa-solid fa-check chk"></i><span data-i18n="feat_debt">Debts &amp; Liabilities</span></li>
+            <li><i class="fa-solid fa-check chk"></i><span data-i18n="feat_ads">Ad Campaign Tracking</span></li>
+            <li><i class="fa-solid fa-check chk"></i><span data-i18n="feat_sync">Google Sheets Sync</span></li>
+            <li><i class="fa-solid fa-check chk"></i><span data-i18n="feat_rbac">Role-based Access Control</span></li>
+            <li class="disabled"><i class="fa-solid fa-xmark"></i><span data-i18n="feat_dash">Real-time Dashboard</span></li>
+            <li class="disabled"><i class="fa-solid fa-xmark"></i><span data-i18n="feat_reports">Advanced Reports &amp; P&amp;L</span></li>
+            <li class="disabled"><i class="fa-solid fa-xmark"></i><span data-i18n="feat_close">Period Closing (التقفيل)</span></li>
+          </ul>
+          <a href="#contact" class="btn-plan btn-plan-outline" data-i18n="cta_basic">Get Started</a>
+        </div>
+
+        <!-- Pro -->
+        <div class="pricing-card pro reveal" style="transition-delay:0.1s">
+          <div class="plan-badge" data-i18n="pro_badge">Most Popular</div>
+          <p class="plan-name" data-i18n="pro_name">Pro</p>
+          <div class="plan-price">1,100 <span class="currency" data-i18n="plan_currency_egp">EGP</span></div>
+          <p class="plan-period" data-i18n="plan_per_month">per month</p>
+          <p class="plan-desc" data-i18n="pro_desc">Full visibility. Full control. Every feature unlocked.</p>
+          <ul class="plan-features">
+            <li><i class="fa-solid fa-check chk"></i><span data-i18n="pro_includes_basic">Everything in Basic, plus:</span></li>
+            <li><i class="fa-solid fa-check chk"></i><span data-i18n="feat_dash">Real-time Dashboard</span></li>
+            <li><i class="fa-solid fa-check chk"></i><span data-i18n="feat_reports">Advanced Reports &amp; P&amp;L</span></li>
+            <li><i class="fa-solid fa-check chk"></i><span data-i18n="feat_close">Period Closing (التقفيل)</span></li>
+            <li><i class="fa-solid fa-check chk"></i><span data-i18n="feat_scenarios">Scenario Financial Simulations</span></li>
+            <li><i class="fa-solid fa-check chk"></i><span data-i18n="feat_partner">Partner Share &amp; Equity Management</span></li>
+          </ul>
+          <a href="https://blog.mediafire.com/" target="_blank" rel="noopener" class="btn-plan btn-plan-fill" data-i18n="cta_pro">Download Now</a>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== PRIVACY ===================== -->
+  <section id="privacy" class="section section-alt">
+    <div class="container">
+      <div class="section-header reveal">
+        <div class="eyebrow" data-i18n="privacy_eyebrow">Legal</div>
+        <h2 data-i18n="privacy_title">Privacy Policy</h2>
+        <p data-i18n="privacy_sub">Your data stays yours.</p>
+      </div>
+
+      <div class="privacy-inner">
+
+        <!-- Google OAuth block — text MUST remain in English for Google verification -->
+        <div class="privacy-block reveal google-verified-text">
+          <h3><i class="fa-brands fa-google"></i> Google OAuth &amp; User Data</h3>
+          <p>
+            Maly - OBS connects to your Google Account to facilitate data synchronization.
+            It uses the <code>https://www.googleapis.com/auth/spreadsheets</code> and
+            <code>https://www.googleapis.com/auth/drive.file</code> scopes solely to export
+            reports generated by the user to their personal Google Sheets.
+            We do not read, delete, or modify any other files on your Google Drive.
+          </p>
+          <p>
+            <strong>We do not share your Google User Data with any third party, AI model, or analytics service.</strong>
+            OAuth access tokens are stored locally on your machine and are never transmitted to our servers.
+          </p>
+        </div>
+
+        <!-- Local storage block — translated -->
+        <div class="privacy-block reveal" style="transition-delay:0.08s">
+          <h3><i class="fa-solid fa-database"></i> <span data-i18n="privacy_local_title">Local Data Storage</span></h3>
+          <p data-i18n="privacy_local_body">All your business data (inventory, orders, staff, and finances) is stored locally on your own machine in a SQLite database. We do not collect, transmit, or store any of your business data on our servers. You own your data completely.</p>
+        </div>
+
+        <!-- Contact block — translated -->
+        <div class="privacy-block reveal" style="transition-delay:0.16s">
+          <h3><i class="fa-solid fa-envelope-open-text"></i> <span data-i18n="privacy_contact_title">Privacy Contact</span></h3>
+          <p data-i18n="privacy_contact_body">For any privacy-related questions or data deletion requests, please contact us directly.</p>
+          <p style="font-family:var(--font-en);">
+            <strong>Email:</strong> asoliman548@gmail.com &nbsp;|&nbsp;
+            <strong>WhatsApp:</strong> +20 110 002 8752
+          </p>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== CONTACT ===================== -->
+  <section id="contact" class="section">
+    <div class="container">
+      <div class="contact-wrapper">
+
+        <div class="contact-info reveal">
+          <h2 data-i18n="contact_title">Get in Touch</h2>
+          <p data-i18n="contact_sub">Ready to take control of your business? Reach out via any channel below, or download and start your free trial immediately.</p>
+
+          <div class="contact-cards">
+
+            <a href="mailto:asoliman548@gmail.com" class="contact-card">
+              <div class="contact-card-icon"><i class="fa-solid fa-envelope"></i></div>
+              <div>
+                <div class="contact-card-label" data-i18n="contact_email_lbl">Email</div>
+                <div class="contact-card-value">asoliman548@gmail.com</div>
+              </div>
             </a>
-            <div class="nav-links">
-                <a href="#features">Features</a>
-                <a href="#pricing">Pricing</a>
-                <a href="#privacy">Privacy</a>
-                <a href="#contact" class="btn-nav">Contact Us</a>
-            </div>
+
+            <a href="https://wa.me/201100028752" target="_blank" rel="noopener" class="contact-card">
+              <div class="contact-card-icon"><i class="fa-brands fa-whatsapp"></i></div>
+              <div>
+                <div class="contact-card-label" data-i18n="contact_phone_lbl">Phone / WhatsApp</div>
+                <div class="contact-card-value">01100028752</div>
+              </div>
+            </a>
+
+            <a href="https://www.linkedin.com/in/adhamseliman/" target="_blank" rel="noopener" class="contact-card">
+              <div class="contact-card-icon"><i class="fa-brands fa-linkedin"></i></div>
+              <div>
+                <div class="contact-card-label">LinkedIn</div>
+                <div class="contact-card-value">Adham Soliman</div>
+              </div>
+            </a>
+
+          </div>
         </div>
-    </nav>
 
-    <header class="hero">
-        <div class="container">
-            <h1>It's not just about money.<br><span>It's Control.</span></h1>
-            <p class="slogan">Manage your Inventory, Manufacturing, and Marketing Intelligence in one powerful system.</p>
-            <div class="hero-btns">
-                <a href="#contact" class="btn btn-primary">Get 1 Week Free Trial</a>
-                <a href="#features" class="btn btn-outline">Explore Features</a>
-            </div>
-            
-            <div class="laptop-wrapper">
-                <div class="laptop-screen">
-                    <img src="assets/dashboard.png" alt="Maly Dashboard Interface">
-                </div>
-                <div class="laptop-base"></div>
-            </div>
+        <div class="contact-download-box reveal" style="transition-delay:0.1s">
+          <h3 data-i18n="dl_box_title">Start Your Free Trial</h3>
+          <p data-i18n="dl_box_sub">Download Maly - OBS now and get 1 full week to explore every module — completely free, no commitment required.</p>
+          <a href="https://blog.mediafire.com/" target="_blank" rel="noopener" class="btn-download">
+            <i class="fa-solid fa-download"></i>
+            <span data-i18n="dl_box_btn">Download Now</span>
+          </a>
+
+          <div class="social-links">
+            <a href="https://www.linkedin.com/in/adhamseliman/" target="_blank" rel="noopener" class="social-link" aria-label="LinkedIn">
+              <i class="fa-brands fa-linkedin-in"></i>
+            </a>
+            <a href="https://web.facebook.com/sadham122" target="_blank" rel="noopener" class="social-link" aria-label="Facebook">
+              <i class="fa-brands fa-facebook-f"></i>
+            </a>
+            <a href="https://www.youtube.com/@adhamseliman458" target="_blank" rel="noopener" class="social-link" aria-label="YouTube">
+              <i class="fa-brands fa-youtube"></i>
+            </a>
+            <a href="https://wa.me/201100028752" target="_blank" rel="noopener" class="social-link" aria-label="WhatsApp">
+              <i class="fa-brands fa-whatsapp"></i>
+            </a>
+          </div>
         </div>
-    </header>
 
-    <section id="features" class="section">
-        <div class="container">
-            <div class="section-title">
-                <h2>Powerful Modules</h2>
-                <p>Everything you need to run your business, all in one place.</p>
-            </div>
+      </div>
+    </div>
+  </section>
 
-            <div class="features-grid">
-                <div class="feature-card">
-                    <div class="feature-icon"><i class="fa-solid fa-industry"></i></div>
-                    <h3>Smart Manufacturing</h3>
-                    <p>Define Bill of Materials (BOM), track raw materials, and calculate "Virtual Stock" for bundles automatically.</p>
-                </div>
+  <!-- ===================== FOOTER ===================== -->
+  <footer>
+    <div class="container">
+      <div class="footer-grid">
 
-                <div class="feature-card">
-                    <div class="feature-icon"><i class="fa-solid fa-bullhorn"></i></div>
-                    <h3>Ads Intelligence</h3>
-                    <p>Don't guess. Know your ROAS & CPO. Link ad spend to real revenue and visualize profitability per platform.</p>
-                </div>
-
-                <div class="feature-card">
-                    <div class="feature-icon"><i class="fa-solid fa-boxes-stacked"></i></div>
-                    <h3>Advanced Inventory</h3>
-                    <p>Real-time tracking, bulk archiving, variant management, and automated alerts for low stock levels.</p>
-                </div>
-
-                <div class="feature-card">
-                    <div class="feature-icon"><i class="fa-brands fa-google-drive"></i></div>
-                    <h3>Cloud Sync</h3>
-                    <p>Securely sync your local data to your personal Google Sheets for remote monitoring and backup.</p>
-                </div>
-
-                <div class="feature-card">
-                    <div class="feature-icon"><i class="fa-solid fa-file-invoice-dollar"></i></div>
-                    <h3>Debts & Ledger</h3>
-                    <p>Keep track of every penny owed to you or by you. Detailed ledger for suppliers and customers.</p>
-                </div>
-
-                <div class="feature-card">
-                    <div class="feature-icon"><i class="fa-solid fa-truck-fast"></i></div>
-                    <h3>Shipping Management</h3>
-                    <p>Full lifecycle tracking from "Preparation" to "Delivered", with returns and exchange handling.</p>
-                </div>
-            </div>
+        <div class="footer-brand">
+          <div class="nav-logo" style="color:#fff; margin-bottom:14px; display:flex; align-items:center; gap:10px;">
+            <img src="assets/logo.png" alt="Maly OBS" style="height:36px; filter:brightness(0) invert(1); opacity:0.85;" />
+            <span>Maly&nbsp;-&nbsp;OBS</span>
+          </div>
+          <p data-i18n="footer_tagline">The smartest way to run your e-commerce business in Egypt.</p>
+          <div class="social-row">
+            <a href="https://www.linkedin.com/in/adhamseliman/" target="_blank" rel="noopener" class="footer-social" aria-label="LinkedIn"><i class="fa-brands fa-linkedin-in"></i></a>
+            <a href="https://web.facebook.com/sadham122" target="_blank" rel="noopener" class="footer-social" aria-label="Facebook"><i class="fa-brands fa-facebook-f"></i></a>
+            <a href="https://www.youtube.com/@adhamseliman458" target="_blank" rel="noopener" class="footer-social" aria-label="YouTube"><i class="fa-brands fa-youtube"></i></a>
+            <a href="https://wa.me/201100028752" target="_blank" rel="noopener" class="footer-social" aria-label="WhatsApp"><i class="fa-brands fa-whatsapp"></i></a>
+          </div>
         </div>
-    </section>
 
-    <section id="pricing" class="section pricing-section">
-        <div class="container">
-            <div class="section-title">
-                <h2>Simple Pricing</h2>
-                <p>Start with a 7-day free trial. No credit card required.</p>
-            </div>
-
-            <div class="pricing-grid">
-                <div class="pricing-card">
-                    <h3>Basic Plan</h3>
-                    <div class="price">800<span>/mo</span></div>
-                    <ul class="features-list">
-                        <li><i class="fa-solid fa-check"></i> Inventory Management</li>
-                        <li><i class="fa-solid fa-check"></i> Sales & POS</li>
-                        <li><i class="fa-solid fa-check"></i> Manufacturing (BOM)</li>
-                        <li><i class="fa-solid fa-check"></i> Shipping Tracking</li>
-                        <li class="disabled"><i class="fa-solid fa-xmark"></i> Dashboard Analytics</li>
-                        <li class="disabled"><i class="fa-solid fa-xmark"></i> Advanced Reports</li>
-                    </ul>
-                    <a href="#contact" class="btn btn-outline" style="width: 100%">Contact Sales</a>
-                </div>
-
-                <div class="pricing-card pro">
-                    <span class="badge">BEST VALUE</span>
-                    <h3>Pro Plan</h3>
-                    <div class="price">1100<span>/mo</span></div>
-                    <ul class="features-list">
-                        <li><i class="fa-solid fa-check"></i> <strong>Everything in Basic</strong></li>
-                        <li><i class="fa-solid fa-check"></i> Full Dashboard Analytics</li>
-                        <li><i class="fa-solid fa-check"></i> Advanced Reports & PDF Export</li>
-                        <li><i class="fa-solid fa-check"></i> Ads Intelligence Module</li>
-                        <li><i class="fa-solid fa-check"></i> Google Sheets Cloud Sync</li>
-                    </ul>
-                    <a href="#contact" class="btn btn-primary" style="width: 100%">Get Started</a>
-                </div>
-            </div>
+        <div class="footer-col">
+          <h4 data-i18n="footer_nav">Navigate</h4>
+          <ul>
+            <li><a href="#features" data-i18n="nav_features">Features</a></li>
+            <li><a href="#pricing"  data-i18n="nav_pricing">Pricing</a></li>
+            <li><a href="#privacy"  data-i18n="nav_privacy">Privacy</a></li>
+            <li><a href="#contact"  data-i18n="nav_contact">Contact</a></li>
+          </ul>
         </div>
-    </section>
 
-    <section id="privacy" class="section">
-        <div class="container" style="max-width: 800px;">
-            <div class="section-title">
-                <h2>Privacy Policy</h2>
-                <p>Your data security is our priority.</p>
-            </div>
-            <div class="legal-text">
-                <h3>Google User Data Policy</h3>
-                <p>Maly - OBS connects to your Google Account to facilitate data synchronization. When you grant permissions, the application accesses your Google Sheets solely to export reports (Sales, Inventory, and Financials) generated by you within the app to your personal Google Sheets. We request the <code>../auth/spreadsheets</code> scope for this purpose.</p>
-                <p><strong>We do not read, delete, or modify any files on your Google Drive other than those created by Maly - OBS.</strong> We do not share your Google User Data with any third-party tools or AI models.</p>
-                <p>Data is stored locally on your device (SQLite). OAuth tokens are stored securely on your local machine.</p>
-            </div>
+        <div class="footer-col">
+          <h4 data-i18n="footer_contact_hd">Contact</h4>
+          <ul>
+            <li><span>asoliman548@gmail.com</span></li>
+            <li><span>01100028752</span></li>
+            <li><span data-i18n="footer_location">Cairo, Egypt</span></li>
+          </ul>
         </div>
-    </section>
 
-    <footer id="contact">
-        <div class="container">
-            <div class="footer-grid">
-                <div class="footer-col">
-                    <a href="#" class="logo" style="color: white; margin-bottom: 20px; display: block;">Maly - OBS</a>
-                    <p>The smartest way to manage your business operations.</p>
-                    <div class="social-icons">
-                        <a href="#"><i class="fa-brands fa-facebook"></i></a>
-                        <a href="#"><i class="fa-brands fa-linkedin"></i></a>
-                        <a href="#"><i class="fa-brands fa-whatsapp"></i></a>
-                    </div>
-                </div>
-                
-                <div class="footer-col">
-                    <h4>Contact Us</h4>
-                    <ul>
-                        <li><i class="fa-solid fa-envelope"></i> asoliman548@gmail.com</li>
-                        <li><i class="fa-solid fa-phone"></i> 01100028752</li>
-                        <li><i class="fa-solid fa-location-dot"></i> Cairo, Egypt</li>
-                    </ul>
-                </div>
-
-                <div class="footer-col">
-                    <h4>Legal</h4>
-                    <ul>
-                        <li><a href="#privacy">Privacy Policy</a></li>
-                        <li><a href="#">Terms of Service</a></li>
-                    </ul>
-                </div>
-            </div>
-            <div style="text-align: center; padding-top: 30px; border-top: 1px solid #334155;">
-                <p>&copy; 2026 Maly Systems. All rights reserved.</p>
-            </div>
+        <div class="footer-col">
+          <h4 data-i18n="footer_legal">Legal</h4>
+          <ul>
+            <li><a href="#privacy" data-i18n="footer_privacy_link">Privacy Policy</a></li>
+          </ul>
         </div>
-    </footer>
 
+      </div>
+
+      <div class="footer-bottom">
+        <p data-i18n="footer_copy">© 2026 Maly Systems. All rights reserved.</p>
+        <p style="font-family:var(--font-en); font-style:italic; color:#6B7280; font-size:0.8rem;">
+          "It's not just about money. It's Control."
+        </p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- ===================== JAVASCRIPT ===================== -->
+  <script>
+    /* -------------------------------------------------------
+       TRANSLATIONS
+    ------------------------------------------------------- */
+    const T = {
+      en: {
+        // Nav
+        nav_features:  "Features",
+        nav_pricing:   "Pricing",
+        nav_privacy:   "Privacy",
+        nav_contact:   "Contact",
+        nav_download:  "Download Now",
+
+        // Hero
+        hero_badge:    "Egypt's Premier E-Commerce ERP",
+        hero_title_1:  "Manage Your Business.",
+        hero_title_2:  "Own Your Numbers.",
+        hero_sub:      "Maly - OBS is a complete desktop ERP built for Egyptian e-commerce businesses. Control inventory, shipping, staff, finances, and advertising — all from one powerful system.",
+        hero_cta:      "Download Now",
+        hero_cta2:     "Explore Features",
+        stat_modules:  "Integrated Modules",
+        stat_translations: "Bilingual Strings",
+        stat_trial:    "Free Trial",
+        stat_local:    "Local & Private",
+
+        // Features
+        feat_eyebrow:  "Modules",
+        feat_title:    "Everything Your Business Needs",
+        feat_sub:      "11 integrated modules covering every aspect of your e-commerce operations.",
+
+        f1_title: "Real-time Dashboard",
+        f1_desc:  "Live KPI cards for revenue, delivery rates, returns, and top products. Interactive charts and a custom date-range picker to spot trends before they become problems.",
+
+        f2_title: "Advanced Inventory",
+        f2_desc:  "Full stock lifecycle management: variant tracking, real-time stock levels, quarantine processing for damaged goods, weighted average costing, and a complete audit trail of every movement.",
+
+        f3_title: "Manufacturing & Bundles",
+        f3_desc:  "Build Bills of Materials (BOMs) to assemble product bundles and kits. Track component availability, auto-calculate bundle costs, clone bundles for quick variations, and monitor profitability per bundle.",
+
+        f4_title: "Order Preparation",
+        f4_desc:  "A smart warehouse picking queue with automatic shortage alerts, bundle explosion into component lists, deferred order management, and exportable picking sheets for your warehouse team.",
+
+        f5_title: "Shipping Management",
+        f5_desc:  "Manage multiple couriers from one screen. Track every shipment from dispatch to delivery, bulk-process collections, handle returns and partial deliveries, and reconcile each company's balance automatically.",
+
+        f6_title: "Expenses & Treasury",
+        f6_desc:  "Log every business expense by category, watch your real-time treasury balance, and close your books daily with variance tracking between system totals and physical cash-on-hand.",
+
+        f7_title: "Staff & HR Payroll",
+        f7_desc:  "Full HR suite: role-based access control, fixed or commission-based payroll engine, employee loan tracking, per-moderator performance metrics, bonus and deduction adjustments, and complete payroll history.",
+
+        f8_title: "Ad Campaign Intelligence",
+        f8_desc:  "Link ad spend on Facebook, TikTok, Google, and Instagram to real revenue. Calculate ROAS and Cost-Per-Order per campaign and per platform so you know exactly where every pound is working — and where it isn't.",
+
+        f9_title: "Financial Reports & Scenarios",
+        f9_desc:  "P&L statements, partner share calculations, period closing (التقفيل), and interactive scenario simulations — \"What if 70% of my pipeline delivers?\" — so you can make confident financial decisions before they happen.",
+
+        f10_title: "Google Sheets Sync",
+        f10_desc:  "Bidirectional sync between your local database and Google Sheets. Your team updates orders in the spreadsheet; Maly pulls them in automatically — no extra software, no manual imports.",
+
+        f11_title: "Debts & Liabilities",
+        f11_desc:  "Consolidated view of every obligation: external loans, courier balances pending collection, employee payroll owed, partner equity, and upcoming payment forecasts with a 7-day alert window.",
+
+        f12_title: "Role-based Access Control",
+        f12_desc:  "Create multi-user accounts with granular module permissions: managers see everything, staff see only their workspace. Every action is logged in a full audit trail with timestamp and user identity.",
+
+        // Pricing
+        pricing_eyebrow:  "Pricing",
+        pricing_title:    "Transparent Pricing",
+        pricing_sub:      "Start free. Scale confidently.",
+        trial_badge:      "1 Week Free Trial",
+        trial_sub:        "أسبوع مجاني — No credit card required. Download and start immediately.",
+        basic_name:       "Basic",
+        plan_currency_egp:"EGP",
+        plan_per_month:   "per month",
+        basic_desc:       "All operational modules to run your day-to-day business.",
+        pro_badge:        "Most Popular",
+        pro_name:         "Pro",
+        pro_desc:         "Full visibility. Full control. Every feature unlocked.",
+        pro_includes_basic: "Everything in Basic, plus:",
+        feat_inv:         "Advanced Inventory Management",
+        feat_mfg:         "Manufacturing & Bundle Builder",
+        feat_prep:        "Order Preparation Module",
+        feat_ship:        "Shipping Management",
+        feat_exp:         "Expenses & Treasury",
+        feat_staff:       "Staff & HR Payroll",
+        feat_debt:        "Debts & Liabilities",
+        feat_ads:         "Ad Campaign Tracking",
+        feat_sync:        "Google Sheets Sync",
+        feat_rbac:        "Role-based Access Control",
+        feat_dash:        "Real-time Dashboard",
+        feat_reports:     "Advanced Reports & P&L",
+        feat_close:       "Period Closing (التقفيل)",
+        feat_scenarios:   "Scenario Financial Simulations",
+        feat_partner:     "Partner Share & Equity Management",
+        cta_basic:        "Get Started",
+        cta_pro:          "Download Now",
+
+        // Privacy
+        privacy_eyebrow:       "Legal",
+        privacy_title:         "Privacy Policy",
+        privacy_sub:           "Your data stays yours.",
+        privacy_local_title:   "Local Data Storage",
+        privacy_local_body:    "All your business data (inventory, orders, staff, and finances) is stored locally on your own machine in a SQLite database. We do not collect, transmit, or store any of your business data on our servers. You own your data completely.",
+        privacy_contact_title: "Privacy Contact",
+        privacy_contact_body:  "For any privacy-related questions or data deletion requests, please contact us directly.",
+
+        // Contact
+        contact_title:    "Get in Touch",
+        contact_sub:      "Ready to take control of your business? Reach out via any channel below, or download and start your free trial immediately.",
+        contact_email_lbl:"Email",
+        contact_phone_lbl:"Phone / WhatsApp",
+        dl_box_title:     "Start Your Free Trial",
+        dl_box_sub:       "Download Maly - OBS now and get 1 full week to explore every module — completely free, no commitment required.",
+        dl_box_btn:       "Download Now",
+
+        // Footer
+        footer_tagline:    "The smartest way to run your e-commerce business in Egypt.",
+        footer_nav:        "Navigate",
+        footer_contact_hd: "Contact",
+        footer_legal:      "Legal",
+        footer_privacy_link:"Privacy Policy",
+        footer_location:   "Cairo, Egypt",
+        footer_copy:       "© 2026 Maly Systems. All rights reserved.",
+      },
+
+      ar: {
+        // Nav
+        nav_features:  "المميزات",
+        nav_pricing:   "الأسعار",
+        nav_privacy:   "الخصوصية",
+        nav_contact:   "تواصل معنا",
+        nav_download:  "تحميل الآن",
+
+        // Hero
+        hero_badge:    "نظام ERP رقم ١ للتجارة الإلكترونية في مصر",
+        hero_title_1:  "أدِر عملك.",
+        hero_title_2:  "امتلك أرقامك.",
+        hero_sub:      "مالي - OBS هو نظام ERP مكتبي متكامل مصمم لأعمال التجارة الإلكترونية المصرية. تحكم في المخزون والشحن والموظفين والمالية والإعلانات — كل ذلك من نظام واحد قوي.",
+        hero_cta:      "تحميل الآن",
+        hero_cta2:     "استكشف المميزات",
+        stat_modules:  "وحدة متكاملة",
+        stat_translations: "جملة ثنائية اللغة",
+        stat_trial:    "تجربة مجانية",
+        stat_local:    "محلي وخاص ١٠٠٪",
+
+        // Features
+        feat_eyebrow:  "الوحدات",
+        feat_title:    "كل ما يحتاجه عملك",
+        feat_sub:      "١١ وحدة متكاملة تغطي كل جانب من جوانب عمليات التجارة الإلكترونية.",
+
+        f1_title: "لوحة تحكم فورية",
+        f1_desc:  "بطاقات KPI مباشرة للإيرادات ومعدلات التسليم والمرتجعات وأفضل المنتجات. رسوم بيانية تفاعلية ومحدد نطاق زمني مخصص لاكتشاف الاتجاهات قبل أن تصبح مشكلات.",
+
+        f2_title: "إدارة المخزون المتقدمة",
+        f2_desc:  "إدارة كاملة لدورة حياة المخزون: تتبع المتغيرات، ومستويات المخزون الفورية، ومعالجة الحجر للبضائع التالفة، والتكلفة المتوسطة الموزونة، وسجل تدقيق كامل لكل حركة.",
+
+        f3_title: "التصنيع والحزم",
+        f3_desc:  "بناء قوائم المواد (BOMs) لتجميع حزم المنتجات. تتبع توفر المكونات، وحساب تكاليف الحزمة تلقائيًا، واستنساخ الحزم للتنويعات السريعة، ومراقبة ربحية كل حزمة.",
+
+        f4_title: "تجهيز الطلبات",
+        f4_desc:  "قائمة انتظار التقاط مستودع ذكية مع تنبيهات نقص تلقائية، وتفكيك الحزم إلى قوائم مكونات، وإدارة الطلبات المؤجلة، وأوراق التقاط قابلة للتصدير لفريق المستودع.",
+
+        f5_title: "إدارة الشحن",
+        f5_desc:  "إدارة شركات نقل متعددة من شاشة واحدة. تتبع كل شحنة من الإرسال إلى التسليم، ومعالجة التحصيل بالجملة، والتعامل مع المرتجعات والتسليم الجزئي، وتسوية رصيد كل شركة تلقائيًا.",
+
+        f6_title: "المصروفات والخزينة",
+        f6_desc:  "سجّل كل مصروف تجاري حسب الفئة، وراقب رصيد خزينتك الفوري، وأقفل دفاترك يوميًا مع تتبع الفارق بين إجماليات النظام والنقد الفعلي.",
+
+        f7_title: "الموارد البشرية والرواتب",
+        f7_desc:  "نظام HR متكامل: تحكم في الصلاحيات بحسب الأدوار، وآلة رواتب ثابتة أو بالعمولة، وتتبع سلف الموظفين، ومعايير أداء لكل مشرف، وتعديلات مكافآت وخصومات، وتاريخ رواتب كامل.",
+
+        f8_title: "ذكاء الحملات الإعلانية",
+        f8_desc:  "اربط الإنفاق الإعلاني على فيسبوك وتيك توك وجوجل وإنستجرام بالإيرادات الفعلية. احسب معدل العائد على الإنفاق الإعلاني وتكلفة الطلب لكل حملة وكل منصة لتعرف أين يعمل كل جنيه.",
+
+        f9_title: "التقارير المالية والسيناريوهات",
+        f9_desc:  "قوائم الأرباح والخسائر، وحسابات حصص الشركاء، والتقفيل الدوري، ومحاكاة سيناريوهات تفاعلية — \"ماذا لو سُلّم ٧٠٪ من مسار الطلبات؟\" — لتتخذ قرارات مالية واثقة.",
+
+        f10_title: "مزامنة Google Sheets",
+        f10_desc:  "مزامنة ثنائية الاتجاه بين قاعدة بياناتك المحلية وجداول بيانات Google. يحدّث فريقك الطلبات في الجدول؛ يسحبها مالي تلقائيًا — بلا برامج إضافية، بلا استيراد يدوي.",
+
+        f11_title: "الديون والالتزامات",
+        f11_desc:  "عرض موحد لكل الالتزامات: القروض الخارجية، وأرصدة شركات الشحن المعلقة، والرواتب المستحقة للموظفين، وحقوق الشركاء، وتوقعات المدفوعات القادمة مع نافذة تنبيه ٧ أيام.",
+
+        f12_title: "التحكم في الصلاحيات",
+        f12_desc:  "أنشئ حسابات متعددة للمستخدمين بصلاحيات وحدات دقيقة: يرى المديرون كل شيء، ويرى الموظفون مساحة العمل الخاصة بهم فقط. كل إجراء مُسجَّل في سجل تدقيق كامل بالتوقيت وهوية المستخدم.",
+
+        // Pricing
+        pricing_eyebrow:  "الأسعار",
+        pricing_title:    "أسعار شفافة",
+        pricing_sub:      "ابدأ مجانًا. توسّع بثقة.",
+        trial_badge:      "أسبوع مجاني",
+        trial_sub:        "1 Week Free Trial — لا حاجة لبطاقة ائتمان. حمّل وابدأ فورًا.",
+        basic_name:       "الأساسية",
+        plan_currency_egp:"جنيه",
+        plan_per_month:   "في الشهر",
+        basic_desc:       "جميع الوحدات التشغيلية لإدارة أعمالك اليومية.",
+        pro_badge:        "الأكثر شيوعًا",
+        pro_name:         "الاحترافية",
+        pro_desc:         "رؤية كاملة. تحكم كامل. جميع الميزات مفعّلة.",
+        pro_includes_basic: "كل ما في الأساسية، بالإضافة إلى:",
+        feat_inv:         "إدارة المخزون المتقدمة",
+        feat_mfg:         "التصنيع وبناء الحزم",
+        feat_prep:        "وحدة تجهيز الطلبات",
+        feat_ship:        "إدارة الشحن",
+        feat_exp:         "المصروفات والخزينة",
+        feat_staff:       "الموارد البشرية والرواتب",
+        feat_debt:        "الديون والالتزامات",
+        feat_ads:         "تتبع الحملات الإعلانية",
+        feat_sync:        "مزامنة Google Sheets",
+        feat_rbac:        "التحكم في الصلاحيات",
+        feat_dash:        "لوحة التحكم الفورية",
+        feat_reports:     "التقارير المتقدمة والأرباح والخسائر",
+        feat_close:       "التقفيل الدوري",
+        feat_scenarios:   "محاكاة السيناريوهات المالية",
+        feat_partner:     "إدارة حصص الشركاء وحقوق الملكية",
+        cta_basic:        "ابدأ الآن",
+        cta_pro:          "تحميل الآن",
+
+        // Privacy
+        privacy_eyebrow:       "قانوني",
+        privacy_title:         "سياسة الخصوصية",
+        privacy_sub:           "بياناتك تبقى ملكك.",
+        privacy_local_title:   "تخزين البيانات محليًا",
+        privacy_local_body:    "يتم تخزين جميع بيانات عملك (المخزون والطلبات والموظفين والمالية) محليًا على جهازك في قاعدة بيانات SQLite. لا نقوم بجمع أو نقل أو تخزين أي من بيانات عملك على خوادمنا. أنت تمتلك بياناتك بالكامل.",
+        privacy_contact_title: "جهة اتصال للخصوصية",
+        privacy_contact_body:  "لأي استفسارات تتعلق بالخصوصية أو طلبات حذف البيانات، يرجى التواصل معنا مباشرة.",
+
+        // Contact
+        contact_title:    "تواصل معنا",
+        contact_sub:      "مستعد لأن تتحكم في عملك؟ تواصل عبر أي قناة أدناه، أو حمّل وابدأ تجربتك المجانية فورًا.",
+        contact_email_lbl:"البريد الإلكتروني",
+        contact_phone_lbl:"الهاتف / واتساب",
+        dl_box_title:     "ابدأ تجربتك المجانية",
+        dl_box_sub:       "حمّل مالي - OBS الآن واحصل على أسبوع كامل لاستكشاف كل الوحدات — مجانًا تمامًا، بلا أي التزام.",
+        dl_box_btn:       "تحميل الآن",
+
+        // Footer
+        footer_tagline:    "الطريقة الأذكى لإدارة أعمالك في التجارة الإلكترونية.",
+        footer_nav:        "التنقل",
+        footer_contact_hd: "تواصل معنا",
+        footer_legal:      "قانوني",
+        footer_privacy_link:"سياسة الخصوصية",
+        footer_location:   "القاهرة، مصر",
+        footer_copy:       "© ٢٠٢٦ مالي سيستمز. جميع الحقوق محفوظة.",
+      }
+    };
+
+    /* -------------------------------------------------------
+       LANGUAGE ENGINE
+    ------------------------------------------------------- */
+    let currentLang = 'en';
+
+    function applyLang(lang) {
+      currentLang = lang;
+      const html = document.documentElement;
+      html.lang = lang;
+      html.dir  = lang === 'ar' ? 'rtl' : 'ltr';
+
+      const texts = T[lang];
+
+      // Translate all data-i18n elements
+      document.querySelectorAll('[data-i18n]').forEach(el => {
+        const key = el.getAttribute('data-i18n');
+        if (texts[key] !== undefined) el.textContent = texts[key];
+      });
+
+      // Update lang toggle labels
+      const label = lang === 'en' ? 'العربية' : 'English';
+      document.getElementById('lang-label').textContent        = label;
+      document.getElementById('lang-label-mobile').textContent = label;
+
+      // Persist
+      try { localStorage.setItem('maly_lang', lang); } catch(e) {}
+    }
+
+    function toggleLang() {
+      applyLang(currentLang === 'en' ? 'ar' : 'en');
+    }
+
+    /* -------------------------------------------------------
+       MOBILE MENU
+    ------------------------------------------------------- */
+    function toggleMenu() {
+      const menu = document.getElementById('mobile-menu');
+      const icon = document.getElementById('hamburger-icon');
+      const isOpen = menu.classList.toggle('open');
+      icon.className = isOpen ? 'fa-solid fa-xmark' : 'fa-solid fa-bars';
+    }
+
+    function closeMenu() {
+      document.getElementById('mobile-menu').classList.remove('open');
+      document.getElementById('hamburger-icon').className = 'fa-solid fa-bars';
+    }
+
+    /* -------------------------------------------------------
+       SCROLL: NAV SHADOW
+    ------------------------------------------------------- */
+    window.addEventListener('scroll', () => {
+      document.getElementById('navbar').classList.toggle('scrolled', window.scrollY > 10);
+    }, { passive: true });
+
+    /* -------------------------------------------------------
+       SCROLL: REVEAL ANIMATIONS
+    ------------------------------------------------------- */
+    const revealObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+          revealObserver.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.12 });
+
+    document.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
+
+    /* -------------------------------------------------------
+       INIT: restore saved language
+    ------------------------------------------------------- */
+    (function init() {
+      let saved = 'en';
+      try { saved = localStorage.getItem('maly_lang') || 'en'; } catch(e) {}
+      applyLang(saved);
+    })();
+  </script>
 </body>
 </html>
