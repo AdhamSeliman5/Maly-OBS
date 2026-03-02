@@ -6,6 +6,9 @@
   <title>Maly - OBS | It's not just about money. It's Control.</title>
   <meta name="description" content="Maly - OBS is a complete desktop ERP for Egyptian e-commerce: inventory, shipping, staff, finances, and advertising — all from one system." />
 
+  <link rel="icon" type="image/png" href="assets/logo_icon.png" />
+  <link rel="shortcut icon" href="assets/icon.ico" />
+
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;800&family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
@@ -34,7 +37,7 @@
       --radius-sm:     8px;
       --radius-md:     14px;
       --radius-lg:     20px;
-      --nav-h:         76px;
+      --nav-h:         90px;
       --font-en:       'Inter', sans-serif;
       --font-ar:       'Cairo', sans-serif;
       --transition:    0.25s ease;
@@ -141,10 +144,16 @@
       color: var(--primary);
     }
     .nav-logo img {
-      height: 42px;
+      height: 75px;
       width: auto;
+      max-width: 220px;
       object-fit: contain;
     }
+    @media (max-width: 768px) {
+      .nav-logo img.nav-logo-desktop { display: none; }
+      .nav-logo img.nav-logo-mobile { display: block !important; }
+    }
+    .nav-logo img.nav-logo-mobile { display: none; }
 
     .nav-links {
       display: flex;
@@ -375,7 +384,10 @@
       border-radius: var(--radius-md);
       padding: 30px 26px;
       transition: transform var(--transition), box-shadow var(--transition), border-color var(--transition);
+      display: block;
+      height: 100%;
     }
+    a.feature-card-link { color: inherit; text-decoration: none; cursor: pointer; }
     .feature-card:hover {
       transform: translateY(-5px);
       box-shadow: var(--shadow-md);
@@ -728,6 +740,14 @@
     }
 
     .footer-brand .nav-logo { color: #fff; margin-bottom: 14px; }
+    .footer-brand .nav-logo img {
+      height: 65px;
+      width: auto;
+      max-width: 200px;
+      object-fit: contain;
+      filter: brightness(0) invert(1);
+      opacity: 0.9;
+    }
     .footer-brand p {
       font-size: 0.88rem;
       line-height: 1.7;
@@ -849,8 +869,8 @@
     <div class="container">
       <div class="nav-inner">
         <a href="#" class="nav-logo">
-          <img src="assets/logo.png" alt="Maly OBS Logo" />
-          <span>Maly&nbsp;-&nbsp;OBS</span>
+          <img src="assets/logo_splash_light.png" alt="Maly OBS Logo" class="nav-logo-desktop" />
+          <img src="assets/logo_icon.png" alt="Maly OBS" class="nav-logo-mobile" />
         </a>
 
         <div class="nav-links">
@@ -922,7 +942,7 @@
 
       <div class="hero-stats reveal" style="transition-delay:0.28s">
         <div class="hero-stat">
-          <div class="stat-num">11</div>
+          <div class="stat-num">12</div>
           <div class="stat-label" data-i18n="stat_modules">Integrated Modules</div>
         </div>
         <div class="hero-stat">
@@ -953,88 +973,112 @@
       <div class="features-grid">
 
         <!-- 1 Dashboard -->
-        <div class="feature-card reveal">
-          <div class="feature-icon"><i class="fa-solid fa-gauge-high"></i></div>
-          <h3 data-i18n="f1_title">Real-time Dashboard</h3>
-          <p data-i18n="f1_desc">Live KPI cards for revenue, delivery rates, returns, and top products. Interactive charts and a custom date-range picker to spot trends before they become problems.</p>
-        </div>
+        <a href="dashboard.html" class="feature-card-link">
+          <div class="feature-card reveal">
+            <div class="feature-icon"><i class="fa-solid fa-gauge-high"></i></div>
+            <h3 data-i18n="f1_title">Dashboard</h3>
+            <p data-i18n="f1_desc">Live KPI cards for revenue, delivery rates, returns, and top products. Interactive charts and a custom date-range picker to spot trends before they become problems.</p>
+          </div>
+        </a>
 
-        <!-- 2 Inventory -->
-        <div class="feature-card reveal" style="transition-delay:0.06s">
-          <div class="feature-icon"><i class="fa-solid fa-boxes-stacked"></i></div>
-          <h3 data-i18n="f2_title">Advanced Inventory</h3>
-          <p data-i18n="f2_desc">Full stock lifecycle management: variant tracking, real-time stock levels, quarantine processing for damaged goods, weighted average costing, and a complete audit trail of every movement.</p>
-        </div>
+        <!-- 2 Preparation (Order Preparation) -->
+        <a href="preparation.html" class="feature-card-link">
+          <div class="feature-card reveal" style="transition-delay:0.06s">
+            <div class="feature-icon"><i class="fa-solid fa-clipboard-list"></i></div>
+            <h3 data-i18n="f2_title">Preparation (Order Preparation)</h3>
+            <p data-i18n="f2_desc">A smart warehouse picking queue with automatic shortage alerts, bundle explosion into component lists, deferred order management, and exportable picking sheets for your warehouse team.</p>
+          </div>
+        </a>
 
-        <!-- 3 Manufacturing -->
-        <div class="feature-card reveal" style="transition-delay:0.12s">
-          <div class="feature-icon"><i class="fa-solid fa-industry"></i></div>
-          <h3 data-i18n="f3_title">Manufacturing & Bundles</h3>
-          <p data-i18n="f3_desc">Build Bills of Materials (BOMs) to assemble product bundles and kits. Track component availability, auto-calculate bundle costs, clone bundles for quick variations, and monitor profitability per bundle.</p>
-        </div>
+        <!-- 3 Shipping -->
+        <a href="shipping.html" class="feature-card-link">
+          <div class="feature-card reveal" style="transition-delay:0.12s">
+            <div class="feature-icon"><i class="fa-solid fa-truck-fast"></i></div>
+            <h3 data-i18n="f3_title">Shipping</h3>
+            <p data-i18n="f3_desc">Manage multiple couriers from one screen. Track every shipment from dispatch to delivery, bulk-process collections, handle returns and partial deliveries, and reconcile each company's balance automatically.</p>
+          </div>
+        </a>
 
-        <!-- 4 Preparation -->
-        <div class="feature-card reveal" style="transition-delay:0.06s">
-          <div class="feature-icon"><i class="fa-solid fa-clipboard-list"></i></div>
-          <h3 data-i18n="f4_title">Order Preparation</h3>
-          <p data-i18n="f4_desc">A smart warehouse picking queue with automatic shortage alerts, bundle explosion into component lists, deferred order management, and exportable picking sheets for your warehouse team.</p>
-        </div>
+        <!-- 4 Inventory -->
+        <a href="inventory.html" class="feature-card-link">
+          <div class="feature-card reveal" style="transition-delay:0.18s">
+            <div class="feature-icon"><i class="fa-solid fa-boxes-stacked"></i></div>
+            <h3 data-i18n="f4_title">Inventory</h3>
+            <p data-i18n="f4_desc">Full stock lifecycle management: variant tracking, real-time stock levels, quarantine processing for damaged goods, weighted average costing, and a complete audit trail of every movement.</p>
+          </div>
+        </a>
 
-        <!-- 5 Shipping -->
-        <div class="feature-card reveal" style="transition-delay:0.12s">
-          <div class="feature-icon"><i class="fa-solid fa-truck-fast"></i></div>
-          <h3 data-i18n="f5_title">Shipping Management</h3>
-          <p data-i18n="f5_desc">Manage multiple couriers from one screen. Track every shipment from dispatch to delivery, bulk-process collections, handle returns and partial deliveries, and reconcile each company's balance automatically.</p>
-        </div>
+        <!-- 5 Manufacturing -->
+        <a href="manufacturing.html" class="feature-card-link">
+          <div class="feature-card reveal">
+            <div class="feature-icon"><i class="fa-solid fa-industry"></i></div>
+            <h3 data-i18n="f5_title">Manufacturing</h3>
+            <p data-i18n="f5_desc">Build Bills of Materials (BOMs) to assemble product bundles and kits. Track component availability, auto-calculate bundle costs, clone bundles for quick variations, and monitor profitability per bundle.</p>
+          </div>
+        </a>
 
         <!-- 6 Expenses -->
-        <div class="feature-card reveal" style="transition-delay:0.18s">
-          <div class="feature-icon"><i class="fa-solid fa-wallet"></i></div>
-          <h3 data-i18n="f6_title">Expenses & Treasury</h3>
-          <p data-i18n="f6_desc">Log every business expense by category, watch your real-time treasury balance, and close your books daily with variance tracking between system totals and physical cash-on-hand.</p>
-        </div>
+        <a href="expenses.html" class="feature-card-link">
+          <div class="feature-card reveal" style="transition-delay:0.06s">
+            <div class="feature-icon"><i class="fa-solid fa-wallet"></i></div>
+            <h3 data-i18n="f6_title">Expenses</h3>
+            <p data-i18n="f6_desc">Log every business expense by category, watch your real-time treasury balance, and close your books daily with variance tracking between system totals and physical cash-on-hand.</p>
+          </div>
+        </a>
 
-        <!-- 7 Staff & HR -->
-        <div class="feature-card reveal">
-          <div class="feature-icon"><i class="fa-solid fa-users"></i></div>
-          <h3 data-i18n="f7_title">Staff & HR Payroll</h3>
-          <p data-i18n="f7_desc">Full HR suite: role-based access control, fixed or commission-based payroll engine, employee loan tracking, per-moderator performance metrics, bonus and deduction adjustments, and complete payroll history.</p>
-        </div>
+        <!-- 7 Debts -->
+        <a href="debts.html" class="feature-card-link">
+          <div class="feature-card reveal" style="transition-delay:0.12s">
+            <div class="feature-icon"><i class="fa-solid fa-file-invoice-dollar"></i></div>
+            <h3 data-i18n="f7_title">Debts</h3>
+            <p data-i18n="f7_desc">Consolidated view of every obligation: external loans, courier balances pending collection, employee payroll owed, partner equity, and upcoming payment forecasts with a 7-day alert window.</p>
+          </div>
+        </a>
 
         <!-- 8 Ads -->
-        <div class="feature-card reveal" style="transition-delay:0.06s">
-          <div class="feature-icon"><i class="fa-solid fa-bullhorn"></i></div>
-          <h3 data-i18n="f8_title">Ad Campaign Intelligence</h3>
-          <p data-i18n="f8_desc">Link ad spend on Facebook, TikTok, Google, and Instagram to real revenue. Calculate ROAS and Cost-Per-Order per campaign and per platform so you know exactly where every pound is working — and where it isn't.</p>
-        </div>
+        <a href="ads.html" class="feature-card-link">
+          <div class="feature-card reveal" style="transition-delay:0.18s">
+            <div class="feature-icon"><i class="fa-solid fa-bullhorn"></i></div>
+            <h3 data-i18n="f8_title">Ads</h3>
+            <p data-i18n="f8_desc">Link ad spend on Facebook, TikTok, Google, and Instagram to real revenue. Calculate ROAS and Cost-Per-Order per campaign and per platform so you know exactly where every pound is working — and where it isn't.</p>
+          </div>
+        </a>
 
-        <!-- 9 Reports -->
-        <div class="feature-card reveal" style="transition-delay:0.12s">
-          <div class="feature-icon"><i class="fa-solid fa-chart-line"></i></div>
-          <h3 data-i18n="f9_title">Financial Reports & Scenarios</h3>
-          <p data-i18n="f9_desc">P&amp;L statements, partner share calculations, period closing (التقفيل), and interactive scenario simulations — "What if 70% of my pipeline delivers?" — so you can make confident financial decisions before they happen.</p>
-        </div>
+        <!-- 9 Staff -->
+        <a href="staff.html" class="feature-card-link">
+          <div class="feature-card reveal">
+            <div class="feature-icon"><i class="fa-solid fa-users"></i></div>
+            <h3 data-i18n="f9_title">Staff</h3>
+            <p data-i18n="f9_desc">Full HR suite: fixed or commission-based payroll engine, employee loan tracking, per-moderator performance metrics, bonus and deduction adjustments, and complete payroll history.</p>
+          </div>
+        </a>
 
-        <!-- 10 Google Sync -->
-        <div class="feature-card reveal">
-          <div class="feature-icon"><i class="fa-brands fa-google-drive"></i></div>
-          <h3 data-i18n="f10_title">Google Sheets Sync</h3>
-          <p data-i18n="f10_desc">Bidirectional sync between your local database and Google Sheets. Your team updates orders in the spreadsheet; Maly pulls them in automatically — no extra software, no manual imports.</p>
-        </div>
+        <!-- 10 Reports -->
+        <a href="reports.html" class="feature-card-link">
+          <div class="feature-card reveal" style="transition-delay:0.06s">
+            <div class="feature-icon"><i class="fa-solid fa-chart-line"></i></div>
+            <h3 data-i18n="f10_title">Reports</h3>
+            <p data-i18n="f10_desc">P&amp;L statements, partner share calculations, period closing (التقفيل), and interactive scenario simulations — "What if 70% of my pipeline delivers?" — so you can make confident financial decisions before they happen.</p>
+          </div>
+        </a>
 
-        <!-- 11 Debts -->
-        <div class="feature-card reveal" style="transition-delay:0.06s">
-          <div class="feature-icon"><i class="fa-solid fa-file-invoice-dollar"></i></div>
-          <h3 data-i18n="f11_title">Debts & Liabilities</h3>
-          <p data-i18n="f11_desc">Consolidated view of every obligation: external loans, courier balances pending collection, employee payroll owed, partner equity, and upcoming payment forecasts with an 7-day alert window.</p>
-        </div>
+        <!-- 11 Google Sheets Sync -->
+        <a href="settings.html" class="feature-card-link">
+          <div class="feature-card reveal" style="transition-delay:0.12s">
+            <div class="feature-icon"><i class="fa-brands fa-google-drive"></i></div>
+            <h3 data-i18n="f11_title">Google Sheets Sync</h3>
+            <p data-i18n="f11_desc">Bidirectional sync between your local database and Google Sheets. Your team updates orders in the spreadsheet; Maly pulls them in automatically — no extra software, no manual imports.</p>
+          </div>
+        </a>
 
-        <!-- 12 RBAC -->
-        <div class="feature-card reveal" style="transition-delay:0.12s">
-          <div class="feature-icon"><i class="fa-solid fa-shield-halved"></i></div>
-          <h3 data-i18n="f12_title">Role-based Access Control</h3>
-          <p data-i18n="f12_desc">Create multi-user accounts with granular module permissions: managers see everything, staff see only their workspace. Every action is logged in a full audit trail with timestamp and user identity.</p>
-        </div>
+        <!-- 12 Role-based Access Control (RBAC) -->
+        <a href="settings.html" class="feature-card-link">
+          <div class="feature-card reveal" style="transition-delay:0.18s">
+            <div class="feature-icon"><i class="fa-solid fa-shield-halved"></i></div>
+            <h3 data-i18n="f12_title">Role-based Access Control (RBAC)</h3>
+            <p data-i18n="f12_desc">Create multi-user accounts with granular module permissions: managers see everything, staff see only their workspace. Every action is logged in a full audit trail with timestamp and user identity.</p>
+          </div>
+        </a>
 
       </div>
     </div>
@@ -1222,8 +1266,7 @@
 
         <div class="footer-brand">
           <div class="nav-logo" style="color:#fff; margin-bottom:14px; display:flex; align-items:center; gap:10px;">
-            <img src="assets/logo.png" alt="Maly OBS" style="height:36px; filter:brightness(0) invert(1); opacity:0.85;" />
-            <span>Maly&nbsp;-&nbsp;OBS</span>
+            <img src="assets/logo_splash_light.png" alt="Maly OBS" />
           </div>
           <p data-i18n="footer_tagline">The smartest way to run your e-commerce business in Egypt.</p>
           <div class="social-row">
@@ -1300,43 +1343,43 @@
         // Features
         feat_eyebrow:  "Modules",
         feat_title:    "Everything Your Business Needs",
-        feat_sub:      "11 integrated modules covering every aspect of your e-commerce operations.",
+        feat_sub:      "12 integrated modules covering every aspect of your e-commerce operations.",
 
-        f1_title: "Real-time Dashboard",
-        f1_desc:  "Live KPI cards for revenue, delivery rates, returns, and top products. Interactive charts and a custom date-range picker to spot trends before they become problems.",
+        f1_title: "Dashboard",
+        f1_desc:  "The main analytics screen showing your business performance at a glance. View KPIs, charts, and lists for sales, deliveries, returns, top products, and campaign performance. Sync orders from Google Sheets to keep data current.",
 
-        f2_title: "Advanced Inventory",
-        f2_desc:  "Full stock lifecycle management: variant tracking, real-time stock levels, quarantine processing for damaged goods, weighted average costing, and a complete audit trail of every movement.",
+        f2_title: "Preparation (Order Preparation)",
+        f2_desc:  "Manages orders ready to be picked and packed before handover to shipping. Mark as prepared, defer or cancel, modify bundles. Export to Excel or ship to courier. Deferred orders wake up before their due date.",
 
-        f3_title: "Manufacturing & Bundles",
-        f3_desc:  "Build Bills of Materials (BOMs) to assemble product bundles and kits. Track component availability, auto-calculate bundle costs, clone bundles for quick variations, and monitor profitability per bundle.",
+        f3_title: "Shipping",
+        f3_desc:  "Manages orders handed over to couriers. Select a company, update delivery status (Delivered, Partial, Returned, Damaged), adjust fees, process collections. Tracks loans, generates reports, exports PDF analytics.",
 
-        f4_title: "Order Preparation",
-        f4_desc:  "A smart warehouse picking queue with automatic shortage alerts, bundle explosion into component lists, deferred order management, and exportable picking sheets for your warehouse team.",
+        f4_title: "Inventory",
+        f4_desc:  "Manages your product catalog and stock levels. Add and edit products with variants, record purchases, run stock adjustments, process quarantine items. Restock alerts for low stock. Bundles are virtual—availability computed from components.",
 
-        f5_title: "Shipping Management",
-        f5_desc:  "Manage multiple couriers from one screen. Track every shipment from dispatch to delivery, bulk-process collections, handle returns and partial deliveries, and reconcile each company's balance automatically.",
+        f5_title: "Manufacturing",
+        f5_desc:  "Manages product bundles (kits) made from components. Create BOMs, set selling prices, track virtual stock. Shows which component limits each bundle, profit margins, and low-stock alerts.",
 
-        f6_title: "Expenses & Treasury",
-        f6_desc:  "Log every business expense by category, watch your real-time treasury balance, and close your books daily with variance tracking between system totals and physical cash-on-hand.",
+        f6_title: "Expenses",
+        f6_desc:  "Tracks income and expenses, maintains treasury balance. Add entries by category, close the day with cash reconciliation. Analytics show expense breakdown by category. Treasury balance is strictly enforced.",
 
-        f7_title: "Staff & HR Payroll",
-        f7_desc:  "Full HR suite: role-based access control, fixed or commission-based payroll engine, employee loan tracking, per-moderator performance metrics, bonus and deduction adjustments, and complete payroll history.",
+        f7_title: "Debts",
+        f7_desc:  "Shows financial position: liquid assets, fixed assets, and liabilities. Add manual debts, settle with full or partial payments. Forecast simulator for projected assets. Overdue debts are highlighted.",
 
-        f8_title: "Ad Campaign Intelligence",
-        f8_desc:  "Link ad spend on Facebook, TikTok, Google, and Instagram to real revenue. Calculate ROAS and Cost-Per-Order per campaign and per platform so you know exactly where every pound is working — and where it isn't.",
+        f8_title: "Ads",
+        f8_desc:  "Manages campaigns and daily spend per platform (Facebook, Google, TikTok, Snapchat). Set budgets, record spend and charges. Analytics: spend, revenue, ROAS, CPA, platform breakdown. Exportable reports.",
 
-        f9_title: "Financial Reports & Scenarios",
-        f9_desc:  "P&L statements, partner share calculations, period closing (التقفيل), and interactive scenario simulations — \"What if 70% of my pipeline delivers?\" — so you can make confident financial decisions before they happen.",
+        f9_title: "Staff",
+        f9_desc:  "Manages employees, payroll, and salary actions. Add staff with roles and salary methods (Fixed, Commission, Per Order). Process payments, bonuses, deductions, loans. View transaction history and dashboard stats.",
 
-        f10_title: "Google Sheets Sync",
-        f10_desc:  "Bidirectional sync between your local database and Google Sheets. Your team updates orders in the spreadsheet; Maly pulls them in automatically — no extra software, no manual imports.",
+        f10_title: "Reports",
+        f10_desc:  "Financial overview: assets, liabilities, KPIs, partner distribution. Simulation engine for what-if scenarios (delivery rate, pipeline logic). Export PDF, close periods, manage partner exits.",
 
-        f11_title: "Debts & Liabilities",
-        f11_desc:  "Consolidated view of every obligation: external loans, courier balances pending collection, employee payroll owed, partner equity, and upcoming payment forecasts with a 7-day alert window.",
+        f11_title: "Google Sheets Sync",
+        f11_desc:  "Connect your Google account and link a Sheet for orders. Push system data or pull orders automatically. Your team updates the spreadsheet; Maly syncs bidirectionally—no extra software.",
 
-        f12_title: "Role-based Access Control",
-        f12_desc:  "Create multi-user accounts with granular module permissions: managers see everything, staff see only their workspace. Every action is logged in a full audit trail with timestamp and user identity.",
+        f12_title: "Role-based Access Control (RBAC)",
+        f12_desc:  "Add and edit users with roles (Manager, Staff) and module permissions. Managers have full access; staff see only allowed modules. Access to Settings restricted to Manager.",
 
         // Pricing
         pricing_eyebrow:  "Pricing",
@@ -1421,43 +1464,43 @@
         // Features
         feat_eyebrow:  "الوحدات",
         feat_title:    "كل ما يحتاجه عملك",
-        feat_sub:      "١١ وحدة متكاملة تغطي كل جانب من جوانب عمليات التجارة الإلكترونية.",
+        feat_sub:      "١٢ وحدة متكاملة تغطي كل جانب من جوانب عمليات التجارة الإلكترونية.",
 
-        f1_title: "لوحة تحكم فورية",
-        f1_desc:  "بطاقات KPI مباشرة للإيرادات ومعدلات التسليم والمرتجعات وأفضل المنتجات. رسوم بيانية تفاعلية ومحدد نطاق زمني مخصص لاكتشاف الاتجاهات قبل أن تصبح مشكلات.",
+        f1_title: "لوحة التحكم",
+        f1_desc:  "الشاشة الرئيسية للتحليلات تعرض أداء عملك بنظرة واحدة. اعرض مؤشرات الأداء والرسوم البيانية والقوائم للمبيعات والتسليمات والمرتجعات وأفضل المنتجات وأداء الحملات. مزامنة الطلبات من Google Sheets لإبقاء البيانات محدثة.",
 
-        f2_title: "إدارة المخزون المتقدمة",
-        f2_desc:  "إدارة كاملة لدورة حياة المخزون: تتبع المتغيرات، ومستويات المخزون الفورية، ومعالجة الحجر للبضائع التالفة، والتكلفة المتوسطة الموزونة، وسجل تدقيق كامل لكل حركة.",
+        f2_title: "التجهيز (تجهيز الطلبات)",
+        f2_desc:  "تدير الطلبات الجاهزة للتقطيع والتعبئة قبل التسليم لشركة الشحن. حدّد كمُجهّزة، أجّل أو ألغِ، عدّل الحزم. صدّر إلى Excel أو أرسل للشركة. الطلبات المؤجلة تستيقظ قبل تاريخ الاستحقاق.",
 
-        f3_title: "التصنيع والحزم",
-        f3_desc:  "بناء قوائم المواد (BOMs) لتجميع حزم المنتجات. تتبع توفر المكونات، وحساب تكاليف الحزمة تلقائيًا، واستنساخ الحزم للتنويعات السريعة، ومراقبة ربحية كل حزمة.",
+        f3_title: "الشحن",
+        f3_desc:  "تدير الطلبات المسلّمة لشركات الشحن. اختر الشركة، حدّث حالة التسليم (مُسلّم، جزئي، مرتجع، تالف)، عدّل الرسوم، نفّذ التحصيل. تتبع القروض، تولد التقارير، تصدير تحليلات PDF.",
 
-        f4_title: "تجهيز الطلبات",
-        f4_desc:  "قائمة انتظار التقاط مستودع ذكية مع تنبيهات نقص تلقائية، وتفكيك الحزم إلى قوائم مكونات، وإدارة الطلبات المؤجلة، وأوراق التقاط قابلة للتصدير لفريق المستودع.",
+        f4_title: "المخزون",
+        f4_desc:  "تدير كتالوج المنتجات ومستويات المخزون. أضف وعدّل المنتجات مع المتغيرات، سجّل المشتريات، نفّذ التعديلات، عالج الحجر الصحي. تنبيهات إعادة التخزين للمخزون المنخفض. الحزم افتراضية—توفرها محسوب من المكونات.",
 
-        f5_title: "إدارة الشحن",
-        f5_desc:  "إدارة شركات نقل متعددة من شاشة واحدة. تتبع كل شحنة من الإرسال إلى التسليم، ومعالجة التحصيل بالجملة، والتعامل مع المرتجعات والتسليم الجزئي، وتسوية رصيد كل شركة تلقائيًا.",
+        f5_title: "التصنيع",
+        f5_desc:  "تدير حزم المنتجات (المجموعات) المصنوعة من المكونات. أنشئ قوائم المواد، حدد أسعار البيع، تتبع المخزون الافتراضي. تعرض المكون المحدّد لكل حزمة، الهوامش الربحية، وتنبيهات المخزون المنخفض.",
 
-        f6_title: "المصروفات والخزينة",
-        f6_desc:  "سجّل كل مصروف تجاري حسب الفئة، وراقب رصيد خزينتك الفوري، وأقفل دفاترك يوميًا مع تتبع الفارق بين إجماليات النظام والنقد الفعلي.",
+        f6_title: "المصروفات",
+        f6_desc:  "تتبع الدخل والمصروفات، تحافظ على رصيد الخزينة. أضف القيود حسب الفئة، أقفل اليوم بعد تسوية النقد. التحليلات تعرض تفصيل المصروفات حسب الفئة. رصيد الخزينة مُطبق بصرامة.",
 
-        f7_title: "الموارد البشرية والرواتب",
-        f7_desc:  "نظام HR متكامل: تحكم في الصلاحيات بحسب الأدوار، وآلة رواتب ثابتة أو بالعمولة، وتتبع سلف الموظفين، ومعايير أداء لكل مشرف، وتعديلات مكافآت وخصومات، وتاريخ رواتب كامل.",
+        f7_title: "الديون",
+        f7_desc:  "تعرض الوضع المالي: الأصول السائلة، الأصول الثابتة، والالتزامات. أضف الديون يدويًا، اسوِ بالكامل أو جزئيًا. محاكي تنبؤات للأصول المتوقعة. الديون المتأخرة مميزة.",
 
-        f8_title: "ذكاء الحملات الإعلانية",
-        f8_desc:  "اربط الإنفاق الإعلاني على فيسبوك وتيك توك وجوجل وإنستجرام بالإيرادات الفعلية. احسب معدل العائد على الإنفاق الإعلاني وتكلفة الطلب لكل حملة وكل منصة لتعرف أين يعمل كل جنيه.",
+        f8_title: "الإعلانات",
+        f8_desc:  "تدير الحملات والإنفاق اليومي لكل منصة (فيسبوك، جوجل، تيك توك، سناب شات). حدد الميزانيات، سجّل الإنفاق والشحنات. التحليلات: الإنفاق، الإيرادات، العائد على الإنفاق، تكلفة الطلب، تفصيل المنصة. تقارير قابلة للتصدير.",
 
-        f9_title: "التقارير المالية والسيناريوهات",
-        f9_desc:  "قوائم الأرباح والخسائر، وحسابات حصص الشركاء، والتقفيل الدوري، ومحاكاة سيناريوهات تفاعلية — \"ماذا لو سُلّم ٧٠٪ من مسار الطلبات؟\" — لتتخذ قرارات مالية واثقة.",
+        f9_title: "الموظفون",
+        f9_desc:  "تدير الموظفين والرواتب والإجراءات المرتبطة. أضف الموظفين بالأدوار وطرق الراتب (ثابت، عمولة، لكل طلب). نفّذ المدفوعات والمكافآت والخصومات والسلف. اعرض سجل المعاملات وإحصائيات لوحة التحكم.",
 
-        f10_title: "مزامنة Google Sheets",
-        f10_desc:  "مزامنة ثنائية الاتجاه بين قاعدة بياناتك المحلية وجداول بيانات Google. يحدّث فريقك الطلبات في الجدول؛ يسحبها مالي تلقائيًا — بلا برامج إضافية، بلا استيراد يدوي.",
+        f10_title: "التقارير",
+        f10_desc:  "نظرة مالية شاملة: الأصول والالتزامات ومؤشرات الأداء وتوزيع الشركاء. محرك محاكاة لسيناريوهات ماذا لو (معدل التسليم، منطق المسار). صدّر PDF، أقفل الفترات، أدِر خروج الشركاء.",
 
-        f11_title: "الديون والالتزامات",
-        f11_desc:  "عرض موحد لكل الالتزامات: القروض الخارجية، وأرصدة شركات الشحن المعلقة، والرواتب المستحقة للموظفين، وحقوق الشركاء، وتوقعات المدفوعات القادمة مع نافذة تنبيه ٧ أيام.",
+        f11_title: "مزامنة Google Sheets",
+        f11_desc:  "اربط حساب Google واربط جدول للطلبات. ادفع بيانات النظام أو اسحب الطلبات تلقائيًا. يحدّث فريقك الجدول؛ مالي يزامن ثنائي الاتجاه—بلا برامج إضافية.",
 
-        f12_title: "التحكم في الصلاحيات",
-        f12_desc:  "أنشئ حسابات متعددة للمستخدمين بصلاحيات وحدات دقيقة: يرى المديرون كل شيء، ويرى الموظفون مساحة العمل الخاصة بهم فقط. كل إجراء مُسجَّل في سجل تدقيق كامل بالتوقيت وهوية المستخدم.",
+        f12_title: "التحكم في الصلاحيات (RBAC)",
+        f12_desc:  "أضف وعدّل المستخدمين بالأدوار (مدير، موظف) وصلاحيات الوحدات. المديرون لديهم وصول كامل؛ الموظفون يرون الوحدات المسموحة فقط. الوصول للإعدادات محصور بالمدير.",
 
         // Pricing
         pricing_eyebrow:  "الأسعار",
@@ -1599,4 +1642,3 @@
   </script>
 </body>
 </html>
-

@@ -1,0 +1,748 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Maly - OBS | Inventory Module — User Guide</title>
+  <meta name="description" content="Inventory module user guide: product catalog, stock, purchases, adjustments, quarantine, and analytics in Maly - OBS." />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;800&family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+
+  <style>
+    :root {
+      --primary: #1B3D6F; --primary-light: #2A5498; --accent: #C5974A; --accent-light: #F0DDB8;
+      --bg: #F5F1EB; --surface: #FFFFFF; --surface-alt: #F9F6F0; --text: #1A1A2E; --text-muted: #64748B;
+      --text-light: #94A3B8; --border: #E2D9CC; --border-light: #EDE8E0;
+      --shadow-sm: 0 2px 8px rgba(27,61,111,0.07); --shadow-md: 0 8px 32px rgba(27,61,111,0.10);
+      --radius-sm: 8px; --radius-md: 14px; --nav-h: 76px;
+      --font-en: 'Inter', sans-serif; --font-ar: 'Cairo', sans-serif; --transition: 0.25s ease;
+    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; font-size: 16px; }
+    body { font-family: var(--font-en); background-color: var(--bg); color: var(--text); line-height: 1.65; overflow-x: hidden; }
+    html[lang="ar"] body { font-family: var(--font-ar); }
+    img { max-width: 100%; display: block; }
+    a { color: inherit; text-decoration: none; }
+    ul { list-style: none; }
+    button { cursor: pointer; font-family: inherit; }
+    .container { max-width: 1160px; margin: 0 auto; padding: 0 24px; }
+
+    nav { position: fixed; top: 0; left: 0; right: 0; height: var(--nav-h); background: rgba(245, 241, 235, 0.92); backdrop-filter: blur(14px); border-bottom: 1px solid var(--border-light); z-index: 1000; transition: box-shadow var(--transition); }
+    nav.scrolled { box-shadow: var(--shadow-md); }
+    .nav-inner { display: flex; align-items: center; justify-content: space-between; height: 100%; }
+    .nav-logo { display: flex; align-items: center; gap: 10px; font-weight: 800; font-size: 1.2rem; color: var(--primary); }
+    .nav-logo img { height: 48px; width: auto; max-width: 220px; object-fit: contain; }
+    @media (max-width: 768px) { .nav-logo img.nav-logo-desktop { display: none; } .nav-logo img.nav-logo-mobile { display: block !important; } }
+    .nav-logo img.nav-logo-mobile { display: none; }
+    .nav-links { display: flex; align-items: center; gap: 8px; }
+    .nav-links a { font-size: 0.9rem; font-weight: 500; color: var(--text-muted); padding: 6px 14px; border-radius: var(--radius-sm); transition: color var(--transition), background var(--transition); }
+    .nav-links a:hover { color: var(--primary); background: rgba(27,61,111,0.06); }
+    .nav-right { display: flex; align-items: center; gap: 12px; }
+    .lang-btn { display: flex; align-items: center; gap: 6px; font-size: 0.82rem; font-weight: 600; color: var(--primary); background: var(--surface); border: 1.5px solid var(--border); padding: 6px 14px; border-radius: 20px; transition: all var(--transition); }
+    .lang-btn:hover { border-color: var(--primary); background: rgba(27,61,111,0.04); }
+    .btn-nav-cta { font-size: 0.88rem; font-weight: 600; color: #fff; background: var(--primary); padding: 8px 20px; border-radius: 8px; transition: background var(--transition), transform var(--transition); }
+    .btn-nav-cta:hover { background: var(--primary-light); transform: translateY(-1px); }
+    .hamburger { display: none; background: none; border: none; font-size: 1.4rem; color: var(--primary); }
+    .mobile-menu { display: none; flex-direction: column; background: var(--surface); border-bottom: 1px solid var(--border); padding: 12px 24px 20px; gap: 4px; }
+    .mobile-menu.open { display: flex; }
+    .mobile-menu a { font-size: 0.95rem; font-weight: 500; color: var(--text); padding: 10px 4px; border-bottom: 1px solid var(--border-light); }
+    .mobile-menu a:last-child { border: none; }
+    .mobile-menu .lang-btn { margin-top: 8px; width: fit-content; }
+
+    .doc-main { padding-top: calc(var(--nav-h) + 48px); padding-bottom: 80px; }
+    .doc-inner { max-width: 840px; margin: 0 auto; }
+    .btn-back { display: inline-flex; align-items: center; gap: 8px; font-size: 0.9rem; font-weight: 600; color: var(--primary); background: var(--surface); border: 1.5px solid var(--border); padding: 10px 20px; border-radius: var(--radius-sm); margin-bottom: 32px; transition: all var(--transition); box-shadow: var(--shadow-sm); }
+    .btn-back:hover { border-color: var(--primary); background: rgba(27,61,111,0.04); }
+    html[dir="rtl"] .btn-back i { transform: scaleX(-1); }
+    .doc-header { margin-bottom: 40px; }
+    .doc-header .doc-badge { display: inline-block; font-size: 0.75rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--accent); background: var(--accent-light); padding: 4px 12px; border-radius: 20px; margin-bottom: 12px; }
+    .doc-header h1 { font-size: clamp(1.8rem, 3vw, 2.4rem); font-weight: 800; color: var(--text); margin-bottom: 12px; line-height: 1.2; }
+    .doc-header .doc-meta { font-size: 0.9rem; color: var(--text-muted); }
+    .doc-content h2 { font-size: 1.35rem; font-weight: 700; color: var(--primary); margin-top: 48px; margin-bottom: 20px; padding-bottom: 8px; border-bottom: 2px solid var(--border-light); }
+    .doc-content h2:first-of-type { margin-top: 0; }
+    .doc-content h3 { font-size: 1.1rem; font-weight: 700; color: var(--text); margin-top: 32px; margin-bottom: 14px; }
+    .doc-content p { font-size: 1rem; color: var(--text-muted); margin-bottom: 16px; line-height: 1.75; }
+    .doc-content ul.doc-list { list-style: disc; padding-left: 24px; margin-bottom: 20px; }
+    html[dir="rtl"] .doc-content ul.doc-list { padding-left: 0; padding-right: 24px; }
+    .doc-content ul.doc-list li { margin-bottom: 8px; color: var(--text-muted); line-height: 1.7; }
+    .doc-content ul.doc-list li strong { color: var(--text); }
+    .doc-table-wrapper { overflow-x: auto; margin: 24px 0; border-radius: var(--radius-sm); border: 1px solid var(--border-light); box-shadow: var(--shadow-sm); }
+    .doc-table { width: 100%; border-collapse: collapse; font-size: 0.95rem; }
+    .doc-table th, .doc-table td { padding: 14px 18px; text-align: left; border-bottom: 1px solid var(--border-light); vertical-align: top; }
+    html[dir="rtl"] .doc-table th, html[dir="rtl"] .doc-table td { text-align: right; }
+    .doc-table th { background: var(--surface-alt); font-weight: 700; color: var(--primary); }
+    .doc-table tr:last-child td { border-bottom: none; }
+    .doc-table tr:hover td { background: rgba(27,61,111,0.02); }
+    .callout { padding: 20px 24px; border-radius: var(--radius-md); margin: 24px 0; border-left: 4px solid; display: flex; gap: 14px; align-items: flex-start; }
+    html[dir="rtl"] .callout { border-left: none; border-right: 4px solid; }
+    .callout i { font-size: 1.2rem; flex-shrink: 0; margin-top: 2px; }
+    .callout-content { flex: 1; }
+    .callout-tip { background: rgba(34, 197, 94, 0.08); border-color: #22c55e; color: #166534; }
+    .callout-tip i { color: #22c55e; }
+
+    footer { background: #111827; color: #9CA3AF; padding: 60px 0 30px; }
+    .footer-grid { display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 40px; margin-bottom: 50px; }
+    .footer-brand .nav-logo { color: #fff; margin-bottom: 14px; }
+    .footer-brand .nav-logo img { height: 40px; width: auto; max-width: 200px; object-fit: contain; filter: brightness(0) invert(1); opacity: 0.9; }
+    .footer-brand p { font-size: 0.88rem; line-height: 1.7; max-width: 260px; color: #9CA3AF; }
+    .footer-brand .social-row { display: flex; gap: 10px; margin-top: 20px; }
+    .footer-social { width: 36px; height: 36px; border-radius: 50%; background: rgba(255,255,255,0.08); color: #D1D5DB; display: flex; align-items: center; justify-content: center; font-size: 0.9rem; transition: background var(--transition), color var(--transition); }
+    .footer-social:hover { background: var(--accent); color: #fff; }
+    .footer-col h4 { font-size: 0.85rem; font-weight: 700; color: #E5E7EB; text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 18px; }
+    .footer-col ul li { margin-bottom: 10px; }
+    .footer-col ul li a { font-size: 0.88rem; color: #9CA3AF; transition: color var(--transition); }
+    .footer-col ul li a:hover { color: #fff; }
+    .footer-col ul li span { font-size: 0.88rem; color: #9CA3AF; font-family: var(--font-en); }
+    .footer-bottom { border-top: 1px solid rgba(255,255,255,0.08); padding-top: 28px; display: flex; align-items: center; justify-content: space-between; gap: 12px; flex-wrap: wrap; }
+    .footer-bottom p { font-size: 0.82rem; }
+    html[dir="rtl"] .footer-grid { direction: rtl; }
+    html[dir="rtl"] .footer-brand p { max-width: 100%; }
+    html[dir="rtl"] .footer-bottom { flex-direction: row-reverse; }
+
+    @media (max-width: 768px) { .nav-links, .btn-nav-cta { display: none; } .hamburger { display: block; } .doc-main { padding-top: calc(var(--nav-h) + 32px); padding-bottom: 48px; } .footer-grid { grid-template-columns: 1fr 1fr; } .footer-brand { grid-column: 1 / -1; } }
+    @media (max-width: 480px) { .container { padding: 0 18px; } .doc-table th, .doc-table td { padding: 10px 14px; font-size: 0.88rem; } .footer-grid { grid-template-columns: 1fr; } }
+  </style>
+</head>
+<body>
+
+  <nav id="navbar">
+    <div class="container">
+      <div class="nav-inner">
+        <a href="index.html" class="nav-logo">
+          <img src="assets/logo_splash_light.png" alt="Maly OBS Logo" class="nav-logo-desktop" />
+          <img src="assets/logo_icon.png" alt="Maly OBS" class="nav-logo-mobile" />
+          <span>Maly&nbsp;-&nbsp;OBS</span>
+        </a>
+        <div class="nav-links">
+          <a href="index.html#features" data-i18n="nav_features">Features</a>
+          <a href="index.html#pricing" data-i18n="nav_pricing">Pricing</a>
+          <a href="index.html#privacy" data-i18n="nav_privacy">Privacy</a>
+          <a href="index.html#contact" data-i18n="nav_contact">Contact</a>
+        </div>
+        <div class="nav-right">
+          <button class="lang-btn" id="lang-toggle" onclick="toggleLang()">
+            <i class="fa-solid fa-globe"></i>
+            <span id="lang-label">العربية</span>
+          </button>
+          <a href="https://drive.google.com/uc?export=download&id=15Vp6Mm15r9nkoK8qhC0GpUmpAVAORZhd" target="_blank" rel="noopener" class="btn-nav-cta" data-i18n="nav_download">Download Now</a>
+          <button class="hamburger" onclick="toggleMenu()" aria-label="Menu"><i class="fa-solid fa-bars" id="hamburger-icon"></i></button>
+        </div>
+      </div>
+    </div>
+    <div class="mobile-menu" id="mobile-menu">
+      <a href="index.html#features" onclick="closeMenu()" data-i18n="nav_features">Features</a>
+      <a href="index.html#pricing" onclick="closeMenu()" data-i18n="nav_pricing">Pricing</a>
+      <a href="index.html#privacy" onclick="closeMenu()" data-i18n="nav_privacy">Privacy</a>
+      <a href="index.html#contact" onclick="closeMenu()" data-i18n="nav_contact">Contact</a>
+      <a href="https://drive.google.com/uc?export=download&id=15Vp6Mm15r9nkoK8qhC0GpUmpAVAORZhd" target="_blank" rel="noopener" onclick="closeMenu()" data-i18n="nav_download">Download Now</a>
+      <button class="lang-btn" onclick="toggleLang(); closeMenu();"><i class="fa-solid fa-globe"></i><span id="lang-label-mobile">العربية</span></button>
+    </div>
+  </nav>
+
+  <main class="doc-main">
+    <div class="container">
+      <div class="doc-inner">
+        <a href="index.html" class="btn-back">
+          <i class="fa-solid fa-arrow-left"></i>
+          <span data-i18n="btn_back">Back to Home</span>
+        </a>
+
+        <header class="doc-header">
+          <span class="doc-badge" data-i18n="doc_badge">User Guide</span>
+          <h1 data-i18n="doc_title">Inventory / Global Stock Status</h1>
+          <p class="doc-meta">Maly - OBS (Online Business System) · <span data-i18n="doc_version">Version 1.0</span></p>
+        </header>
+
+        <div class="doc-content">
+          <h2 data-i18n="h2_purpose">Module Purpose</h2>
+          <p><span data-i18n="purpose_p1a">The Inventory module manages your product catalog and stock levels. You can add and edit products with variants, record stock purchases, run stock adjustments (stocktake, damaged, etc.), process quarantine items (valid vs damaged), and view analytics. Restock alerts show items with negative available stock. Bundles are virtual products—their availability is computed from component stock, and you </span><strong data-i18n="purpose_strong">cannot buy or edit them directly</strong><span data-i18n="purpose_p1b">.</span></p>
+
+          <h2 data-i18n="h2_ui">UI Elements</h2>
+
+          <h3 data-i18n="h3_header">Header Area</h3>
+          <div class="doc-table-wrapper">
+            <table class="doc-table">
+              <thead><tr><th data-i18n="th_element">Element</th><th data-i18n="th_description">Description</th></tr></thead>
+              <tbody>
+                <tr><td><strong>Refresh</strong></td><td data-i18n="h_refresh">Reload inventory data</td></tr>
+                <tr><td><strong>Adjustment</strong></td><td data-i18n="h_adjustment">Open the Stock Adjustment dialog</td></tr>
+                <tr><td><strong>New Product</strong></td><td data-i18n="h_new">Open the Add Product dialog</td></tr>
+              </tbody>
+            </table>
+          </div>
+
+          <h3 data-i18n="h3_tabs">Tabs</h3>
+          <div class="doc-table-wrapper">
+            <table class="doc-table">
+              <thead><tr><th data-i18n="th_tab">Tab</th><th data-i18n="th_content">Content</th></tr></thead>
+              <tbody>
+                <tr><td><strong>Main Inventory</strong></td><td data-i18n="tab_main">Products table, search, category filter, restock sidebar</td></tr>
+                <tr><td><strong>Analytics</strong></td><td data-i18n="tab_analytics">KPI cards, sales performance, date range filter, product filter</td></tr>
+                <tr><td><strong>Quarantine</strong></td><td data-i18n="tab_quarantine">Quarantine table (valid processing), Damaged table (damaged counts/loss)</td></tr>
+                <tr><td><strong>Stock Movements</strong></td><td data-i18n="tab_movements">Stock history with type filter, search, pagination</td></tr>
+              </tbody>
+            </table>
+          </div>
+
+          <h3 data-i18n="h3_main">Main Inventory Tab</h3>
+          <div class="doc-table-wrapper">
+            <table class="doc-table">
+              <thead><tr><th data-i18n="th_element">Element</th><th data-i18n="th_description">Description</th></tr></thead>
+              <tbody>
+                <tr><td><strong>Search</strong></td><td data-i18n="m_search">Text field — search by product name or ID</td></tr>
+                <tr><td><strong>Category Filter</strong></td><td data-i18n="m_category">Dropdown — filter by category</td></tr>
+                <tr><td><strong>Show Archived</strong></td><td data-i18n="m_archived">Checkbox — include archived products</td></tr>
+                <tr><td><strong>Archive Suggestions</strong></td><td data-i18n="m_archive_btn">Button — open dialog with products suggested for archiving</td></tr>
+                <tr><td><strong>Products Table</strong></td><td data-i18n="m_table">Columns: ID, Product Name, Physical, Reserved, Available, Cost, Actions</td></tr>
+                <tr><td><strong>Pagination</strong></td><td data-i18n="m_pagination">Previous / Next, page info, total items</td></tr>
+                <tr><td><strong>Restock Sidebar</strong></td><td data-i18n="m_restock">List of items needing restock (current < reserved); total estimated cost</td></tr>
+              </tbody>
+            </table>
+          </div>
+
+          <h3 data-i18n="h3_actions">Product Row Actions (per product)</h3>
+          <div class="doc-table-wrapper">
+            <table class="doc-table">
+              <thead><tr><th data-i18n="th_action">Action</th><th data-i18n="th_icon">Icon</th><th data-i18n="th_description">Description</th></tr></thead>
+              <tbody>
+                <tr><td><strong>Star</strong></td><td>Star / Star Border</td><td data-i18n="act_star">Toggle favorite (show first)</td></tr>
+                <tr><td><strong>Buy</strong></td><td>Add box</td><td data-i18n="act_buy">Open Purchase dialog (disabled for bundles)</td></tr>
+                <tr><td><strong>Edit</strong></td><td>Pencil</td><td data-i18n="act_edit">Open Edit Product dialog (disabled for bundles)</td></tr>
+                <tr><td><strong>Archive</strong></td><td>Archive / Unarchive</td><td data-i18n="act_archive">Archive or unarchive the product</td></tr>
+                <tr><td><strong>Delete</strong></td><td>Trash</td><td data-i18n="act_delete">Delete product (disabled for bundles)</td></tr>
+              </tbody>
+            </table>
+          </div>
+
+          <h3 data-i18n="h3_analytics">Analytics Tab</h3>
+          <div class="doc-table-wrapper">
+            <table class="doc-table">
+              <thead><tr><th data-i18n="th_element">Element</th><th data-i18n="th_description">Description</th></tr></thead>
+              <tbody>
+                <tr><td><strong>KPI Cards</strong></td><td data-i18n="a_kpi">Products count, Physical Stock, Cost, Value; Sold Units, Revenue, Profit, Damage Rate</td></tr>
+                <tr><td><strong>Date Range Button</strong></td><td data-i18n="a_date">Opens date picker with presets (Today, This Week, This Month, etc.)</td></tr>
+                <tr><td><strong>Product Filter</strong></td><td data-i18n="a_filter">Dropdown — filter analytics by product</td></tr>
+                <tr><td><strong>Refresh</strong></td><td data-i18n="a_refresh">Reload analytics</td></tr>
+                <tr><td><strong>Top Profit</strong></td><td data-i18n="a_top">Horizontal bar list — most profitable products</td></tr>
+                <tr><td><strong>Most Damaged</strong></td><td data-i18n="a_damaged">Horizontal bar list — most damaged units</td></tr>
+              </tbody>
+            </table>
+          </div>
+
+          <h3 data-i18n="h3_quarantine">Quarantine Tab</h3>
+          <div class="doc-table-wrapper">
+            <table class="doc-table">
+              <thead><tr><th data-i18n="th_element">Element</th><th data-i18n="th_description">Description</th></tr></thead>
+              <tbody>
+                <tr><td><strong>KPI Cards</strong></td><td data-i18n="q_kpi">Quarantine items count, Quarantine value, Damaged count, Damaged loss</td></tr>
+                <tr><td><strong>Quarantine Table</strong></td><td data-i18n="q_table">Name, Count, Cost, Process button</td></tr>
+                <tr><td><strong>Damaged Table</strong></td><td data-i18n="q_damaged">Name, Count, Loss (read-only)</td></tr>
+              </tbody>
+            </table>
+          </div>
+
+          <h3 data-i18n="h3_movements">Stock Movements Tab</h3>
+          <div class="doc-table-wrapper">
+            <table class="doc-table">
+              <thead><tr><th data-i18n="th_element">Element</th><th data-i18n="th_description">Description</th></tr></thead>
+              <tbody>
+                <tr><td><strong>Movement Type</strong></td><td data-i18n="s_type">Dropdown — All, Purchase, Adjustment In/Out, Quarantine Valid/Damaged</td></tr>
+                <tr><td><strong>Search</strong></td><td data-i18n="s_search">Filter movements</td></tr>
+                <tr><td><strong>Table</strong></td><td data-i18n="s_table">Product Name, Movement Type, Count, Cost, Cost Before/After, Reason, Date</td></tr>
+                <tr><td><strong>Pagination</strong></td><td data-i18n="s_pagination">Previous / Next</td></tr>
+              </tbody>
+            </table>
+          </div>
+
+          <h2 data-i18n="h2_workflow">Step-by-Step Workflow</h2>
+
+          <h3 data-i18n="w1_title">1. Add a New Product</h3>
+          <ul class="doc-list">
+            <li data-i18n="w1_1">Click New Product.</li>
+            <li data-i18n="w1_2">Enter Product Name.</li>
+            <li data-i18n="w1_3">Add variants: enter Variant Name and Price, then click + (or press Enter).</li>
+            <li data-i18n="w1_4">Click Save.</li>
+            <li data-i18n="w1_5">If the name already exists: error snackbar. If variants list is empty: system requires at least one variant.</li>
+          </ul>
+
+          <h3 data-i18n="w2_title">2. Edit a Product</h3>
+          <ul class="doc-list">
+            <li data-i18n="w2_1">Click the Edit (pencil) icon on a product row.</li>
+            <li data-i18n="w2_2">Change Product Name or variant prices.</li>
+            <li data-i18n="w2_3">To add a variant: enter Name and Price → click +.</li>
+            <li data-i18n="w2_4">To delete a variant: click the delete icon on the row.</li>
+            <li data-i18n="w2_5">Click Save.</li>
+            <li data-i18n="w2_6">Note: Buy, Edit, and Delete are disabled for bundles.</li>
+          </ul>
+
+          <h3 data-i18n="w3_title">3. Purchase Stock</h3>
+          <ul class="doc-list">
+            <li data-i18n="w3_1">Click the Buy (add box) icon on a product row.</li>
+            <li data-i18n="w3_2">Enter Supplier (required). You can use suggestion chips if shown.</li>
+            <li data-i18n="w3_3">For each variant: enter Quantity, Cost, and optionally Paid (defaults to qty × cost).</li>
+            <li data-i18n="w3_4">Click Confirm.</li>
+            <li data-i18n="w3_5">The system: adds stock and updates weighted average cost (WAC); records the purchase expense if Paid > 0 (treasury must be sufficient); creates Receivable/Payable if expected cost ≠ paid (with supplier).</li>
+          </ul>
+          <p data-i18n="w3_valid">Validations:</p>
+          <ul class="doc-list">
+            <li data-i18n="w3_v1">Supplier is required.</li>
+            <li data-i18n="w3_v2">At least one variant must have quantity > 0.</li>
+            <li data-i18n="w3_v3">If Paid > 0 and treasury is insufficient: "Insufficient treasury balance".</li>
+          </ul>
+
+          <h3 data-i18n="w4_title">4. Stock Adjustment</h3>
+          <ul class="doc-list">
+            <li data-i18n="w4_1">Click Adjustment in the header.</li>
+            <li data-i18n="w4_2">Select Product and Variant.</li>
+            <li data-i18n="w4_3">Enter Quantity Change (+ to add, − to subtract).</li>
+            <li data-i18n="w4_4">Select Adjustment Type: Stocktake, Damaged, Gift, Correction, Other.</li>
+            <li data-i18n="w4_5">Enter Reason (optional; default is the type).</li>
+            <li data-i18n="w4_6">Click Confirm.</li>
+          </ul>
+          <p data-i18n="w4_rules">Rules:</p>
+          <ul class="doc-list">
+            <li data-i18n="w4_r1">Quantity cannot be 0 — error if zero.</li>
+            <li data-i18n="w4_r2">Damaged type: quantity must be negative (e.g. −5 for 5 damaged). Positive quantity shows: "For Damaged adjustment, enter a negative quantity (e.g. -5 for 5 units)".</li>
+          </ul>
+
+          <h3 data-i18n="w5_title">5. Process Quarantine</h3>
+          <ul class="doc-list">
+            <li data-i18n="w5_1">Go to the Quarantine tab.</li>
+            <li data-i18n="w5_2">For an item in the Quarantine table, click Process.</li>
+            <li data-i18n="w5_3">In the dialog, split items into: Valid — returned to regular stock (optionally with refurbishment cost); Damaged — counted as damaged.</li>
+            <li data-i18n="w5_4">Enter Refurbishment Cost/Unit if applicable.</li>
+            <li data-i18n="w5_5">Valid + Damaged must equal the total quantity in quarantine. Remaining must be 0.</li>
+            <li data-i18n="w5_6">Click Confirm.</li>
+          </ul>
+          <p data-i18n="w5_rules">Rules:</p>
+          <ul class="doc-list">
+            <li data-i18n="w5_r1">Remaining must be 0 to enable Confirm.</li>
+            <li data-i18n="w5_r2">Refurbishment cost (if > 0) is recorded as an expense; treasury must be sufficient.</li>
+          </ul>
+
+          <h3 data-i18n="w6_title">6. Archive / Unarchive Products</h3>
+          <p data-i18n="w6_single">Single product</p>
+          <ul class="doc-list">
+            <li data-i18n="w6_1">Click the Archive or Unarchive icon on the row.</li>
+            <li data-i18n="w6_2">Product is archived or unarchived; snackbar shows success.</li>
+          </ul>
+          <p data-i18n="w6_bulk">Bulk archive</p>
+          <ul class="doc-list">
+            <li data-i18n="w6_3">Click Archive Suggestions.</li>
+            <li data-i18n="w6_4">Review suggested products (0 stock, no orders in last 90 days).</li>
+            <li data-i18n="w6_5">Check the ones to archive.</li>
+            <li data-i18n="w6_6">Click Archive All.</li>
+          </ul>
+
+          <h3 data-i18n="w7_title">7. Delete a Product</h3>
+          <ul class="doc-list">
+            <li data-i18n="w7_1">Click the Delete (trash) icon on a product row.</li>
+            <li data-i18n="w7_2">Confirm in the dialog.</li>
+            <li data-i18n="w7_3">Success: product and variants are deleted. If the product has sales history: "Cannot delete: Product has sales history!".</li>
+          </ul>
+
+          <h3 data-i18n="w8_title">8. View Stock Movements</h3>
+          <ul class="doc-list">
+            <li data-i18n="w8_1">Go to the Stock Movements tab.</li>
+            <li data-i18n="w8_2">Optionally select a Movement Type and use Search.</li>
+            <li data-i18n="w8_3">Use pagination to browse history.</li>
+          </ul>
+
+          <h3 data-i18n="w9_title">9. Toggle Star (Favorite)</h3>
+          <ul class="doc-list">
+            <li data-i18n="w9_1">Click the Star icon on a product. Favorites appear first in the list.</li>
+          </ul>
+
+          <h2 data-i18n="h2_rules">Business Rules & Validations</h2>
+
+          <h3 data-i18n="r_add">Add Product</h3>
+          <div class="doc-table-wrapper">
+            <table class="doc-table">
+              <thead><tr><th data-i18n="th_rule">Rule</th><th data-i18n="th_result">Result</th></tr></thead>
+              <tbody>
+                <tr><td data-i18n="r_add_name">Product name required</td><td data-i18n="r_add_name_res">Error if empty</td></tr>
+                <tr><td data-i18n="r_add_var">At least one variant</td><td data-i18n="r_add_var_res">Error if variants list is empty</td></tr>
+                <tr><td data-i18n="r_add_dup">Duplicate name</td><td data-i18n="r_add_dup_res">Error if name already exists</td></tr>
+              </tbody>
+            </table>
+          </div>
+
+          <h3 data-i18n="r_edit">Edit Product</h3>
+          <ul class="doc-list">
+            <li data-i18n="r_edit1">Same rules as Add for name and variants.</li>
+            <li data-i18n="r_edit2">Bundles: Edit is disabled.</li>
+          </ul>
+
+          <h3 data-i18n="r_purchase">Purchase</h3>
+          <div class="doc-table-wrapper">
+            <table class="doc-table">
+              <thead><tr><th data-i18n="th_rule">Rule</th><th data-i18n="th_result">Result</th></tr></thead>
+              <tbody>
+                <tr><td data-i18n="r_pur_supplier">Supplier required</td><td data-i18n="r_pur_supplier_res">Error: "Supplier"</td></tr>
+                <tr><td data-i18n="r_pur_qty">At least one variant with qty > 0</td><td data-i18n="r_pur_qty_res">Error: "Enter quantity > 0 for at least one variant"</td></tr>
+                <tr><td data-i18n="r_pur_cost">Cost < 0</td><td data-i18n="r_pur_cost_res">Error for that variant</td></tr>
+                <tr><td data-i18n="r_pur_treasury">Paid > 0 and insufficient treasury</td><td data-i18n="r_pur_treasury_res">"Insufficient treasury balance. (Current: X)"</td></tr>
+              </tbody>
+            </table>
+          </div>
+
+          <h3 data-i18n="r_adjustment">Stock Adjustment</h3>
+          <div class="doc-table-wrapper">
+            <table class="doc-table">
+              <thead><tr><th data-i18n="th_rule">Rule</th><th data-i18n="th_result">Result</th></tr></thead>
+              <tbody>
+                <tr><td data-i18n="r_adj_zero">Quantity = 0</td><td data-i18n="r_adj_zero_res">"Quantity cannot be zero"</td></tr>
+                <tr><td data-i18n="r_adj_damaged">Damaged type + positive qty</td><td data-i18n="r_adj_damaged_res">"For Damaged adjustment, enter a negative quantity..."</td></tr>
+                <tr><td data-i18n="r_adj_var">Variant not selected</td><td data-i18n="r_adj_var_res">Error shown</td></tr>
+              </tbody>
+            </table>
+          </div>
+
+          <h3 data-i18n="r_quarantine">Quarantine Processing</h3>
+          <div class="doc-table-wrapper">
+            <table class="doc-table">
+              <thead><tr><th data-i18n="th_rule">Rule</th><th data-i18n="th_result">Result</th></tr></thead>
+              <tbody>
+                <tr><td data-i18n="r_q_valid">Valid + Damaged ≠ Total</td><td data-i18n="r_q_valid_res">Confirm button disabled until Remaining = 0</td></tr>
+                <tr><td data-i18n="r_q_refurb">Refurbishment cost > 0</td><td data-i18n="r_q_refurb_res">Expense recorded; treasury must be sufficient</td></tr>
+              </tbody>
+            </table>
+          </div>
+
+          <h3 data-i18n="r_delete">Delete Product</h3>
+          <div class="doc-table-wrapper">
+            <table class="doc-table">
+              <thead><tr><th data-i18n="th_rule">Rule</th><th data-i18n="th_result">Result</th></tr></thead>
+              <tbody>
+                <tr><td data-i18n="r_del_history">Has sales history</td><td data-i18n="r_del_history_res">"Cannot delete: Product has sales history!"</td></tr>
+              </tbody>
+            </table>
+          </div>
+
+          <h3 data-i18n="r_bundles">Bundles</h3>
+          <ul class="doc-list">
+            <li data-i18n="r_bundles1">Bundles are virtual: Physical = 0, Reserved = 0.</li>
+            <li data-i18n="r_bundles2">Availability = minimum (component available ÷ BOM quantity) across components.</li>
+            <li data-i18n="r_bundles3">Buy, Edit, Delete are disabled for bundles.</li>
+          </ul>
+
+          <h2 data-i18n="h2_messages">Messages & Alerts</h2>
+          <div class="doc-table-wrapper">
+            <table class="doc-table">
+              <thead><tr><th data-i18n="th_situation">Situation</th><th data-i18n="th_message">Message</th></tr></thead>
+              <tbody>
+                <tr><td data-i18n="m_load">Load error</td><td data-i18n="m_load_msg">"Error: [message]" (red)</td></tr>
+                <tr><td data-i18n="m_save">Add/Edit success</td><td data-i18n="m_save_msg">Snackbar confirms save</td></tr>
+                <tr><td data-i18n="m_dup">Add duplicate name</td><td data-i18n="m_dup_msg">"Error" (red)</td></tr>
+                <tr><td data-i18n="m_pur_ok">Purchase success</td><td data-i18n="m_pur_ok_msg">"Success" (green)</td></tr>
+                <tr><td data-i18n="m_pur_treasury">Purchase insufficient treasury</td><td data-i18n="m_pur_treasury_msg">"Insufficient treasury balance. (Current: X)" (red)</td></tr>
+                <tr><td data-i18n="m_pur_qty">Purchase no qty</td><td data-i18n="m_pur_qty_msg">"Enter quantity > 0 for at least one variant" (red)</td></tr>
+                <tr><td data-i18n="m_adj_ok">Stock adjustment success</td><td data-i18n="m_adj_ok_msg">"Adjustment saved successfully" (green)</td></tr>
+                <tr><td data-i18n="m_adj_zero">Stock adjustment qty zero</td><td data-i18n="m_adj_zero_msg">"Quantity cannot be zero"</td></tr>
+                <tr><td data-i18n="m_adj_damaged">Stock adjustment damaged positive</td><td data-i18n="m_adj_damaged_msg">"For Damaged adjustment, enter a negative quantity..." (red)</td></tr>
+                <tr><td data-i18n="m_q_ok">Quarantine success</td><td data-i18n="m_q_ok_msg">Data reloads; no explicit message</td></tr>
+                <tr><td data-i18n="m_q_treasury">Quarantine treasury</td><td data-i18n="m_q_treasury_msg">Treasury error if refurbishment and insufficient funds</td></tr>
+                <tr><td data-i18n="m_arch_ok">Archive success</td><td data-i18n="m_arch_ok_msg">"Product Archived/Unarchived Successfully" (green)</td></tr>
+                <tr><td data-i18n="m_arch_bulk">Bulk archive success</td><td data-i18n="m_arch_bulk_msg">"Archived X products" (green)</td></tr>
+                <tr><td data-i18n="m_del_ok">Delete success</td><td data-i18n="m_del_ok_msg">"Success" (green)</td></tr>
+                <tr><td data-i18n="m_del_block">Delete blocked</td><td data-i18n="m_del_block_msg">"Cannot delete: Product has sales history!" (red)</td></tr>
+                <tr><td data-i18n="m_no_suggest">No archive suggestions</td><td data-i18n="m_no_suggest_msg">"No suggestions" (blue)</td></tr>
+                <tr><td data-i18n="m_restock_empty">Restock sidebar empty</td><td data-i18n="m_restock_empty_msg">Shows "Success" when no items need restock</td></tr>
+              </tbody>
+            </table>
+          </div>
+
+          <h2 data-i18n="h2_tips">Tips</h2>
+          <div class="callout callout-tip">
+            <i class="fa-solid fa-lightbulb"></i>
+            <div class="callout-content">
+              <ul class="doc-list" style="margin-bottom:0;">
+                <li data-i18n="tip1">Restock sidebar: Items with reserved > current (negative available) appear with estimated cost.</li>
+                <li data-i18n="tip2">Bundles: Restock and purchase work on component variants, not the bundle itself.</li>
+                <li data-i18n="tip3">Quarantine: Items come from returns; you decide how many go back to stock vs damaged.</li>
+                <li data-i18n="tip4">Refurbishment cost: Use when repair/cleaning costs apply before putting valid items back.</li>
+                <li data-i18n="tip5">Damaged adjustment: Use negative quantity (e.g. −5) to mark 5 units as damaged.</li>
+                <li data-i18n="tip6">Archive: Products with 0 stock and no orders in 90 days are suggested for archiving.</li>
+                <li data-i18n="tip7">Stock Movements: Use filters and search to trace purchase, adjustment, and quarantine events.</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <footer>
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <div class="nav-logo" style="color:#fff; margin-bottom:14px; display:flex; align-items:center; gap:10px;">
+            <img src="assets/logo_splash_light.png" alt="Maly OBS" />
+            <span>Maly&nbsp;-&nbsp;OBS</span>
+          </div>
+          <p data-i18n="footer_tagline">The smartest way to run your e-commerce business in Egypt.</p>
+          <div class="social-row">
+            <a href="https://www.linkedin.com/in/adhamseliman/" target="_blank" rel="noopener" class="footer-social"><i class="fa-brands fa-linkedin-in"></i></a>
+            <a href="https://web.facebook.com/sadham122" target="_blank" rel="noopener" class="footer-social"><i class="fa-brands fa-facebook-f"></i></a>
+            <a href="https://www.youtube.com/@adhamseliman458" target="_blank" rel="noopener" class="footer-social"><i class="fa-brands fa-youtube"></i></a>
+            <a href="https://wa.me/201100028752" target="_blank" rel="noopener" class="footer-social"><i class="fa-brands fa-whatsapp"></i></a>
+          </div>
+        </div>
+        <div class="footer-col">
+          <h4 data-i18n="footer_nav">Navigate</h4>
+          <ul>
+            <li><a href="index.html#features" data-i18n="nav_features">Features</a></li>
+            <li><a href="index.html#pricing" data-i18n="nav_pricing">Pricing</a></li>
+            <li><a href="index.html#privacy" data-i18n="nav_privacy">Privacy</a></li>
+            <li><a href="index.html#contact" data-i18n="nav_contact">Contact</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4 data-i18n="footer_contact_hd">Contact</h4>
+          <ul>
+            <li><span>asoliman548@gmail.com</span></li>
+            <li><span>01100028752</span></li>
+            <li><span data-i18n="footer_location">Cairo, Egypt</span></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4 data-i18n="footer_legal">Legal</h4>
+          <ul><li><a href="index.html#privacy" data-i18n="footer_privacy_link">Privacy Policy</a></li></ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p data-i18n="footer_copy">© 2026 Maly Systems. All rights reserved.</p>
+        <p style="font-family:var(--font-en); font-style:italic; color:#6B7280; font-size:0.8rem;">"It's not just about money. It's Control."</p>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    const T = {
+      en: {
+        btn_back: "Back to Home", doc_badge: "User Guide", doc_title: "Inventory / Global Stock Status", doc_version: "Version 1.0",
+        nav_features: "Features", nav_pricing: "Pricing", nav_privacy: "Privacy", nav_contact: "Contact", nav_download: "Download Now",
+        footer_tagline: "The smartest way to run your e-commerce business in Egypt.",
+        footer_nav: "Navigate", footer_contact_hd: "Contact", footer_legal: "Legal", footer_privacy_link: "Privacy Policy", footer_location: "Cairo, Egypt", footer_copy: "© 2026 Maly Systems. All rights reserved.",
+        h2_purpose: "Module Purpose", h2_ui: "UI Elements", h2_workflow: "Step-by-Step Workflow", h2_rules: "Business Rules & Validations", h2_messages: "Messages & Alerts", h2_tips: "Tips",
+        th_element: "Element", th_description: "Description", th_tab: "Tab", th_content: "Content", th_action: "Action", th_icon: "Icon", th_rule: "Rule", th_result: "Result", th_situation: "Situation", th_message: "Message",
+        purpose_p1a: "The Inventory module manages your product catalog and stock levels. You can add and edit products with variants, record stock purchases, run stock adjustments (stocktake, damaged, etc.), process quarantine items (valid vs damaged), and view analytics. Restock alerts show items with negative available stock. Bundles are virtual products—their availability is computed from component stock, and you ",
+        purpose_strong: "cannot buy or edit them directly",
+        purpose_p1b: ".",
+        h3_header: "Header Area", h3_tabs: "Tabs", h3_main: "Main Inventory Tab", h3_actions: "Product Row Actions (per product)", h3_analytics: "Analytics Tab", h3_quarantine: "Quarantine Tab", h3_movements: "Stock Movements Tab",
+        h_refresh: "Reload inventory data", h_adjustment: "Open the Stock Adjustment dialog", h_new: "Open the Add Product dialog",
+        tab_main: "Products table, search, category filter, restock sidebar",
+        tab_analytics: "KPI cards, sales performance, date range filter, product filter",
+        tab_quarantine: "Quarantine table (valid processing), Damaged table (damaged counts/loss)",
+        tab_movements: "Stock history with type filter, search, pagination",
+        m_search: "Text field — search by product name or ID", m_category: "Dropdown — filter by category",
+        m_archived: "Checkbox — include archived products", m_archive_btn: "Button — open dialog with products suggested for archiving",
+        m_table: "Columns: ID, Product Name, Physical, Reserved, Available, Cost, Actions",
+        m_pagination: "Previous / Next, page info, total items", m_restock: "List of items needing restock (current < reserved); total estimated cost",
+        act_star: "Toggle favorite (show first)", act_buy: "Open Purchase dialog (disabled for bundles)",
+        act_edit: "Open Edit Product dialog (disabled for bundles)", act_archive: "Archive or unarchive the product", act_delete: "Delete product (disabled for bundles)",
+        a_kpi: "Products count, Physical Stock, Cost, Value; Sold Units, Revenue, Profit, Damage Rate",
+        a_date: "Opens date picker with presets (Today, This Week, This Month, etc.)",
+        a_filter: "Dropdown — filter analytics by product", a_refresh: "Reload analytics",
+        a_top: "Horizontal bar list — most profitable products", a_damaged: "Horizontal bar list — most damaged units",
+        q_kpi: "Quarantine items count, Quarantine value, Damaged count, Damaged loss",
+        q_table: "Name, Count, Cost, Process button", q_damaged: "Name, Count, Loss (read-only)",
+        s_type: "Dropdown — All, Purchase, Adjustment In/Out, Quarantine Valid/Damaged",
+        s_search: "Filter movements", s_table: "Product Name, Movement Type, Count, Cost, Cost Before/After, Reason, Date", s_pagination: "Previous / Next",
+        w1_title: "1. Add a New Product", w1_1: "Click New Product.", w1_2: "Enter Product Name.",
+        w1_3: "Add variants: enter Variant Name and Price, then click + (or press Enter).", w1_4: "Click Save.",
+        w1_5: "If the name already exists: error snackbar. If variants list is empty: system requires at least one variant.",
+        w2_title: "2. Edit a Product", w2_1: "Click the Edit (pencil) icon on a product row.", w2_2: "Change Product Name or variant prices.",
+        w2_3: "To add a variant: enter Name and Price → click +.", w2_4: "To delete a variant: click the delete icon on the row.", w2_5: "Click Save.", w2_6: "Note: Buy, Edit, and Delete are disabled for bundles.",
+        w3_title: "3. Purchase Stock", w3_1: "Click the Buy (add box) icon on a product row.", w3_2: "Enter Supplier (required). You can use suggestion chips if shown.",
+        w3_3: "For each variant: enter Quantity, Cost, and optionally Paid (defaults to qty × cost).", w3_4: "Click Confirm.",
+        w3_5: "The system: adds stock and updates weighted average cost (WAC); records the purchase expense if Paid > 0 (treasury must be sufficient); creates Receivable/Payable if expected cost ≠ paid (with supplier).",
+        w3_valid: "Validations:", w3_v1: "Supplier is required.", w3_v2: "At least one variant must have quantity > 0.", w3_v3: "If Paid > 0 and treasury is insufficient: \"Insufficient treasury balance\".",
+        w4_title: "4. Stock Adjustment", w4_1: "Click Adjustment in the header.", w4_2: "Select Product and Variant.", w4_3: "Enter Quantity Change (+ to add, − to subtract).",
+        w4_4: "Select Adjustment Type: Stocktake, Damaged, Gift, Correction, Other.", w4_5: "Enter Reason (optional; default is the type).", w4_6: "Click Confirm.",
+        w4_rules: "Rules:", w4_r1: "Quantity cannot be 0 — error if zero.",
+        w4_r2: "Damaged type: quantity must be negative (e.g. −5 for 5 damaged). Positive quantity shows: \"For Damaged adjustment, enter a negative quantity (e.g. -5 for 5 units)\".",
+        w5_title: "5. Process Quarantine", w5_1: "Go to the Quarantine tab.", w5_2: "For an item in the Quarantine table, click Process.",
+        w5_3: "In the dialog, split items into: Valid — returned to regular stock (optionally with refurbishment cost); Damaged — counted as damaged.",
+        w5_4: "Enter Refurbishment Cost/Unit if applicable.", w5_5: "Valid + Damaged must equal the total quantity in quarantine. Remaining must be 0.", w5_6: "Click Confirm.",
+        w5_rules: "Rules:", w5_r1: "Remaining must be 0 to enable Confirm.", w5_r2: "Refurbishment cost (if > 0) is recorded as an expense; treasury must be sufficient.",
+        w6_title: "6. Archive / Unarchive Products", w6_single: "Single product", w6_bulk: "Bulk archive",
+        w6_1: "Click the Archive or Unarchive icon on the row.", w6_2: "Product is archived or unarchived; snackbar shows success.",
+        w6_3: "Click Archive Suggestions.", w6_4: "Review suggested products (0 stock, no orders in last 90 days).", w6_5: "Check the ones to archive.", w6_6: "Click Archive All.",
+        w7_title: "7. Delete a Product", w7_1: "Click the Delete (trash) icon on a product row.", w7_2: "Confirm in the dialog.",
+        w7_3: "Success: product and variants are deleted. If the product has sales history: \"Cannot delete: Product has sales history!\".",
+        w8_title: "8. View Stock Movements", w8_1: "Go to the Stock Movements tab.", w8_2: "Optionally select a Movement Type and use Search.", w8_3: "Use pagination to browse history.",
+        w9_title: "9. Toggle Star (Favorite)", w9_1: "Click the Star icon on a product. Favorites appear first in the list.",
+        r_add: "Add Product", r_add_name: "Product name required", r_add_name_res: "Error if empty",
+        r_add_var: "At least one variant", r_add_var_res: "Error if variants list is empty",
+        r_add_dup: "Duplicate name", r_add_dup_res: "Error if name already exists",
+        r_edit: "Edit Product", r_edit1: "Same rules as Add for name and variants.", r_edit2: "Bundles: Edit is disabled.",
+        r_purchase: "Purchase", r_pur_supplier: "Supplier required", r_pur_supplier_res: "Error: \"Supplier\"",
+        r_pur_qty: "At least one variant with qty > 0", r_pur_qty_res: "Error: \"Enter quantity > 0 for at least one variant\"",
+        r_pur_cost: "Cost < 0", r_pur_cost_res: "Error for that variant",
+        r_pur_treasury: "Paid > 0 and insufficient treasury", r_pur_treasury_res: "\"Insufficient treasury balance. (Current: X)\"",
+        r_adjustment: "Stock Adjustment", r_adj_zero: "Quantity = 0", r_adj_zero_res: "\"Quantity cannot be zero\"",
+        r_adj_damaged: "Damaged type + positive qty", r_adj_damaged_res: "\"For Damaged adjustment, enter a negative quantity...\"",
+        r_adj_var: "Variant not selected", r_adj_var_res: "Error shown",
+        r_quarantine: "Quarantine Processing", r_q_valid: "Valid + Damaged ≠ Total", r_q_valid_res: "Confirm button disabled until Remaining = 0",
+        r_q_refurb: "Refurbishment cost > 0", r_q_refurb_res: "Expense recorded; treasury must be sufficient",
+        r_delete: "Delete Product", r_del_history: "Has sales history", r_del_history_res: "\"Cannot delete: Product has sales history!\"",
+        r_bundles: "Bundles", r_bundles1: "Bundles are virtual: Physical = 0, Reserved = 0.",
+        r_bundles2: "Availability = minimum (component available ÷ BOM quantity) across components.", r_bundles3: "Buy, Edit, Delete are disabled for bundles.",
+        m_load: "Load error", m_load_msg: "\"Error: [message]\" (red)", m_save: "Add/Edit success", m_save_msg: "Snackbar confirms save",
+        m_dup: "Add duplicate name", m_dup_msg: "\"Error\" (red)", m_pur_ok: "Purchase success", m_pur_ok_msg: "\"Success\" (green)",
+        m_pur_treasury: "Purchase insufficient treasury", m_pur_treasury_msg: "\"Insufficient treasury balance. (Current: X)\" (red)",
+        m_pur_qty: "Purchase no qty", m_pur_qty_msg: "\"Enter quantity > 0 for at least one variant\" (red)",
+        m_adj_ok: "Stock adjustment success", m_adj_ok_msg: "\"Adjustment saved successfully\" (green)",
+        m_adj_zero: "Stock adjustment qty zero", m_adj_zero_msg: "\"Quantity cannot be zero\"",
+        m_adj_damaged: "Stock adjustment damaged positive", m_adj_damaged_msg: "\"For Damaged adjustment, enter a negative quantity...\" (red)",
+        m_q_ok: "Quarantine success", m_q_ok_msg: "Data reloads; no explicit message",
+        m_q_treasury: "Quarantine treasury", m_q_treasury_msg: "Treasury error if refurbishment and insufficient funds",
+        m_arch_ok: "Archive success", m_arch_ok_msg: "\"Product Archived/Unarchived Successfully\" (green)",
+        m_arch_bulk: "Bulk archive success", m_arch_bulk_msg: "\"Archived X products\" (green)",
+        m_del_ok: "Delete success", m_del_ok_msg: "\"Success\" (green)",
+        m_del_block: "Delete blocked", m_del_block_msg: "\"Cannot delete: Product has sales history!\" (red)",
+        m_no_suggest: "No archive suggestions", m_no_suggest_msg: "\"No suggestions\" (blue)",
+        m_restock_empty: "Restock sidebar empty", m_restock_empty_msg: "Shows \"Success\" when no items need restock",
+        tip1: "Restock sidebar: Items with reserved > current (negative available) appear with estimated cost.",
+        tip2: "Bundles: Restock and purchase work on component variants, not the bundle itself.",
+        tip3: "Quarantine: Items come from returns; you decide how many go back to stock vs damaged.",
+        tip4: "Refurbishment cost: Use when repair/cleaning costs apply before putting valid items back.",
+        tip5: "Damaged adjustment: Use negative quantity (e.g. −5) to mark 5 units as damaged.",
+        tip6: "Archive: Products with 0 stock and no orders in 90 days are suggested for archiving.",
+        tip7: "Stock Movements: Use filters and search to trace purchase, adjustment, and quarantine events."
+      },
+      ar: {
+        btn_back: "العودة للرئيسية", doc_badge: "دليل المستخدم", doc_title: "المخزون / حالة المخزون العام", doc_version: "الإصدار ١.٠",
+        nav_features: "المميزات", nav_pricing: "الأسعار", nav_privacy: "الخصوصية", nav_contact: "تواصل معنا", nav_download: "تحميل الآن",
+        footer_tagline: "الطريقة الأذكى لإدارة أعمالك في التجارة الإلكترونية.",
+        footer_nav: "التنقل", footer_contact_hd: "تواصل معنا", footer_legal: "قانوني", footer_privacy_link: "سياسة الخصوصية", footer_location: "القاهرة، مصر", footer_copy: "© ٢٠٢٦ مالي سيستمز. جميع الحقوق محفوظة.",
+        h2_purpose: "نبذة عن الموديول", h2_ui: "عناصر الواجهة", h2_workflow: "خطوات العمل", h2_rules: "قواعد العمل والتحقق", h2_messages: "الرسائل والتنبيهات", h2_tips: "نصائح",
+        th_element: "العنصر", th_description: "الوصف", th_tab: "التبويب", th_content: "المحتوى", th_action: "الإجراء", th_icon: "الأيقونة", th_rule: "القاعدة", th_result: "النتيجة", th_situation: "الموقف", th_message: "الرسالة",
+        purpose_p1a: "وحدة المخزون تدير كتالوج المنتجات ومستويات المخزون. يمكنك إضافة وتعديل المنتجات مع المتغيرات، تسجيل مشتريات المخزون، تنفيذ تعديلات المخزون (الجرد، التالف، إلخ)، معالجة عناصر الحجر (صالح مقابل تالف)، وعرض التحليلات. تنبيهات إعادة التخزين تعرض العناصر ذات المخزون المتاح السالب. الحزم منتجات افتراضية—توفرها محسوب من مخزون المكونات، ولا يمكنك ",
+        purpose_strong: "شراؤها أو تعديلها مباشرة",
+        purpose_p1b: ".",
+        h3_header: "منطقة الرأس", h3_tabs: "التبويبات", h3_main: "تبويب المخزون الرئيسي", h3_actions: "إجراءات صف المنتج (لكل منتج)", h3_analytics: "تبويب التحليلات", h3_quarantine: "تبويب الحجر", h3_movements: "تبويب حركات المخزون",
+        h_refresh: "إعادة تحميل بيانات المخزون", h_adjustment: "فتح نافذة تعديل المخزون", h_new: "فتح نافذة إضافة منتج",
+        tab_main: "جدول المنتجات، البحث، تصفية الفئة، الشريط الجانبي لإعادة التخزين",
+        tab_analytics: "بطاقات المؤشرات، أداء المبيعات، تصفية نطاق التاريخ، تصفية المنتج",
+        tab_quarantine: "جدول الحجر (معالجة الصالح)، جدول التالف (عدد/خسارة التالف)",
+        tab_movements: "سجل المخزون مع تصفية النوع، البحث، التصفح",
+        m_search: "حقل نصوص — البحث باسم المنتج أو المعرّف", m_category: "قائمة — تصفية حسب الفئة",
+        m_archived: "مربع اختيار — تضمين المنتجات المؤرشفة", m_archive_btn: "زر — فتح نافذة بالمنتجات المقترحة للأرشفة",
+        m_table: "الأعمدة: المعرّف، اسم المنتج، الفعلي، المحجوز، المتاح، التكلفة، الإجراءات",
+        m_pagination: "السابق / التالي، معلومات الصفحة، إجمالي العناصر", m_restock: "قائمة العناصر المحتاجة لإعادة التخزين (الحالي < المحجوز)؛ التكلفة التقديرية الإجمالية",
+        act_star: "تبديل المفضلة (تظهر أولاً)", act_buy: "فتح نافذة الشراء (معطّل للحزم)",
+        act_edit: "فتح نافذة تعديل المنتج (معطّل للحزم)", act_archive: "أرشفة أو إلغاء أرشفة المنتج", act_delete: "حذف المنتج (معطّل للحزم)",
+        a_kpi: "عدد المنتجات، المخزون الفعلي، التكلفة، القيمة؛ الوحدات المباعة، الإيرادات، الربح، معدل التلف",
+        a_date: "يفتح منتقي التاريخ مع الاختصارات (اليوم، هذا الأسبوع، هذا الشهر، إلخ)",
+        a_filter: "قائمة — تصفية التحليلات بالمنتج", a_refresh: "إعادة تحميل التحليلات",
+        a_top: "قائمة أشرطة أفقية — المنتجات الأربح", a_damaged: "قائمة أشرطة أفقية — الوحدات الأكثر تلفًا",
+        q_kpi: "عدد عناصر الحجر، قيمة الحجر، عدد التالف، خسارة التالف",
+        q_table: "الاسم، العدد، التكلفة، زر المعالجة", q_damaged: "الاسم، العدد، الخسارة (للقراءة فقط)",
+        s_type: "قائمة — الكل، الشراء، تعديل داخلي/خارجي، حجر صالح/تالف",
+        s_search: "تصفية الحركات", s_table: "اسم المنتج، نوع الحركة، العدد، التكلفة، التكلفة قبل/بعد، السبب، التاريخ", s_pagination: "السابق / التالي",
+        w1_title: "١. إضافة منتج جديد", w1_1: "انقر على منتج جديد.", w1_2: "أدخل اسم المنتج.",
+        w1_3: "أضف المتغيرات: أدخل اسم المتغير والسعر، ثم انقر + (أو اضغط Enter).", w1_4: "انقر على حفظ.",
+        w1_5: "إن كان الاسم موجودًا: شريط خطأ. إن كانت قائمة المتغيرات فارغة: النظام يتطلب متغيرًا واحدًا على الأقل.",
+        w2_title: "٢. تعديل منتج", w2_1: "انقر على أيقونة التعديل (القلم) على صف المنتج.", w2_2: "غيّر اسم المنتج أو أسعار المتغيرات.",
+        w2_3: "لإضافة متغير: أدخل الاسم والسعر → انقر +.", w2_4: "لحذف متغير: انقر على أيقونة الحذف على الصف.", w2_5: "انقر على حفظ.", w2_6: "ملاحظة: الشراء والتعديل والحذف معطّلان للحزم.",
+        w3_title: "٣. شراء مخزون", w3_1: "انقر على أيقونة الشراء (صندوق الإضافة) على صف المنتج.", w3_2: "أدخل المورّد (مطلوب). يمكنك استخدام اقتراحات إن ظهرت.",
+        w3_3: "لكل متغير: أدخل الكمية والتكلفة واختياريًا المدفوع (افتراضي = الكمية × التكلفة).", w3_4: "انقر على تأكيد.",
+        w3_5: "النظام: يضيف المخزون ويحدّث التكلفة المتوسطة الموزونة؛ يسجّل مصروف الشراء إن كان المدفوع > ٠ (الخزينة يجب أن تكون كافية)؛ ينشئ ذمم مدينة/دائنة إن كانت التكلفة المتوقعة ≠ المدفوع (مع المورّد).",
+        w3_valid: "التحققات:", w3_v1: "المورّد مطلوب.", w3_v2: "متغير واحد على الأقل يجب أن تكون كميته > ٠.", w3_v3: "إن كان المدفوع > ٠ والخزينة غير كافية: «رصيد خزينة غير كافٍ».",
+        w4_title: "٤. تعديل المخزون", w4_1: "انقر على تعديل في الرأس.", w4_2: "اختر المنتج والمتغير.", w4_3: "أدخل تغيير الكمية (+ للإضافة، − للخصم).",
+        w4_4: "اختر نوع التعديل: جرد، تالف، هدية، تصحيح، أخرى.", w4_5: "أدخل السبب (اختياري؛ الافتراضي هو النوع).", w4_6: "انقر على تأكيد.",
+        w4_rules: "القواعد:", w4_r1: "الكمية لا يمكن أن تكون ٠ — خطأ إن كانت صفر.",
+        w4_r2: "نوع التالف: الكمية يجب أن تكون سالبة (مثل −٥ لـ ٥ وحدات تالفة). الكمية الموجبة تعرض: «لتعديل التالف، أدخل كمية سالبة (مثل -5 لـ 5 وحدات)».",
+        w5_title: "٥. معالجة الحجر", w5_1: "انتقل إلى تبويب الحجر.", w5_2: "لعنصر في جدول الحجر، انقر على معالجة.",
+        w5_3: "في النافذة، قسّم العناصر إلى: صالح — يُعاد للمخزون العادي (اختياريًا مع تكلفة التجديد)؛ تالف — يُحسب كتالف.",
+        w5_4: "أدخل تكلفة التجديد للوحدة إن وجدت.", w5_5: "الصالح + التالف يجب أن يساوي الكمية الإجمالية في الحجر. المتبقي يجب أن يكون ٠.", w5_6: "انقر على تأكيد.",
+        w5_rules: "القواعد:", w5_r1: "المتبقي يجب أن يكون ٠ لتفعيل تأكيد.", w5_r2: "تكلفة التجديد (إن > ٠) تُسجّل كمصروف؛ الخزينة يجب أن تكون كافية.",
+        w6_title: "٦. أرشفة / إلغاء أرشفة المنتجات", w6_single: "منتج واحد", w6_bulk: "أرشفة بالجملة",
+        w6_1: "انقر على أيقونة الأرشفة أو إلغاء الأرشفة على الصف.", w6_2: "يُؤرشف المنتج أو يُلغى تأريفه؛ يظهر شريط النجاح.",
+        w6_3: "انقر على اقتراحات الأرشفة.", w6_4: "راجع المنتجات المقترحة (٠ مخزون، لا طلبات في آخر ٩٠ يومًا).", w6_5: "حدّد المطلوب أرشفته.", w6_6: "انقر على أرشفة الكل.",
+        w7_title: "٧. حذف منتج", w7_1: "انقر على أيقونة الحذف (السلة) على صف المنتج.", w7_2: "أكّد في النافذة.",
+        w7_3: "نجاح: يُحذف المنتج والمتغيرات. إن كان المنتج له تاريخ مبيعات: «لا يمكن الحذف: المنتج له تاريخ مبيعات!».",
+        w8_title: "٨. عرض حركات المخزون", w8_1: "انتقل إلى تبويب حركات المخزون.", w8_2: "اختر نوع الحركة واستخدم البحث اختياريًا.", w8_3: "استخدم التصفح لاستعراض السجل.",
+        w9_title: "٩. تبديل النجمة (المفضلة)", w9_1: "انقر على أيقونة النجمة على المنتج. المفضلات تظهر أولاً في القائمة.",
+        r_add: "إضافة منتج", r_add_name: "اسم المنتج مطلوب", r_add_name_res: "خطأ إن كان فارغًا",
+        r_add_var: "متغير واحد على الأقل", r_add_var_res: "خطأ إن كانت قائمة المتغيرات فارغة",
+        r_add_dup: "اسم مكرر", r_add_dup_res: "خطأ إن كان الاسم موجودًا",
+        r_edit: "تعديل منتج", r_edit1: "نفس قواعد الإضافة للاسم والمتغيرات.", r_edit2: "الحزم: التعديل معطّل.",
+        r_purchase: "الشراء", r_pur_supplier: "المورّد مطلوب", r_pur_supplier_res: "خطأ: «المورّد»",
+        r_pur_qty: "متغير واحد على الأقل بكمية > ٠", r_pur_qty_res: "خطأ: «أدخل كمية > ٠ لمتغير واحد على الأقل»",
+        r_pur_cost: "التكلفة < ٠", r_pur_cost_res: "خطأ لذلك المتغير",
+        r_pur_treasury: "المدفوع > ٠ والخزينة غير كافية", r_pur_treasury_res: "«رصيد خزينة غير كافٍ. (الحالي: X)»",
+        r_adjustment: "تعديل المخزون", r_adj_zero: "الكمية = ٠", r_adj_zero_res: "«الكمية لا يمكن أن تكون صفرًا»",
+        r_adj_damaged: "نوع التالف + كمية موجبة", r_adj_damaged_res: "«لتعديل التالف، أدخل كمية سالبة...»",
+        r_adj_var: "لم يُختر متغير", r_adj_var_res: "يظهر خطأ",
+        r_quarantine: "معالجة الحجر", r_q_valid: "الصالح + التالف ≠ الإجمالي", r_q_valid_res: "زر التأكيد معطّل حتى المتبقي = ٠",
+        r_q_refurb: "تكلفة التجديد > ٠", r_q_refurb_res: "يُسجّل المصروف؛ الخزينة يجب أن تكون كافية",
+        r_delete: "حذف المنتج", r_del_history: "له تاريخ مبيعات", r_del_history_res: "«لا يمكن الحذف: المنتج له تاريخ مبيعات!»",
+        r_bundles: "الحزم", r_bundles1: "الحزم افتراضية: الفعلي = ٠، المحجوز = ٠.",
+        r_bundles2: "التوفر = الحد الأدنى (المتاح للمكون ÷ كمية قائمة المواد) عبر المكونات.", r_bundles3: "الشراء والتعديل والحذف معطّلان للحزم.",
+        m_load: "خطأ التحميل", m_load_msg: "«خطأ: [الرسالة]» (أحمر)", m_save: "نجاح الإضافة/التعديل", m_save_msg: "شريط يؤكد الحفظ",
+        m_dup: "إضافة اسم مكرر", m_dup_msg: "«خطأ» (أحمر)", m_pur_ok: "نجاح الشراء", m_pur_ok_msg: "«نجاح» (أخضر)",
+        m_pur_treasury: "الشراء بخزينة غير كافية", m_pur_treasury_msg: "«رصيد خزينة غير كافٍ. (الحالي: X)» (أحمر)",
+        m_pur_qty: "الشراء بلا كمية", m_pur_qty_msg: "«أدخل كمية > ٠ لمتغير واحد على الأقل» (أحمر)",
+        m_adj_ok: "نجاح تعديل المخزون", m_adj_ok_msg: "«تم حفظ التعديل بنجاح» (أخضر)",
+        m_adj_zero: "تعديل المخزون كمية صفر", m_adj_zero_msg: "«الكمية لا يمكن أن تكون صفرًا»",
+        m_adj_damaged: "تعديل المخزون تالف موجب", m_adj_damaged_msg: "«لتعديل التالف، أدخل كمية سالبة...» (أحمر)",
+        m_q_ok: "نجاح الحجر", m_q_ok_msg: "البيانات تُحدَّث؛ لا رسالة صريحة",
+        m_q_treasury: "خزينة الحجر", m_q_treasury_msg: "خطأ خزينة إن كانت تكلفة التجديد والأموال غير كافية",
+        m_arch_ok: "نجاح الأرشفة", m_arch_ok_msg: "«تم أرشفة المنتج/إلغاء أرشفته بنجاح» (أخضر)",
+        m_arch_bulk: "نجاح الأرشفة بالجملة", m_arch_bulk_msg: "«تم أرشفة X منتجات» (أخضر)",
+        m_del_ok: "نجاح الحذف", m_del_ok_msg: "«نجاح» (أخضر)",
+        m_del_block: "الحذف محظور", m_del_block_msg: "«لا يمكن الحذف: المنتج له تاريخ مبيعات!» (أحمر)",
+        m_no_suggest: "لا اقتراحات للأرشفة", m_no_suggest_msg: "«لا اقتراحات» (أزرق)",
+        m_restock_empty: "الشريط الجانبي لإعادة التخزين فارغ", m_restock_empty_msg: "يعرض «نجاح» عندما لا عناصر تحتاج إعادة تخزين",
+        tip1: "الشريط الجانبي لإعادة التخزين: العناصر التي المحجوز فيها > الحالي (متاح سالب) تظهر مع التكلفة التقديرية.",
+        tip2: "الحزم: إعادة التخزين والشراء يعملان على متغيرات المكونات، وليس الحزمة نفسها.",
+        tip3: "الحجر: العناصر تأتي من المرتجعات؛ أنت تحدد كم يعود للمخزون مقابل التالف.",
+        tip4: "تكلفة التجديد: استخدمها عندما تنطبق تكاليف الإصلاح/التنظيف قبل إعادة العناصر الصالحة.",
+        tip5: "تعديل التالف: استخدم كمية سالبة (مثل −٥) لتحديد ٥ وحدات كتالفة.",
+        tip6: "الأرشفة: المنتجات ذات ٠ مخزون ولا طلبات في ٩٠ يومًا تُقترح للأرشفة.",
+        tip7: "حركات المخزون: استخدم الفلاتر والبحث لتتبع أحداث الشراء والتعديل والحجر."
+      }
+    };
+
+    let currentLang = 'en';
+    function applyLang(lang) {
+      currentLang = lang;
+      const html = document.documentElement;
+      html.lang = lang;
+      html.dir = lang === 'ar' ? 'rtl' : 'ltr';
+      const texts = T[lang];
+      document.querySelectorAll('[data-i18n]').forEach(el => {
+        const key = el.getAttribute('data-i18n');
+        if (texts[key] !== undefined) el.textContent = texts[key];
+      });
+      const label = lang === 'en' ? 'العربية' : 'English';
+      document.getElementById('lang-label').textContent = label;
+      document.getElementById('lang-label-mobile').textContent = label;
+      try { localStorage.setItem('maly_lang', lang); } catch(e) {}
+    }
+    function toggleLang() { applyLang(currentLang === 'en' ? 'ar' : 'en'); }
+    function toggleMenu() {
+      const menu = document.getElementById('mobile-menu');
+      const icon = document.getElementById('hamburger-icon');
+      menu.classList.toggle('open');
+      icon.className = menu.classList.contains('open') ? 'fa-solid fa-xmark' : 'fa-solid fa-bars';
+    }
+    function closeMenu() {
+      document.getElementById('mobile-menu').classList.remove('open');
+      document.getElementById('hamburger-icon').className = 'fa-solid fa-bars';
+    }
+    window.addEventListener('scroll', () => { document.getElementById('navbar').classList.toggle('scrolled', window.scrollY > 10); }, { passive: true });
+    (function init() {
+      let saved = 'en';
+      try { saved = localStorage.getItem('maly_lang') || 'en'; } catch(e) {}
+      applyLang(saved);
+    })();
+  </script>
+</body>
+</html>

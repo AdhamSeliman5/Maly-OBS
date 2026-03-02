@@ -1,0 +1,753 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Maly - OBS | Dashboard Module — User Guide</title>
+  <meta name="description" content="Dashboard module user guide: analytics, KPIs, charts, and Google Sheets sync in Maly - OBS." />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;800&family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+
+  <style>
+    /* =========================================================
+       ROOT VARIABLES (match index.html)
+    ========================================================= */
+    :root {
+      --primary:       #1B3D6F;
+      --primary-light: #2A5498;
+      --accent:        #C5974A;
+      --accent-light:  #F0DDB8;
+      --bg:            #F5F1EB;
+      --surface:       #FFFFFF;
+      --surface-alt:   #F9F6F0;
+      --text:          #1A1A2E;
+      --text-muted:    #64748B;
+      --text-light:    #94A3B8;
+      --border:        #E2D9CC;
+      --border-light:  #EDE8E0;
+      --shadow-sm:     0 2px 8px rgba(27,61,111,0.07);
+      --shadow-md:     0 8px 32px rgba(27,61,111,0.10);
+      --shadow-lg:     0 20px 60px rgba(27,61,111,0.13);
+      --radius-sm:     8px;
+      --radius-md:     14px;
+      --radius-lg:     20px;
+      --nav-h:         76px;
+      --font-en:       'Inter', sans-serif;
+      --font-ar:       'Cairo', sans-serif;
+      --transition:    0.25s ease;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; font-size: 16px; }
+    body {
+      font-family: var(--font-en);
+      background-color: var(--bg);
+      color: var(--text);
+      line-height: 1.65;
+      overflow-x: hidden;
+    }
+    html[lang="ar"] body { font-family: var(--font-ar); }
+    img { max-width: 100%; display: block; }
+    a { color: inherit; text-decoration: none; }
+    ul { list-style: none; }
+    button { cursor: pointer; font-family: inherit; }
+
+    .container { max-width: 1160px; margin: 0 auto; padding: 0 24px; }
+
+    /* =========================================================
+       NAVIGATION (match index.html)
+    ========================================================= */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      height: var(--nav-h);
+      background: rgba(245, 241, 235, 0.92);
+      backdrop-filter: blur(14px);
+      border-bottom: 1px solid var(--border-light);
+      z-index: 1000;
+      transition: box-shadow var(--transition);
+    }
+    nav.scrolled { box-shadow: var(--shadow-md); }
+    .nav-inner { display: flex; align-items: center; justify-content: space-between; height: 100%; }
+    .nav-logo { display: flex; align-items: center; gap: 10px; font-weight: 800; font-size: 1.2rem; color: var(--primary); }
+    .nav-logo img { height: 48px; width: auto; max-width: 220px; object-fit: contain; }
+    @media (max-width: 768px) {
+      .nav-logo img.nav-logo-desktop { display: none; }
+      .nav-logo img.nav-logo-mobile { display: block !important; }
+    }
+    .nav-logo img.nav-logo-mobile { display: none; }
+    .nav-links { display: flex; align-items: center; gap: 8px; }
+    .nav-links a { font-size: 0.9rem; font-weight: 500; color: var(--text-muted); padding: 6px 14px; border-radius: var(--radius-sm); transition: color var(--transition), background var(--transition); }
+    .nav-links a:hover { color: var(--primary); background: rgba(27,61,111,0.06); }
+    .nav-right { display: flex; align-items: center; gap: 12px; }
+    .lang-btn { display: flex; align-items: center; gap: 6px; font-size: 0.82rem; font-weight: 600; color: var(--primary); background: var(--surface); border: 1.5px solid var(--border); padding: 6px 14px; border-radius: 20px; transition: all var(--transition); letter-spacing: 0.03em; }
+    .lang-btn:hover { border-color: var(--primary); background: rgba(27,61,111,0.04); }
+    .lang-btn i { font-size: 0.75rem; }
+    .btn-nav-cta { font-size: 0.88rem; font-weight: 600; color: #fff; background: var(--primary); padding: 8px 20px; border-radius: 8px; border: none; transition: background var(--transition), transform var(--transition); }
+    .btn-nav-cta:hover { background: var(--primary-light); transform: translateY(-1px); }
+    .hamburger { display: none; background: none; border: none; font-size: 1.4rem; color: var(--primary); }
+    .mobile-menu { display: none; flex-direction: column; background: var(--surface); border-bottom: 1px solid var(--border); padding: 12px 24px 20px; gap: 4px; }
+    .mobile-menu.open { display: flex; }
+    .mobile-menu a { font-size: 0.95rem; font-weight: 500; color: var(--text); padding: 10px 4px; border-bottom: 1px solid var(--border-light); }
+    .mobile-menu a:last-child { border: none; }
+    .mobile-menu .lang-btn { margin-top: 8px; width: fit-content; }
+
+    /* =========================================================
+       DOC LAYOUT
+    ========================================================= */
+    .doc-main { padding-top: calc(var(--nav-h) + 48px); padding-bottom: 80px; }
+    .doc-inner { max-width: 840px; margin: 0 auto; }
+
+    .btn-back {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 0.9rem;
+      font-weight: 600;
+      color: var(--primary);
+      background: var(--surface);
+      border: 1.5px solid var(--border);
+      padding: 10px 20px;
+      border-radius: var(--radius-sm);
+      margin-bottom: 32px;
+      transition: all var(--transition);
+      box-shadow: var(--shadow-sm);
+    }
+    .btn-back:hover { border-color: var(--primary); background: rgba(27,61,111,0.04); }
+    html[dir="rtl"] .btn-back i { transform: scaleX(-1); }
+
+    .doc-header { margin-bottom: 40px; }
+    .doc-header .doc-badge {
+      display: inline-block;
+      font-size: 0.75rem;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--accent);
+      background: var(--accent-light);
+      padding: 4px 12px;
+      border-radius: 20px;
+      margin-bottom: 12px;
+    }
+    .doc-header h1 { font-size: clamp(1.8rem, 3vw, 2.4rem); font-weight: 800; color: var(--text); margin-bottom: 12px; line-height: 1.2; }
+    .doc-header .doc-meta { font-size: 0.9rem; color: var(--text-muted); }
+
+    .doc-content h2 {
+      font-size: 1.35rem;
+      font-weight: 700;
+      color: var(--primary);
+      margin-top: 48px;
+      margin-bottom: 20px;
+      padding-bottom: 8px;
+      border-bottom: 2px solid var(--border-light);
+    }
+    .doc-content h2:first-of-type { margin-top: 0; }
+    .doc-content h3 { font-size: 1.1rem; font-weight: 700; color: var(--text); margin-top: 32px; margin-bottom: 14px; }
+    .doc-content p { font-size: 1rem; color: var(--text-muted); margin-bottom: 16px; line-height: 1.75; }
+    .doc-content ul.doc-list { list-style: disc; padding-left: 24px; margin-bottom: 20px; }
+    html[dir="rtl"] .doc-content ul.doc-list { padding-left: 0; padding-right: 24px; }
+    .doc-content ul.doc-list li { margin-bottom: 8px; color: var(--text-muted); line-height: 1.7; }
+    .doc-content ul.doc-list li strong { color: var(--text); }
+
+    /* Tables */
+    .doc-table-wrapper { overflow-x: auto; margin: 24px 0; border-radius: var(--radius-sm); border: 1px solid var(--border-light); box-shadow: var(--shadow-sm); }
+    .doc-table { width: 100%; border-collapse: collapse; font-size: 0.95rem; }
+    .doc-table th, .doc-table td { padding: 14px 18px; text-align: left; border-bottom: 1px solid var(--border-light); vertical-align: top; }
+    html[dir="rtl"] .doc-table th, html[dir="rtl"] .doc-table td { text-align: right; }
+    .doc-table th { background: var(--surface-alt); font-weight: 700; color: var(--primary); }
+    .doc-table tr:last-child td { border-bottom: none; }
+    .doc-table tr:hover td { background: rgba(27,61,111,0.02); }
+    .doc-table code { background: var(--surface-alt); padding: 2px 8px; border-radius: 4px; font-size: 0.88em; color: var(--primary); font-family: 'Consolas', monospace; }
+
+    /* Callout boxes */
+    .callout {
+      padding: 20px 24px;
+      border-radius: var(--radius-md);
+      margin: 24px 0;
+      border-left: 4px solid;
+      display: flex;
+      gap: 14px;
+      align-items: flex-start;
+    }
+    html[dir="rtl"] .callout { border-left: none; border-right: 4px solid; }
+    .callout i { font-size: 1.2rem; flex-shrink: 0; margin-top: 2px; }
+    .callout-content { flex: 1; }
+    .callout-content p:last-child { margin-bottom: 0; }
+    .callout-tip { background: rgba(34, 197, 94, 0.08); border-color: #22c55e; color: #166534; }
+    .callout-tip i { color: #22c55e; }
+    .callout-alert { background: rgba(234, 179, 8, 0.08); border-color: #eab308; color: #854d0e; }
+    .callout-alert i { color: #eab308; }
+    .callout-info { background: rgba(27, 61, 111, 0.06); border-color: var(--primary); color: var(--primary); }
+    .callout-info i { color: var(--primary); }
+
+    /* Footer (match index.html) */
+    footer { background: #111827; color: #9CA3AF; padding: 60px 0 30px; }
+    .footer-grid { display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 40px; margin-bottom: 50px; }
+    .footer-brand .nav-logo { color: #fff; margin-bottom: 14px; }
+    .footer-brand .nav-logo img { height: 40px; width: auto; max-width: 200px; object-fit: contain; filter: brightness(0) invert(1); opacity: 0.9; }
+    .footer-brand p { font-size: 0.88rem; line-height: 1.7; max-width: 260px; color: #9CA3AF; }
+    .footer-brand .social-row { display: flex; gap: 10px; margin-top: 20px; }
+    .footer-social { width: 36px; height: 36px; border-radius: 50%; background: rgba(255,255,255,0.08); color: #D1D5DB; display: flex; align-items: center; justify-content: center; font-size: 0.9rem; transition: background var(--transition), color var(--transition); }
+    .footer-social:hover { background: var(--accent); color: #fff; }
+    .footer-col h4 { font-size: 0.85rem; font-weight: 700; color: #E5E7EB; text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 18px; }
+    .footer-col ul li { margin-bottom: 10px; }
+    .footer-col ul li a { font-size: 0.88rem; color: #9CA3AF; transition: color var(--transition); }
+    .footer-col ul li a:hover { color: #fff; }
+    .footer-col ul li span { font-size: 0.88rem; color: #9CA3AF; font-family: var(--font-en); }
+    .footer-bottom { border-top: 1px solid rgba(255,255,255,0.08); padding-top: 28px; display: flex; align-items: center; justify-content: space-between; gap: 12px; flex-wrap: wrap; }
+    .footer-bottom p { font-size: 0.82rem; }
+    html[dir="rtl"] .footer-grid { direction: rtl; }
+    html[dir="rtl"] .footer-brand p { max-width: 100%; }
+    html[dir="rtl"] .footer-bottom { flex-direction: row-reverse; }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+      .nav-links, .btn-nav-cta { display: none; }
+      .hamburger { display: block; }
+      .doc-main { padding-top: calc(var(--nav-h) + 32px); padding-bottom: 48px; }
+      .footer-grid { grid-template-columns: 1fr 1fr; }
+      .footer-brand { grid-column: 1 / -1; }
+    }
+    @media (max-width: 480px) {
+      .container { padding: 0 18px; }
+      .doc-table th, .doc-table td { padding: 10px 14px; font-size: 0.88rem; }
+      .footer-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ===================== NAVIGATION ===================== -->
+  <nav id="navbar">
+    <div class="container">
+      <div class="nav-inner">
+        <a href="index.html" class="nav-logo">
+          <img src="assets/logo_splash_light.png" alt="Maly OBS Logo" class="nav-logo-desktop" />
+          <img src="assets/logo_icon.png" alt="Maly OBS" class="nav-logo-mobile" />
+          <span>Maly&nbsp;-&nbsp;OBS</span>
+        </a>
+        <div class="nav-links">
+          <a href="index.html#features" data-i18n="nav_features">Features</a>
+          <a href="index.html#pricing" data-i18n="nav_pricing">Pricing</a>
+          <a href="index.html#privacy" data-i18n="nav_privacy">Privacy</a>
+          <a href="index.html#contact" data-i18n="nav_contact">Contact</a>
+        </div>
+        <div class="nav-right">
+          <button class="lang-btn" id="lang-toggle" onclick="toggleLang()">
+            <i class="fa-solid fa-globe"></i>
+            <span id="lang-label">العربية</span>
+          </button>
+          <a href="https://drive.google.com/uc?export=download&id=15Vp6Mm15r9nkoK8qhC0GpUmpAVAORZhd" target="_blank" rel="noopener" class="btn-nav-cta" data-i18n="nav_download">Download Now</a>
+          <button class="hamburger" onclick="toggleMenu()" aria-label="Menu">
+            <i class="fa-solid fa-bars" id="hamburger-icon"></i>
+          </button>
+        </div>
+      </div>
+    </div>
+    <div class="mobile-menu" id="mobile-menu">
+      <a href="index.html#features" onclick="closeMenu()" data-i18n="nav_features">Features</a>
+      <a href="index.html#pricing" onclick="closeMenu()" data-i18n="nav_pricing">Pricing</a>
+      <a href="index.html#privacy" onclick="closeMenu()" data-i18n="nav_privacy">Privacy</a>
+      <a href="index.html#contact" onclick="closeMenu()" data-i18n="nav_contact">Contact</a>
+      <a href="https://drive.google.com/uc?export=download&id=15Vp6Mm15r9nkoK8qhC0GpUmpAVAORZhd" target="_blank" rel="noopener" onclick="closeMenu()" data-i18n="nav_download">Download Now</a>
+      <button class="lang-btn" onclick="toggleLang(); closeMenu();">
+        <i class="fa-solid fa-globe"></i>
+        <span id="lang-label-mobile">العربية</span>
+      </button>
+    </div>
+  </nav>
+
+  <!-- ===================== MAIN CONTENT ===================== -->
+  <main class="doc-main">
+    <div class="container">
+      <div class="doc-inner">
+        <a href="index.html" class="btn-back">
+          <i class="fa-solid fa-arrow-left"></i>
+          <span data-i18n="btn_back">Back to Home</span>
+        </a>
+
+        <header class="doc-header">
+          <span class="doc-badge" data-i18n="doc_badge">User Guide</span>
+          <h1 data-i18n="doc_title">Dashboard Module</h1>
+          <p class="doc-meta">Maly - OBS (Online Business System) · <span data-i18n="doc_version">Version 1.0</span></p>
+        </header>
+
+        <div class="doc-content">
+          <!-- Module Purpose -->
+          <h2 data-i18n="h2_purpose">Module Purpose</h2>
+          <p><span data-i18n="purpose_p1a">The Dashboard is the main analytics screen in Maly - OBS. It shows your business performance at a glance using key numbers (KPIs), charts, and lists. You can choose a date range to see sales, deliveries, shipping, returns, top products, top governorates, customer insights, and campaign performance. The dashboard also lets you </span><strong data-i18n="purpose_strong">sync orders from Google Sheets</strong><span data-i18n="purpose_p1b"> so your data stays up to date.</span></p>
+
+          <!-- UI Elements -->
+          <h2 data-i18n="h2_ui">UI Elements</h2>
+
+          <h3 data-i18n="h3_header">Header Area</h3>
+          <div class="doc-table-wrapper">
+            <table class="doc-table">
+              <thead>
+                <tr><th data-i18n="th_element">Element</th><th data-i18n="th_description">Description</th></tr>
+              </thead>
+              <tbody>
+                <tr><td><strong data-i18n="date_range_btn">Date Range Button</strong></td><td data-i18n="date_range_desc">Shows the current date range (e.g., 2025-01-01 → 2025-03-02). Click to change the range.</td></tr>
+                <tr><td><strong data-i18n="sync_orders">Sync Orders</strong></td><td data-i18n="sync_orders_desc">Button to fetch the latest orders from Google Sheets.</td></tr>
+              </tbody>
+            </table>
+          </div>
+
+          <h3 data-i18n="h3_kpi">KPI Cards (Top Section)</h3>
+          <div class="doc-table-wrapper">
+            <table class="doc-table">
+              <thead>
+                <tr><th data-i18n="kpi_card">KPI Card</th><th data-i18n="kpi_shows">What It Shows</th></tr>
+              </thead>
+              <tbody>
+                <tr><td><strong>Total Revenue</strong></td><td data-i18n="kpi_revenue">Order count and total net sales (EGP) in the selected period.</td></tr>
+                <tr><td><strong>Delivered</strong></td><td data-i18n="kpi_delivered">Number of delivered orders and total value (EGP).</td></tr>
+                <tr><td><strong>To Prepare</strong></td><td data-i18n="kpi_prepare">Orders waiting to be prepared and their total value. Click to open the Preparation module.</td></tr>
+                <tr><td><strong>In Shipping</strong></td><td data-i18n="kpi_shipping">Orders currently in transit and their total value. Click to open the Shipping module.</td></tr>
+                <tr><td><strong>Returned</strong></td><td data-i18n="kpi_returned">Number of returned/cancelled orders and total cost of returns.</td></tr>
+                <tr><td><strong>Active Clients</strong></td><td data-i18n="kpi_clients">Unique customers with orders in the period.</td></tr>
+              </tbody>
+            </table>
+          </div>
+
+          <h3 data-i18n="h3_quickstats">Quick Stats Row</h3>
+          <div class="doc-table-wrapper">
+            <table class="doc-table">
+              <thead>
+                <tr><th data-i18n="th_stat">Stat</th><th data-i18n="th_description">Description</th></tr>
+              </thead>
+              <tbody>
+                <tr><td><strong>Avg Shipping Time</strong></td><td data-i18n="stat_shipping">Days from order date to shipping date (lower is better).</td></tr>
+                <tr><td><strong>Avg Order Value</strong></td><td data-i18n="stat_order">Average order value in EGP.</td></tr>
+                <tr><td><strong>Returning Customers</strong></td><td data-i18n="stat_returning">Percentage of repeat customers.</td></tr>
+                <tr><td><strong>MoM Growth</strong></td><td data-i18n="stat_mom">Month-over-month revenue growth.</td></tr>
+              </tbody>
+            </table>
+          </div>
+
+          <h3 data-i18n="h3_charts">Charts & Lists</h3>
+          <div class="doc-table-wrapper">
+            <table class="doc-table">
+              <thead>
+                <tr><th data-i18n="th_section">Section</th><th data-i18n="th_content">Content</th></tr>
+              </thead>
+              <tbody>
+                <tr><td><strong>Sales Trend</strong></td><td data-i18n="chart_sales">Bar chart of revenue over time (daily or monthly).</td></tr>
+                <tr><td><strong>Top Sellers</strong></td><td data-i18n="chart_top">Top 5 products by quantity sold.</td></tr>
+                <tr><td><strong>Status</strong></td><td data-i18n="chart_status">Pie chart: Delivered vs Cancelled.</td></tr>
+                <tr><td><strong>Moderators</strong></td><td data-i18n="chart_mods">Orders handled per moderator.</td></tr>
+                <tr><td><strong>Order Types</strong></td><td data-i18n="chart_types">Grouped bar chart of Exchange, Missing, etc. by month.</td></tr>
+                <tr><td><strong>Shipping Performance</strong></td><td data-i18n="chart_ship">Delivered vs Returned by shipping company.</td></tr>
+                <tr><td><strong>Avg Delivery Days</strong></td><td data-i18n="chart_delivery">Average days from ship to delivery per company.</td></tr>
+              </tbody>
+            </table>
+          </div>
+
+          <h3 data-i18n="h3_more">More Analytics (Expandable)</h3>
+          <p data-i18n="more_click">Click <strong>More Analytics</strong> to show:</p>
+          <div class="doc-table-wrapper">
+            <table class="doc-table">
+              <thead>
+                <tr><th data-i18n="th_section">Section</th><th data-i18n="th_content">Content</th></tr>
+              </thead>
+              <tbody>
+                <tr><td><strong>Top Governorates</strong></td><td data-i18n="more_gov">Top 5 governorates by order count.</td></tr>
+                <tr><td><strong>Highest Return Rates</strong></td><td data-i18n="more_returns">Governorates with highest return rates.</td></tr>
+                <tr><td><strong>Top Months</strong></td><td data-i18n="more_months">Best-performing months by revenue.</td></tr>
+                <tr><td><strong>Best Days of Week</strong></td><td data-i18n="more_days">Days with most orders.</td></tr>
+                <tr><td><strong>Customer Value Distribution</strong></td><td data-i18n="more_cust">How many customers fall into each spend bucket (0–500 EGP, 500–1K, etc.).</td></tr>
+                <tr><td><strong>Top VIP Customers</strong></td><td data-i18n="more_vip">Top 10 customers by total spend.</td></tr>
+                <tr><td><strong>Most Returned Products</strong></td><td data-i18n="more_prods">Products with most returns.</td></tr>
+                <tr><td><strong>Campaign Performance</strong></td><td data-i18n="more_campaign">Ad campaigns with Spend, Revenue, ROAS, and CPO.</td></tr>
+              </tbody>
+            </table>
+          </div>
+
+          <!-- Step-by-Step Workflow -->
+          <h2 data-i18n="h2_workflow">Step-by-Step Workflow</h2>
+
+          <h3 data-i18n="workflow1_title">1. View the Dashboard</h3>
+          <p data-i18n="workflow1_p">When you open the Dashboard:</p>
+          <ul class="doc-list">
+            <li><strong data-i18n="workflow1_1">The system loads KPIs first, then charts.</strong></li>
+            <li><strong data-i18n="workflow1_2">Default date range is start of year → today</strong>, unless you previously set another range.</li>
+            <li><strong data-i18n="workflow1_3">KPI cards and charts appear</strong> as data is ready.</li>
+          </ul>
+
+          <h3 data-i18n="workflow2_title">2. Change the Date Range</h3>
+          <ul class="doc-list">
+            <li data-i18n="workflow2_1">Click the <strong>Date Range</strong> button (e.g., 2025-01-01 → 2025-03-02).</li>
+            <li data-i18n="workflow2_2">A date-picker dialog opens.</li>
+            <li data-i18n="workflow2_3">Choose <strong>Start Date</strong> and <strong>End Date</strong>.</li>
+            <li data-i18n="workflow2_4">Click <strong>Apply</strong> (or equivalent confirm action).</li>
+            <li data-i18n="workflow2_5">The system reloads all dashboard data for the new range and keeps your choice for the session.</li>
+          </ul>
+
+          <h3 data-i18n="workflow3_title">3. Sync Orders from Google Sheets</h3>
+          <ul class="doc-list">
+            <li data-i18n="workflow3_1">Click <strong>Sync Orders</strong>.</li>
+            <li data-i18n="workflow3_2">A full-screen overlay appears with "Syncing with Google Sheets...".</li>
+            <li><strong data-i18n="workflow3_3a">Success:</strong> <span data-i18n="workflow3_3b">"Sync Complete: [summary]" and a refresh of the dashboard.</span></li>
+            <li><strong data-i18n="workflow3_4a">Failure:</strong> <span data-i18n="workflow3_4b">"Sync Failed: [error message]".</span></li>
+            <li data-i18n="workflow3_5">The Sync button is disabled during the sync.</li>
+          </ul>
+
+          <h3 data-i18n="workflow4_title">4. Navigate to Preparation or Shipping</h3>
+          <ul class="doc-list">
+            <li data-i18n="workflow4_1">Click the <strong>To Prepare</strong> card → opens the Preparation module.</li>
+            <li data-i18n="workflow4_2">Click the <strong>In Shipping</strong> card → opens the Shipping module.</li>
+          </ul>
+
+          <h3 data-i18n="workflow5_title">5. View More Analytics</h3>
+          <ul class="doc-list">
+            <li data-i18n="workflow5_1">Click <strong>More Analytics</strong>.</li>
+            <li data-i18n="workflow5_2">Additional sections appear: Top Governorates, Governorate Returns, Top Months, Best Days, Customer Value Distribution, VIP Customers, Returned Products, Campaign Performance.</li>
+            <li data-i18n="workflow5_3">Click again to collapse.</li>
+          </ul>
+
+          <!-- Business Rules -->
+          <h2 data-i18n="h2_rules">Business Rules & Validations</h2>
+
+          <h3 data-i18n="rules_daterange">Date Range</h3>
+          <ul class="doc-list">
+            <li data-i18n="rules_dr1">You must pick a valid <strong>start</strong> and <strong>end</strong> date.</li>
+            <li data-i18n="rules_dr2">End date cannot be before start date (enforced in the date picker).</li>
+            <li data-i18n="rules_dr3">The range is stored in your session and reused until you change it.</li>
+          </ul>
+
+          <h3 data-i18n="rules_kpi">KPI Definitions (What the Numbers Represent)</h3>
+          <div class="doc-table-wrapper">
+            <table class="doc-table">
+              <thead>
+                <tr><th>KPI</th><th data-i18n="th_rule">Rule</th></tr>
+              </thead>
+              <tbody>
+                <tr><td><strong>Total Revenue</strong></td><td data-i18n="rule_revenue">Sum of item values (order_price) for non-cancelled orders.</td></tr>
+                <tr><td><strong>Delivered</strong></td><td data-i18n="rule_delivered">Orders with status Delivered / Partially Delivered; shows count and total value.</td></tr>
+                <tr><td><strong>To Prepare</strong></td><td data-i18n="rule_prepare">Orders without a shipping company assigned and not finalized.</td></tr>
+                <tr><td><strong>In Shipping</strong></td><td data-i18n="rule_shipping">Orders with a shipping company assigned and not yet delivered/returned/cancelled.</td></tr>
+                <tr><td><strong>Returned</strong></td><td data-i18n="rule_returned">Includes Returned, Shipped on Sender, and Cancelled. Returned Money = Shipped on Sender extra cost + refurbishment costs from Quarantine.</td></tr>
+              </tbody>
+            </table>
+          </div>
+
+          <h3 data-i18n="rules_scope">Data Scope</h3>
+          <ul class="doc-list">
+            <li data-i18n="scope1">Data comes from <strong>Orders</strong> and <strong>Archived Orders</strong> within the selected date range.</li>
+            <li data-i18n="scope2">Sales and most charts use <strong>non-cancelled</strong> orders.</li>
+            <li data-i18n="scope3">Governorate return rates are only shown if a governorate has <strong>at least 5 orders</strong>.</li>
+          </ul>
+
+          <h3 data-i18n="rules_input">No Special User Input</h3>
+          <ul class="doc-list">
+            <li data-i18n="input1">The Dashboard is read-only: you do not enter or edit data.</li>
+            <li data-i18n="input2">No required fields; everything is driven by the selected date range and sync.</li>
+          </ul>
+
+          <!-- Messages -->
+          <h2 data-i18n="h2_messages">Messages & Alerts</h2>
+          <div class="doc-table-wrapper">
+            <table class="doc-table">
+              <thead>
+                <tr><th data-i18n="th_situation">Situation</th><th data-i18n="th_message">Message</th></tr>
+              </thead>
+              <tbody>
+                <tr><td data-i18n="msg_loading">Loading</td><td data-i18n="msg_loading_desc">"Loading..." overlay or similar.</td></tr>
+                <tr><td data-i18n="msg_nodata">No data</td><td data-i18n="msg_nodata_desc">"No Data Available" in charts or lists.</td></tr>
+                <tr><td data-i18n="msg_success">Sync success</td><td data-i18n="msg_success_desc">"✅ Sync Complete: [summary]" (green snackbar).</td></tr>
+                <tr><td data-i18n="msg_failure">Sync failure</td><td data-i18n="msg_failure_desc">"❌ Sync Failed: [error message]" (red snackbar).</td></tr>
+                <tr><td data-i18n="msg_error">General error</td><td data-i18n="msg_error_desc">"Error: [message]" (red snackbar).</td></tr>
+              </tbody>
+            </table>
+          </div>
+
+          <!-- Tips -->
+          <h2 data-i18n="h2_tips">Tips</h2>
+          <div class="callout callout-tip">
+            <i class="fa-solid fa-lightbulb"></i>
+            <div class="callout-content">
+              <ul class="doc-list" style="margin-bottom:0;">
+                <li data-i18n="tip1">Use a shorter date range (e.g., 1–2 weeks) for detailed daily trends.</li>
+                <li data-i18n="tip2">Use a longer range (e.g., 3–6 months) for monthly trends and broader analytics.</li>
+                <li data-i18n="tip3">Sync regularly to keep the Dashboard aligned with Google Sheets.</li>
+                <li data-i18n="tip4">Click "More Analytics" for deeper insights on geography, time, customers, and campaigns.</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <!-- ===================== FOOTER ===================== -->
+  <footer>
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <div class="nav-logo" style="color:#fff; margin-bottom:14px; display:flex; align-items:center; gap:10px;">
+            <img src="assets/logo_splash_light.png" alt="Maly OBS" />
+            <span>Maly&nbsp;-&nbsp;OBS</span>
+          </div>
+          <p data-i18n="footer_tagline">The smartest way to run your e-commerce business in Egypt.</p>
+          <div class="social-row">
+            <a href="https://www.linkedin.com/in/adhamseliman/" target="_blank" rel="noopener" class="footer-social" aria-label="LinkedIn"><i class="fa-brands fa-linkedin-in"></i></a>
+            <a href="https://web.facebook.com/sadham122" target="_blank" rel="noopener" class="footer-social" aria-label="Facebook"><i class="fa-brands fa-facebook-f"></i></a>
+            <a href="https://www.youtube.com/@adhamseliman458" target="_blank" rel="noopener" class="footer-social" aria-label="YouTube"><i class="fa-brands fa-youtube"></i></a>
+            <a href="https://wa.me/201100028752" target="_blank" rel="noopener" class="footer-social" aria-label="WhatsApp"><i class="fa-brands fa-whatsapp"></i></a>
+          </div>
+        </div>
+        <div class="footer-col">
+          <h4 data-i18n="footer_nav">Navigate</h4>
+          <ul>
+            <li><a href="index.html#features" data-i18n="nav_features">Features</a></li>
+            <li><a href="index.html#pricing" data-i18n="nav_pricing">Pricing</a></li>
+            <li><a href="index.html#privacy" data-i18n="nav_privacy">Privacy</a></li>
+            <li><a href="index.html#contact" data-i18n="nav_contact">Contact</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4 data-i18n="footer_contact_hd">Contact</h4>
+          <ul>
+            <li><span>asoliman548@gmail.com</span></li>
+            <li><span>01100028752</span></li>
+            <li><span data-i18n="footer_location">Cairo, Egypt</span></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4 data-i18n="footer_legal">Legal</h4>
+          <ul>
+            <li><a href="index.html#privacy" data-i18n="footer_privacy_link">Privacy Policy</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p data-i18n="footer_copy">© 2026 Maly Systems. All rights reserved.</p>
+        <p style="font-family:var(--font-en); font-style:italic; color:#6B7280; font-size:0.8rem;">"It's not just about money. It's Control."</p>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    const T = {
+      en: {
+        btn_back: "Back to Home",
+        doc_badge: "User Guide",
+        doc_title: "Dashboard Module",
+        doc_version: "Version 1.0",
+        nav_features: "Features", nav_pricing: "Pricing", nav_privacy: "Privacy", nav_contact: "Contact", nav_download: "Download Now",
+        footer_tagline: "The smartest way to run your e-commerce business in Egypt.",
+        footer_nav: "Navigate", footer_contact_hd: "Contact", footer_legal: "Legal", footer_privacy_link: "Privacy Policy", footer_location: "Cairo, Egypt", footer_copy: "© 2026 Maly Systems. All rights reserved.",
+        purpose_p1a: "The Dashboard is the main analytics screen in Maly - OBS. It shows your business performance at a glance using key numbers (KPIs), charts, and lists. You can choose a date range to see sales, deliveries, shipping, returns, top products, top governorates, customer insights, and campaign performance. The dashboard also lets you ",
+        purpose_strong: "sync orders from Google Sheets",
+        purpose_p1b: " so your data stays up to date.",
+        h2_purpose: "Module Purpose", h2_ui: "UI Elements", h2_workflow: "Step-by-Step Workflow", h2_rules: "Business Rules & Validations", h2_messages: "Messages & Alerts", h2_tips: "Tips",
+        h3_header: "Header Area", h3_kpi: "KPI Cards (Top Section)", h3_quickstats: "Quick Stats Row", h3_charts: "Charts & Lists", h3_more: "More Analytics (Expandable)",
+        th_element: "Element", th_description: "Description", th_stat: "Stat", th_section: "Section", th_content: "Content", kpi_card: "KPI Card", kpi_shows: "What It Shows", th_rule: "Rule", th_situation: "Situation", th_message: "Message",
+        date_range_btn: "Date Range Button", date_range_desc: "Shows the current date range (e.g., 2025-01-01 → 2025-03-02). Click to change the range.",
+        sync_orders: "Sync Orders", sync_orders_desc: "Button to fetch the latest orders from Google Sheets.",
+        kpi_revenue: "Order count and total net sales (EGP) in the selected period.",
+        kpi_delivered: "Number of delivered orders and total value (EGP).",
+        kpi_prepare: "Orders waiting to be prepared and their total value. Click to open the Preparation module.",
+        kpi_shipping: "Orders currently in transit and their total value. Click to open the Shipping module.",
+        kpi_returned: "Number of returned/cancelled orders and total cost of returns.",
+        kpi_clients: "Unique customers with orders in the period.",
+        stat_shipping: "Days from order date to shipping date (lower is better).",
+        stat_order: "Average order value in EGP.",
+        stat_returning: "Percentage of repeat customers.",
+        stat_mom: "Month-over-month revenue growth.",
+        chart_sales: "Bar chart of revenue over time (daily or monthly).",
+        chart_top: "Top 5 products by quantity sold.",
+        chart_status: "Pie chart: Delivered vs Cancelled.",
+        chart_mods: "Orders handled per moderator.",
+        chart_types: "Grouped bar chart of Exchange, Missing, etc. by month.",
+        chart_ship: "Delivered vs Returned by shipping company.",
+        chart_delivery: "Average days from ship to delivery per company.",
+        more_click: "Click More Analytics to show:",
+        more_gov: "Top 5 governorates by order count.",
+        more_returns: "Governorates with highest return rates.",
+        more_months: "Best-performing months by revenue.",
+        more_days: "Days with most orders.",
+        more_cust: "How many customers fall into each spend bucket (0–500 EGP, 500–1K, etc.).",
+        more_vip: "Top 10 customers by total spend.",
+        more_prods: "Products with most returns.",
+        more_campaign: "Ad campaigns with Spend, Revenue, ROAS, and CPO.",
+        workflow1_title: "1. View the Dashboard", workflow2_title: "2. Change the Date Range", workflow3_title: "3. Sync Orders from Google Sheets",
+        workflow4_title: "4. Navigate to Preparation or Shipping", workflow5_title: "5. View More Analytics",
+        workflow1_p: "When you open the Dashboard:",
+        workflow1_1: "The system loads KPIs first, then charts.",
+        workflow1_2: "Default date range is start of year → today",
+        workflow1_3: "KPI cards and charts appear",
+        workflow2_1: "Click the Date Range button (e.g., 2025-01-01 → 2025-03-02).",
+        workflow2_2: "A date-picker dialog opens.",
+        workflow2_3: "Choose Start Date and End Date.",
+        workflow2_4: "Click Apply (or equivalent confirm action).",
+        workflow2_5: "The system reloads all dashboard data for the new range and keeps your choice for the session.",
+        workflow3_1: "Click Sync Orders.",
+        workflow3_2: "A full-screen overlay appears with \"Syncing with Google Sheets...\".",
+        workflow3_3a: "Success:", workflow3_3b: "\"Sync Complete: [summary]\" and a refresh of the dashboard.",
+        workflow3_4a: "Failure:", workflow3_4b: "\"Sync Failed: [error message]\".",
+        workflow3_5: "The Sync button is disabled during the sync.",
+        workflow4_1: "Click the To Prepare card → opens the Preparation module.",
+        workflow4_2: "Click the In Shipping card → opens the Shipping module.",
+        workflow5_1: "Click More Analytics.",
+        workflow5_2: "Additional sections appear: Top Governorates, Governorate Returns, Top Months, Best Days, Customer Value Distribution, VIP Customers, Returned Products, Campaign Performance.",
+        workflow5_3: "Click again to collapse.",
+        rules_daterange: "Date Range", rules_kpi: "KPI Definitions (What the Numbers Represent)", rules_scope: "Data Scope", rules_input: "No Special User Input",
+        rules_dr1: "You must pick a valid start and end date.",
+        rules_dr2: "End date cannot be before start date (enforced in the date picker).",
+        rules_dr3: "The range is stored in your session and reused until you change it.",
+        rule_revenue: "Sum of item values (order_price) for non-cancelled orders.",
+        rule_delivered: "Orders with status Delivered / Partially Delivered; shows count and total value.",
+        rule_prepare: "Orders without a shipping company assigned and not finalized.",
+        rule_shipping: "Orders with a shipping company assigned and not yet delivered/returned/cancelled.",
+        rule_returned: "Includes Returned, Shipped on Sender, and Cancelled. Returned Money = Shipped on Sender extra cost + refurbishment costs from Quarantine.",
+        scope1: "Data comes from Orders and Archived Orders within the selected date range.",
+        scope2: "Sales and most charts use non-cancelled orders.",
+        scope3: "Governorate return rates are only shown if a governorate has at least 5 orders.",
+        input1: "The Dashboard is read-only: you do not enter or edit data.",
+        input2: "No required fields; everything is driven by the selected date range and sync.",
+        msg_loading: "Loading", msg_loading_desc: "\"Loading...\" overlay or similar.",
+        msg_nodata: "No data", msg_nodata_desc: "\"No Data Available\" in charts or lists.",
+        msg_success: "Sync success", msg_success_desc: "\"✅ Sync Complete: [summary]\" (green snackbar).",
+        msg_failure: "Sync failure", msg_failure_desc: "\"❌ Sync Failed: [error message]\" (red snackbar).",
+        msg_error: "General error", msg_error_desc: "\"Error: [message]\" (red snackbar).",
+        tip1: "Use a shorter date range (e.g., 1–2 weeks) for detailed daily trends.",
+        tip2: "Use a longer range (e.g., 3–6 months) for monthly trends and broader analytics.",
+        tip3: "Sync regularly to keep the Dashboard aligned with Google Sheets.",
+        tip4: "Click \"More Analytics\" for deeper insights on geography, time, customers, and campaigns."
+      },
+      ar: {
+        btn_back: "العودة للرئيسية",
+        doc_badge: "دليل المستخدم",
+        doc_title: "وحدة لوحة التحكم",
+        doc_version: "الإصدار ١.٠",
+        nav_features: "المميزات", nav_pricing: "الأسعار", nav_privacy: "الخصوصية", nav_contact: "تواصل معنا", nav_download: "تحميل الآن",
+        footer_tagline: "الطريقة الأذكى لإدارة أعمالك في التجارة الإلكترونية.",
+        footer_nav: "التنقل", footer_contact_hd: "تواصل معنا", footer_legal: "قانوني", footer_privacy_link: "سياسة الخصوصية", footer_location: "القاهرة، مصر", footer_copy: "© ٢٠٢٦ مالي سيستمز. جميع الحقوق محفوظة.",
+        purpose_p1a: "لوحة التحكم هي شاشة التحليلات الرئيسية في مالي - OBS. تعرض أداء عملك بنظرة واحدة باستخدام أرقام أساسية (مؤشرات الأداء) والرسوم البيانية والقوائم. يمكنك اختيار نطاق زمني لعرض المبيعات والتسليمات والشحن والمرتجعات وأفضل المنتجات وأفضل المحافظات ورؤى العملاء وأداء الحملات. تتيح لك لوحة التحكم أيضًا ",
+        purpose_strong: "مزامنة الطلبات من Google Sheets",
+        purpose_p1b: " لإبقاء بياناتك محدثة.",
+        h2_purpose: "نبذة عن الموديول", h2_ui: "عناصر الواجهة", h2_workflow: "خطوات العمل", h2_rules: "قواعد العمل والتحقق", h2_messages: "الرسائل والتنبيهات", h2_tips: "نصائح",
+        h3_header: "منطقة الرأس", h3_kpi: "بطاقات مؤشرات الأداء (القسم العلوي)", h3_quickstats: "صف الإحصائيات السريعة", h3_charts: "الرسوم البيانية والقوائم", h3_more: "تحليلات إضافية (قابلة للتوسيع)",
+        th_element: "العنصر", th_description: "الوصف", th_stat: "الإحصائية", th_section: "القسم", th_content: "المحتوى", kpi_card: "بطاقة المؤشر", kpi_shows: "ما تعرضه", th_rule: "القاعدة", th_situation: "الموقف", th_message: "الرسالة",
+        date_range_btn: "زر نطاق التاريخ", date_range_desc: "يعرض نطاق التاريخ الحالي (مثل 2025-01-01 ← 2025-03-02). انقر لتغيير النطاق.",
+        sync_orders: "مزامنة الطلبات", sync_orders_desc: "زر لجلب أحدث الطلبات من Google Sheets.",
+        kpi_revenue: "عدد الطلبات وإجمالي المبيعات الصافية (جنيه) في الفترة المحددة.",
+        kpi_delivered: "عدد الطلبات المُسلّمة وقيمتها الإجمالية (جنيه).",
+        kpi_prepare: "الطلبات في انتظار التجهيز وقيمتها. انقر لفتح وحدة التجهيز.",
+        kpi_shipping: "الطلبات قيد الشحن وقيمتها. انقر لفتح وحدة الشحن.",
+        kpi_returned: "عدد الطلبات المرتجعة/الملغاة وتكلفة المرتجعات.",
+        kpi_clients: "العملاء الفريدون الذين لديهم طلبات في الفترة.",
+        stat_shipping: "الأيام من تاريخ الطلب إلى تاريخ الشحن (الأقل أفضل).",
+        stat_order: "متوسط قيمة الطلب بالجنيه.",
+        stat_returning: "نسبة العملاء العائدين.",
+        stat_mom: "نمو الإيرادات شهرًا على شهر.",
+        chart_sales: "رسم بياني شريطي للإيرادات عبر الزمن (يومي أو شهري).",
+        chart_top: "أفضل ٥ منتجات من حيث الكمية المباعة.",
+        chart_status: "رسم دائري: مُسلّم مقابل ملغى.",
+        chart_mods: "الطلبات المعالجة لكل مشرف.",
+        chart_types: "رسم بياني شريطي مجمّع للاستبدال والناقص إلخ حسب الشهر.",
+        chart_ship: "المُسلّم مقابل المرتجع حسب شركة الشحن.",
+        chart_delivery: "متوسط أيام التسليم من الشحن لكل شركة.",
+        more_click: "انقر على «تحليلات إضافية» لعرض:",
+        more_gov: "أفضل ٥ محافظات بعدد الطلبات.",
+        more_returns: "المحافظات ذات أعلى معدل إرجاع.",
+        more_months: "أفضل الأشهر أداءً بالإيرادات.",
+        more_days: "أيام الأسبوع الأكثر طلباتًا.",
+        more_cust: "كم عميلًا في كل شريحة إنفاق (٠–٥٠٠ جنيه، ٥٠٠–١٠٠٠، إلخ).",
+        more_vip: "أفضل ١٠ عملاء من حيث إجمالي الإنفاق.",
+        more_prods: "المنتجات الأكثر إرجاعًا.",
+        more_campaign: "حملات إعلانية مع الإنفاق والإيرادات والعائد على الإنفاق وتكلفة الطلب.",
+        workflow1_title: "١. عرض لوحة التحكم", workflow2_title: "٢. تغيير نطاق التاريخ", workflow3_title: "٣. مزامنة الطلبات من Google Sheets",
+        workflow4_title: "٤. الانتقال للتجهيز أو الشحن", workflow5_title: "٥. عرض تحليلات إضافية",
+        workflow1_p: "عند فتح لوحة التحكم:",
+        workflow1_1: "النظام يحمّل مؤشرات الأداء أولاً ثم الرسوم البيانية.",
+        workflow1_2: "النطاق الافتراضي من بداية السنة حتى اليوم",
+        workflow1_3: "بطاقات المؤشرات والرسوم البيانية تظهر",
+        workflow2_1: "انقر على زر نطاق التاريخ (مثل 2025-01-01 ← 2025-03-02).",
+        workflow2_2: "يظهر نافذة اختيار التاريخ.",
+        workflow2_3: "اختر تاريخ البداية وتاريخ النهاية.",
+        workflow2_4: "انقر على «تطبيق» (أو ما يعادله).",
+        workflow2_5: "يعيد النظام تحميل بيانات لوحة التحكم للنطاق الجديد ويحفظ اختيارك للجلسة.",
+        workflow3_1: "انقر على مزامنة الطلبات.",
+        workflow3_2: "يظهر طبقة ملء الشاشة بـ «جاري المزامنة مع Google Sheets...».",
+        workflow3_3a: "نجاح:", workflow3_3b: "«اكتملت المزامنة: [ملخص]» وتحديث لوحة التحكم.",
+        workflow3_4a: "فشل:", workflow3_4b: "«فشلت المزامنة: [رسالة الخطأ]».",
+        workflow3_5: "زر المزامنة معطّل أثناء المزامنة.",
+        workflow4_1: "انقر على بطاقة «للتجهيز» → تفتح وحدة التجهيز.",
+        workflow4_2: "انقر على بطاقة «قيد الشحن» → تفتح وحدة الشحن.",
+        workflow5_1: "انقر على تحليلات إضافية.",
+        workflow5_2: "تظهر أقسام إضافية: أفضل المحافظات، إرجاعات المحافظات، أفضل الأشهر، أفضل الأيام، توزيع قيمة العملاء، عملاء VIP، المنتجات المرتجعة، أداء الحملات.",
+        workflow5_3: "انقر مجددًا للإخفاء.",
+        rules_daterange: "نطاق التاريخ", rules_kpi: "تعريفات المؤشرات (ما تمثله الأرقام)", rules_scope: "نطاق البيانات", rules_input: "لا مدخلات مستخدم خاصة",
+        rules_dr1: "يجب اختيار تاريخ بداية ونهاية صالحين.",
+        rules_dr2: "لا يمكن أن يكون تاريخ النهاية قبل تاريخ البداية (مُطبَّق في منتقي التاريخ).",
+        rules_dr3: "يُخزَّن النطاق في جلستك ويُعاد استخدامه حتى تغيره.",
+        rule_revenue: "مجموع قيم العناصر (سعر الطلب) للطلبات غير الملغاة.",
+        rule_delivered: "الطلبات ذات الحالة مُسلّم / مُسلّم جزئيًا؛ تعرض العدد والقيمة الإجمالية.",
+        rule_prepare: "الطلبات بدون شركة شحن مُعيّنة وغير مُنهية.",
+        rule_shipping: "الطلبات بشركة شحن مُعيّنة ولم تُسلّم أو تُرجع أو تُلغى بعد.",
+        rule_returned: "تتضمن المرتجعة والشحنة على المرسل والملغاة. المال المرتجع = تكلفة إضافية الشحنة على المرسل + تكاليف التجديد من الحجر.",
+        scope1: "البيانات من الطلبات والأرشيف ضمن نطاق التاريخ المحدد.",
+        scope2: "المبيعات ومعظم الرسوم تستخدم الطلبات غير الملغاة.",
+        scope3: "معدلات إرجاع المحافظات تُعرض فقط إذا كانت المحافظة لديها ٥ طلبات على الأقل.",
+        input1: "لوحة التحكم للقراءة فقط: لا تدخل أو تعدّل البيانات.",
+        input2: "لا حقول مطلوبة؛ كل شيء يتحكم به نطاق التاريخ والمزامنة.",
+        msg_loading: "تحميل", msg_loading_desc: "طبقة «جاري التحميل...» أو مشابهة.",
+        msg_nodata: "لا بيانات", msg_nodata_desc: "«لا توجد بيانات متاحة» في الرسوم أو القوائم.",
+        msg_success: "نجاح المزامنة", msg_success_desc: "«✅ اكتملت المزامنة: [ملخص]» (شريط أخضر).",
+        msg_failure: "فشل المزامنة", msg_failure_desc: "«❌ فشلت المزامنة: [رسالة الخطأ]» (شريط أحمر).",
+        msg_error: "خطأ عام", msg_error_desc: "«خطأ: [الرسالة]» (شريط أحمر).",
+        tip1: "استخدم نطاقًا أقصر (مثل ١–٢ أسبوع) للاتجاهات اليومية التفصيلية.",
+        tip2: "استخدم نطاقًا أطول (مثل ٣–٦ أشهر) للاتجاهات الشهرية والتحليلات الأوسع.",
+        tip3: "زامن بانتظام لإبقاء لوحة التحكم متوافقة مع Google Sheets.",
+        tip4: "انقر على «تحليلات إضافية» لرؤى أعمق عن الجغرافيا والزمن والعملاء والحملات."
+      }
+    };
+
+    let currentLang = 'en';
+
+    function applyLang(lang) {
+      currentLang = lang;
+      const html = document.documentElement;
+      html.lang = lang;
+      html.dir = lang === 'ar' ? 'rtl' : 'ltr';
+      const texts = T[lang];
+      document.querySelectorAll('[data-i18n]').forEach(el => {
+        const key = el.getAttribute('data-i18n');
+        if (texts[key] !== undefined) el.textContent = texts[key];
+      });
+      const label = lang === 'en' ? 'العربية' : 'English';
+      document.getElementById('lang-label').textContent = label;
+      document.getElementById('lang-label-mobile').textContent = label;
+      try { localStorage.setItem('maly_lang', lang); } catch(e) {}
+    }
+
+    function toggleLang() { applyLang(currentLang === 'en' ? 'ar' : 'en'); }
+
+    function toggleMenu() {
+      const menu = document.getElementById('mobile-menu');
+      const icon = document.getElementById('hamburger-icon');
+      const isOpen = menu.classList.toggle('open');
+      icon.className = isOpen ? 'fa-solid fa-xmark' : 'fa-solid fa-bars';
+    }
+    function closeMenu() {
+      document.getElementById('mobile-menu').classList.remove('open');
+      document.getElementById('hamburger-icon').className = 'fa-solid fa-bars';
+    }
+
+    window.addEventListener('scroll', () => {
+      document.getElementById('navbar').classList.toggle('scrolled', window.scrollY > 10);
+    }, { passive: true });
+
+    (function init() {
+      let saved = 'en';
+      try { saved = localStorage.getItem('maly_lang') || 'en'; } catch(e) {}
+      applyLang(saved);
+    })();
+  </script>
+</body>
+</html>

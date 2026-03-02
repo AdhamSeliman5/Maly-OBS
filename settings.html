@@ -1,0 +1,708 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Maly - OBS | Settings Module — User Guide</title>
+  <meta name="description" content="Settings module user guide: users, roles, Google Sheets, backups, subscription in Maly - OBS." />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;800&family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+
+  <style>
+    :root {
+      --primary: #1B3D6F; --primary-light: #2A5498; --accent: #C5974A; --accent-light: #F0DDB8;
+      --bg: #F5F1EB; --surface: #FFFFFF; --surface-alt: #F9F6F0; --text: #1A1A2E; --text-muted: #64748B;
+      --shadow-sm: 0 2px 8px rgba(27,61,111,0.07); --shadow-md: 0 8px 32px rgba(27,61,111,0.10);
+      --radius-sm: 8px; --radius-md: 14px; --nav-h: 76px;
+      --font-en: 'Inter', sans-serif; --font-ar: 'Cairo', sans-serif; --transition: 0.25s ease;
+      --border: #E2D9CC; --border-light: #EDE8E0;
+    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; font-size: 16px; }
+    body { font-family: var(--font-en); background-color: var(--bg); color: var(--text); line-height: 1.65; overflow-x: hidden; }
+    html[lang="ar"] body { font-family: var(--font-ar); }
+    img { max-width: 100%; display: block; }
+    a { color: inherit; text-decoration: none; }
+    ul { list-style: none; }
+    button { cursor: pointer; font-family: inherit; }
+    .container { max-width: 1160px; margin: 0 auto; padding: 0 24px; }
+
+    nav { position: fixed; top: 0; left: 0; right: 0; height: var(--nav-h); background: rgba(245, 241, 235, 0.92); backdrop-filter: blur(14px); border-bottom: 1px solid var(--border-light); z-index: 1000; transition: box-shadow var(--transition); }
+    nav.scrolled { box-shadow: var(--shadow-md); }
+    .nav-inner { display: flex; align-items: center; justify-content: space-between; height: 100%; }
+    .nav-logo { display: flex; align-items: center; gap: 10px; font-weight: 800; font-size: 1.2rem; color: var(--primary); }
+    .nav-logo img { height: 48px; width: auto; max-width: 220px; object-fit: contain; }
+    @media (max-width: 768px) { .nav-logo img.nav-logo-desktop { display: none; } .nav-logo img.nav-logo-mobile { display: block !important; } }
+    .nav-logo img.nav-logo-mobile { display: none; }
+    .nav-links { display: flex; align-items: center; gap: 8px; }
+    .nav-links a { font-size: 0.9rem; font-weight: 500; color: var(--text-muted); padding: 6px 14px; border-radius: var(--radius-sm); transition: color var(--transition), background var(--transition); }
+    .nav-links a:hover { color: var(--primary); background: rgba(27,61,111,0.06); }
+    .nav-right { display: flex; align-items: center; gap: 12px; }
+    .lang-btn { display: flex; align-items: center; gap: 6px; font-size: 0.82rem; font-weight: 600; color: var(--primary); background: var(--surface); border: 1.5px solid var(--border); padding: 6px 14px; border-radius: 20px; transition: all var(--transition); }
+    .lang-btn:hover { border-color: var(--primary); background: rgba(27,61,111,0.04); }
+    .btn-nav-cta { font-size: 0.88rem; font-weight: 600; color: #fff; background: var(--primary); padding: 8px 20px; border-radius: 8px; transition: background var(--transition), transform var(--transition); }
+    .btn-nav-cta:hover { background: var(--primary-light); transform: translateY(-1px); }
+    .hamburger { display: none; background: none; border: none; font-size: 1.4rem; color: var(--primary); }
+    .mobile-menu { display: none; flex-direction: column; background: var(--surface); border-bottom: 1px solid var(--border); padding: 12px 24px 20px; gap: 4px; }
+    .mobile-menu.open { display: flex; }
+    .mobile-menu a { font-size: 0.95rem; font-weight: 500; color: var(--text); padding: 10px 4px; border-bottom: 1px solid var(--border-light); }
+    .mobile-menu a:last-child { border: none; }
+    .mobile-menu .lang-btn { margin-top: 8px; width: fit-content; }
+
+    .doc-main { padding-top: calc(var(--nav-h) + 48px); padding-bottom: 80px; }
+    .doc-inner { max-width: 840px; margin: 0 auto; }
+    .btn-back { display: inline-flex; align-items: center; gap: 8px; font-size: 0.9rem; font-weight: 600; color: var(--primary); background: var(--surface); border: 1.5px solid var(--border); padding: 10px 20px; border-radius: var(--radius-sm); margin-bottom: 32px; transition: all var(--transition); box-shadow: var(--shadow-sm); }
+    .btn-back:hover { border-color: var(--primary); background: rgba(27,61,111,0.04); }
+    html[dir="rtl"] .btn-back i { transform: scaleX(-1); }
+    .doc-header { margin-bottom: 40px; }
+    .doc-header .doc-badge { display: inline-block; font-size: 0.75rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--accent); background: var(--accent-light); padding: 4px 12px; border-radius: 20px; margin-bottom: 12px; }
+    .doc-header h1 { font-size: clamp(1.8rem, 3vw, 2.4rem); font-weight: 800; color: var(--text); margin-bottom: 12px; line-height: 1.2; }
+    .doc-header .doc-meta { font-size: 0.9rem; color: var(--text-muted); }
+    .doc-content h2 { font-size: 1.35rem; font-weight: 700; color: var(--primary); margin-top: 48px; margin-bottom: 20px; padding-bottom: 8px; border-bottom: 2px solid var(--border-light); }
+    .doc-content h2:first-of-type { margin-top: 0; }
+    .doc-content h3 { font-size: 1.1rem; font-weight: 700; color: var(--text); margin-top: 32px; margin-bottom: 14px; }
+    .doc-content p { font-size: 1rem; color: var(--text-muted); margin-bottom: 16px; line-height: 1.75; }
+    .doc-content ul.doc-list { list-style: disc; padding-left: 24px; margin-bottom: 20px; }
+    html[dir="rtl"] .doc-content ul.doc-list { padding-left: 0; padding-right: 24px; }
+    .doc-content ul.doc-list li { margin-bottom: 8px; color: var(--text-muted); line-height: 1.7; }
+    .doc-table-wrapper { overflow-x: auto; margin: 24px 0; border-radius: var(--radius-sm); border: 1px solid var(--border-light); box-shadow: var(--shadow-sm); }
+    .doc-table { width: 100%; border-collapse: collapse; font-size: 0.95rem; }
+    .doc-table th, .doc-table td { padding: 14px 18px; text-align: left; border-bottom: 1px solid var(--border-light); vertical-align: top; }
+    html[dir="rtl"] .doc-table th, html[dir="rtl"] .doc-table td { text-align: right; }
+    .doc-table th { background: var(--surface-alt); font-weight: 700; color: var(--primary); }
+    .doc-table tr:last-child td { border-bottom: none; }
+    .doc-table tr:hover td { background: rgba(27,61,111,0.02); }
+    .callout { padding: 20px 24px; border-radius: var(--radius-md); margin: 24px 0; border-left: 4px solid; display: flex; gap: 14px; align-items: flex-start; }
+    html[dir="rtl"] .callout { border-left: none; border-right: 4px solid; }
+    .callout i { font-size: 1.2rem; flex-shrink: 0; margin-top: 2px; }
+    .callout-content { flex: 1; }
+    .callout-tip { background: rgba(34, 197, 94, 0.08); border-color: #22c55e; color: #166534; }
+    .callout-tip i { color: #22c55e; }
+
+    footer { background: #111827; color: #9CA3AF; padding: 60px 0 30px; }
+    .footer-grid { display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 40px; margin-bottom: 50px; }
+    .footer-brand .nav-logo { color: #fff; margin-bottom: 14px; }
+    .footer-brand .nav-logo img { height: 40px; width: auto; max-width: 200px; object-fit: contain; filter: brightness(0) invert(1); opacity: 0.9; }
+    .footer-brand p { font-size: 0.88rem; line-height: 1.7; max-width: 260px; color: #9CA3AF; }
+    .footer-social { width: 36px; height: 36px; border-radius: 50%; background: rgba(255,255,255,0.08); color: #D1D5DB; display: flex; align-items: center; justify-content: center; font-size: 0.9rem; transition: background var(--transition), color var(--transition); }
+    .footer-social:hover { background: var(--accent); color: #fff; }
+    .footer-col h4 { font-size: 0.85rem; font-weight: 700; color: #E5E7EB; text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 18px; }
+    .footer-col ul li { margin-bottom: 10px; }
+    .footer-col ul li a { font-size: 0.88rem; color: #9CA3AF; transition: color var(--transition); }
+    .footer-col ul li a:hover { color: #fff; }
+    .footer-col ul li span { font-size: 0.88rem; color: #9CA3AF; font-family: var(--font-en); }
+    .footer-bottom { border-top: 1px solid rgba(255,255,255,0.08); padding-top: 28px; display: flex; align-items: center; justify-content: space-between; gap: 12px; flex-wrap: wrap; }
+    html[dir="rtl"] .footer-grid { direction: rtl; }
+    html[dir="rtl"] .footer-brand p { max-width: 100%; }
+    html[dir="rtl"] .footer-bottom { flex-direction: row-reverse; }
+
+    @media (max-width: 768px) { .nav-links, .btn-nav-cta { display: none; } .hamburger { display: block; } .doc-main { padding-top: calc(var(--nav-h) + 32px); padding-bottom: 48px; } .footer-grid { grid-template-columns: 1fr 1fr; } .footer-brand { grid-column: 1 / -1; } }
+    @media (max-width: 480px) { .container { padding: 0 18px; } .doc-table th, .doc-table td { padding: 10px 14px; font-size: 0.88rem; } .footer-grid { grid-template-columns: 1fr; } }
+  </style>
+</head>
+<body>
+
+  <nav id="navbar">
+    <div class="container">
+      <div class="nav-inner">
+        <a href="index.html" class="nav-logo">
+          <img src="assets/logo_splash_light.png" alt="Maly OBS Logo" class="nav-logo-desktop" />
+          <img src="assets/logo_icon.png" alt="Maly OBS" class="nav-logo-mobile" />
+          <span>Maly&nbsp;-&nbsp;OBS</span>
+        </a>
+        <div class="nav-links">
+          <a href="index.html#features" data-i18n="nav_features">Features</a>
+          <a href="index.html#pricing" data-i18n="nav_pricing">Pricing</a>
+          <a href="index.html#privacy" data-i18n="nav_privacy">Privacy</a>
+          <a href="index.html#contact" data-i18n="nav_contact">Contact</a>
+        </div>
+        <div class="nav-right">
+          <button class="lang-btn" id="lang-toggle" onclick="toggleLang()">
+            <i class="fa-solid fa-globe"></i>
+            <span id="lang-label">العربية</span>
+          </button>
+          <a href="https://drive.google.com/uc?export=download&id=15Vp6Mm15r9nkoK8qhC0GpUmpAVAORZhd" target="_blank" rel="noopener" class="btn-nav-cta" data-i18n="nav_download">Download Now</a>
+          <button class="hamburger" onclick="toggleMenu()" aria-label="Menu"><i class="fa-solid fa-bars" id="hamburger-icon"></i></button>
+        </div>
+      </div>
+    </div>
+    <div class="mobile-menu" id="mobile-menu">
+      <a href="index.html#features" onclick="closeMenu()" data-i18n="nav_features">Features</a>
+      <a href="index.html#pricing" onclick="closeMenu()" data-i18n="nav_pricing">Pricing</a>
+      <a href="index.html#privacy" onclick="closeMenu()" data-i18n="nav_privacy">Privacy</a>
+      <a href="index.html#contact" onclick="closeMenu()" data-i18n="nav_contact">Contact</a>
+      <a href="https://drive.google.com/uc?export=download&id=15Vp6Mm15r9nkoK8qhC0GpUmpAVAORZhd" target="_blank" rel="noopener" onclick="closeMenu()" data-i18n="nav_download">Download Now</a>
+      <button class="lang-btn" onclick="toggleLang(); closeMenu();"><i class="fa-solid fa-globe"></i><span id="lang-label-mobile">العربية</span></button>
+    </div>
+  </nav>
+
+  <main class="doc-main">
+    <div class="container">
+      <div class="doc-inner">
+        <a href="index.html" class="btn-back">
+          <i class="fa-solid fa-arrow-left"></i>
+          <span data-i18n="btn_back">Back to Home</span>
+        </a>
+
+        <header class="doc-header">
+          <span class="doc-badge" data-i18n="doc_badge">User Guide</span>
+          <h1 data-i18n="doc_title">Settings / System Configuration</h1>
+          <p class="doc-meta">Maly - OBS (Online Business System) · <span data-i18n="doc_version">Version 1.0</span></p>
+        </header>
+
+        <div class="doc-content">
+          <h2 data-i18n="h2_purpose">Module Purpose</h2>
+          <p data-i18n="purpose_p1">The Settings module manages system configuration, user accounts, Google Sheets integration, backups, and subscription. You add and edit users with roles (Manager, Staff) and module permissions, connect a Google account, link or create a Google Sheet for orders sync, push system data or pull orders, run smart archiving, create backups, export/import data, and perform maintenance actions (clear transactions, delete orders, replace table data, factory reset). Auto-backup can be scheduled. The Subscription tab shows license status and allows activation. Access to Settings is restricted to Manager role; non-Managers see an access-denied message.</p>
+
+          <h2 data-i18n="h2_ui">UI Elements</h2>
+
+          <h3 data-i18n="h3_access">Access Control</h3>
+          <div class="doc-table-wrapper">
+            <table class="doc-table">
+              <thead><tr><th data-i18n="th_condition">Condition</th><th data-i18n="th_result">Result</th></tr></thead>
+              <tbody>
+                <tr><td><strong>Manager</strong></td><td data-i18n="access_manager">Full access to all tabs</td></tr>
+                <tr><td><strong>Non-Manager</strong></td><td data-i18n="access_denied">"Access Denied" — Manager only</td></tr>
+                <tr><td><strong data-i18n="access_sub">Subscription tab only</strong></td><td data-i18n="access_sub_desc">Can be shown for non-Managers in license-only mode</td></tr>
+              </tbody>
+            </table>
+          </div>
+
+          <h3 data-i18n="h3_tabs">Tab Navigation</h3>
+          <div class="doc-table-wrapper">
+            <table class="doc-table">
+              <thead><tr><th data-i18n="th_tab">Tab</th><th data-i18n="th_content">Content</th></tr></thead>
+              <tbody>
+                <tr><td><strong data-i18n="tab_users">Users & Roles</strong></td><td data-i18n="tab_users_desc">User cards, Add User</td></tr>
+                <tr><td><strong data-i18n="tab_cloud">Cloud</strong></td><td data-i18n="tab_cloud_desc">Google account, Sheet config, Sync/Archive actions</td></tr>
+                <tr><td><strong>Backup</strong></td><td data-i18n="tab_backup_desc">Manual backup, Export/Import, Auto-backup, Danger Zone</td></tr>
+                <tr><td><strong>Subscription</strong></td><td data-i18n="tab_subs_desc">License status, plan, expiry, HWID, activation</td></tr>
+              </tbody>
+            </table>
+          </div>
+
+          <h3 data-i18n="h3_users">Users Tab</h3>
+          <div class="doc-table-wrapper">
+            <table class="doc-table">
+              <thead><tr><th data-i18n="th_element">Element</th><th data-i18n="th_description">Description</th></tr></thead>
+              <tbody>
+                <tr><td><strong data-i18n="users_add">Add User</strong></td><td data-i18n="users_add_desc">Button — open add user dialog</td></tr>
+                <tr><td><strong data-i18n="users_cards">User Cards</strong></td><td data-i18n="users_cards_desc">Name, @username, Role badge, Active/Locked badge, Allowed Modules chips, Edit, Delete</td></tr>
+                <tr><td><strong>Edit / Delete</strong></td><td data-i18n="users_edit_delete">Icon — open edit dialog / confirm and deactivate</td></tr>
+              </tbody>
+            </table>
+          </div>
+
+          <h3 data-i18n="h3_user_dialog">Add/Edit User Dialog</h3>
+          <div class="doc-table-wrapper">
+            <table class="doc-table">
+              <thead><tr><th data-i18n="th_element">Element</th><th data-i18n="th_description">Description</th></tr></thead>
+              <tbody>
+                <tr><td><strong>Name</strong></td><td data-i18n="user_name">Text field — display name</td></tr>
+                <tr><td><strong>Username</strong></td><td data-i18n="user_username">Text field — login username</td></tr>
+                <tr><td><strong>Password</strong></td><td data-i18n="user_password">Required for add; optional for edit (leave empty to keep current)</td></tr>
+                <tr><td><strong>Role</strong></td><td data-i18n="user_role">Dropdown — Manager or Staff</td></tr>
+                <tr><td><strong data-i18n="user_active">Active Account</strong></td><td data-i18n="user_active_desc">Switch — on = Active, off = Locked</td></tr>
+                <tr><td><strong>Permissions</strong></td><td data-i18n="user_perms">Checkboxes — Dashboard, Preparation, Inventory, Manufacturing, Expenses, Shipping, Debts, Ads, Staff, Reports, Settings</td></tr>
+              </tbody>
+            </table>
+          </div>
+
+          <h3 data-i18n="h3_cloud">Cloud Tab — Google & Sheet</h3>
+          <div class="doc-table-wrapper">
+            <table class="doc-table">
+              <thead><tr><th data-i18n="th_element">Element</th><th data-i18n="th_description">Description</th></tr></thead>
+              <tbody>
+                <tr><td><strong>Status</strong></td><td data-i18n="cloud_status">Connected / Not Connected</td></tr>
+                <tr><td><strong data-i18n="cloud_connect">Connect Account</strong></td><td data-i18n="cloud_connect_desc">Button — OAuth flow (disabled when connected)</td></tr>
+                <tr><td><strong>Disconnect</strong></td><td data-i18n="cloud_disconnect">Button — remove token</td></tr>
+                <tr><td><strong>Sheet URL / ID</strong></td><td data-i18n="cloud_sheet">Text field — paste URL or ID; Create Sheet, Link Existing, Check Access, Unlink</td></tr>
+                <tr><td><strong data-i18n="cloud_push">Push System Data</strong></td><td data-i18n="cloud_push_desc">Sync products, governors to sheet</td></tr>
+                <tr><td><strong data-i18n="cloud_fetch">Fetch New Orders</strong></td><td data-i18n="cloud_fetch_desc">Pull orders from Google Sheet</td></tr>
+                <tr><td><strong>Archive</strong></td><td data-i18n="cloud_archive">Button — smart archiving (move finalized orders to archive)</td></tr>
+              </tbody>
+            </table>
+          </div>
+
+          <h3 data-i18n="h3_backup">Backup Tab</h3>
+          <div class="doc-table-wrapper">
+            <table class="doc-table">
+              <thead><tr><th data-i18n="th_card">Card</th><th data-i18n="th_description">Description</th></tr></thead>
+              <tbody>
+                <tr><td><strong data-i18n="backup_manual">Manual Backup</strong></td><td data-i18n="backup_manual_desc">Backup Database, Export as CSV, Import Database</td></tr>
+                <tr><td><strong data-i18n="backup_auto">Auto-Backup</strong></td><td data-i18n="backup_auto_desc">Enable on app start; Frequency (Daily/Weekly); Max Backups (1–50)</td></tr>
+                <tr><td><strong>Storage Info</strong></td><td data-i18n="backup_storage">Last Backup, Backup Files count, Backup Storage size</td></tr>
+                <tr><td><strong data-i18n="backup_danger">Danger Zone</strong></td><td data-i18n="backup_danger_desc">Clear Transactions, Delete All Orders, Replace Entire Table, Factory Reset (admin password required)</td></tr>
+              </tbody>
+            </table>
+          </div>
+
+          <h3 data-i18n="h3_subs">Subscription Tab</h3>
+          <div class="doc-table-wrapper">
+            <table class="doc-table">
+              <thead><tr><th data-i18n="th_element">Element</th><th data-i18n="th_description">Description</th></tr></thead>
+              <tbody>
+                <tr><td><strong>Status</strong></td><td data-i18n="subs_status">Active / Expired — license message</td></tr>
+                <tr><td><strong>Plan</strong></td><td data-i18n="subs_plan">Basic, Premium, Unknown</td></tr>
+                <tr><td><strong>Expiry / Days Left</strong></td><td data-i18n="subs_expiry">Date or N/A; count or "Expired"</td></tr>
+                <tr><td><strong>HWID</strong></td><td data-i18n="subs_hwid">Hardware ID — copyable</td></tr>
+                <tr><td><strong>License Key</strong></td><td data-i18n="subs_key">Text field — paste key; Activate button</td></tr>
+              </tbody>
+            </table>
+          </div>
+
+          <h2 data-i18n="h2_workflow">Step-by-Step Workflow</h2>
+
+          <h3 data-i18n="w1_title">1. Add a User</h3>
+          <ul class="doc-list">
+            <li data-i18n="w1_1">Open Users & Roles tab. Click Add User.</li>
+            <li data-i18n="w1_2">Enter Name, Username, Password (required for new users).</li>
+            <li data-i18n="w1_3">Select Role (Manager or Staff). Set Active Account. Check Allowed Modules.</li>
+            <li data-i18n="w1_4">Click Save. Success: green snackbar. Manager always gets Settings access. Duplicate username: "Username 'X' is already taken!"</li>
+          </ul>
+
+          <h3 data-i18n="w2_title">2. Edit a User</h3>
+          <ul class="doc-list">
+            <li data-i18n="w2_1">Click Edit on a user card.</li>
+            <li data-i18n="w2_2">Change Name, Username, Password (leave empty to keep), Role, Active, or Permissions.</li>
+            <li data-i18n="w2_3">Click Save. Success: green snackbar.</li>
+          </ul>
+
+          <h3 data-i18n="w3_title">3. Delete (Deactivate) a User</h3>
+          <ul class="doc-list">
+            <li data-i18n="w3_1">Click Delete on a user card. Confirm.</li>
+            <li data-i18n="w3_2">User is soft-deleted (deactivated); credentials cleared.</li>
+            <li data-i18n="w3_3">Cannot delete self: "Cannot delete self". Cannot delete admin: "Cannot delete main admin account."</li>
+          </ul>
+
+          <h3 data-i18n="w4_title">4. Connect Google Account</h3>
+          <ul class="doc-list">
+            <li data-i18n="w4_1">Open Cloud tab. Click Connect Account.</li>
+            <li data-i18n="w4_2">Complete OAuth in browser. Status shows "Connected"; Disconnect enabled.</li>
+          </ul>
+
+          <h3 data-i18n="w5_title">5. Link a Google Sheet</h3>
+          <ul class="doc-list">
+            <li data-i18n="w5_1">Paste Google Sheet URL or ID. Click Link Existing (or Create Sheet for new).</li>
+            <li data-i18n="w5_2">Success: "Linked Successfully". Invalid: "Invalid URL or ID". Access denied: "Access Denied: [message]".</li>
+          </ul>
+
+          <h3 data-i18n="w6_title">6. Push / Fetch / Archive</h3>
+          <ul class="doc-list">
+            <li data-i18n="w6_1">Push System Data: sync products, governors to sheet.</li>
+            <li data-i18n="w6_2">Fetch New Orders: pull orders from sheet.</li>
+            <li data-i18n="w6_3">Archive: move finalized orders to archive. No linked sheet: "No linked Google Sheet. Please link one first."</li>
+          </ul>
+
+          <h3 data-i18n="w7_title">7. Create Backup & Export</h3>
+          <ul class="doc-list">
+            <li data-i18n="w7_1">Backup tab → Backup Database. Creates .db file. Success: "Backup Created: Backup_YYYYMMDD_HHMMSS.db".</li>
+            <li data-i18n="w7_2">Export as CSV: exports all tables to ZIP. Success: "Exported N tables to [filename]".</li>
+          </ul>
+
+          <h3 data-i18n="w8_title">8. Import Database</h3>
+          <ul class="doc-list">
+            <li data-i18n="w8_1">Click Import Database. Choose Restore from .db or Import from CSV (ZIP).</li>
+            <li data-i18n="w8_2">Select file. Confirm. Success: "Database Restored. Please Restart App." or "Database imported from CSV. Please restart the app."</li>
+          </ul>
+
+          <h3 data-i18n="w9_title">9. Configure Auto-Backup</h3>
+          <ul class="doc-list">
+            <li data-i18n="w9_1">Enable Auto-Backup on App Start. Select Frequency (Daily/Weekly). Set Max Backups (1–50).</li>
+            <li data-i18n="w9_2">Click Save. Success: "Settings Saved".</li>
+          </ul>
+
+          <h3 data-i18n="w10_title">10. Danger Zone Actions</h3>
+          <ul class="doc-list">
+            <li data-i18n="w10_1">Delete All Orders: enter Admin Password → Confirm. Clears orders and order_items.</li>
+            <li data-i18n="w10_2">Replace Table: select table, download template, upload file, enter password, Execute.</li>
+            <li data-i18n="w10_3">Clear Transactions (Level 1): clears transaction tables; starts new year.</li>
+            <li data-i18n="w10_4">Factory Reset (Level 2): clears products, campaigns, partners; keeps users and settings.</li>
+            <li data-i18n="w10_5">Wrong password: "Wrong password!". Admin password required.</li>
+          </ul>
+
+          <h3 data-i18n="w11_title">11. Activate License</h3>
+          <ul class="doc-list">
+            <li data-i18n="w11_1">Open Subscription tab. Paste License Key. Click Activate.</li>
+            <li data-i18n="w11_2">Success: "License activated". Empty key: "License key required". Invalid: error message.</li>
+          </ul>
+
+          <h2 data-i18n="h2_rules">Business Rules & Validations</h2>
+
+          <h3 data-i18n="r_users">Users</h3>
+          <div class="doc-table-wrapper">
+            <table class="doc-table">
+              <thead><tr><th data-i18n="th_rule">Rule</th><th data-i18n="th_result">Result</th></tr></thead>
+              <tbody>
+                <tr><td data-i18n="r_creds">Name/Username/Password required</td><td data-i18n="r_creds_res">"Missing credentials" / dialog stays open</td></tr>
+                <tr><td data-i18n="r_duplicate">Duplicate username</td><td data-i18n="r_duplicate_res">"Username 'X' is already taken!"</td></tr>
+                <tr><td data-i18n="r_manager">Manager</td><td data-i18n="r_manager_res">Always gets Settings in allowed_modules</td></tr>
+                <tr><td data-i18n="r_del_self">Delete self</td><td data-i18n="r_del_self_res">"Cannot delete self"</td></tr>
+                <tr><td data-i18n="r_del_admin">Delete admin</td><td data-i18n="r_del_admin_res">"Cannot delete main admin account."</td></tr>
+              </tbody>
+            </table>
+          </div>
+
+          <h3 data-i18n="r_cloud">Google & Sheet</h3>
+          <div class="doc-table-wrapper">
+            <table class="doc-table">
+              <thead><tr><th data-i18n="th_rule">Rule</th><th data-i18n="th_result">Result</th></tr></thead>
+              <tbody>
+                <tr><td data-i18n="r_invalid_url">Invalid URL/ID</td><td data-i18n="r_invalid_url_res">"Invalid URL or ID"</td></tr>
+                <tr><td data-i18n="r_no_sheet">No linked sheet for sync</td><td data-i18n="r_no_sheet_res">"No linked Google Sheet. Please link one first."</td></tr>
+                <tr><td data-i18n="r_create_disabled">Create/Link</td><td data-i18n="r_create_disabled_res">Disabled when sheet already linked</td></tr>
+              </tbody>
+            </table>
+          </div>
+
+          <h3 data-i18n="r_danger">Danger Zone</h3>
+          <div class="doc-table-wrapper">
+            <table class="doc-table">
+              <thead><tr><th data-i18n="th_rule">Rule</th><th data-i18n="th_result">Result</th></tr></thead>
+              <tbody>
+                <tr><td data-i18n="r_admin_pw">Admin password</td><td data-i18n="r_admin_pw_res">Required for Delete Orders, Replace Table, Factory Reset</td></tr>
+                <tr><td data-i18n="r_wrong_pw">Wrong password</td><td data-i18n="r_wrong_pw_res">"Wrong password!"</td></tr>
+                <tr><td data-i18n="r_replace_cols">Replace table columns</td><td data-i18n="r_replace_cols_res">File columns must exactly match table columns</td></tr>
+                <tr><td data-i18n="r_level1">Level 1 Reset</td><td data-i18n="r_level1_res">Clears transactions; resets balances</td></tr>
+                <tr><td data-i18n="r_level2">Level 2 Reset</td><td data-i18n="r_level2_res">Clears products, campaigns, partners; keeps users</td></tr>
+              </tbody>
+            </table>
+          </div>
+
+          <h2 data-i18n="h2_messages">Messages & Alerts</h2>
+          <div class="doc-table-wrapper">
+            <table class="doc-table">
+              <thead><tr><th data-i18n="th_situation">Situation</th><th data-i18n="th_message">Message</th></tr></thead>
+              <tbody>
+                <tr><td data-i18n="m_saved">User saved</td><td data-i18n="m_saved_msg">"User Saved Successfully" (green)</td></tr>
+                <tr><td data-i18n="m_deleted">User deleted</td><td data-i18n="m_deleted_msg">"User Deactivated" (green)</td></tr>
+                <tr><td data-i18n="m_username_taken">Username taken</td><td data-i18n="m_username_taken_msg">"Username 'X' is already taken!" (red)</td></tr>
+                <tr><td data-i18n="m_linked">Linked successfully</td><td data-i18n="m_linked_msg">"Linked Successfully" (green)</td></tr>
+                <tr><td data-i18n="m_backup">Backup created</td><td data-i18n="m_backup_msg">"Backup Created: Backup_YYYYMMDD_HHMMSS.db" (green)</td></tr>
+                <tr><td data-i18n="m_restore">Restore success</td><td data-i18n="m_restore_msg">"Database Restored. Please Restart App." (green)</td></tr>
+                <tr><td data-i18n="m_settings">Auto-backup saved</td><td data-i18n="m_settings_msg">"Settings Saved" (green)</td></tr>
+                <tr><td data-i18n="m_license">License activated</td><td data-i18n="m_license_msg">"License activated" (green)</td></tr>
+                <tr><td data-i18n="m_access_denied">Access denied</td><td data-i18n="m_access_denied_msg">"Access Denied" / "Manager only" (red)</td></tr>
+              </tbody>
+            </table>
+          </div>
+
+          <h2 data-i18n="h2_tips">Tips</h2>
+          <div class="callout callout-tip">
+            <i class="fa-solid fa-lightbulb"></i>
+            <div class="callout-content">
+              <ul class="doc-list" style="margin-bottom:0;">
+                <li data-i18n="tip1">Manager always has Settings access; the checkbox is enforced automatically.</li>
+                <li data-i18n="tip2">Staff can be restricted to specific modules via the permissions checkboxes.</li>
+                <li data-i18n="tip3">Soft delete keeps the employee record; only credentials and active status are cleared.</li>
+                <li data-i18n="tip4">Link Existing accepts full URL or sheet ID; ID is extracted from URLs automatically.</li>
+                <li data-i18n="tip5">Create Sheet creates a new Google Sheet and links it; disabled when one is already linked.</li>
+                <li data-i18n="tip6">Export CSV produces a ZIP with one CSV per table; useful for Excel or migration.</li>
+                <li data-i18n="tip7">Import CSV replaces table data; column names must match exactly.</li>
+                <li data-i18n="tip8">Replace Table uses the same column structure as the template; download template first.</li>
+                <li data-i18n="tip9">Level 1 Reset clears transactions for a new fiscal year; Level 2 is a deep reset.</li>
+                <li data-i18n="tip10">Auto-backup runs on app start when due (daily or weekly based on frequency).</li>
+                <li data-i18n="tip11">Backups are stored in the Backups folder; older files are pruned by max count.</li>
+                <li data-i18n="tip12">Subscription tab may be the only accessible section for non-Managers when license activation is required.</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <footer>
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <div class="nav-logo" style="color:#fff; margin-bottom:14px; display:flex; align-items:center; gap:10px;">
+            <img src="assets/logo_splash_light.png" alt="Maly OBS" />
+            <span>Maly&nbsp;-&nbsp;OBS</span>
+          </div>
+          <p data-i18n="footer_tagline">The smartest way to run your e-commerce business in Egypt.</p>
+          <div class="social-row">
+            <a href="https://www.linkedin.com/in/adhamseliman/" target="_blank" rel="noopener" class="footer-social"><i class="fa-brands fa-linkedin-in"></i></a>
+            <a href="https://web.facebook.com/sadham122" target="_blank" rel="noopener" class="footer-social"><i class="fa-brands fa-facebook-f"></i></a>
+            <a href="https://www.youtube.com/@adhamseliman458" target="_blank" rel="noopener" class="footer-social"><i class="fa-brands fa-youtube"></i></a>
+            <a href="https://wa.me/201100028752" target="_blank" rel="noopener" class="footer-social"><i class="fa-brands fa-whatsapp"></i></a>
+          </div>
+        </div>
+        <div class="footer-col">
+          <h4 data-i18n="footer_nav">Navigate</h4>
+          <ul>
+            <li><a href="index.html#features" data-i18n="nav_features">Features</a></li>
+            <li><a href="index.html#pricing" data-i18n="nav_pricing">Pricing</a></li>
+            <li><a href="index.html#privacy" data-i18n="nav_privacy">Privacy</a></li>
+            <li><a href="index.html#contact" data-i18n="nav_contact">Contact</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4 data-i18n="footer_contact_hd">Contact</h4>
+          <ul>
+            <li><span>asoliman548@gmail.com</span></li>
+            <li><span>01100028752</span></li>
+            <li><span data-i18n="footer_location">Cairo, Egypt</span></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4 data-i18n="footer_legal">Legal</h4>
+          <ul><li><a href="index.html#privacy" data-i18n="footer_privacy_link">Privacy Policy</a></li></ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p data-i18n="footer_copy">© 2026 Maly Systems. All rights reserved.</p>
+        <p style="font-family:var(--font-en); font-style:italic; color:#6B7280; font-size:0.8rem;">"It's not just about money. It's Control."</p>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    const T = {
+      en: {
+        btn_back: "Back to Home", doc_badge: "User Guide", doc_title: "Settings / System Configuration", doc_version: "Version 1.0",
+        nav_features: "Features", nav_pricing: "Pricing", nav_privacy: "Privacy", nav_contact: "Contact", nav_download: "Download Now",
+        footer_tagline: "The smartest way to run your e-commerce business in Egypt.",
+        footer_nav: "Navigate", footer_contact_hd: "Contact", footer_legal: "Legal", footer_privacy_link: "Privacy Policy", footer_location: "Cairo, Egypt", footer_copy: "© 2026 Maly Systems. All rights reserved.",
+        h2_purpose: "Module Purpose", h2_ui: "UI Elements", h2_workflow: "Step-by-Step Workflow", h2_rules: "Business Rules & Validations", h2_messages: "Messages & Alerts", h2_tips: "Tips",
+        th_element: "Element", th_description: "Description", th_card: "Card", th_tab: "Tab", th_content: "Content", th_rule: "Rule", th_result: "Result", th_condition: "Condition", th_situation: "Situation", th_message: "Message",
+        purpose_p1: "The Settings module manages system configuration, user accounts, Google Sheets integration, backups, and subscription. You add and edit users with roles (Manager, Staff) and module permissions, connect a Google account, link or create a Google Sheet for orders sync, push system data or pull orders, run smart archiving, create backups, export/import data, and perform maintenance actions (clear transactions, delete orders, replace table data, factory reset). Auto-backup can be scheduled. The Subscription tab shows license status and allows activation. Access to Settings is restricted to Manager role; non-Managers see an access-denied message.",
+        h3_access: "Access Control", h3_tabs: "Tab Navigation", h3_users: "Users Tab", h3_user_dialog: "Add/Edit User Dialog",
+        h3_cloud: "Cloud Tab — Google & Sheet", h3_backup: "Backup Tab", h3_subs: "Subscription Tab",
+        access_manager: "Full access to all tabs", access_denied: "\"Access Denied\" — Manager only",
+        access_sub: "Subscription tab only", access_sub_desc: "Can be shown for non-Managers in license-only mode",
+        tab_users: "Users & Roles", tab_users_desc: "User cards, Add User",
+        tab_cloud: "Cloud", tab_cloud_desc: "Google account, Sheet config, Sync/Archive actions",
+        tab_backup_desc: "Manual backup, Export/Import, Auto-backup, Danger Zone",
+        tab_subs_desc: "License status, plan, expiry, HWID, activation",
+        users_add: "Add User", users_add_desc: "Button — open add user dialog",
+        users_cards: "User Cards", users_cards_desc: "Name, @username, Role badge, Active/Locked badge, Allowed Modules chips, Edit, Delete",
+        users_edit_delete: "Icon — open edit dialog / confirm and deactivate",
+        user_name: "Text field — display name", user_username: "Text field — login username",
+        user_password: "Required for add; optional for edit (leave empty to keep current)",
+        user_role: "Dropdown — Manager or Staff",
+        user_active: "Active Account", user_active_desc: "Switch — on = Active, off = Locked",
+        user_perms: "Checkboxes — Dashboard, Preparation, Inventory, Manufacturing, Expenses, Shipping, Debts, Ads, Staff, Reports, Settings",
+        cloud_status: "Connected / Not Connected",
+        cloud_connect: "Connect Account", cloud_connect_desc: "Button — OAuth flow (disabled when connected)",
+        cloud_disconnect: "Button — remove token",
+        cloud_sheet: "Text field — paste URL or ID; Create Sheet, Link Existing, Check Access, Unlink",
+        cloud_push: "Push System Data", cloud_push_desc: "Sync products, governors to sheet",
+        cloud_fetch: "Fetch New Orders", cloud_fetch_desc: "Pull orders from Google Sheet",
+        cloud_archive: "Button — smart archiving (move finalized orders to archive)",
+        backup_manual: "Manual Backup", backup_manual_desc: "Backup Database, Export as CSV, Import Database",
+        backup_auto: "Auto-Backup", backup_auto_desc: "Enable on app start; Frequency (Daily/Weekly); Max Backups (1–50)",
+        backup_storage: "Last Backup, Backup Files count, Backup Storage size",
+        backup_danger: "Danger Zone", backup_danger_desc: "Clear Transactions, Delete All Orders, Replace Entire Table, Factory Reset (admin password required)",
+        subs_status: "Active / Expired — license message", subs_plan: "Basic, Premium, Unknown",
+        subs_expiry: "Date or N/A; count or \"Expired\"", subs_hwid: "Hardware ID — copyable",
+        subs_key: "Text field — paste key; Activate button",
+        w1_title: "1. Add a User", w1_1: "Open Users & Roles tab. Click Add User.",
+        w1_2: "Enter Name, Username, Password (required for new users).",
+        w1_3: "Select Role (Manager or Staff). Set Active Account. Check Allowed Modules.",
+        w1_4: "Click Save. Success: green snackbar. Manager always gets Settings access. Duplicate username: \"Username 'X' is already taken!\"",
+        w2_title: "2. Edit a User", w2_1: "Click Edit on a user card.",
+        w2_2: "Change Name, Username, Password (leave empty to keep), Role, Active, or Permissions.",
+        w2_3: "Click Save. Success: green snackbar.",
+        w3_title: "3. Delete (Deactivate) a User", w3_1: "Click Delete on a user card. Confirm.",
+        w3_2: "User is soft-deleted (deactivated); credentials cleared.",
+        w3_3: "Cannot delete self: \"Cannot delete self\". Cannot delete admin: \"Cannot delete main admin account.\"",
+        w4_title: "4. Connect Google Account", w4_1: "Open Cloud tab. Click Connect Account.",
+        w4_2: "Complete OAuth in browser. Status shows \"Connected\"; Disconnect enabled.",
+        w5_title: "5. Link a Google Sheet", w5_1: "Paste Google Sheet URL or ID. Click Link Existing (or Create Sheet for new).",
+        w5_2: "Success: \"Linked Successfully\". Invalid: \"Invalid URL or ID\". Access denied: \"Access Denied: [message]\".",
+        w6_title: "6. Push / Fetch / Archive", w6_1: "Push System Data: sync products, governors to sheet.",
+        w6_2: "Fetch New Orders: pull orders from sheet.",
+        w6_3: "Archive: move finalized orders to archive. No linked sheet: \"No linked Google Sheet. Please link one first.\"",
+        w7_title: "7. Create Backup & Export", w7_1: "Backup tab → Backup Database. Creates .db file. Success: \"Backup Created: Backup_YYYYMMDD_HHMMSS.db\".",
+        w7_2: "Export as CSV: exports all tables to ZIP. Success: \"Exported N tables to [filename]\".",
+        w8_title: "8. Import Database", w8_1: "Click Import Database. Choose Restore from .db or Import from CSV (ZIP).",
+        w8_2: "Select file. Confirm. Success: \"Database Restored. Please Restart App.\" or \"Database imported from CSV. Please restart the app.\"",
+        w9_title: "9. Configure Auto-Backup", w9_1: "Enable Auto-Backup on App Start. Select Frequency (Daily/Weekly). Set Max Backups (1–50).",
+        w9_2: "Click Save. Success: \"Settings Saved\".",
+        w10_title: "10. Danger Zone Actions", w10_1: "Delete All Orders: enter Admin Password → Confirm. Clears orders and order_items.",
+        w10_2: "Replace Table: select table, download template, upload file, enter password, Execute.",
+        w10_3: "Clear Transactions (Level 1): clears transaction tables; starts new year.",
+        w10_4: "Factory Reset (Level 2): clears products, campaigns, partners; keeps users and settings.",
+        w10_5: "Wrong password: \"Wrong password!\". Admin password required.",
+        w11_title: "11. Activate License", w11_1: "Open Subscription tab. Paste License Key. Click Activate.",
+        w11_2: "Success: \"License activated\". Empty key: \"License key required\". Invalid: error message.",
+        r_users: "Users", r_creds: "Name/Username/Password required", r_creds_res: "\"Missing credentials\" / dialog stays open",
+        r_duplicate: "Duplicate username", r_duplicate_res: "\"Username 'X' is already taken!\"",
+        r_manager: "Manager", r_manager_res: "Always gets Settings in allowed_modules",
+        r_del_self: "Delete self", r_del_self_res: "\"Cannot delete self\"",
+        r_del_admin: "Delete admin", r_del_admin_res: "\"Cannot delete main admin account.\"",
+        r_cloud: "Google & Sheet", r_invalid_url: "Invalid URL/ID", r_invalid_url_res: "\"Invalid URL or ID\"",
+        r_no_sheet: "No linked sheet for sync", r_no_sheet_res: "\"No linked Google Sheet. Please link one first.\"",
+        r_create_disabled: "Create/Link", r_create_disabled_res: "Disabled when sheet already linked",
+        r_danger: "Danger Zone", r_admin_pw: "Admin password", r_admin_pw_res: "Required for Delete Orders, Replace Table, Factory Reset",
+        r_wrong_pw: "Wrong password", r_wrong_pw_res: "\"Wrong password!\"",
+        r_replace_cols: "Replace table columns", r_replace_cols_res: "File columns must exactly match table columns",
+        r_level1: "Level 1 Reset", r_level1_res: "Clears transactions; resets balances",
+        r_level2: "Level 2 Reset", r_level2_res: "Clears products, campaigns, partners; keeps users",
+        m_saved: "User saved", m_saved_msg: "\"User Saved Successfully\" (green)",
+        m_deleted: "User deleted", m_deleted_msg: "\"User Deactivated\" (green)",
+        m_username_taken: "Username taken", m_username_taken_msg: "\"Username 'X' is already taken!\" (red)",
+        m_linked: "Linked successfully", m_linked_msg: "\"Linked Successfully\" (green)",
+        m_backup: "Backup created", m_backup_msg: "\"Backup Created: Backup_YYYYMMDD_HHMMSS.db\" (green)",
+        m_restore: "Restore success", m_restore_msg: "\"Database Restored. Please Restart App.\" (green)",
+        m_settings: "Auto-backup saved", m_settings_msg: "\"Settings Saved\" (green)",
+        m_license: "License activated", m_license_msg: "\"License activated\" (green)",
+        m_access_denied: "Access denied", m_access_denied_msg: "\"Access Denied\" / \"Manager only\" (red)",
+        tip1: "Manager always has Settings access; the checkbox is enforced automatically.",
+        tip2: "Staff can be restricted to specific modules via the permissions checkboxes.",
+        tip3: "Soft delete keeps the employee record; only credentials and active status are cleared.",
+        tip4: "Link Existing accepts full URL or sheet ID; ID is extracted from URLs automatically.",
+        tip5: "Create Sheet creates a new Google Sheet and links it; disabled when one is already linked.",
+        tip6: "Export CSV produces a ZIP with one CSV per table; useful for Excel or migration.",
+        tip7: "Import CSV replaces table data; column names must match exactly.",
+        tip8: "Replace Table uses the same column structure as the template; download template first.",
+        tip9: "Level 1 Reset clears transactions for a new fiscal year; Level 2 is a deep reset.",
+        tip10: "Auto-backup runs on app start when due (daily or weekly based on frequency).",
+        tip11: "Backups are stored in the Backups folder; older files are pruned by max count.",
+        tip12: "Subscription tab may be the only accessible section for non-Managers when license activation is required."
+      },
+      ar: {
+        btn_back: "العودة للرئيسية", doc_badge: "دليل المستخدم", doc_title: "الإعدادات / تكوين النظام", doc_version: "الإصدار ١.٠",
+        nav_features: "المميزات", nav_pricing: "الأسعار", nav_privacy: "الخصوصية", nav_contact: "تواصل معنا", nav_download: "تحميل الآن",
+        footer_tagline: "الطريقة الأذكى لإدارة أعمالك في التجارة الإلكترونية.",
+        footer_nav: "التنقل", footer_contact_hd: "تواصل معنا", footer_legal: "قانوني", footer_privacy_link: "سياسة الخصوصية", footer_location: "القاهرة، مصر", footer_copy: "© ٢٠٢٦ مالي سيستمز. جميع الحقوق محفوظة.",
+        h2_purpose: "نبذة عن الموديول", h2_ui: "عناصر الواجهة", h2_workflow: "خطوات العمل", h2_rules: "قواعد العمل والتحقق", h2_messages: "الرسائل والتنبيهات", h2_tips: "نصائح",
+        th_element: "العنصر", th_description: "الوصف", th_card: "البطاقة", th_tab: "التبويب", th_content: "المحتوى", th_rule: "القاعدة", th_result: "النتيجة", th_condition: "الشرط", th_situation: "الموقف", th_message: "الرسالة",
+        purpose_p1: "وحدة الإعدادات تدير تكوين النظام، حسابات المستخدمين، تكامل جداول جوجل، النسخ الاحتياطية، والاشتراك. تضيف وتعدّل المستخدمين بأدوار (مدير، موظف) وصلاحيات الموديولات، تربط حساب جوجل، تربط أو تنشئ جدول جوجل لمزامنة الطلبات، تدفع بيانات النظام أو تسحب الطلبات، تشغّل الأرشفة الذكية، تنشئ نسخًا احتياطية، تصدّر/تستورد البيانات، وتنفّذ إجراءات الصيانة (مسح المعاملات، حذف الطلبات، استبدال بيانات الجدول، إعادة ضبط المصنع). النسخ الاحتياطي التلقائي قابل للجدولة. تبويب الاشتراك يعرض حالة الرخصة ويسمح بالتفعيل. الوصول للإعدادات مقيد بدور المدير؛ غير المديرين يرون رسالة رفض الوصول.",
+        h3_access: "التحكم بالوصول", h3_tabs: "تنقل التبويبات", h3_users: "تبويب المستخدمين", h3_user_dialog: "نافذة إضافة/تعديل مستخدم",
+        h3_cloud: "تبويب السحابة — جوجل والجدول", h3_backup: "تبويب النسخ الاحتياطي", h3_subs: "تبويب الاشتراك",
+        access_manager: "وصول كامل لجميع التبويبات", access_denied: "«رفض الوصول» — المدير فقط",
+        access_sub: "تبويب الاشتراك فقط", access_sub_desc: "يمكن عرضه لغير المديرين في وضع الرخصة فقط",
+        tab_users: "المستخدمون والأدوار", tab_users_desc: "بطاقات المستخدمين، إضافة مستخدم",
+        tab_cloud: "السحابة", tab_cloud_desc: "حساب جوجل، تكوين الجدول، إجراءات المزامنة/الأرشفة",
+        tab_backup_desc: "نسخ احتياطي يدوي، تصدير/استيراد، نسخ تلقائي، منطقة الخطر",
+        tab_subs_desc: "حالة الرخصة، الخطة، الانتهاء، HWID، التفغيل",
+        users_add: "إضافة مستخدم", users_add_desc: "زر — فتح نافذة إضافة مستخدم",
+        users_cards: "بطاقات المستخدمين", users_cards_desc: "الاسم، @اسم المستخدم، شارة الدور، شارة نشط/مقفل، رقائق الموديولات المسموحة، تعديل، حذف",
+        users_edit_delete: "أيقونة — فتح نافذة التعديل / تأكيد وإلغاء التفعيل",
+        user_name: "حقل نصوص — الاسم المعروض", user_username: "حقل نصوص — اسم تسجيل الدخول",
+        user_password: "مطلوب للإضافة؛ اختياري للتعديل (اتركه فارغًا للإبقاء على الحالي)",
+        user_role: "قائمة — مدير أو موظف",
+        user_active: "الحساب النشط", user_active_desc: "مفتاح — تشغيل = نشط، إيقاف = مقفل",
+        user_perms: "مربعات اختيار — لوحة التحكم، التحضير، المخزون، التصنيع، المصروفات، الشحن، الديون، الإعلانات، الموظفون، التقارير، الإعدادات",
+        cloud_status: "متصل / غير متصل",
+        cloud_connect: "ربط الحساب", cloud_connect_desc: "زر — تدفق OAuth (معطّل عند الاتصال)",
+        cloud_disconnect: "زر — إزالة التوكن",
+        cloud_sheet: "حقل نصوص — لصق الرابط أو المعرف؛ إنشاء جدول، ربط الموجود، التحقق من الوصول، إلغاء الربط",
+        cloud_push: "دفع بيانات النظام", cloud_push_desc: "مزامنة المنتجات والحكام للجدول",
+        cloud_fetch: "جلب الطلبات الجديدة", cloud_fetch_desc: "سحب الطلبات من جدول جوجل",
+        cloud_archive: "زر — أرشفة ذكية (نقل الطلبات المنتهية للأرشيف)",
+        backup_manual: "نسخ احتياطي يدوي", backup_manual_desc: "نسخ قاعدة البيانات، تصدير كـ CSV، استيراد قاعدة البيانات",
+        backup_auto: "نسخ تلقائي", backup_auto_desc: "تفعيل عند بدء التطبيق؛ التكرار (يومي/أسبوعي)؛ الحد الأقصى للنسخ (١–٥٠)",
+        backup_storage: "آخر نسخ احتياطي، عدد الملفات، حجم التخزين",
+        backup_danger: "منطقة الخطر", backup_danger_desc: "مسح المعاملات، حذف كل الطلبات، استبدال الجدول بالكامل، إعادة ضبط المصنع (كلمة مرور المسؤول مطلوبة)",
+        subs_status: "نشط / منتهي — رسالة الرخصة", subs_plan: "أساسي، مميز، غير معروف",
+        subs_expiry: "التاريخ أو N/A؛ العدد أو «منتهي»", subs_hwid: "معرف الجهاز — قابل للنسخ",
+        subs_key: "حقل نصوص — لصق المفتاح؛ زر التفعيل",
+        w1_title: "١. إضافة مستخدم", w1_1: "افتح تبويب المستخدمين والأدوار. انقر على إضافة مستخدم.",
+        w1_2: "أدخل الاسم، اسم المستخدم، كلمة المرور (مطلوبة للمستخدمين الجدد).",
+        w1_3: "اختر الدور (مدير أو موظف). حدّد الحساب النشط. حدّد الموديولات المسموحة.",
+        w1_4: "انقر على حفظ. نجاح: شريط أخضر. المدير يحصل دائمًا على وصول الإعدادات. اسم مستخدم مكرر: «اسم المستخدم 'X' مستخدم بالفعل!»",
+        w2_title: "٢. تعديل مستخدم", w2_1: "انقر على تعديل على بطاقة مستخدم.",
+        w2_2: "غيّر الاسم، اسم المستخدم، كلمة المرور (اتركه فارغًا للإبقاء)، الدور، النشط، أو الصلاحيات.",
+        w2_3: "انقر على حفظ. نجاح: شريط أخضر.",
+        w3_title: "٣. حذف (إلغاء تفعيل) مستخدم", w3_1: "انقر على حذف على بطاقة مستخدم. أكّد.",
+        w3_2: "المستخدم يُحذف ناعمًا (يُلغى التفعيل)؛ بيانات الاعتماد مُمسحة.",
+        w3_3: "لا يمكن حذف نفسك: «لا يمكن حذف نفسك». لا يمكن حذف المسؤول: «لا يمكن حذف حساب المسؤول الرئيسي.»",
+        w4_title: "٤. ربط حساب جوجل", w4_1: "افتح تبويب السحابة. انقر على ربط الحساب.",
+        w4_2: "أكمل OAuth في المتصفح. الحالة تعرض «متصل»؛ إلغاء الاتصال مُفعّل.",
+        w5_title: "٥. ربط جدول جوجل", w5_1: "الصق رابط جدول جوجل أو المعرف. انقر على ربط الموجود (أو إنشاء جدول للجديد).",
+        w5_2: "نجاح: «تم الربط بنجاح». غير صالح: «رابط أو معرف غير صالح». رفض الوصول: «رفض الوصول: [الرسالة]».",
+        w6_title: "٦. دفع / جلب / أرشفة", w6_1: "دفع بيانات النظام: مزامنة المنتجات والحكام للجدول.",
+        w6_2: "جلب الطلبات الجديدة: سحب الطلبات من الجدول.",
+        w6_3: "أرشفة: نقل الطلبات المنتهية للأرشيف. لا جدول مرتبط: «لا جدول جوجل مرتبط. يرجى ربط واحد أولاً.»",
+        w7_title: "٧. إنشاء نسخة احتياطية وتصدير", w7_1: "تبويب النسخ الاحتياطي → نسخ قاعدة البيانات. ينشئ ملف .db. نجاح: «تم إنشاء النسخة: Backup_YYYYMMDD_HHMMSS.db».",
+        w7_2: "تصدير كـ CSV: تصدير كل الجداول إلى ZIP. نجاح: «تم تصدير N جدول إلى [اسم الملف]».",
+        w8_title: "٨. استيراد قاعدة البيانات", w8_1: "انقر على استيراد قاعدة البيانات. اختر استعادة من .db أو استيراد من CSV (ZIP).",
+        w8_2: "اختر الملف. أكّد. نجاح: «تم استعادة قاعدة البيانات. يرجى إعادة تشغيل التطبيق.» أو «تم استيراد قاعدة البيانات من CSV. يرجى إعادة تشغيل التطبيق.»",
+        w9_title: "٩. تكوين النسخ التلقائي", w9_1: "فعّل النسخ الاحتياطي التلقائي عند بدء التطبيق. اختر التكرار (يومي/أسبوعي). حدّد الحد الأقصى للنسخ (١–٥٠).",
+        w9_2: "انقر على حفظ. نجاح: «تم حفظ الإعدادات».",
+        w10_title: "١٠. إجراءات منطقة الخطر", w10_1: "حذف كل الطلبات: أدخل كلمة مرور المسؤول → أكّد. يمسح الطلبات وعناصر الطلب.",
+        w10_2: "استبدال الجدول: اختر الجدول، حمّل القالب، ارفع الملف، أدخل كلمة المرور، نفّذ.",
+        w10_3: "مسح المعاملات (المستوى ١): يمسح جداول المعاملات؛ يبدأ سنة جديدة.",
+        w10_4: "إعادة ضبط المصنع (المستوى ٢): يمسح المنتجات والحملات والشركاء؛ يحتفظ بالمستخدمين والإعدادات.",
+        w10_5: "كلمة مرور خاطئة: «كلمة المرور خاطئة!». كلمة مرور المسؤول مطلوبة.",
+        w11_title: "١١. تفعيل الرخصة", w11_1: "افتح تبويب الاشتراك. الصق مفتاح الرخصة. انقر على تفعيل.",
+        w11_2: "نجاح: «تم تفعيل الرخصة». مفتاح فارغ: «مفتاح الرخصة مطلوب». غير صالح: رسالة خطأ.",
+        r_users: "المستخدمون", r_creds: "الاسم/اسم المستخدم/كلمة المرور مطلوبة", r_creds_res: "«بيانات اعتماد مفقودة» / النافذة تبقى مفتوحة",
+        r_duplicate: "اسم مستخدم مكرر", r_duplicate_res: "«اسم المستخدم 'X' مستخدم بالفعل!»",
+        r_manager: "المدير", r_manager_res: "يحصل دائمًا على الإعدادات في allowed_modules",
+        r_del_self: "حذف نفسك", r_del_self_res: "«لا يمكن حذف نفسك»",
+        r_del_admin: "حذف المسؤول", r_del_admin_res: "«لا يمكن حذف حساب المسؤول الرئيسي.»",
+        r_cloud: "جوجل والجدول", r_invalid_url: "رابط أو معرف غير صالح", r_invalid_url_res: "«رابط أو معرف غير صالح»",
+        r_no_sheet: "لا جدول مرتبط للمزامنة", r_no_sheet_res: "«لا جدول جوجل مرتبط. يرجى ربط واحد أولاً.»",
+        r_create_disabled: "إنشاء/ربط", r_create_disabled_res: "معطّل عندما يكون الجدول مرتبطًا بالفعل",
+        r_danger: "منطقة الخطر", r_admin_pw: "كلمة مرور المسؤول", r_admin_pw_res: "مطلوبة لحذف الطلبات، استبدال الجدول، إعادة ضبط المصنع",
+        r_wrong_pw: "كلمة مرور خاطئة", r_wrong_pw_res: "«كلمة المرور خاطئة!»",
+        r_replace_cols: "أعمدة استبدال الجدول", r_replace_cols_res: "أعمدة الملف يجب أن تطابق أعمدة الجدول بالضبط",
+        r_level1: "إعادة ضبط المستوى ١", r_level1_res: "يمسح المعاملات؛ يعيد ضبط الأرصدة",
+        r_level2: "إعادة ضبط المستوى ٢", r_level2_res: "يمسح المنتجات والحملات والشركاء؛ يحتفظ بالمستخدمين",
+        m_saved: "تم حفظ المستخدم", m_saved_msg: "«تم حفظ المستخدم بنجاح» (أخضر)",
+        m_deleted: "تم حذف المستخدم", m_deleted_msg: "«تم إلغاء تفعيل المستخدم» (أخضر)",
+        m_username_taken: "اسم المستخدم مستخدم", m_username_taken_msg: "«اسم المستخدم 'X' مستخدم بالفعل!» (أحمر)",
+        m_linked: "تم الربط بنجاح", m_linked_msg: "«تم الربط بنجاح» (أخضر)",
+        m_backup: "تم إنشاء نسخة احتياطية", m_backup_msg: "«تم إنشاء النسخة: Backup_YYYYMMDD_HHMMSS.db» (أخضر)",
+        m_restore: "نجاح الاستعادة", m_restore_msg: "«تم استعادة قاعدة البيانات. يرجى إعادة تشغيل التطبيق.» (أخضر)",
+        m_settings: "تم حفظ النسخ التلقائي", m_settings_msg: "«تم حفظ الإعدادات» (أخضر)",
+        m_license: "تم تفعيل الرخصة", m_license_msg: "«تم تفعيل الرخصة» (أخضر)",
+        m_access_denied: "رفض الوصول", m_access_denied_msg: "«رفض الوصول» / «المدير فقط» (أحمر)",
+        tip1: "المدير لديه دائمًا وصول للإعدادات؛ المربع يُفرض تلقائيًا.",
+        tip2: "الموظف يمكن تقييده لموديولات محددة عبر مربعات الصلاحيات.",
+        tip3: "الحذف الناعم يحتفظ بسجل الموظف؛ فقط بيانات الاعتماد وحالة النشاط تُمسح.",
+        tip4: "ربط الموجود يقبل الرابط الكامل أو معرف الجدول؛ يُستخرج المعرف من الروابط تلقائيًا.",
+        tip5: "إنشاء جدول ينشئ جدول جوجل جديد ويربطه؛ معطّل عندما يكون واحد مرتبطًا بالفعل.",
+        tip6: "تصدير CSV يُنتج ZIP بملف CSV لكل جدول؛ مفيد لـ Excel أو الترحيل.",
+        tip7: "استيراد CSV يستبدل بيانات الجدول؛ أسماء الأعمدة يجب أن تطابق بالضبط.",
+        tip8: "استبدال الجدول يستخدم نفس هيكل أعمدة القالب؛ حمّل القالب أولاً.",
+        tip9: "إعادة ضبط المستوى ١ تمسح المعاملات لسنة مالية جديدة؛ المستوى ٢ إعادة ضبط عميقة.",
+        tip10: "النسخ الاحتياطي التلقائي يعمل عند بدء التطبيق عند الاستحقاق (يومي أو أسبوعي حسب التكرار).",
+        tip11: "النسخ الاحتياطية تُخزّن في مجلد Backups؛ الملفات الأقدم تُقصّ حسب الحد الأقصى.",
+        tip12: "تبويب الاشتراك قد يكون القسم الوحيد المتاح لغير المديرين عندما يكون تفعيل الرخصة مطلوبًا."
+      }
+    };
+
+    let currentLang = 'en';
+    function applyLang(lang) {
+      currentLang = lang;
+      const html = document.documentElement;
+      html.lang = lang;
+      html.dir = lang === 'ar' ? 'rtl' : 'ltr';
+      const texts = T[lang];
+      document.querySelectorAll('[data-i18n]').forEach(el => {
+        const key = el.getAttribute('data-i18n');
+        if (texts[key] !== undefined) el.textContent = texts[key];
+      });
+      const label = lang === 'en' ? 'العربية' : 'English';
+      document.getElementById('lang-label').textContent = label;
+      document.getElementById('lang-label-mobile').textContent = label;
+      try { localStorage.setItem('maly_lang', lang); } catch(e) {}
+    }
+    function toggleLang() { applyLang(currentLang === 'en' ? 'ar' : 'en'); }
+    function toggleMenu() {
+      const menu = document.getElementById('mobile-menu');
+      const icon = document.getElementById('hamburger-icon');
+      menu.classList.toggle('open');
+      icon.className = menu.classList.contains('open') ? 'fa-solid fa-xmark' : 'fa-solid fa-bars';
+    }
+    function closeMenu() {
+      document.getElementById('mobile-menu').classList.remove('open');
+      document.getElementById('hamburger-icon').className = 'fa-solid fa-bars';
+    }
+    window.addEventListener('scroll', () => { document.getElementById('navbar').classList.toggle('scrolled', window.scrollY > 10); }, { passive: true });
+    (function init() {
+      let saved = 'en';
+      try { saved = localStorage.getItem('maly_lang') || 'en'; } catch(e) {}
+      applyLang(saved);
+    })();
+  </script>
+</body>
+</html>

@@ -1,0 +1,773 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Maly - OBS | Expenses Module — User Guide</title>
+  <meta name="description" content="Expenses module user guide: treasury, ledger, income, expenses, close day, consolidate in Maly - OBS." />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;800&family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+
+  <style>
+    :root {
+      --primary: #1B3D6F; --primary-light: #2A5498; --accent: #C5974A; --accent-light: #F0DDB8;
+      --bg: #F5F1EB; --surface: #FFFFFF; --surface-alt: #F9F6F0; --text: #1A1A2E; --text-muted: #64748B;
+      --text-light: #94A3B8; --border: #E2D9CC; --border-light: #EDE8E0;
+      --shadow-sm: 0 2px 8px rgba(27,61,111,0.07); --shadow-md: 0 8px 32px rgba(27,61,111,0.10);
+      --radius-sm: 8px; --radius-md: 14px; --nav-h: 76px;
+      --font-en: 'Inter', sans-serif; --font-ar: 'Cairo', sans-serif; --transition: 0.25s ease;
+    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; font-size: 16px; }
+    body { font-family: var(--font-en); background-color: var(--bg); color: var(--text); line-height: 1.65; overflow-x: hidden; }
+    html[lang="ar"] body { font-family: var(--font-ar); }
+    img { max-width: 100%; display: block; }
+    a { color: inherit; text-decoration: none; }
+    ul { list-style: none; }
+    button { cursor: pointer; font-family: inherit; }
+    .container { max-width: 1160px; margin: 0 auto; padding: 0 24px; }
+
+    nav { position: fixed; top: 0; left: 0; right: 0; height: var(--nav-h); background: rgba(245, 241, 235, 0.92); backdrop-filter: blur(14px); border-bottom: 1px solid var(--border-light); z-index: 1000; transition: box-shadow var(--transition); }
+    nav.scrolled { box-shadow: var(--shadow-md); }
+    .nav-inner { display: flex; align-items: center; justify-content: space-between; height: 100%; }
+    .nav-logo { display: flex; align-items: center; gap: 10px; font-weight: 800; font-size: 1.2rem; color: var(--primary); }
+    .nav-logo img { height: 48px; width: auto; max-width: 220px; object-fit: contain; }
+    @media (max-width: 768px) { .nav-logo img.nav-logo-desktop { display: none; } .nav-logo img.nav-logo-mobile { display: block !important; } }
+    .nav-logo img.nav-logo-mobile { display: none; }
+    .nav-links { display: flex; align-items: center; gap: 8px; }
+    .nav-links a { font-size: 0.9rem; font-weight: 500; color: var(--text-muted); padding: 6px 14px; border-radius: var(--radius-sm); transition: color var(--transition), background var(--transition); }
+    .nav-links a:hover { color: var(--primary); background: rgba(27,61,111,0.06); }
+    .nav-right { display: flex; align-items: center; gap: 12px; }
+    .lang-btn { display: flex; align-items: center; gap: 6px; font-size: 0.82rem; font-weight: 600; color: var(--primary); background: var(--surface); border: 1.5px solid var(--border); padding: 6px 14px; border-radius: 20px; transition: all var(--transition); }
+    .lang-btn:hover { border-color: var(--primary); background: rgba(27,61,111,0.04); }
+    .btn-nav-cta { font-size: 0.88rem; font-weight: 600; color: #fff; background: var(--primary); padding: 8px 20px; border-radius: 8px; transition: background var(--transition), transform var(--transition); }
+    .btn-nav-cta:hover { background: var(--primary-light); transform: translateY(-1px); }
+    .hamburger { display: none; background: none; border: none; font-size: 1.4rem; color: var(--primary); }
+    .mobile-menu { display: none; flex-direction: column; background: var(--surface); border-bottom: 1px solid var(--border); padding: 12px 24px 20px; gap: 4px; }
+    .mobile-menu.open { display: flex; }
+    .mobile-menu a { font-size: 0.95rem; font-weight: 500; color: var(--text); padding: 10px 4px; border-bottom: 1px solid var(--border-light); }
+    .mobile-menu a:last-child { border: none; }
+    .mobile-menu .lang-btn { margin-top: 8px; width: fit-content; }
+
+    .doc-main { padding-top: calc(var(--nav-h) + 48px); padding-bottom: 80px; }
+    .doc-inner { max-width: 840px; margin: 0 auto; }
+    .btn-back { display: inline-flex; align-items: center; gap: 8px; font-size: 0.9rem; font-weight: 600; color: var(--primary); background: var(--surface); border: 1.5px solid var(--border); padding: 10px 20px; border-radius: var(--radius-sm); margin-bottom: 32px; transition: all var(--transition); box-shadow: var(--shadow-sm); }
+    .btn-back:hover { border-color: var(--primary); background: rgba(27,61,111,0.04); }
+    html[dir="rtl"] .btn-back i { transform: scaleX(-1); }
+    .doc-header { margin-bottom: 40px; }
+    .doc-header .doc-badge { display: inline-block; font-size: 0.75rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--accent); background: var(--accent-light); padding: 4px 12px; border-radius: 20px; margin-bottom: 12px; }
+    .doc-header h1 { font-size: clamp(1.8rem, 3vw, 2.4rem); font-weight: 800; color: var(--text); margin-bottom: 12px; line-height: 1.2; }
+    .doc-header .doc-meta { font-size: 0.9rem; color: var(--text-muted); }
+    .doc-content h2 { font-size: 1.35rem; font-weight: 700; color: var(--primary); margin-top: 48px; margin-bottom: 20px; padding-bottom: 8px; border-bottom: 2px solid var(--border-light); }
+    .doc-content h2:first-of-type { margin-top: 0; }
+    .doc-content h3 { font-size: 1.1rem; font-weight: 700; color: var(--text); margin-top: 32px; margin-bottom: 14px; }
+    .doc-content p { font-size: 1rem; color: var(--text-muted); margin-bottom: 16px; line-height: 1.75; }
+    .doc-content ul.doc-list { list-style: disc; padding-left: 24px; margin-bottom: 20px; }
+    html[dir="rtl"] .doc-content ul.doc-list { padding-left: 0; padding-right: 24px; }
+    .doc-content ul.doc-list li { margin-bottom: 8px; color: var(--text-muted); line-height: 1.7; }
+    .doc-content ul.doc-list li strong { color: var(--text); }
+    .doc-table-wrapper { overflow-x: auto; margin: 24px 0; border-radius: var(--radius-sm); border: 1px solid var(--border-light); box-shadow: var(--shadow-sm); }
+    .doc-table { width: 100%; border-collapse: collapse; font-size: 0.95rem; }
+    .doc-table th, .doc-table td { padding: 14px 18px; text-align: left; border-bottom: 1px solid var(--border-light); vertical-align: top; }
+    html[dir="rtl"] .doc-table th, html[dir="rtl"] .doc-table td { text-align: right; }
+    .doc-table th { background: var(--surface-alt); font-weight: 700; color: var(--primary); }
+    .doc-table tr:last-child td { border-bottom: none; }
+    .doc-table tr:hover td { background: rgba(27,61,111,0.02); }
+    .callout { padding: 20px 24px; border-radius: var(--radius-md); margin: 24px 0; border-left: 4px solid; display: flex; gap: 14px; align-items: flex-start; }
+    html[dir="rtl"] .callout { border-left: none; border-right: 4px solid; }
+    .callout i { font-size: 1.2rem; flex-shrink: 0; margin-top: 2px; }
+    .callout-content { flex: 1; }
+    .callout-tip { background: rgba(34, 197, 94, 0.08); border-color: #22c55e; color: #166534; }
+    .callout-tip i { color: #22c55e; }
+
+    footer { background: #111827; color: #9CA3AF; padding: 60px 0 30px; }
+    .footer-grid { display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 40px; margin-bottom: 50px; }
+    .footer-brand .nav-logo { color: #fff; margin-bottom: 14px; }
+    .footer-brand .nav-logo img { height: 40px; width: auto; max-width: 200px; object-fit: contain; filter: brightness(0) invert(1); opacity: 0.9; }
+    .footer-brand p { font-size: 0.88rem; line-height: 1.7; max-width: 260px; color: #9CA3AF; }
+    .footer-brand .social-row { display: flex; gap: 10px; margin-top: 20px; }
+    .footer-social { width: 36px; height: 36px; border-radius: 50%; background: rgba(255,255,255,0.08); color: #D1D5DB; display: flex; align-items: center; justify-content: center; font-size: 0.9rem; transition: background var(--transition), color var(--transition); }
+    .footer-social:hover { background: var(--accent); color: #fff; }
+    .footer-col h4 { font-size: 0.85rem; font-weight: 700; color: #E5E7EB; text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 18px; }
+    .footer-col ul li { margin-bottom: 10px; }
+    .footer-col ul li a { font-size: 0.88rem; color: #9CA3AF; transition: color var(--transition); }
+    .footer-col ul li a:hover { color: #fff; }
+    .footer-col ul li span { font-size: 0.88rem; color: #9CA3AF; font-family: var(--font-en); }
+    .footer-bottom { border-top: 1px solid rgba(255,255,255,0.08); padding-top: 28px; display: flex; align-items: center; justify-content: space-between; gap: 12px; flex-wrap: wrap; }
+    .footer-bottom p { font-size: 0.82rem; }
+    html[dir="rtl"] .footer-grid { direction: rtl; }
+    html[dir="rtl"] .footer-brand p { max-width: 100%; }
+    html[dir="rtl"] .footer-bottom { flex-direction: row-reverse; }
+
+    @media (max-width: 768px) { .nav-links, .btn-nav-cta { display: none; } .hamburger { display: block; } .doc-main { padding-top: calc(var(--nav-h) + 32px); padding-bottom: 48px; } .footer-grid { grid-template-columns: 1fr 1fr; } .footer-brand { grid-column: 1 / -1; } }
+    @media (max-width: 480px) { .container { padding: 0 18px; } .doc-table th, .doc-table td { padding: 10px 14px; font-size: 0.88rem; } .footer-grid { grid-template-columns: 1fr; } }
+  </style>
+</head>
+<body>
+
+  <nav id="navbar">
+    <div class="container">
+      <div class="nav-inner">
+        <a href="index.html" class="nav-logo">
+          <img src="assets/logo_splash_light.png" alt="Maly OBS Logo" class="nav-logo-desktop" />
+          <img src="assets/logo_icon.png" alt="Maly OBS" class="nav-logo-mobile" />
+          <span>Maly&nbsp;-&nbsp;OBS</span>
+        </a>
+        <div class="nav-links">
+          <a href="index.html#features" data-i18n="nav_features">Features</a>
+          <a href="index.html#pricing" data-i18n="nav_pricing">Pricing</a>
+          <a href="index.html#privacy" data-i18n="nav_privacy">Privacy</a>
+          <a href="index.html#contact" data-i18n="nav_contact">Contact</a>
+        </div>
+        <div class="nav-right">
+          <button class="lang-btn" id="lang-toggle" onclick="toggleLang()">
+            <i class="fa-solid fa-globe"></i>
+            <span id="lang-label">العربية</span>
+          </button>
+          <a href="https://drive.google.com/uc?export=download&id=15Vp6Mm15r9nkoK8qhC0GpUmpAVAORZhd" target="_blank" rel="noopener" class="btn-nav-cta" data-i18n="nav_download">Download Now</a>
+          <button class="hamburger" onclick="toggleMenu()" aria-label="Menu"><i class="fa-solid fa-bars" id="hamburger-icon"></i></button>
+        </div>
+      </div>
+    </div>
+    <div class="mobile-menu" id="mobile-menu">
+      <a href="index.html#features" onclick="closeMenu()" data-i18n="nav_features">Features</a>
+      <a href="index.html#pricing" onclick="closeMenu()" data-i18n="nav_pricing">Pricing</a>
+      <a href="index.html#privacy" onclick="closeMenu()" data-i18n="nav_privacy">Privacy</a>
+      <a href="index.html#contact" onclick="closeMenu()" data-i18n="nav_contact">Contact</a>
+      <a href="https://drive.google.com/uc?export=download&id=15Vp6Mm15r9nkoK8qhC0GpUmpAVAORZhd" target="_blank" rel="noopener" onclick="closeMenu()" data-i18n="nav_download">Download Now</a>
+      <button class="lang-btn" onclick="toggleLang(); closeMenu();"><i class="fa-solid fa-globe"></i><span id="lang-label-mobile">العربية</span></button>
+    </div>
+  </nav>
+
+  <main class="doc-main">
+    <div class="container">
+      <div class="doc-inner">
+        <a href="index.html" class="btn-back">
+          <i class="fa-solid fa-arrow-left"></i>
+          <span data-i18n="btn_back">Back to Home</span>
+        </a>
+
+        <header class="doc-header">
+          <span class="doc-badge" data-i18n="doc_badge">User Guide</span>
+          <h1 data-i18n="doc_title">Expenses / Treasury & Operations Ledger</h1>
+          <p class="doc-meta">Maly - OBS (Online Business System) · <span data-i18n="doc_version">Version 1.0</span></p>
+        </header>
+
+        <div class="doc-content">
+          <h2 data-i18n="h2_purpose">Module Purpose</h2>
+          <p><span data-i18n="purpose_p1a">The Expenses module tracks income and expenses, maintains the treasury (cash) balance, and records financial operations in a date-filtered ledger. You can add manual entries (income or expense), view totals by category, close the day with an actual cash count to reconcile differences, and consolidate all transactions into summary entries. The module also provides analytics to see how expenses break down by category. Treasury balance is </span><strong data-i18n="purpose_strong">strictly enforced</strong><span data-i18n="purpose_p1b">: you cannot record an expense that would make the cash balance negative.</span></p>
+
+          <h2 data-i18n="h2_ui">UI Elements</h2>
+
+          <h3 data-i18n="h3_header">Header Area</h3>
+          <div class="doc-table-wrapper">
+            <table class="doc-table">
+              <thead><tr><th data-i18n="th_element">Element</th><th data-i18n="th_description">Description</th></tr></thead>
+              <tbody>
+                <tr><td><strong data-i18n="h_title">Header Title</strong></td><td data-i18n="h_title_desc">"Expenses" / "Operations Ledger" subtitle</td></tr>
+                <tr><td><strong data-i18n="h_consolidate">Consolidate</strong></td><td data-i18n="h_consolidate_desc">Button — groups all transactions by category into single entries (irreversible)</td></tr>
+              </tbody>
+            </table>
+          </div>
+
+          <h3 data-i18n="h3_kpi">KPI Cards</h3>
+          <div class="doc-table-wrapper">
+            <table class="doc-table">
+              <thead><tr><th data-i18n="th_card">Card</th><th data-i18n="th_description">Description</th></tr></thead>
+              <tbody>
+                <tr><td><strong data-i18n="kpi_treasury">Total Treasury</strong></td><td data-i18n="kpi_treasury_desc">Current cash balance (all income minus all expenses)</td></tr>
+                <tr><td><strong data-i18n="kpi_income">Total Income</strong></td><td data-i18n="kpi_income_desc">Sum of income in the selected date range</td></tr>
+                <tr><td><strong data-i18n="kpi_expenses">Total Expenses</strong></td><td data-i18n="kpi_expenses_desc">Sum of expenses in the selected date range</td></tr>
+              </tbody>
+            </table>
+          </div>
+
+          <h3 data-i18n="h3_action">Action Bar</h3>
+          <div class="doc-table-wrapper">
+            <table class="doc-table">
+              <thead><tr><th data-i18n="th_element">Element</th><th data-i18n="th_description">Description</th></tr></thead>
+              <tbody>
+                <tr><td><strong>Search</strong></td><td data-i18n="action_search">Text field — search in ledger by category, notes, or amount</td></tr>
+                <tr><td><strong data-i18n="action_date">Date Range</strong></td><td data-i18n="action_date_desc">Clickable field — opens date range picker (presets + custom)</td></tr>
+                <tr><td><strong>Refresh</strong></td><td data-i18n="action_refresh">Icon button — reload data</td></tr>
+                <tr><td><strong data-i18n="action_new">New Entry</strong></td><td data-i18n="action_new_desc">Button — add a new income or expense</td></tr>
+                <tr><td><strong data-i18n="action_close">Close Day</strong></td><td data-i18n="action_close_desc">Button — reconcile treasury with actual cash count</td></tr>
+              </tbody>
+            </table>
+          </div>
+
+          <h3 data-i18n="h3_tabs">Tabs</h3>
+          <div class="doc-table-wrapper">
+            <table class="doc-table">
+              <thead><tr><th data-i18n="th_tab">Tab</th><th data-i18n="th_content">Content</th></tr></thead>
+              <tbody>
+                <tr><td><strong data-i18n="tab_ledger">Operations Ledger</strong></td><td data-i18n="tab_ledger_desc">Transaction table with pagination</td></tr>
+                <tr><td><strong data-i18n="tab_analytics">Analytics & Reports</strong></td><td data-i18n="tab_analytics_desc">Expenses breakdown chart by category</td></tr>
+              </tbody>
+            </table>
+          </div>
+
+          <h3 data-i18n="h3_ledger">Operations Ledger Tab</h3>
+          <div class="doc-table-wrapper">
+            <table class="doc-table">
+              <thead><tr><th data-i18n="th_element">Element</th><th data-i18n="th_description">Description</th></tr></thead>
+              <tbody>
+                <tr><td><strong data-i18n="ledger_table">Data Table</strong></td><td data-i18n="ledger_table_desc">Columns: Type, Category, Amount, Date, Notes, Actions</td></tr>
+                <tr><td><strong data-i18n="ledger_type">Type</strong></td><td data-i18n="ledger_type_desc">Income (green) or Expense (red) with icon</td></tr>
+                <tr><td><strong>Actions</strong></td><td data-i18n="ledger_actions">Edit and Delete buttons per row (or "System" badge for auto-generated entries)</td></tr>
+                <tr><td><strong>Pagination</strong></td><td data-i18n="ledger_pagination">Previous / Page X of Y / Next — 15 rows per page</td></tr>
+              </tbody>
+            </table>
+          </div>
+
+          <h3 data-i18n="h3_entry">Entry Dialog (Add / Edit)</h3>
+          <div class="doc-table-wrapper">
+            <table class="doc-table">
+              <thead><tr><th data-i18n="th_element">Element</th><th data-i18n="th_description">Description</th></tr></thead>
+              <tbody>
+                <tr><td><strong>Type</strong></td><td data-i18n="entry_type">Radio buttons — Expense or Income (changes dialog background color)</td></tr>
+                <tr><td><strong>Category</strong></td><td data-i18n="entry_category">Dropdown — select category; + button to add new category</td></tr>
+                <tr><td><strong>Amount</strong></td><td data-i18n="entry_amount">Text field — numeric amount</td></tr>
+                <tr><td><strong>Notes</strong></td><td data-i18n="entry_notes">Text field — optional description</td></tr>
+                <tr><td><strong>Date</strong></td><td data-i18n="entry_date">Button — opens date picker (new entries only; disabled when editing)</td></tr>
+                <tr><td><strong>Save</strong></td><td data-i18n="entry_save">Button — save the entry</td></tr>
+              </tbody>
+            </table>
+          </div>
+
+          <h3 data-i18n="h3_category">Add Category Dialog</h3>
+          <div class="doc-table-wrapper">
+            <table class="doc-table">
+              <thead><tr><th data-i18n="th_element">Element</th><th data-i18n="th_description">Description</th></tr></thead>
+              <tbody>
+                <tr><td><strong>Name</strong></td><td data-i18n="cat_name">Text field — new category name</td></tr>
+                <tr><td><strong>Add</strong></td><td data-i18n="cat_add">Button — create category and select it in the parent dialog</td></tr>
+              </tbody>
+            </table>
+          </div>
+
+          <h3 data-i18n="h3_close_day">Close Day Dialog</h3>
+          <div class="doc-table-wrapper">
+            <table class="doc-table">
+              <thead><tr><th data-i18n="th_element">Element</th><th data-i18n="th_description">Description</th></tr></thead>
+              <tbody>
+                <tr><td><strong data-i18n="close_balance">System Balance</strong></td><td data-i18n="close_balance_desc">Display — current calculated balance</td></tr>
+                <tr><td><strong>Amount</strong></td><td data-i18n="close_amount">Text field — actual cash you have in hand</td></tr>
+                <tr><td><strong>Confirm</strong></td><td data-i18n="close_confirm">Button — create adjustment if there is a difference</td></tr>
+              </tbody>
+            </table>
+          </div>
+
+          <h3 data-i18n="h3_consolidate">Consolidate Dialog</h3>
+          <div class="doc-table-wrapper">
+            <table class="doc-table">
+              <thead><tr><th data-i18n="th_element">Element</th><th data-i18n="th_description">Description</th></tr></thead>
+              <tbody>
+                <tr><td><strong>Warning</strong></td><td data-i18n="cons_warning">Explains that all transactions will be grouped by category; consolidated entries cannot be edited; action cannot be undone</td></tr>
+                <tr><td><strong>Info</strong></td><td data-i18n="cons_info">"This will consolidate ALL transactions in the system (not just the current date range)"</td></tr>
+                <tr><td><strong>Cancel</strong></td><td data-i18n="cons_cancel">Dismiss dialog</td></tr>
+                <tr><td><strong>Confirm</strong></td><td data-i18n="cons_confirm">Proceed with consolidation</td></tr>
+              </tbody>
+            </table>
+          </div>
+
+          <h3 data-i18n="h3_analytics_tab">Analytics Tab</h3>
+          <div class="doc-table-wrapper">
+            <table class="doc-table">
+              <thead><tr><th data-i18n="th_element">Element</th><th data-i18n="th_description">Description</th></tr></thead>
+              <tbody>
+                <tr><td><strong data-i18n="ana_breakdown">Expenses Breakdown</strong></td><td data-i18n="ana_breakdown_desc">Section title</td></tr>
+                <tr><td><strong data-i18n="ana_include">Include Purchases & System</strong></td><td data-i18n="ana_include_desc">Switch — include purchase/system transactions in the chart (off by default)</td></tr>
+                <tr><td><strong data-i18n="ana_chart">Chart List</strong></td><td data-i18n="ana_chart_desc">Bar-style list — category names with progress bars and amounts, sorted by amount</td></tr>
+              </tbody>
+            </table>
+          </div>
+
+          <h2 data-i18n="h2_workflow">Step-by-Step Workflow</h2>
+
+          <h3 data-i18n="w1_title">1. Add a New Entry (Income or Expense)</h3>
+          <ul class="doc-list">
+            <li data-i18n="w1_1">Click New Entry.</li>
+            <li data-i18n="w1_2">Choose Income or Expense (Expense is default).</li>
+            <li data-i18n="w1_3">Select a Category from the dropdown, or click the + icon to add a new category.</li>
+            <li data-i18n="w1_4">Enter the Amount (e.g., 150.50).</li>
+            <li data-i18n="w1_5">Optionally enter Notes.</li>
+            <li data-i18n="w1_6">Click the Date button to pick a date (defaults to today for new entries).</li>
+            <li data-i18n="w1_7">Click Save.</li>
+            <li data-i18n="w1_8">The dialog closes. If saved successfully, a green snackbar shows; the ledger and KPIs refresh. If the amount is invalid or required fields are missing, the dialog stays open (fix and try again).</li>
+          </ul>
+
+          <h3 data-i18n="w2_title">2. Edit an Entry</h3>
+          <ul class="doc-list">
+            <li data-i18n="w2_1">In the ledger, find the row and click the Edit icon (blue pencil).</li>
+            <li data-i18n="w2_2">Change Category, Amount, Type, or Notes. Date cannot be changed when editing.</li>
+            <li data-i18n="w2_3">Click Save.</li>
+            <li data-i18n="w2_4">Success: green snackbar; ledger refreshes.</li>
+            <li data-i18n="w2_5">Note: System-generated entries (e.g., daily closing adjustments, consolidated entries) show a "System" badge instead of Edit/Delete and cannot be edited.</li>
+          </ul>
+
+          <h3 data-i18n="w3_title">3. Delete an Entry</h3>
+          <ul class="doc-list">
+            <li data-i18n="w3_1">In the ledger, click the Delete icon (red trash).</li>
+            <li data-i18n="w3_2">Confirm in the dialog.</li>
+            <li data-i18n="w3_3">Success: green snackbar; ledger refreshes.</li>
+            <li data-i18n="w3_4">Note: System-generated entries cannot be deleted.</li>
+          </ul>
+
+          <h3 data-i18n="w4_title">4. Add a New Category</h3>
+          <ul class="doc-list">
+            <li data-i18n="w4_1">Open New Entry or Edit.</li>
+            <li data-i18n="w4_2">Click the + (plus) icon next to the Category dropdown.</li>
+            <li data-i18n="w4_3">Enter the category Name and click Add.</li>
+            <li data-i18n="w4_4">The new category is created and selected. Continue filling the entry form and click Save.</li>
+          </ul>
+
+          <h3 data-i18n="w5_title">5. Change Date Range</h3>
+          <ul class="doc-list">
+            <li data-i18n="w5_1">Click the Date Range field (shows start → end).</li>
+            <li data-i18n="w5_2">In the dialog, choose a preset (Today, Yesterday, This Week, Last Week, This Month, Last Month, This Year, Last Year, All Time) or pick custom Start and End dates.</li>
+            <li data-i18n="w5_3">Apply the selection. The ledger and KPIs update to the new range.</li>
+            <li data-i18n="w5_4">The range is remembered for the session.</li>
+          </ul>
+
+          <h3 data-i18n="w6_title">6. Search in the Ledger</h3>
+          <ul class="doc-list">
+            <li data-i18n="w6_1">Type in the Search field.</li>
+            <li data-i18n="w6_2">The ledger filters by category, notes, or amount in real time.</li>
+            <li data-i18n="w6_3">KPIs still reflect the full filtered result set.</li>
+          </ul>
+
+          <h3 data-i18n="w7_title">7. Close the Day (Reconcile Cash)</h3>
+          <ul class="doc-list">
+            <li data-i18n="w7_1">Count your actual cash on hand.</li>
+            <li data-i18n="w7_2">Click Close Day.</li>
+            <li data-i18n="w7_3">See the System Balance (calculated from all income and expenses).</li>
+            <li data-i18n="w7_4">Enter the Amount you actually have (actual cash).</li>
+            <li data-i18n="w7_5">Click Confirm.</li>
+            <li data-i18n="w7_6">If the difference is more than 0.01, the system adds a protected Adjustment entry (Income or Expense) to match the actual balance. A green snackbar confirms with the difference shown.</li>
+            <li data-i18n="w7_7">Note: Actual cash cannot be negative. If you enter a negative value, an error message appears.</li>
+          </ul>
+
+          <h3 data-i18n="w8_title">8. Consolidate Transactions</h3>
+          <ul class="doc-list">
+            <li data-i18n="w8_1">Click Consolidate in the header.</li>
+            <li data-i18n="w8_2">Read the warning: all transactions (manual and system) will be grouped by category into single entries; consolidated entries cannot be edited; this cannot be undone.</li>
+            <li data-i18n="w8_3">Click Confirm to proceed or Cancel to close.</li>
+            <li data-i18n="w8_4">Success: green snackbar; ledger refreshes with fewer, grouped entries.</li>
+            <li data-i18n="w8_5">If there are no transactions: "No transactions to consolidate" is shown.</li>
+            <li data-i18n="w8_6">Note: Consolidation affects all transactions in the system, not only the current date range.</li>
+          </ul>
+
+          <h3 data-i18n="w9_title">9. View Analytics</h3>
+          <ul class="doc-list">
+            <li data-i18n="w9_1">Open the Analytics & Reports tab.</li>
+            <li data-i18n="w9_2">See the Expenses Breakdown chart (categories with amounts and progress bars).</li>
+            <li data-i18n="w9_3">Toggle Include Purchases & System to include or exclude purchase and system-generated transactions in the chart.</li>
+            <li data-i18n="w9_4">The chart shows only expense categories (no income).</li>
+          </ul>
+
+          <h3 data-i18n="w10_title">10. Paginate the Ledger</h3>
+          <ul class="doc-list">
+            <li data-i18n="w10_1">Use Previous and Next to move between pages (15 rows per page).</li>
+            <li data-i18n="w10_2">The label shows "Page X of Y".</li>
+          </ul>
+
+          <h2 data-i18n="h2_rules">Business Rules & Validations</h2>
+
+          <h3 data-i18n="r_add_edit">Add / Edit Entry</h3>
+          <div class="doc-table-wrapper">
+            <table class="doc-table">
+              <thead><tr><th data-i18n="th_rule">Rule</th><th data-i18n="th_result">Result</th></tr></thead>
+              <tbody>
+                <tr><td data-i18n="r_cat_req">Category required</td><td data-i18n="r_cat_req_res">Dialog stays open if empty; must select a category</td></tr>
+                <tr><td data-i18n="r_amount_req">Amount required</td><td data-i18n="r_amount_req_res">Dialog stays open if empty</td></tr>
+                <tr><td data-i18n="r_amount_valid">Amount must be a valid number</td><td data-i18n="r_amount_valid_res">Invalid input causes save to be ignored; fix and retry</td></tr>
+                <tr><td data-i18n="r_treasury">Treasury balance</td><td data-i18n="r_treasury_res">When adding an Expense, the amount cannot exceed current treasury; otherwise: "Insufficient treasury balance. (Current: X.XX)"</td></tr>
+              </tbody>
+            </table>
+          </div>
+
+          <h3 data-i18n="r_edit_del">Edit / Delete</h3>
+          <div class="doc-table-wrapper">
+            <table class="doc-table">
+              <thead><tr><th data-i18n="th_rule">Rule</th><th data-i18n="th_result">Result</th></tr></thead>
+              <tbody>
+                <tr><td data-i18n="r_system">System-generated entries</td><td data-i18n="r_system_res">Cannot edit or delete; show "System" badge instead of buttons</td></tr>
+                <tr><td data-i18n="r_system_err">Error if attempted</td><td data-i18n="r_system_err_res">"Security: Cannot edit System-Auto records." / "Cannot delete System-Auto records."</td></tr>
+              </tbody>
+            </table>
+          </div>
+
+          <h3 data-i18n="r_close_day">Close Day</h3>
+          <div class="doc-table-wrapper">
+            <table class="doc-table">
+              <thead><tr><th data-i18n="th_rule">Rule</th><th data-i18n="th_result">Result</th></tr></thead>
+              <tbody>
+                <tr><td data-i18n="r_negative">Actual cash cannot be negative</td><td data-i18n="r_negative_res">"Actual balance cannot be negative. (Strict Treasury Control)"</td></tr>
+                <tr><td data-i18n="r_diff_small">Difference &lt; 0.01</td><td data-i18n="r_diff_small_res">No adjustment entry created; closing is recorded</td></tr>
+                <tr><td data-i18n="r_diff_large">Difference ≥ 0.01</td><td data-i18n="r_diff_large_res">An Adjustment entry is added automatically (protected)</td></tr>
+              </tbody>
+            </table>
+          </div>
+
+          <h3 data-i18n="r_consolidate">Consolidate</h3>
+          <div class="doc-table-wrapper">
+            <table class="doc-table">
+              <thead><tr><th data-i18n="th_rule">Rule</th><th data-i18n="th_result">Result</th></tr></thead>
+              <tbody>
+                <tr><td data-i18n="r_none">No transactions</td><td data-i18n="r_none_res">"No transactions to consolidate"</td></tr>
+                <tr><td data-i18n="r_all">All transactions</td><td data-i18n="r_all_res">Affects entire system, regardless of date filter</td></tr>
+              </tbody>
+            </table>
+          </div>
+
+          <h3 data-i18n="r_general">General</h3>
+          <div class="doc-table-wrapper">
+            <table class="doc-table">
+              <thead><tr><th data-i18n="th_rule">Rule</th><th data-i18n="th_description">Description</th></tr></thead>
+              <tbody>
+                <tr><td data-i18n="r_formula">Treasury = Income − Expense</td><td data-i18n="r_formula_desc">Current balance is always (total income − total expenses)</td></tr>
+                <tr><td data-i18n="r_filter">Date filter</td><td data-i18n="r_filter_desc">Ledger and KPIs use the selected date range; treasury balance is always full-history</td></tr>
+              </tbody>
+            </table>
+          </div>
+
+          <h2 data-i18n="h2_messages">Messages & Alerts</h2>
+          <div class="doc-table-wrapper">
+            <table class="doc-table">
+              <thead><tr><th data-i18n="th_situation">Situation</th><th data-i18n="th_message">Message</th></tr></thead>
+              <tbody>
+                <tr><td data-i18n="m_add">Add success</td><td data-i18n="m_add_msg">"Saved Successfully" (green)</td></tr>
+                <tr><td data-i18n="m_update">Update success</td><td data-i18n="m_update_msg">"Updated Successfully" (green)</td></tr>
+                <tr><td data-i18n="m_delete">Delete success</td><td data-i18n="m_delete_msg">"Deleted Successfully" (green)</td></tr>
+                <tr><td data-i18n="m_treasury">Add/Update failure (treasury)</td><td data-i18n="m_treasury_msg">"Insufficient treasury balance. (Current: X.XX)" (red)</td></tr>
+                <tr><td data-i18n="m_edit_sys">Edit system entry</td><td data-i18n="m_edit_sys_msg">"Security: Cannot edit System-Auto records." (red)</td></tr>
+                <tr><td data-i18n="m_del_sys">Delete system entry</td><td data-i18n="m_del_sys_msg">"Security: Cannot delete System-Auto records." (red)</td></tr>
+                <tr><td data-i18n="m_close_ok">Close day success</td><td data-i18n="m_close_ok_msg">"Closed! Diff: X.XX" (green)</td></tr>
+                <tr><td data-i18n="m_close_fail">Close day failure (negative)</td><td data-i18n="m_close_fail_msg">"Actual balance cannot be negative. (Strict Treasury Control)" (red)</td></tr>
+                <tr><td data-i18n="m_cons_ok">Consolidate success</td><td data-i18n="m_cons_ok_msg">"Transactions consolidated successfully" (green)</td></tr>
+                <tr><td data-i18n="m_cons_fail">Consolidate failure (none)</td><td data-i18n="m_cons_fail_msg">"No transactions to consolidate" (red)</td></tr>
+                <tr><td data-i18n="m_load">Load error</td><td data-i18n="m_load_msg">Error message in snackbar (red)</td></tr>
+              </tbody>
+            </table>
+          </div>
+
+          <h2 data-i18n="h2_tips">Tips</h2>
+          <div class="callout callout-tip">
+            <i class="fa-solid fa-lightbulb"></i>
+            <div class="callout-content">
+              <ul class="doc-list" style="margin-bottom:0;">
+                <li data-i18n="tip1">Treasury shows total cash; it turns red if the balance is negative.</li>
+                <li data-i18n="tip2">System entries (adjustments, consolidated entries) are protected and cannot be edited or deleted.</li>
+                <li data-i18n="tip3">Date can only be set when creating a new entry; editing keeps the original date.</li>
+                <li data-i18n="tip4">Include Purchases & System in Analytics lets you see purchase-related categories in the breakdown; off by default for a cleaner view.</li>
+                <li data-i18n="tip5">Consolidate reduces many transactions to one per (category, type). Use when you want a simplified ledger for reporting.</li>
+                <li data-i18n="tip6">Close Day is for daily reconciliation; enter the actual cash you have so the system can adjust for differences.</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <footer>
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <div class="nav-logo" style="color:#fff; margin-bottom:14px; display:flex; align-items:center; gap:10px;">
+            <img src="assets/logo_splash_light.png" alt="Maly OBS" />
+            <span>Maly&nbsp;-&nbsp;OBS</span>
+          </div>
+          <p data-i18n="footer_tagline">The smartest way to run your e-commerce business in Egypt.</p>
+          <div class="social-row">
+            <a href="https://www.linkedin.com/in/adhamseliman/" target="_blank" rel="noopener" class="footer-social"><i class="fa-brands fa-linkedin-in"></i></a>
+            <a href="https://web.facebook.com/sadham122" target="_blank" rel="noopener" class="footer-social"><i class="fa-brands fa-facebook-f"></i></a>
+            <a href="https://www.youtube.com/@adhamseliman458" target="_blank" rel="noopener" class="footer-social"><i class="fa-brands fa-youtube"></i></a>
+            <a href="https://wa.me/201100028752" target="_blank" rel="noopener" class="footer-social"><i class="fa-brands fa-whatsapp"></i></a>
+          </div>
+        </div>
+        <div class="footer-col">
+          <h4 data-i18n="footer_nav">Navigate</h4>
+          <ul>
+            <li><a href="index.html#features" data-i18n="nav_features">Features</a></li>
+            <li><a href="index.html#pricing" data-i18n="nav_pricing">Pricing</a></li>
+            <li><a href="index.html#privacy" data-i18n="nav_privacy">Privacy</a></li>
+            <li><a href="index.html#contact" data-i18n="nav_contact">Contact</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4 data-i18n="footer_contact_hd">Contact</h4>
+          <ul>
+            <li><span>asoliman548@gmail.com</span></li>
+            <li><span>01100028752</span></li>
+            <li><span data-i18n="footer_location">Cairo, Egypt</span></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4 data-i18n="footer_legal">Legal</h4>
+          <ul><li><a href="index.html#privacy" data-i18n="footer_privacy_link">Privacy Policy</a></li></ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p data-i18n="footer_copy">© 2026 Maly Systems. All rights reserved.</p>
+        <p style="font-family:var(--font-en); font-style:italic; color:#6B7280; font-size:0.8rem;">"It's not just about money. It's Control."</p>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    const T = {
+      en: {
+        btn_back: "Back to Home", doc_badge: "User Guide", doc_title: "Expenses / Treasury & Operations Ledger", doc_version: "Version 1.0",
+        nav_features: "Features", nav_pricing: "Pricing", nav_privacy: "Privacy", nav_contact: "Contact", nav_download: "Download Now",
+        footer_tagline: "The smartest way to run your e-commerce business in Egypt.",
+        footer_nav: "Navigate", footer_contact_hd: "Contact", footer_legal: "Legal", footer_privacy_link: "Privacy Policy", footer_location: "Cairo, Egypt", footer_copy: "© 2026 Maly Systems. All rights reserved.",
+        h2_purpose: "Module Purpose", h2_ui: "UI Elements", h2_workflow: "Step-by-Step Workflow", h2_rules: "Business Rules & Validations", h2_messages: "Messages & Alerts", h2_tips: "Tips",
+        th_element: "Element", th_description: "Description", th_card: "Card", th_tab: "Tab", th_content: "Content", th_rule: "Rule", th_result: "Result", th_situation: "Situation", th_message: "Message",
+        purpose_p1a: "The Expenses module tracks income and expenses, maintains the treasury (cash) balance, and records financial operations in a date-filtered ledger. You can add manual entries (income or expense), view totals by category, close the day with an actual cash count to reconcile differences, and consolidate all transactions into summary entries. The module also provides analytics to see how expenses break down by category. Treasury balance is ",
+        purpose_strong: "strictly enforced",
+        purpose_p1b: ": you cannot record an expense that would make the cash balance negative.",
+        h3_header: "Header Area", h3_kpi: "KPI Cards", h3_action: "Action Bar", h3_tabs: "Tabs", h3_ledger: "Operations Ledger Tab", h3_entry: "Entry Dialog (Add / Edit)",
+        h3_category: "Add Category Dialog", h3_close_day: "Close Day Dialog", h3_consolidate: "Consolidate Dialog", h3_analytics_tab: "Analytics Tab",
+        h_title: "Header Title", h_title_desc: "\"Expenses\" / \"Operations Ledger\" subtitle",
+        h_consolidate: "Consolidate", h_consolidate_desc: "Button — groups all transactions by category into single entries (irreversible)",
+        kpi_treasury: "Total Treasury", kpi_treasury_desc: "Current cash balance (all income minus all expenses)",
+        kpi_income: "Total Income", kpi_income_desc: "Sum of income in the selected date range",
+        kpi_expenses: "Total Expenses", kpi_expenses_desc: "Sum of expenses in the selected date range",
+        action_search: "Text field — search in ledger by category, notes, or amount",
+        action_date: "Date Range", action_date_desc: "Clickable field — opens date range picker (presets + custom)",
+        action_refresh: "Icon button — reload data", action_new: "New Entry", action_new_desc: "Button — add a new income or expense",
+        action_close: "Close Day", action_close_desc: "Button — reconcile treasury with actual cash count",
+        tab_ledger: "Operations Ledger", tab_ledger_desc: "Transaction table with pagination",
+        tab_analytics: "Analytics & Reports", tab_analytics_desc: "Expenses breakdown chart by category",
+        ledger_table: "Data Table", ledger_table_desc: "Columns: Type, Category, Amount, Date, Notes, Actions",
+        ledger_type: "Type", ledger_type_desc: "Income (green) or Expense (red) with icon",
+        ledger_actions: "Edit and Delete buttons per row (or \"System\" badge for auto-generated entries)",
+        ledger_pagination: "Previous / Page X of Y / Next — 15 rows per page",
+        entry_type: "Radio buttons — Expense or Income (changes dialog background color)",
+        entry_category: "Dropdown — select category; + button to add new category",
+        entry_amount: "Text field — numeric amount", entry_notes: "Text field — optional description",
+        entry_date: "Button — opens date picker (new entries only; disabled when editing)",
+        entry_save: "Button — save the entry",
+        cat_name: "Text field — new category name", cat_add: "Button — create category and select it in the parent dialog",
+        close_balance: "System Balance", close_balance_desc: "Display — current calculated balance",
+        close_amount: "Text field — actual cash you have in hand", close_confirm: "Button — create adjustment if there is a difference",
+        cons_warning: "Explains that all transactions will be grouped by category; consolidated entries cannot be edited; action cannot be undone",
+        cons_info: "\"This will consolidate ALL transactions in the system (not just the current date range)\"",
+        cons_cancel: "Dismiss dialog", cons_confirm: "Proceed with consolidation",
+        ana_breakdown: "Expenses Breakdown", ana_breakdown_desc: "Section title",
+        ana_include: "Include Purchases & System", ana_include_desc: "Switch — include purchase/system transactions in the chart (off by default)",
+        ana_chart: "Chart List", ana_chart_desc: "Bar-style list — category names with progress bars and amounts, sorted by amount",
+        w1_title: "1. Add a New Entry (Income or Expense)", w1_1: "Click New Entry.", w1_2: "Choose Income or Expense (Expense is default).",
+        w1_3: "Select a Category from the dropdown, or click the + icon to add a new category.",
+        w1_4: "Enter the Amount (e.g., 150.50).", w1_5: "Optionally enter Notes.",
+        w1_6: "Click the Date button to pick a date (defaults to today for new entries).", w1_7: "Click Save.",
+        w1_8: "The dialog closes. If saved successfully, a green snackbar shows; the ledger and KPIs refresh. If the amount is invalid or required fields are missing, the dialog stays open (fix and try again).",
+        w2_title: "2. Edit an Entry", w2_1: "In the ledger, find the row and click the Edit icon (blue pencil).",
+        w2_2: "Change Category, Amount, Type, or Notes. Date cannot be changed when editing.", w2_3: "Click Save.",
+        w2_4: "Success: green snackbar; ledger refreshes.",
+        w2_5: "Note: System-generated entries (e.g., daily closing adjustments, consolidated entries) show a \"System\" badge instead of Edit/Delete and cannot be edited.",
+        w3_title: "3. Delete an Entry", w3_1: "In the ledger, click the Delete icon (red trash).", w3_2: "Confirm in the dialog.",
+        w3_3: "Success: green snackbar; ledger refreshes.", w3_4: "Note: System-generated entries cannot be deleted.",
+        w4_title: "4. Add a New Category", w4_1: "Open New Entry or Edit.", w4_2: "Click the + (plus) icon next to the Category dropdown.",
+        w4_3: "Enter the category Name and click Add.", w4_4: "The new category is created and selected. Continue filling the entry form and click Save.",
+        w5_title: "5. Change Date Range", w5_1: "Click the Date Range field (shows start → end).",
+        w5_2: "In the dialog, choose a preset (Today, Yesterday, This Week, Last Week, This Month, Last Month, This Year, Last Year, All Time) or pick custom Start and End dates.",
+        w5_3: "Apply the selection. The ledger and KPIs update to the new range.", w5_4: "The range is remembered for the session.",
+        w6_title: "6. Search in the Ledger", w6_1: "Type in the Search field.",
+        w6_2: "The ledger filters by category, notes, or amount in real time.", w6_3: "KPIs still reflect the full filtered result set.",
+        w7_title: "7. Close the Day (Reconcile Cash)", w7_1: "Count your actual cash on hand.", w7_2: "Click Close Day.",
+        w7_3: "See the System Balance (calculated from all income and expenses).", w7_4: "Enter the Amount you actually have (actual cash).",
+        w7_5: "Click Confirm.",
+        w7_6: "If the difference is more than 0.01, the system adds a protected Adjustment entry (Income or Expense) to match the actual balance. A green snackbar confirms with the difference shown.",
+        w7_7: "Note: Actual cash cannot be negative. If you enter a negative value, an error message appears.",
+        w8_title: "8. Consolidate Transactions", w8_1: "Click Consolidate in the header.",
+        w8_2: "Read the warning: all transactions (manual and system) will be grouped by category into single entries; consolidated entries cannot be edited; this cannot be undone.",
+        w8_3: "Click Confirm to proceed or Cancel to close.", w8_4: "Success: green snackbar; ledger refreshes with fewer, grouped entries.",
+        w8_5: "If there are no transactions: \"No transactions to consolidate\" is shown.",
+        w8_6: "Note: Consolidation affects all transactions in the system, not only the current date range.",
+        w9_title: "9. View Analytics", w9_1: "Open the Analytics & Reports tab.",
+        w9_2: "See the Expenses Breakdown chart (categories with amounts and progress bars).",
+        w9_3: "Toggle Include Purchases & System to include or exclude purchase and system-generated transactions in the chart.",
+        w9_4: "The chart shows only expense categories (no income).",
+        w10_title: "10. Paginate the Ledger", w10_1: "Use Previous and Next to move between pages (15 rows per page).", w10_2: "The label shows \"Page X of Y\".",
+        r_add_edit: "Add / Edit Entry", r_cat_req: "Category required", r_cat_req_res: "Dialog stays open if empty; must select a category",
+        r_amount_req: "Amount required", r_amount_req_res: "Dialog stays open if empty",
+        r_amount_valid: "Amount must be a valid number", r_amount_valid_res: "Invalid input causes save to be ignored; fix and retry",
+        r_treasury: "Treasury balance", r_treasury_res: "When adding an Expense, the amount cannot exceed current treasury; otherwise: \"Insufficient treasury balance. (Current: X.XX)\"",
+        r_edit_del: "Edit / Delete", r_system: "System-generated entries", r_system_res: "Cannot edit or delete; show \"System\" badge instead of buttons",
+        r_system_err: "Error if attempted", r_system_err_res: "\"Security: Cannot edit System-Auto records.\" / \"Cannot delete System-Auto records.\"",
+        r_close_day: "Close Day", r_negative: "Actual cash cannot be negative",
+        r_negative_res: "\"Actual balance cannot be negative. (Strict Treasury Control)\"",
+        r_diff_small: "Difference < 0.01", r_diff_small_res: "No adjustment entry created; closing is recorded",
+        r_diff_large: "Difference ≥ 0.01", r_diff_large_res: "An Adjustment entry is added automatically (protected)",
+        r_consolidate: "Consolidate", r_none: "No transactions", r_none_res: "\"No transactions to consolidate\"",
+        r_all: "All transactions", r_all_res: "Affects entire system, regardless of date filter",
+        r_general: "General", r_formula: "Treasury = Income − Expense", r_formula_desc: "Current balance is always (total income − total expenses)",
+        r_filter: "Date filter", r_filter_desc: "Ledger and KPIs use the selected date range; treasury balance is always full-history",
+        m_add: "Add success", m_add_msg: "\"Saved Successfully\" (green)",
+        m_update: "Update success", m_update_msg: "\"Updated Successfully\" (green)",
+        m_delete: "Delete success", m_delete_msg: "\"Deleted Successfully\" (green)",
+        m_treasury: "Add/Update failure (treasury)", m_treasury_msg: "\"Insufficient treasury balance. (Current: X.XX)\" (red)",
+        m_edit_sys: "Edit system entry", m_edit_sys_msg: "\"Security: Cannot edit System-Auto records.\" (red)",
+        m_del_sys: "Delete system entry", m_del_sys_msg: "\"Security: Cannot delete System-Auto records.\" (red)",
+        m_close_ok: "Close day success", m_close_ok_msg: "\"Closed! Diff: X.XX\" (green)",
+        m_close_fail: "Close day failure (negative)", m_close_fail_msg: "\"Actual balance cannot be negative. (Strict Treasury Control)\" (red)",
+        m_cons_ok: "Consolidate success", m_cons_ok_msg: "\"Transactions consolidated successfully\" (green)",
+        m_cons_fail: "Consolidate failure (none)", m_cons_fail_msg: "\"No transactions to consolidate\" (red)",
+        m_load: "Load error", m_load_msg: "Error message in snackbar (red)",
+        tip1: "Treasury shows total cash; it turns red if the balance is negative.",
+        tip2: "System entries (adjustments, consolidated entries) are protected and cannot be edited or deleted.",
+        tip3: "Date can only be set when creating a new entry; editing keeps the original date.",
+        tip4: "Include Purchases & System in Analytics lets you see purchase-related categories in the breakdown; off by default for a cleaner view.",
+        tip5: "Consolidate reduces many transactions to one per (category, type). Use when you want a simplified ledger for reporting.",
+        tip6: "Close Day is for daily reconciliation; enter the actual cash you have so the system can adjust for differences."
+      },
+      ar: {
+        btn_back: "العودة للرئيسية", doc_badge: "دليل المستخدم", doc_title: "المصروفات / الخزينة وسجل العمليات", doc_version: "الإصدار ١.٠",
+        nav_features: "المميزات", nav_pricing: "الأسعار", nav_privacy: "الخصوصية", nav_contact: "تواصل معنا", nav_download: "تحميل الآن",
+        footer_tagline: "الطريقة الأذكى لإدارة أعمالك في التجارة الإلكترونية.",
+        footer_nav: "التنقل", footer_contact_hd: "تواصل معنا", footer_legal: "قانوني", footer_privacy_link: "سياسة الخصوصية", footer_location: "القاهرة، مصر", footer_copy: "© ٢٠٢٦ مالي سيستمز. جميع الحقوق محفوظة.",
+        h2_purpose: "نبذة عن الموديول", h2_ui: "عناصر الواجهة", h2_workflow: "خطوات العمل", h2_rules: "قواعد العمل والتحقق", h2_messages: "الرسائل والتنبيهات", h2_tips: "نصائح",
+        th_element: "العنصر", th_description: "الوصف", th_card: "البطاقة", th_tab: "التبويب", th_content: "المحتوى", th_rule: "القاعدة", th_result: "النتيجة", th_situation: "الموقف", th_message: "الرسالة",
+        purpose_p1a: "وحدة المصروفات تتتبع الدخل والمصروفات، تحافظ على رصيد الخزينة (النقد)، وتسجل العمليات المالية في سجل مفلتر بالتاريخ. يمكنك إضافة قيود يدوية (دخل أو مصروف)، عرض الإجماليات حسب الفئة، إغلاق اليوم بعدد النقد الفعلي للمطابقة، ودمج جميع المعاملات في قيود ملخصة. الوحدة توفر تحليلات لتوزيع المصروفات حسب الفئة. رصيد الخزينة ",
+        purpose_strong: "مطبّق بدقة",
+        purpose_p1b: ": لا يمكنك تسجيل مصروف يجعل الرصيد النقدي سالبًا.",
+        h3_header: "منطقة الرأس", h3_kpi: "بطاقات المؤشرات", h3_action: "شريط الإجراءات", h3_tabs: "التبويبات", h3_ledger: "تبويب سجل العمليات", h3_entry: "نافذة القيد (إضافة / تعديل)",
+        h3_category: "نافذة إضافة فئة", h3_close_day: "نافذة إغلاق اليوم", h3_consolidate: "نافذة الدمج", h3_analytics_tab: "تبويب التحليلات",
+        h_title: "عنوان الرأس", h_title_desc: "«المصروفات» / «سجل العمليات» فرعي",
+        h_consolidate: "دمج", h_consolidate_desc: "زر — يجمع كل المعاملات حسب الفئة في قيود فردية (لا يمكن التراجع)",
+        kpi_treasury: "إجمالي الخزينة", kpi_treasury_desc: "الرصيد النقدي الحالي (كل الدخل ناقص كل المصروفات)",
+        kpi_income: "إجمالي الدخل", kpi_income_desc: "مجموع الدخل في النطاق الزمني المحدد",
+        kpi_expenses: "إجمالي المصروفات", kpi_expenses_desc: "مجموع المصروفات في النطاق الزمني المحدد",
+        action_search: "حقل نصوص — البحث في السجل بالفئة أو الملاحظات أو المبلغ",
+        action_date: "النطاق الزمني", action_date_desc: "حقل قابل للنقر — يفتح منتقي النطاق (جاهز + مخصص)",
+        action_refresh: "أيقونة — إعادة تحميل البيانات", action_new: "قيد جديد", action_new_desc: "زر — إضافة دخل أو مصروف جديد",
+        action_close: "إغلاق اليوم", action_close_desc: "زر — مطابقة الخزينة بعدد النقد الفعلي",
+        tab_ledger: "سجل العمليات", tab_ledger_desc: "جدول المعاملات مع ترقيم الصفحات",
+        tab_analytics: "التحليلات والتقارير", tab_analytics_desc: "مخطط توزيع المصروفات حسب الفئة",
+        ledger_table: "جدول البيانات", ledger_table_desc: "أعمدة: النوع، الفئة، المبلغ، التاريخ، الملاحظات، الإجراءات",
+        ledger_type: "النوع", ledger_type_desc: "الدخل (أخضر) أو المصروف (أحمر) مع أيقونة",
+        ledger_actions: "أزرار تعديل وحذف لكل صف (أو شارة «النظام» للقيود التلقائية)",
+        ledger_pagination: "السابق / الصفحة X من Y / التالي — ١٥ صفًا لكل صفحة",
+        entry_type: "زر اختيار — مصروف أو دخل (يغيّر لون خلفية النافذة)",
+        entry_category: "قائمة منسدلة — اختيار الفئة؛ زر + لإضافة فئة جديدة",
+        entry_amount: "حقل نصوص — مبلغ رقمي", entry_notes: "حقل نصوص — وصف اختياري",
+        entry_date: "زر — يفتح منتقي التاريخ (قيد جديد فقط؛ معطّل عند التعديل)",
+        entry_save: "زر — حفظ القيد",
+        cat_name: "حقل نصوص — اسم الفئة الجديدة", cat_add: "زر — إنشاء الفئة واختيارها في النافذة الأم",
+        close_balance: "رصيد النظام", close_balance_desc: "عرض — الرصيد المحسوب الحالي",
+        close_amount: "حقل نصوص — النقد الفعلي المتوفر لديك", close_confirm: "زر — إنشاء تسوية إذا كان هناك فرق",
+        cons_warning: "يوضح أن كل المعاملات ستُجمّع حسب الفئة؛ القيود المدمجة لا يمكن تعديلها؛ الفعل لا يمكن التراجع عنه",
+        cons_info: "«سيتم دمج كل المعاملات في النظام (وليس نطاق التاريخ الحالي فقط)»",
+        cons_cancel: "إغلاق النافذة", cons_confirm: "المتابعة بالدمج",
+        ana_breakdown: "توزيع المصروفات", ana_breakdown_desc: "عنوان القسم",
+        ana_include: "تضمين المشتريات والنظام", ana_include_desc: "مفتاح — تضمين معاملات المشتريات/النظام في المخطط (معطّل افتراضيًا)",
+        ana_chart: "قائمة المخطط", ana_chart_desc: "قائمة شريطية — أسماء الفئات مع أشرطة التقدم والمبالغ، مرتبة بالمبلغ",
+        w1_title: "١. إضافة قيد جديد (دخل أو مصروف)", w1_1: "انقر على قيد جديد.", w1_2: "اختر الدخل أو المصروف (المصروف هو الافتراضي).",
+        w1_3: "اختر فئة من القائمة، أو انقر على + لإضافة فئة جديدة.",
+        w1_4: "أدخل المبلغ (مثل ١٥٠.٥٠).", w1_5: "أدخل الملاحظات اختياريًا.",
+        w1_6: "انقر على زر التاريخ لاختيار تاريخ (افتراضي اليوم للقيود الجديدة).", w1_7: "انقر على حفظ.",
+        w1_8: "تُغلق النافذة. إن نجح الحفظ، يظهر شريط أخضر؛ السجل والمؤشرات تتحدّث. إن كان المبلغ غير صالح أو حقول مطلوبة ناقصة، تبقى النافذة مفتوحة (أصلح وحاول مجددًا).",
+        w2_title: "٢. تعديل قيد", w2_1: "في السجل، ابحث عن الصف وانقر على أيقونة التعديل (قلم أزرق).",
+        w2_2: "غيّر الفئة أو المبلغ أو النوع أو الملاحظات. التاريخ لا يمكن تغييره عند التعديل.", w2_3: "انقر على حفظ.",
+        w2_4: "نجاح: شريط أخضر؛ السجل يتحدّث.",
+        w2_5: "ملاحظة: القيود التلقائية (مثل تسويات إغلاق اليوم، القيود المدمجة) تظهر شارة «النظام» بدل تعديل/حذف ولا يمكن تعديلها.",
+        w3_title: "٣. حذف قيد", w3_1: "في السجل، انقر على أيقونة الحذف (سلة حمراء).", w3_2: "أكّد في النافذة.",
+        w3_3: "نجاح: شريط أخضر؛ السجل يتحدّث.", w3_4: "ملاحظة: القيود التلقائية لا يمكن حذفها.",
+        w4_title: "٤. إضافة فئة جديدة", w4_1: "افتح قيد جديد أو تعديل.", w4_2: "انقر على أيقونة + بجانب قائمة الفئة.",
+        w4_3: "أدخل اسم الفئة وانقر على إضافة.", w4_4: "تُنشأ الفئة الجديدة وتُختار. أكمل تعبئة النموذج وانقر حفظ.",
+        w5_title: "٥. تغيير النطاق الزمني", w5_1: "انقر على حقل النطاق الزمني (يعرض البداية → النهاية).",
+        w5_2: "في النافذة، اختر جاهز (اليوم، أمس، هذا الأسبوع، الأسبوع الماضي، هذا الشهر، الشهر الماضي، هذه السنة، السنة الماضية، كل الوقت) أو حدّد تواريخ مخصصة للبداية والنهاية.",
+        w5_3: "طبّق الاختيار. السجل والمؤشرات يتحدّثان للنطاق الجديد.", w5_4: "النطاق يُحفظ للجلسة.",
+        w6_title: "٦. البحث في السجل", w6_1: "اكتب في حقل البحث.",
+        w6_2: "السجل يُفلتر بالفئة أو الملاحظات أو المبلغ في الوقت الفعلي.", w6_3: "المؤشرات تعكس النتائج المفلترة.",
+        w7_title: "٧. إغلاق اليوم (مطابقة النقد)", w7_1: "عد النقد الفعلي المتوفر.", w7_2: "انقر على إغلاق اليوم.",
+        w7_3: "انظر رصيد النظام (محسوب من كل الدخل والمصروفات).", w7_4: "أدخل المبلغ الفعلي المتوفر لديك.",
+        w7_5: "انقر على تأكيد.",
+        w7_6: "إن كان الفرق أكثر من ٠.٠١، يضيف النظام قيد تسوية محمي (دخل أو مصروف) لمطابقة الرصيد الفعلي. شريط أخضر يؤكد بعرض الفرق.",
+        w7_7: "ملاحظة: النقد الفعلي لا يمكن أن يكون سالبًا. إن أدخلت قيمة سالبة، تظهر رسالة خطأ.",
+        w8_title: "٨. دمج المعاملات", w8_1: "انقر على دمج في الرأس.",
+        w8_2: "اقرأ التحذير: كل المعاملات (يدوية ونظامية) ستُجمّع حسب الفئة في قيود فردية؛ القيود المدمجة لا يمكن تعديلها؛ لا يمكن التراجع.",
+        w8_3: "انقر تأكيد للمتابعة أو إلغاء للإغلاق.", w8_4: "نجاح: شريط أخضر؛ السجل يتحدّث بقيود أقل ومجمّعة.",
+        w8_5: "إن لم تكن هناك معاملات: يظهر «لا معاملات للدمج».",
+        w8_6: "ملاحظة: الدمج يشمل كل المعاملات في النظام، وليس نطاق التاريخ الحالي فقط.",
+        w9_title: "٩. عرض التحليلات", w9_1: "افتح تبويب التحليلات والتقارير.",
+        w9_2: "انظر مخطط توزيع المصروفات (الفئات مع المبالغ وأشرطة التقدم).",
+        w9_3: "بدّل تضمين المشتريات والنظام لتضمين أو استبعاد معاملات المشتريات/النظام في المخطط.",
+        w9_4: "المخطط يعرض فئات المصروفات فقط (بدون دخل).",
+        w10_title: "١٠. ترقيم السجل", w10_1: "استخدم السابق والتالي للتنقل بين الصفحات (١٥ صفًا لكل صفحة).", w10_2: "يُظهر التسمية «الصفحة X من Y».",
+        r_add_edit: "إضافة / تعديل قيد", r_cat_req: "الفئة مطلوبة", r_cat_req_res: "النافذة تبقى مفتوحة إن كانت فارغة؛ يجب اختيار فئة",
+        r_amount_req: "المبلغ مطلوب", r_amount_req_res: "النافذة تبقى مفتوحة إن كان فارغًا",
+        r_amount_valid: "المبلغ يجب أن يكون رقمًا صالحًا", r_amount_valid_res: "إدخال غير صالح يُتجاهل الحفظ؛ أصلح وحاول مجددًا",
+        r_treasury: "رصيد الخزينة", r_treasury_res: "عند إضافة مصروف، المبلغ لا يمكن أن يتجاوز الخزينة الحالية؛ وإلا: «رصيد الخزينة غير كافٍ. (الحالي: X.XX)»",
+        r_edit_del: "تعديل / حذف", r_system: "القيود التلقائية", r_system_res: "لا يمكن تعديلها أو حذفها؛ تظهر شارة «النظام» بدل الأزرار",
+        r_system_err: "خطأ إن حاولت", r_system_err_res: "«الأمان: لا يمكن تعديل سجلات النظام التلقائية.» / «لا يمكن حذف سجلات النظام التلقائية.»",
+        r_close_day: "إغلاق اليوم", r_negative: "النقد الفعلي لا يمكن أن يكون سالبًا",
+        r_negative_res: "«الرصيد الفعلي لا يمكن أن يكون سالبًا. (التحكم الصارم بالخزينة)»",
+        r_diff_small: "الفرق < ٠.٠١", r_diff_small_res: "لا يُنشأ قيد تسوية؛ يُسجّل الإغلاق",
+        r_diff_large: "الفرق ≥ ٠.٠١", r_diff_large_res: "يُضاف قيد تسوية تلقائيًا (محمي)",
+        r_consolidate: "الدمج", r_none: "لا معاملات", r_none_res: "«لا معاملات للدمج»",
+        r_all: "كل المعاملات", r_all_res: "يشمل النظام بالكامل، بغض النظر عن فلتر التاريخ",
+        r_general: "عام", r_formula: "الخزينة = الدخل − المصروفات", r_formula_desc: "الرصيد الحالي دائمًا (إجمالي الدخل − إجمالي المصروفات)",
+        r_filter: "فلتر التاريخ", r_filter_desc: "السجل والمؤشرات تستخدم النطاق المحدد؛ رصيد الخزينة دائماً السجل الكامل",
+        m_add: "نجاح الإضافة", m_add_msg: "«تم الحفظ بنجاح» (أخضر)",
+        m_update: "نجاح التحديث", m_update_msg: "«تم التحديث بنجاح» (أخضر)",
+        m_delete: "نجاح الحذف", m_delete_msg: "«تم الحذف بنجاح» (أخضر)",
+        m_treasury: "فشل الإضافة/التحديث (الخزينة)", m_treasury_msg: "«رصيد الخزينة غير كافٍ. (الحالي: X.XX)» (أحمر)",
+        m_edit_sys: "تعديل قيد نظام", m_edit_sys_msg: "«الأمان: لا يمكن تعديل سجلات النظام التلقائية.» (أحمر)",
+        m_del_sys: "حذف قيد نظام", m_del_sys_msg: "«الأمان: لا يمكن حذف سجلات النظام التلقائية.» (أحمر)",
+        m_close_ok: "نجاح إغلاق اليوم", m_close_ok_msg: "«تم الإغلاق! الفرق: X.XX» (أخضر)",
+        m_close_fail: "فشل إغلاق اليوم (سالب)", m_close_fail_msg: "«الرصيد الفعلي لا يمكن أن يكون سالبًا. (التحكم الصارم بالخزينة)» (أحمر)",
+        m_cons_ok: "نجاح الدمج", m_cons_ok_msg: "«تم دمج المعاملات بنجاح» (أخضر)",
+        m_cons_fail: "فشل الدمج (لا معاملات)", m_cons_fail_msg: "«لا معاملات للدمج» (أحمر)",
+        m_load: "خطأ التحميل", m_load_msg: "رسالة خطأ في الشريط (أحمر)",
+        tip1: "الخزينة تعرض إجمالي النقد؛ تتحول للأحمر إن كان الرصيد سالبًا.",
+        tip2: "القيود التلقائية (التسويات، القيود المدمجة) محمية ولا يمكن تعديلها أو حذفها.",
+        tip3: "التاريخ يُحدَّد فقط عند إنشاء قيد جديد؛ التعديل يحتفظ بالتاريخ الأصلي.",
+        tip4: "تضمين المشتريات والنظام في التحليلات يعرض فئات المشتريات في التوزيع؛ معطّل افتراضيًا لعرض أنظف.",
+        tip5: "الدمج يقلّل المعاملات لواحدة لكل (فئة، نوع). استخدمه عند رغبتك بسجل مبسّط للتقارير.",
+        tip6: "إغلاق اليوم للمطابقة اليومية؛ أدخل النقد الفعلي لديك ليُعدّل النظام للفروقات."
+      }
+    };
+
+    let currentLang = 'en';
+    function applyLang(lang) {
+      currentLang = lang;
+      const html = document.documentElement;
+      html.lang = lang;
+      html.dir = lang === 'ar' ? 'rtl' : 'ltr';
+      const texts = T[lang];
+      document.querySelectorAll('[data-i18n]').forEach(el => {
+        const key = el.getAttribute('data-i18n');
+        if (texts[key] !== undefined) el.textContent = texts[key];
+      });
+      const label = lang === 'en' ? 'العربية' : 'English';
+      document.getElementById('lang-label').textContent = label;
+      document.getElementById('lang-label-mobile').textContent = label;
+      try { localStorage.setItem('maly_lang', lang); } catch(e) {}
+    }
+    function toggleLang() { applyLang(currentLang === 'en' ? 'ar' : 'en'); }
+    function toggleMenu() {
+      const menu = document.getElementById('mobile-menu');
+      const icon = document.getElementById('hamburger-icon');
+      menu.classList.toggle('open');
+      icon.className = menu.classList.contains('open') ? 'fa-solid fa-xmark' : 'fa-solid fa-bars';
+    }
+    function closeMenu() {
+      document.getElementById('mobile-menu').classList.remove('open');
+      document.getElementById('hamburger-icon').className = 'fa-solid fa-bars';
+    }
+    window.addEventListener('scroll', () => { document.getElementById('navbar').classList.toggle('scrolled', window.scrollY > 10); }, { passive: true });
+    (function init() {
+      let saved = 'en';
+      try { saved = localStorage.getItem('maly_lang') || 'en'; } catch(e) {}
+      applyLang(saved);
+    })();
+  </script>
+</body>
+</html>

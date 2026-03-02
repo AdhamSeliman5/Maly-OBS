@@ -1,0 +1,886 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Maly - OBS | Debts Module — User Guide</title>
+  <meta name="description" content="Debts module user guide: financial position, receivables, payables, fixed assets, settle, forecast in Maly - OBS." />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;800&family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+
+  <style>
+    :root {
+      --primary: #1B3D6F; --primary-light: #2A5498; --accent: #C5974A; --accent-light: #F0DDB8;
+      --bg: #F5F1EB; --surface: #FFFFFF; --surface-alt: #F9F6F0; --text: #1A1A2E; --text-muted: #64748B;
+      --text-light: #94A3B8; --border: #E2D9CC; --border-light: #EDE8E0;
+      --shadow-sm: 0 2px 8px rgba(27,61,111,0.07); --shadow-md: 0 8px 32px rgba(27,61,111,0.10);
+      --radius-sm: 8px; --radius-md: 14px; --nav-h: 76px;
+      --font-en: 'Inter', sans-serif; --font-ar: 'Cairo', sans-serif; --transition: 0.25s ease;
+    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; font-size: 16px; }
+    body { font-family: var(--font-en); background-color: var(--bg); color: var(--text); line-height: 1.65; overflow-x: hidden; }
+    html[lang="ar"] body { font-family: var(--font-ar); }
+    img { max-width: 100%; display: block; }
+    a { color: inherit; text-decoration: none; }
+    ul { list-style: none; }
+    button { cursor: pointer; font-family: inherit; }
+    .container { max-width: 1160px; margin: 0 auto; padding: 0 24px; }
+
+    nav { position: fixed; top: 0; left: 0; right: 0; height: var(--nav-h); background: rgba(245, 241, 235, 0.92); backdrop-filter: blur(14px); border-bottom: 1px solid var(--border-light); z-index: 1000; transition: box-shadow var(--transition); }
+    nav.scrolled { box-shadow: var(--shadow-md); }
+    .nav-inner { display: flex; align-items: center; justify-content: space-between; height: 100%; }
+    .nav-logo { display: flex; align-items: center; gap: 10px; font-weight: 800; font-size: 1.2rem; color: var(--primary); }
+    .nav-logo img { height: 48px; width: auto; max-width: 220px; object-fit: contain; }
+    @media (max-width: 768px) { .nav-logo img.nav-logo-desktop { display: none; } .nav-logo img.nav-logo-mobile { display: block !important; } }
+    .nav-logo img.nav-logo-mobile { display: none; }
+    .nav-links { display: flex; align-items: center; gap: 8px; }
+    .nav-links a { font-size: 0.9rem; font-weight: 500; color: var(--text-muted); padding: 6px 14px; border-radius: var(--radius-sm); transition: color var(--transition), background var(--transition); }
+    .nav-links a:hover { color: var(--primary); background: rgba(27,61,111,0.06); }
+    .nav-right { display: flex; align-items: center; gap: 12px; }
+    .lang-btn { display: flex; align-items: center; gap: 6px; font-size: 0.82rem; font-weight: 600; color: var(--primary); background: var(--surface); border: 1.5px solid var(--border); padding: 6px 14px; border-radius: 20px; transition: all var(--transition); }
+    .lang-btn:hover { border-color: var(--primary); background: rgba(27,61,111,0.04); }
+    .btn-nav-cta { font-size: 0.88rem; font-weight: 600; color: #fff; background: var(--primary); padding: 8px 20px; border-radius: 8px; transition: background var(--transition), transform var(--transition); }
+    .btn-nav-cta:hover { background: var(--primary-light); transform: translateY(-1px); }
+    .hamburger { display: none; background: none; border: none; font-size: 1.4rem; color: var(--primary); }
+    .mobile-menu { display: none; flex-direction: column; background: var(--surface); border-bottom: 1px solid var(--border); padding: 12px 24px 20px; gap: 4px; }
+    .mobile-menu.open { display: flex; }
+    .mobile-menu a { font-size: 0.95rem; font-weight: 500; color: var(--text); padding: 10px 4px; border-bottom: 1px solid var(--border-light); }
+    .mobile-menu a:last-child { border: none; }
+    .mobile-menu .lang-btn { margin-top: 8px; width: fit-content; }
+
+    .doc-main { padding-top: calc(var(--nav-h) + 48px); padding-bottom: 80px; }
+    .doc-inner { max-width: 840px; margin: 0 auto; }
+    .btn-back { display: inline-flex; align-items: center; gap: 8px; font-size: 0.9rem; font-weight: 600; color: var(--primary); background: var(--surface); border: 1.5px solid var(--border); padding: 10px 20px; border-radius: var(--radius-sm); margin-bottom: 32px; transition: all var(--transition); box-shadow: var(--shadow-sm); }
+    .btn-back:hover { border-color: var(--primary); background: rgba(27,61,111,0.04); }
+    html[dir="rtl"] .btn-back i { transform: scaleX(-1); }
+    .doc-header { margin-bottom: 40px; }
+    .doc-header .doc-badge { display: inline-block; font-size: 0.75rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--accent); background: var(--accent-light); padding: 4px 12px; border-radius: 20px; margin-bottom: 12px; }
+    .doc-header h1 { font-size: clamp(1.8rem, 3vw, 2.4rem); font-weight: 800; color: var(--text); margin-bottom: 12px; line-height: 1.2; }
+    .doc-header .doc-meta { font-size: 0.9rem; color: var(--text-muted); }
+    .doc-content h2 { font-size: 1.35rem; font-weight: 700; color: var(--primary); margin-top: 48px; margin-bottom: 20px; padding-bottom: 8px; border-bottom: 2px solid var(--border-light); }
+    .doc-content h2:first-of-type { margin-top: 0; }
+    .doc-content h3 { font-size: 1.1rem; font-weight: 700; color: var(--text); margin-top: 32px; margin-bottom: 14px; }
+    .doc-content p { font-size: 1rem; color: var(--text-muted); margin-bottom: 16px; line-height: 1.75; }
+    .doc-content ul.doc-list { list-style: disc; padding-left: 24px; margin-bottom: 20px; }
+    html[dir="rtl"] .doc-content ul.doc-list { padding-left: 0; padding-right: 24px; }
+    .doc-content ul.doc-list li { margin-bottom: 8px; color: var(--text-muted); line-height: 1.7; }
+    .doc-content ul.doc-list li strong { color: var(--text); }
+    .doc-table-wrapper { overflow-x: auto; margin: 24px 0; border-radius: var(--radius-sm); border: 1px solid var(--border-light); box-shadow: var(--shadow-sm); }
+    .doc-table { width: 100%; border-collapse: collapse; font-size: 0.95rem; }
+    .doc-table th, .doc-table td { padding: 14px 18px; text-align: left; border-bottom: 1px solid var(--border-light); vertical-align: top; }
+    html[dir="rtl"] .doc-table th, html[dir="rtl"] .doc-table td { text-align: right; }
+    .doc-table th { background: var(--surface-alt); font-weight: 700; color: var(--primary); }
+    .doc-table tr:last-child td { border-bottom: none; }
+    .doc-table tr:hover td { background: rgba(27,61,111,0.02); }
+    .callout { padding: 20px 24px; border-radius: var(--radius-md); margin: 24px 0; border-left: 4px solid; display: flex; gap: 14px; align-items: flex-start; }
+    html[dir="rtl"] .callout { border-left: none; border-right: 4px solid; }
+    .callout i { font-size: 1.2rem; flex-shrink: 0; margin-top: 2px; }
+    .callout-content { flex: 1; }
+    .callout-tip { background: rgba(34, 197, 94, 0.08); border-color: #22c55e; color: #166534; }
+    .callout-tip i { color: #22c55e; }
+
+    footer { background: #111827; color: #9CA3AF; padding: 60px 0 30px; }
+    .footer-grid { display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 40px; margin-bottom: 50px; }
+    .footer-brand .nav-logo { color: #fff; margin-bottom: 14px; }
+    .footer-brand .nav-logo img { height: 40px; width: auto; max-width: 200px; object-fit: contain; filter: brightness(0) invert(1); opacity: 0.9; }
+    .footer-brand p { font-size: 0.88rem; line-height: 1.7; max-width: 260px; color: #9CA3AF; }
+    .footer-brand .social-row { display: flex; gap: 10px; margin-top: 20px; }
+    .footer-social { width: 36px; height: 36px; border-radius: 50%; background: rgba(255,255,255,0.08); color: #D1D5DB; display: flex; align-items: center; justify-content: center; font-size: 0.9rem; transition: background var(--transition), color var(--transition); }
+    .footer-social:hover { background: var(--accent); color: #fff; }
+    .footer-col h4 { font-size: 0.85rem; font-weight: 700; color: #E5E7EB; text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 18px; }
+    .footer-col ul li { margin-bottom: 10px; }
+    .footer-col ul li a { font-size: 0.88rem; color: #9CA3AF; transition: color var(--transition); }
+    .footer-col ul li a:hover { color: #fff; }
+    .footer-col ul li span { font-size: 0.88rem; color: #9CA3AF; font-family: var(--font-en); }
+    .footer-bottom { border-top: 1px solid rgba(255,255,255,0.08); padding-top: 28px; display: flex; align-items: center; justify-content: space-between; gap: 12px; flex-wrap: wrap; }
+    .footer-bottom p { font-size: 0.82rem; }
+    html[dir="rtl"] .footer-grid { direction: rtl; }
+    html[dir="rtl"] .footer-brand p { max-width: 100%; }
+    html[dir="rtl"] .footer-bottom { flex-direction: row-reverse; }
+
+    @media (max-width: 768px) { .nav-links, .btn-nav-cta { display: none; } .hamburger { display: block; } .doc-main { padding-top: calc(var(--nav-h) + 32px); padding-bottom: 48px; } .footer-grid { grid-template-columns: 1fr 1fr; } .footer-brand { grid-column: 1 / -1; } }
+    @media (max-width: 480px) { .container { padding: 0 18px; } .doc-table th, .doc-table td { padding: 10px 14px; font-size: 0.88rem; } .footer-grid { grid-template-columns: 1fr; } }
+  </style>
+</head>
+<body>
+
+  <nav id="navbar">
+    <div class="container">
+      <div class="nav-inner">
+        <a href="index.html" class="nav-logo">
+          <img src="assets/logo_splash_light.png" alt="Maly OBS Logo" class="nav-logo-desktop" />
+          <img src="assets/logo_icon.png" alt="Maly OBS" class="nav-logo-mobile" />
+          <span>Maly&nbsp;-&nbsp;OBS</span>
+        </a>
+        <div class="nav-links">
+          <a href="index.html#features" data-i18n="nav_features">Features</a>
+          <a href="index.html#pricing" data-i18n="nav_pricing">Pricing</a>
+          <a href="index.html#privacy" data-i18n="nav_privacy">Privacy</a>
+          <a href="index.html#contact" data-i18n="nav_contact">Contact</a>
+        </div>
+        <div class="nav-right">
+          <button class="lang-btn" id="lang-toggle" onclick="toggleLang()">
+            <i class="fa-solid fa-globe"></i>
+            <span id="lang-label">العربية</span>
+          </button>
+          <a href="https://drive.google.com/uc?export=download&id=15Vp6Mm15r9nkoK8qhC0GpUmpAVAORZhd" target="_blank" rel="noopener" class="btn-nav-cta" data-i18n="nav_download">Download Now</a>
+          <button class="hamburger" onclick="toggleMenu()" aria-label="Menu"><i class="fa-solid fa-bars" id="hamburger-icon"></i></button>
+        </div>
+      </div>
+    </div>
+    <div class="mobile-menu" id="mobile-menu">
+      <a href="index.html#features" onclick="closeMenu()" data-i18n="nav_features">Features</a>
+      <a href="index.html#pricing" onclick="closeMenu()" data-i18n="nav_pricing">Pricing</a>
+      <a href="index.html#privacy" onclick="closeMenu()" data-i18n="nav_privacy">Privacy</a>
+      <a href="index.html#contact" onclick="closeMenu()" data-i18n="nav_contact">Contact</a>
+      <a href="https://drive.google.com/uc?export=download&id=15Vp6Mm15r9nkoK8qhC0GpUmpAVAORZhd" target="_blank" rel="noopener" onclick="closeMenu()" data-i18n="nav_download">Download Now</a>
+      <button class="lang-btn" onclick="toggleLang(); closeMenu();"><i class="fa-solid fa-globe"></i><span id="lang-label-mobile">العربية</span></button>
+    </div>
+  </nav>
+
+  <main class="doc-main">
+    <div class="container">
+      <div class="doc-inner">
+        <a href="index.html" class="btn-back">
+          <i class="fa-solid fa-arrow-left"></i>
+          <span data-i18n="btn_back">Back to Home</span>
+        </a>
+
+        <header class="doc-header">
+          <span class="doc-badge" data-i18n="doc_badge">User Guide</span>
+          <h1 data-i18n="doc_title">Debts / Financial Position & Ledger</h1>
+          <p class="doc-meta">Maly - OBS (Online Business System) · <span data-i18n="doc_version">Version 1.0</span></p>
+        </header>
+
+        <div class="doc-content">
+          <h2 data-i18n="h2_purpose">Module Purpose</h2>
+          <p><span data-i18n="purpose_p1a">The Debts module shows your financial position: liquid assets (receivables, pipeline, shipping balance, staff loans), fixed assets (equipment, property), and liabilities (payables, staff due, shipping debt). You can add manual debts (receivables and payables), settle them with full or partial payments, track history, and manage fixed assets (add, update value, sell or dispose). A forecast simulator lets you adjust the delivery rate and toggle pipeline inclusion to see how projected assets change. Overdue debts are </span><strong data-i18n="purpose_strong">highlighted</strong><span data-i18n="purpose_p1b">, and the Net position shows your liquid financial standing.</span></p>
+
+          <h2 data-i18n="h2_ui">UI Elements</h2>
+
+          <h3 data-i18n="h3_header">Header Area</h3>
+          <div class="doc-table-wrapper">
+            <table class="doc-table">
+              <thead><tr><th data-i18n="th_element">Element</th><th data-i18n="th_description">Description</th></tr></thead>
+              <tbody>
+                <tr><td><strong data-i18n="h_title">Title</strong></td><td data-i18n="h_title_desc">"Financial Position & Ledger" / "Debts"</td></tr>
+                <tr><td><strong>Refresh</strong></td><td data-i18n="h_refresh">Icon button — reload all data</td></tr>
+                <tr><td><strong data-i18n="h_add">Add New Entry</strong></td><td data-i18n="h_add_desc">Button — add a new debt (Receivable or Payable)</td></tr>
+              </tbody>
+            </table>
+          </div>
+
+          <h3 data-i18n="h3_kpi">KPI Cards</h3>
+          <div class="doc-table-wrapper">
+            <table class="doc-table">
+              <thead><tr><th data-i18n="th_card">Card</th><th data-i18n="th_description">Description</th></tr></thead>
+              <tbody>
+                <tr><td><strong data-i18n="kpi_liquid">Liquid Assets</strong></td><td data-i18n="kpi_liquid_desc">Receivables, pipeline, shipping balance, staff loans (excludes fixed assets)</td></tr>
+                <tr><td><strong data-i18n="kpi_fixed">Fixed Assets</strong></td><td data-i18n="kpi_fixed_desc">Sum of current values of all fixed assets</td></tr>
+                <tr><td><strong data-i18n="kpi_liabilities">Liabilities</strong></td><td data-i18n="kpi_liabilities_desc">Payables, staff due today, shipping debt</td></tr>
+                <tr><td><strong data-i18n="kpi_net">Net</strong></td><td data-i18n="kpi_net_desc">Liquid Assets − Liabilities (green if positive, red if negative)</td></tr>
+                <tr><td><strong data-i18n="kpi_overdue">Overdue</strong></td><td data-i18n="kpi_overdue_desc">Total amount of past-due debts</td></tr>
+              </tbody>
+            </table>
+          </div>
+
+          <h3 data-i18n="h3_forecast">Forecast Simulator (in Header)</h3>
+          <div class="doc-table-wrapper">
+            <table class="doc-table">
+              <thead><tr><th data-i18n="th_element">Element</th><th data-i18n="th_description">Description</th></tr></thead>
+              <tbody>
+                <tr><td><strong>Pipeline</strong></td><td data-i18n="forecast_pipeline">Switch — include or exclude pipeline (To Prepare) orders in asset calculations</td></tr>
+                <tr><td><strong data-i18n="forecast_info">Pipeline Info</strong></td><td data-i18n="forecast_info_desc">Shows count of pipeline orders</td></tr>
+                <tr><td><strong data-i18n="forecast_rate">Delivery Rate</strong></td><td data-i18n="forecast_rate_desc">Slider 0–100% — percentage applied to pipeline and in-shipping values for forecast</td></tr>
+              </tbody>
+            </table>
+          </div>
+
+          <h3 data-i18n="h3_tabs">Tabs</h3>
+          <div class="doc-table-wrapper">
+            <table class="doc-table">
+              <thead><tr><th data-i18n="th_tab">Tab</th><th data-i18n="th_content">Content</th></tr></thead>
+              <tbody>
+                <tr><td><strong>Assets</strong></td><td data-i18n="tab_assets">Table — receivables, pipeline, shipping balance, staff loans, fixed assets summary</td></tr>
+                <tr><td><strong>Liabilities</strong></td><td data-i18n="tab_liabilities">Table — payables, staff due today, shipping debt</td></tr>
+                <tr><td><strong data-i18n="tab_fixed">Fixed Assets</strong></td><td data-i18n="tab_fixed_desc">Table — asset list with Add button and per-row actions</td></tr>
+              </tbody>
+            </table>
+          </div>
+
+          <h3 data-i18n="h3_assets">Assets Table</h3>
+          <div class="doc-table-wrapper">
+            <table class="doc-table">
+              <thead><tr><th data-i18n="th_column">Column</th><th data-i18n="th_description">Description</th></tr></thead>
+              <tbody>
+                <tr><td><strong>Source</strong></td><td data-i18n="assets_source">Row name (e.g., Pipeline, In Shipping, person name)</td></tr>
+                <tr><td><strong>Type</strong></td><td data-i18n="assets_type">Category badge (Forecast, Ledger, Payroll, Manual, CapEx)</td></tr>
+                <tr><td><strong>Amount</strong></td><td data-i18n="assets_amount">Value (green)</td></tr>
+                <tr><td><strong data-i18n="assets_due">Due Date</strong></td><td data-i18n="assets_due_desc">Due date or "-"</td></tr>
+                <tr><td><strong>Actions</strong></td><td data-i18n="assets_actions">History (📜), Settle (✓) for manual entries; "-" for system rows</td></tr>
+              </tbody>
+            </table>
+          </div>
+
+          <h3 data-i18n="h3_liabilities">Liabilities Table</h3>
+          <div class="doc-table-wrapper">
+            <table class="doc-table">
+              <thead><tr><th data-i18n="th_column">Column</th><th data-i18n="th_description">Description</th></tr></thead>
+              <tbody>
+                <tr><td><strong>Source</strong></td><td data-i18n="liab_source">Row name (e.g., Staff Due Today, person name)</td></tr>
+                <tr><td><strong>Type</strong></td><td data-i18n="liab_type">Category badge</td></tr>
+                <tr><td><strong>Amount</strong></td><td data-i18n="liab_amount">Value (red)</td></tr>
+                <tr><td><strong data-i18n="liab_due">Due Date</strong></td><td data-i18n="liab_due_desc">Due date or "-"; overdue shown in red with left bar</td></tr>
+                <tr><td><strong>Actions</strong></td><td data-i18n="liab_actions">History, Settle for manual entries</td></tr>
+              </tbody>
+            </table>
+          </div>
+
+          <h3 data-i18n="h3_fixed">Fixed Assets Table</h3>
+          <div class="doc-table-wrapper">
+            <table class="doc-table">
+              <thead><tr><th data-i18n="th_column">Column</th><th data-i18n="th_description">Description</th></tr></thead>
+              <tbody>
+                <tr><td><strong data-i18n="fixed_name">Asset Name</strong></td><td data-i18n="fixed_name_desc">Name of the asset</td></tr>
+                <tr><td><strong data-i18n="fixed_date">Purchase Date</strong></td><td data-i18n="fixed_date_desc">Date acquired</td></tr>
+                <tr><td><strong data-i18n="fixed_price">Purchase Price</strong></td><td data-i18n="fixed_price_desc">Original cost</td></tr>
+                <tr><td><strong data-i18n="fixed_value">Current Value</strong></td><td data-i18n="fixed_value_desc">Updated/depreciated value</td></tr>
+                <tr><td><strong>Actions</strong></td><td data-i18n="fixed_actions">Update Value (✎), Sell/Dispose (🗑)</td></tr>
+              </tbody>
+            </table>
+          </div>
+
+          <h3 data-i18n="h3_add_debt">Add Debt Dialog</h3>
+          <div class="doc-table-wrapper">
+            <table class="doc-table">
+              <thead><tr><th data-i18n="th_element">Element</th><th data-i18n="th_description">Description</th></tr></thead>
+              <tbody>
+                <tr><td><strong>Name</strong></td><td data-i18n="debt_name">Text field — person/entity name; suggestions appear as you type</td></tr>
+                <tr><td><strong>Amount</strong></td><td data-i18n="debt_amount">Text field — numeric amount</td></tr>
+                <tr><td><strong>Type</strong></td><td data-i18n="debt_type">Dropdown — Receivable or Payable</td></tr>
+                <tr><td><strong>Notes</strong></td><td data-i18n="debt_notes">Text field — optional</td></tr>
+                <tr><td><strong data-i18n="debt_due">Due Date</strong></td><td data-i18n="debt_due_desc">Button — opens date picker</td></tr>
+                <tr><td><strong data-i18n="debt_cash">Record in Cash Flow</strong></td><td data-i18n="debt_cash_desc">Checkbox — record transaction in treasury (checked by default)</td></tr>
+                <tr><td><strong>Save / Cancel</strong></td><td data-i18n="debt_buttons">Buttons</td></tr>
+              </tbody>
+            </table>
+          </div>
+
+          <h3 data-i18n="h3_settle">Settle Dialog</h3>
+          <div class="doc-table-wrapper">
+            <table class="doc-table">
+              <thead><tr><th data-i18n="th_element">Element</th><th data-i18n="th_description">Description</th></tr></thead>
+              <tbody>
+                <tr><td><strong>Info</strong></td><td data-i18n="settle_info">Shows entity name, amount, and type (Receivable/Payable)</td></tr>
+                <tr><td><strong>Amount</strong></td><td data-i18n="settle_amount">Text field — amount being paid (default: full amount)</td></tr>
+                <tr><td><strong>Notes</strong></td><td data-i18n="settle_notes">Text field — optional</td></tr>
+                <tr><td><strong>Confirm / Cancel</strong></td><td data-i18n="settle_buttons">Buttons</td></tr>
+              </tbody>
+            </table>
+          </div>
+
+          <h3 data-i18n="h3_history">History Log Dialog</h3>
+          <div class="doc-table-wrapper">
+            <table class="doc-table">
+              <thead><tr><th data-i18n="th_element">Element</th><th data-i18n="th_description">Description</th></tr></thead>
+              <tbody>
+                <tr><td><strong>Table</strong></td><td data-i18n="history_table">Date, Type, Amount, Balance, Notes for each transaction</td></tr>
+              </tbody>
+            </table>
+          </div>
+
+          <h3 data-i18n="h3_add_asset">Add Fixed Asset Dialog</h3>
+          <div class="doc-table-wrapper">
+            <table class="doc-table">
+              <thead><tr><th data-i18n="th_element">Element</th><th data-i18n="th_description">Description</th></tr></thead>
+              <tbody>
+                <tr><td><strong data-i18n="asset_name">Asset Name</strong></td><td data-i18n="asset_name_desc">Text field — name</td></tr>
+                <tr><td><strong data-i18n="asset_date">Purchase Date</strong></td><td data-i18n="asset_date_desc">Button — date picker</td></tr>
+                <tr><td><strong data-i18n="asset_price">Purchase Price</strong></td><td data-i18n="asset_price_desc">Text field — original cost</td></tr>
+                <tr><td><strong data-i18n="asset_value">Current Value</strong></td><td data-i18n="asset_value_desc">Text field — optional; defaults to purchase price</td></tr>
+                <tr><td><strong data-i18n="asset_treasury">Record Payment in Treasury</strong></td><td data-i18n="asset_treasury_desc">Switch — deduct purchase from cash (on by default)</td></tr>
+                <tr><td><strong>Notes</strong></td><td data-i18n="asset_notes">Text field — optional</td></tr>
+                <tr><td><strong>Save / Cancel</strong></td><td data-i18n="asset_buttons">Buttons</td></tr>
+              </tbody>
+            </table>
+          </div>
+
+          <h3 data-i18n="h3_update_value">Update Value Dialog</h3>
+          <div class="doc-table-wrapper">
+            <table class="doc-table">
+              <thead><tr><th data-i18n="th_element">Element</th><th data-i18n="th_description">Description</th></tr></thead>
+              <tbody>
+                <tr><td><strong data-i18n="asset_name">Asset Name</strong></td><td data-i18n="update_name">Display</td></tr>
+                <tr><td><strong data-i18n="asset_value">Current Value</strong></td><td data-i18n="update_value">Text field — new value (for manual depreciation)</td></tr>
+                <tr><td><strong>Save / Cancel</strong></td><td data-i18n="update_buttons">Buttons</td></tr>
+              </tbody>
+            </table>
+          </div>
+
+          <h3 data-i18n="h3_sell">Sell/Dispose Dialog</h3>
+          <div class="doc-table-wrapper">
+            <table class="doc-table">
+              <thead><tr><th data-i18n="th_element">Element</th><th data-i18n="th_description">Description</th></tr></thead>
+              <tbody>
+                <tr><td><strong>Info</strong></td><td data-i18n="sell_info">Shows asset name and current value</td></tr>
+                <tr><td><strong data-i18n="sell_amount">Sale Amount</strong></td><td data-i18n="sell_amount_desc">Text field — sale price; 0 = disposal (no cash received)</td></tr>
+                <tr><td><strong>Notes</strong></td><td data-i18n="sell_notes">Text field — optional</td></tr>
+                <tr><td><strong>Confirm / Cancel</strong></td><td data-i18n="sell_buttons">Buttons</td></tr>
+              </tbody>
+            </table>
+          </div>
+
+          <h2 data-i18n="h2_workflow">Step-by-Step Workflow</h2>
+
+          <h3 data-i18n="w1_title">1. Add a New Debt (Receivable or Payable)</h3>
+          <ul class="doc-list">
+            <li data-i18n="w1_1">Click Add New Entry.</li>
+            <li data-i18n="w1_2">Enter Name (person or entity). As you type, suggestions from existing entries appear; click one to fill.</li>
+            <li data-i18n="w1_3">Enter Amount (positive number).</li>
+            <li data-i18n="w1_4">Select Type: Receivable (they owe you) or Payable (you owe them).</li>
+            <li data-i18n="w1_5">Optionally enter Notes and set Due Date.</li>
+            <li data-i18n="w1_6">Check Record in Cash Flow if the transaction involves actual cash: Receivable + checked = you gave them cash (Expense); Payable + checked = they gave you cash (Income).</li>
+            <li data-i18n="w1_7">Click Save.</li>
+            <li data-i18n="w1_8">Success: green snackbar; tables refresh. If the same entity already has a debt, the new amount is netted with the existing balance. If treasury is insufficient: "Insufficient treasury balance. (Current: X.XX)".</li>
+          </ul>
+
+          <h3 data-i18n="w2_title">2. Settle a Debt (Full or Partial)</h3>
+          <ul class="doc-list">
+            <li data-i18n="w2_1">In the Assets or Liabilities table, find the manual entry and click Settle (✓).</li>
+            <li data-i18n="w2_2">Enter the Amount you are paying (default: full amount).</li>
+            <li data-i18n="w2_3">Optionally add Notes.</li>
+            <li data-i18n="w2_4">Click Confirm.</li>
+            <li data-i18n="w2_5">If the amount pays the full balance (or within 0.01), the debt is marked settled and removed from the active list.</li>
+            <li data-i18n="w2_6">If partial: the remaining balance stays; you can settle again later.</li>
+            <li data-i18n="w2_7">The system records the cash impact in the Expenses module. Treasury is checked when paying a payable.</li>
+          </ul>
+
+          <h3 data-i18n="w3_title">3. View Debt History</h3>
+          <ul class="doc-list">
+            <li data-i18n="w3_1">In the Assets or Liabilities table, click History (📜) on a manual entry.</li>
+            <li data-i18n="w3_2">A dialog shows the transaction log: Date, Type, Amount, Balance After, Notes.</li>
+            <li data-i18n="w3_3">Click Close to dismiss.</li>
+          </ul>
+
+          <h3 data-i18n="w4_title">4. Add a Fixed Asset</h3>
+          <ul class="doc-list">
+            <li data-i18n="w4_1">Open the Fixed Assets tab.</li>
+            <li data-i18n="w4_2">Click Add Fixed Asset.</li>
+            <li data-i18n="w4_3">Enter Asset Name, Purchase Date, and Purchase Price.</li>
+            <li data-i18n="w4_4">Optionally enter Current Value (defaults to purchase price if left blank).</li>
+            <li data-i18n="w4_5">Toggle Record Payment in Treasury — if on, the purchase is deducted from cash (treasury must be sufficient).</li>
+            <li data-i18n="w4_6">Click Save. Success: green snackbar; fixed assets table refreshes.</li>
+          </ul>
+
+          <h3 data-i18n="w5_title">5. Update Fixed Asset Value (Depreciation)</h3>
+          <ul class="doc-list">
+            <li data-i18n="w5_1">In the Fixed Assets table, click Update Value (✎) on the asset.</li>
+            <li data-i18n="w5_2">Enter the new Current Value.</li>
+            <li data-i18n="w5_3">Click Save. Success: green snackbar; value updates (no treasury impact).</li>
+          </ul>
+
+          <h3 data-i18n="w6_title">6. Sell or Dispose of a Fixed Asset</h3>
+          <ul class="doc-list">
+            <li data-i18n="w6_1">In the Fixed Assets table, click Sell/Dispose (🗑).</li>
+            <li data-i18n="w6_2">To sell: Enter Sale Amount (e.g., 5000). Income is recorded in the treasury.</li>
+            <li data-i18n="w6_3">To dispose: Enter 0. The current value is written off as an Expense.</li>
+            <li data-i18n="w6_4">Click Confirm. Success: asset is removed; treasury is updated. For disposal, treasury must be sufficient.</li>
+          </ul>
+
+          <h3 data-i18n="w7_title">7. Adjust Forecast (Delivery Rate &amp; Pipeline)</h3>
+          <ul class="doc-list">
+            <li data-i18n="w7_1">Pipeline switch: Turn off to exclude pipeline (To Prepare) orders from asset calculations.</li>
+            <li data-i18n="w7_2">Delivery Rate slider: Move to adjust the percentage applied to pipeline and in-shipping values (e.g., 85% = expect 85% to be collected).</li>
+            <li data-i18n="w7_3">KPI cards and tables update immediately when you change the slider or switch.</li>
+          </ul>
+
+          <h3 data-i18n="w8_title">8. Refresh Data</h3>
+          <ul class="doc-list">
+            <li data-i18n="w8_1">Click Refresh in the header.</li>
+            <li data-i18n="w8_2">All data is reloaded from the database; KPIs and tables update.</li>
+          </ul>
+
+          <h2 data-i18n="h2_rules">Business Rules & Validations</h2>
+
+          <h3 data-i18n="r_add_debt">Add Debt</h3>
+          <div class="doc-table-wrapper">
+            <table class="doc-table">
+              <thead><tr><th data-i18n="th_rule">Rule</th><th data-i18n="th_result">Result</th></tr></thead>
+              <tbody>
+                <tr><td data-i18n="r_name_req">Name required</td><td data-i18n="r_name_req_res">"Name is required"</td></tr>
+                <tr><td data-i18n="r_amount_pos">Amount must be positive</td><td data-i18n="r_amount_pos_res">"Amount must be positive"</td></tr>
+                <tr><td data-i18n="r_same_entity">Same entity</td><td data-i18n="r_same_entity_res">Amount is netted with existing balance; type may flip</td></tr>
+                <tr><td data-i18n="r_rec_cash">Record in Cash Flow + Receivable</td><td data-i18n="r_rec_cash_res">Expense recorded; treasury must cover amount</td></tr>
+                <tr><td data-i18n="r_pay_cash">Record in Cash Flow + Payable</td><td data-i18n="r_pay_cash_res">Income recorded</td></tr>
+              </tbody>
+            </table>
+          </div>
+
+          <h3 data-i18n="r_settle">Settle Debt</h3>
+          <div class="doc-table-wrapper">
+            <table class="doc-table">
+              <thead><tr><th data-i18n="th_rule">Rule</th><th data-i18n="th_result">Result</th></tr></thead>
+              <tbody>
+                <tr><td data-i18n="r_amount_pos">Amount must be positive</td><td data-i18n="r_amount_pos_res">"Amount must be positive"</td></tr>
+                <tr><td data-i18n="r_debt_not_found">Debt not found</td><td data-i18n="r_debt_not_found_res">"Debt not found"</td></tr>
+                <tr><td data-i18n="r_balance_zero">Balance ≤ 0.01 after payment</td><td data-i18n="r_balance_zero_res">Marked fully settled, removed from active list</td></tr>
+                <tr><td data-i18n="r_payable_settle">Payable settlement</td><td data-i18n="r_payable_settle_res">Expense recorded; treasury must cover amount</td></tr>
+                <tr><td data-i18n="r_receivable_settle">Receivable settlement</td><td data-i18n="r_receivable_settle_res">Income recorded</td></tr>
+              </tbody>
+            </table>
+          </div>
+
+          <h3 data-i18n="r_add_asset">Add Fixed Asset</h3>
+          <div class="doc-table-wrapper">
+            <table class="doc-table">
+              <thead><tr><th data-i18n="th_rule">Rule</th><th data-i18n="th_result">Result</th></tr></thead>
+              <tbody>
+                <tr><td data-i18n="r_asset_name">Asset name required</td><td data-i18n="r_asset_name_res">"Asset name is required"</td></tr>
+                <tr><td data-i18n="r_invalid_amount">Invalid amount</td><td data-i18n="r_invalid_amount_res">"Invalid amount"</td></tr>
+                <tr><td data-i18n="r_rec_treasury">Record in Treasury + purchase_price > 0</td><td data-i18n="r_rec_treasury_res">Treasury must be sufficient</td></tr>
+                <tr><td data-i18n="r_current_value">Current value</td><td data-i18n="r_current_value_res">Optional; defaults to purchase price</td></tr>
+              </tbody>
+            </table>
+          </div>
+
+          <h3 data-i18n="r_update_value">Update Fixed Asset Value</h3>
+          <div class="doc-table-wrapper">
+            <table class="doc-table">
+              <thead><tr><th data-i18n="th_rule">Rule</th><th data-i18n="th_result">Result</th></tr></thead>
+              <tbody>
+                <tr><td data-i18n="r_value_neg">Value cannot be negative</td><td data-i18n="r_value_neg_res">"Value cannot be negative"</td></tr>
+                <tr><td data-i18n="r_invalid_value">Invalid value</td><td data-i18n="r_invalid_value_res">"Invalid value"</td></tr>
+                <tr><td data-i18n="r_asset_not_found">Asset not found</td><td data-i18n="r_asset_not_found_res">"Asset not found"</td></tr>
+              </tbody>
+            </table>
+          </div>
+
+          <h3 data-i18n="r_sell">Sell/Dispose Fixed Asset</h3>
+          <div class="doc-table-wrapper">
+            <table class="doc-table">
+              <thead><tr><th data-i18n="th_rule">Rule</th><th data-i18n="th_result">Result</th></tr></thead>
+              <tbody>
+                <tr><td data-i18n="r_sale_pos">Sale amount > 0</td><td data-i18n="r_sale_pos_res">Income recorded in treasury</td></tr>
+                <tr><td data-i18n="r_sale_zero">Sale amount = 0 (disposal)</td><td data-i18n="r_sale_zero_res">Expense = current value (write-off); treasury must be sufficient</td></tr>
+                <tr><td data-i18n="r_sale_neg">Sale amount cannot be negative</td><td data-i18n="r_sale_neg_res">Dialog rejects negative input</td></tr>
+                <tr><td data-i18n="r_asset_not_found">Asset not found</td><td data-i18n="r_asset_not_found_res">"Asset not found"</td></tr>
+              </tbody>
+            </table>
+          </div>
+
+          <h3 data-i18n="r_general">General</h3>
+          <div class="doc-table-wrapper">
+            <table class="doc-table">
+              <thead><tr><th data-i18n="th_rule">Rule</th><th data-i18n="th_description">Description</th></tr></thead>
+              <tbody>
+                <tr><td data-i18n="r_smart_ledger">Smart ledger</td><td data-i18n="r_smart_ledger_desc">Same entity: multiple entries are netted into one balance</td></tr>
+                <tr><td data-i18n="r_soft_delete">Soft delete</td><td data-i18n="r_soft_delete_desc">Deleting a debt marks it settled (not physically removed)</td></tr>
+                <tr><td data-i18n="r_overdue">Overdue</td><td data-i18n="r_overdue_desc">Debts with due date &lt; today show red bar and red due date</td></tr>
+              </tbody>
+            </table>
+          </div>
+
+          <h2 data-i18n="h2_messages">Messages & Alerts</h2>
+          <div class="doc-table-wrapper">
+            <table class="doc-table">
+              <thead><tr><th data-i18n="th_situation">Situation</th><th data-i18n="th_message">Message</th></tr></thead>
+              <tbody>
+                <tr><td data-i18n="m_add">Add debt success</td><td data-i18n="m_add_msg">"Saved successfully" (green)</td></tr>
+                <tr><td data-i18n="m_settle">Settle success</td><td data-i18n="m_settle_msg">"Settled successfully" (green)</td></tr>
+                <tr><td data-i18n="m_delete">Delete success</td><td data-i18n="m_delete_msg">"Deleted" (green)</td></tr>
+                <tr><td data-i18n="m_asset_add">Add fixed asset success</td><td data-i18n="m_asset_add_msg">"Fixed asset added successfully" (green)</td></tr>
+                <tr><td data-i18n="m_update">Update value success</td><td data-i18n="m_update_msg">"Value updated" (green)</td></tr>
+                <tr><td data-i18n="m_sell">Sell success</td><td data-i18n="m_sell_msg">"Asset sold successfully" (green)</td></tr>
+                <tr><td data-i18n="m_dispose">Dispose success</td><td data-i18n="m_dispose_msg">"Asset disposed" (green)</td></tr>
+                <tr><td data-i18n="m_treasury">Treasury insufficient</td><td data-i18n="m_treasury_msg">"Insufficient treasury balance. (Current: X.XX)" (red)</td></tr>
+                <tr><td data-i18n="m_name_req">Name required</td><td data-i18n="m_name_req_msg">"Name is required" (red)</td></tr>
+                <tr><td data-i18n="m_amount_pos">Amount must be positive</td><td data-i18n="m_amount_pos_msg">"Amount must be positive" (red)</td></tr>
+                <tr><td data-i18n="m_debt_not_found">Debt not found</td><td data-i18n="m_debt_not_found_msg">"Debt not found" (red)</td></tr>
+                <tr><td data-i18n="m_asset_name">Asset name required</td><td data-i18n="m_asset_name_msg">"Asset name is required" (red)</td></tr>
+                <tr><td data-i18n="m_invalid_amount">Invalid amount</td><td data-i18n="m_invalid_amount_msg">"Invalid amount" (red)</td></tr>
+                <tr><td data-i18n="m_value_neg">Value cannot be negative</td><td data-i18n="m_value_neg_msg">"Value cannot be negative" (red)</td></tr>
+                <tr><td data-i18n="m_asset_not_found">Asset not found</td><td data-i18n="m_asset_not_found_msg">"Asset not found" (red)</td></tr>
+              </tbody>
+            </table>
+          </div>
+
+          <h2 data-i18n="h2_tips">Tips</h2>
+          <div class="callout callout-tip">
+            <i class="fa-solid fa-lightbulb"></i>
+            <div class="callout-content">
+              <ul class="doc-list" style="margin-bottom:0;">
+                <li data-i18n="tip1">Liquid Assets exclude fixed assets and show cash-like items (receivables, pipeline, loans).</li>
+                <li data-i18n="tip2">Net = Liquid Assets − Liabilities; indicates your liquid financial position.</li>
+                <li data-i18n="tip3">Pipeline and Delivery Rate affect only forecast rows (orange "Forecast" badge); manual and system rows are fixed.</li>
+                <li data-i18n="tip4">Record in Cash Flow links debt and treasury: cash movements are logged in the Expenses module.</li>
+                <li data-i18n="tip5">Same-entity netting keeps one balance per person; adding a receivable and a payable for the same person produces a net balance.</li>
+                <li data-i18n="tip6">Settle reduces the debt; use partial amounts for installments.</li>
+                <li data-i18n="tip7">Fixed assets are separate from liquid assets; use Update Value for depreciation.</li>
+                <li data-i18n="tip8">Disposal (sale amount 0) writes off the current value as an expense.</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <footer>
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <div class="nav-logo" style="color:#fff; margin-bottom:14px; display:flex; align-items:center; gap:10px;">
+            <img src="assets/logo_splash_light.png" alt="Maly OBS" />
+            <span>Maly&nbsp;-&nbsp;OBS</span>
+          </div>
+          <p data-i18n="footer_tagline">The smartest way to run your e-commerce business in Egypt.</p>
+          <div class="social-row">
+            <a href="https://www.linkedin.com/in/adhamseliman/" target="_blank" rel="noopener" class="footer-social"><i class="fa-brands fa-linkedin-in"></i></a>
+            <a href="https://web.facebook.com/sadham122" target="_blank" rel="noopener" class="footer-social"><i class="fa-brands fa-facebook-f"></i></a>
+            <a href="https://www.youtube.com/@adhamseliman458" target="_blank" rel="noopener" class="footer-social"><i class="fa-brands fa-youtube"></i></a>
+            <a href="https://wa.me/201100028752" target="_blank" rel="noopener" class="footer-social"><i class="fa-brands fa-whatsapp"></i></a>
+          </div>
+        </div>
+        <div class="footer-col">
+          <h4 data-i18n="footer_nav">Navigate</h4>
+          <ul>
+            <li><a href="index.html#features" data-i18n="nav_features">Features</a></li>
+            <li><a href="index.html#pricing" data-i18n="nav_pricing">Pricing</a></li>
+            <li><a href="index.html#privacy" data-i18n="nav_privacy">Privacy</a></li>
+            <li><a href="index.html#contact" data-i18n="nav_contact">Contact</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4 data-i18n="footer_contact_hd">Contact</h4>
+          <ul>
+            <li><span>asoliman548@gmail.com</span></li>
+            <li><span>01100028752</span></li>
+            <li><span data-i18n="footer_location">Cairo, Egypt</span></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4 data-i18n="footer_legal">Legal</h4>
+          <ul><li><a href="index.html#privacy" data-i18n="footer_privacy_link">Privacy Policy</a></li></ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p data-i18n="footer_copy">© 2026 Maly Systems. All rights reserved.</p>
+        <p style="font-family:var(--font-en); font-style:italic; color:#6B7280; font-size:0.8rem;">"It's not just about money. It's Control."</p>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    const T = {
+      en: {
+        btn_back: "Back to Home", doc_badge: "User Guide", doc_title: "Debts / Financial Position & Ledger", doc_version: "Version 1.0",
+        nav_features: "Features", nav_pricing: "Pricing", nav_privacy: "Privacy", nav_contact: "Contact", nav_download: "Download Now",
+        footer_tagline: "The smartest way to run your e-commerce business in Egypt.",
+        footer_nav: "Navigate", footer_contact_hd: "Contact", footer_legal: "Legal", footer_privacy_link: "Privacy Policy", footer_location: "Cairo, Egypt", footer_copy: "© 2026 Maly Systems. All rights reserved.",
+        h2_purpose: "Module Purpose", h2_ui: "UI Elements", h2_workflow: "Step-by-Step Workflow", h2_rules: "Business Rules & Validations", h2_messages: "Messages & Alerts", h2_tips: "Tips",
+        th_element: "Element", th_description: "Description", th_card: "Card", th_tab: "Tab", th_content: "Content", th_rule: "Rule", th_result: "Result", th_situation: "Situation", th_message: "Message",
+        purpose_p1a: "The Debts module shows your financial position: liquid assets (receivables, pipeline, shipping balance, staff loans), fixed assets (equipment, property), and liabilities (payables, staff due, shipping debt). You can add manual debts (receivables and payables), settle them with full or partial payments, track history, and manage fixed assets (add, update value, sell or dispose). A forecast simulator lets you adjust the delivery rate and toggle pipeline inclusion to see how projected assets change. Overdue debts are ",
+        purpose_strong: "highlighted",
+        purpose_p1b: ", and the Net position shows your liquid financial standing.",
+        h3_header: "Header Area", h3_kpi: "KPI Cards", h3_forecast: "Forecast Simulator (in Header)", h3_tabs: "Tabs",
+        h3_assets: "Assets Table", h3_liabilities: "Liabilities Table", h3_fixed: "Fixed Assets Table",
+        h3_add_debt: "Add Debt Dialog", h3_settle: "Settle Dialog", h3_history: "History Log Dialog",
+        h3_add_asset: "Add Fixed Asset Dialog", h3_update_value: "Update Value Dialog", h3_sell: "Sell/Dispose Dialog",
+        h_title: "Title", h_title_desc: "\"Financial Position & Ledger\" / \"Debts\"",
+        h_refresh: "Icon button — reload all data", h_add: "Add New Entry", h_add_desc: "Button — add a new debt (Receivable or Payable)",
+        kpi_liquid: "Liquid Assets", kpi_liquid_desc: "Receivables, pipeline, shipping balance, staff loans (excludes fixed assets)",
+        kpi_fixed: "Fixed Assets", kpi_fixed_desc: "Sum of current values of all fixed assets",
+        kpi_liabilities: "Liabilities", kpi_liabilities_desc: "Payables, staff due today, shipping debt",
+        kpi_net: "Net", kpi_net_desc: "Liquid Assets − Liabilities (green if positive, red if negative)",
+        kpi_overdue: "Overdue", kpi_overdue_desc: "Total amount of past-due debts",
+        forecast_pipeline: "Switch — include or exclude pipeline (To Prepare) orders in asset calculations",
+        forecast_info: "Pipeline Info", forecast_info_desc: "Shows count of pipeline orders",
+        forecast_rate: "Delivery Rate", forecast_rate_desc: "Slider 0–100% — percentage applied to pipeline and in-shipping values for forecast",
+        tab_assets: "Table — receivables, pipeline, shipping balance, staff loans, fixed assets summary",
+        tab_liabilities: "Table — payables, staff due today, shipping debt",
+        tab_fixed: "Fixed Assets", tab_fixed_desc: "Table — asset list with Add button and per-row actions",
+        th_column: "Column",
+        assets_source: "Row name (e.g., Pipeline, In Shipping, person name)",
+        assets_type: "Category badge (Forecast, Ledger, Payroll, Manual, CapEx)",
+        assets_amount: "Value (green)", assets_due: "Due Date", assets_due_desc: "Due date or \"-\"",
+        assets_actions: "History (📜), Settle (✓) for manual entries; \"-\" for system rows",
+        liab_source: "Row name (e.g., Staff Due Today, person name)", liab_type: "Category badge",
+        liab_amount: "Value (red)", liab_due: "Due Date", liab_due_desc: "Due date or \"-\"; overdue shown in red with left bar",
+        liab_actions: "History, Settle for manual entries",
+        fixed_name: "Asset Name", fixed_name_desc: "Name of the asset",
+        fixed_date: "Purchase Date", fixed_date_desc: "Date acquired",
+        fixed_price: "Purchase Price", fixed_price_desc: "Original cost",
+        fixed_value: "Current Value", fixed_value_desc: "Updated/depreciated value",
+        fixed_actions: "Update Value (✎), Sell/Dispose (🗑)",
+        debt_name: "Text field — person/entity name; suggestions appear as you type",
+        debt_amount: "Text field — numeric amount", debt_type: "Dropdown — Receivable or Payable",
+        debt_notes: "Text field — optional", debt_due: "Due Date", debt_due_desc: "Button — opens date picker",
+        debt_cash: "Record in Cash Flow", debt_cash_desc: "Checkbox — record transaction in treasury (checked by default)",
+        debt_buttons: "Buttons",
+        settle_info: "Shows entity name, amount, and type (Receivable/Payable)",
+        settle_amount: "Text field — amount being paid (default: full amount)",
+        settle_notes: "Text field — optional", settle_buttons: "Buttons",
+        history_table: "Date, Type, Amount, Balance, Notes for each transaction",
+        asset_name: "Asset Name", asset_name_desc: "Text field — name",
+        asset_date: "Purchase Date", asset_date_desc: "Button — date picker",
+        asset_price: "Purchase Price", asset_price_desc: "Text field — original cost",
+        asset_value: "Current Value", asset_value_desc: "Text field — optional; defaults to purchase price",
+        asset_treasury: "Record Payment in Treasury", asset_treasury_desc: "Switch — deduct purchase from cash (on by default)",
+        asset_notes: "Text field — optional", asset_buttons: "Buttons",
+        update_name: "Display", update_value: "Text field — new value (for manual depreciation)", update_buttons: "Buttons",
+        sell_info: "Shows asset name and current value",
+        sell_amount: "Sale Amount", sell_amount_desc: "Text field — sale price; 0 = disposal (no cash received)",
+        sell_notes: "Text field — optional", sell_buttons: "Buttons",
+        w1_title: "1. Add a New Debt (Receivable or Payable)", w1_1: "Click Add New Entry.",
+        w1_2: "Enter Name (person or entity). As you type, suggestions from existing entries appear; click one to fill.",
+        w1_3: "Enter Amount (positive number).",
+        w1_4: "Select Type: Receivable (they owe you) or Payable (you owe them).",
+        w1_5: "Optionally enter Notes and set Due Date.",
+        w1_6: "Check Record in Cash Flow if the transaction involves actual cash: Receivable + checked = you gave them cash (Expense); Payable + checked = they gave you cash (Income).",
+        w1_7: "Click Save.",
+        w1_8: "Success: green snackbar; tables refresh. If the same entity already has a debt, the new amount is netted with the existing balance. If treasury is insufficient: \"Insufficient treasury balance. (Current: X.XX)\".",
+        w2_title: "2. Settle a Debt (Full or Partial)", w2_1: "In the Assets or Liabilities table, find the manual entry and click Settle (✓).",
+        w2_2: "Enter the Amount you are paying (default: full amount).", w2_3: "Optionally add Notes.", w2_4: "Click Confirm.",
+        w2_5: "If the amount pays the full balance (or within 0.01), the debt is marked settled and removed from the active list.",
+        w2_6: "If partial: the remaining balance stays; you can settle again later.",
+        w2_7: "The system records the cash impact in the Expenses module. Treasury is checked when paying a payable.",
+        w3_title: "3. View Debt History", w3_1: "In the Assets or Liabilities table, click History (📜) on a manual entry.",
+        w3_2: "A dialog shows the transaction log: Date, Type, Amount, Balance After, Notes.", w3_3: "Click Close to dismiss.",
+        w4_title: "4. Add a Fixed Asset", w4_1: "Open the Fixed Assets tab.", w4_2: "Click Add Fixed Asset.",
+        w4_3: "Enter Asset Name, Purchase Date, and Purchase Price.",
+        w4_4: "Optionally enter Current Value (defaults to purchase price if left blank).",
+        w4_5: "Toggle Record Payment in Treasury — if on, the purchase is deducted from cash (treasury must be sufficient).",
+        w4_6: "Click Save. Success: green snackbar; fixed assets table refreshes.",
+        w5_title: "5. Update Fixed Asset Value (Depreciation)", w5_1: "In the Fixed Assets table, click Update Value (✎) on the asset.",
+        w5_2: "Enter the new Current Value.", w5_3: "Click Save. Success: green snackbar; value updates (no treasury impact).",
+        w6_title: "6. Sell or Dispose of a Fixed Asset", w6_1: "In the Fixed Assets table, click Sell/Dispose (🗑).",
+        w6_2: "To sell: Enter Sale Amount (e.g., 5000). Income is recorded in the treasury.",
+        w6_3: "To dispose: Enter 0. The current value is written off as an Expense.",
+        w6_4: "Click Confirm. Success: asset is removed; treasury is updated. For disposal, treasury must be sufficient.",
+        w7_title: "7. Adjust Forecast (Delivery Rate & Pipeline)", w7_1: "Pipeline switch: Turn off to exclude pipeline (To Prepare) orders from asset calculations.",
+        w7_2: "Delivery Rate slider: Move to adjust the percentage applied to pipeline and in-shipping values (e.g., 85% = expect 85% to be collected).",
+        w7_3: "KPI cards and tables update immediately when you change the slider or switch.",
+        w8_title: "8. Refresh Data", w8_1: "Click Refresh in the header.", w8_2: "All data is reloaded from the database; KPIs and tables update.",
+        r_add_debt: "Add Debt", r_name_req: "Name required", r_name_req_res: "\"Name is required\"",
+        r_amount_pos: "Amount must be positive", r_amount_pos_res: "\"Amount must be positive\"",
+        r_same_entity: "Same entity", r_same_entity_res: "Amount is netted with existing balance; type may flip",
+        r_rec_cash: "Record in Cash Flow + Receivable", r_rec_cash_res: "Expense recorded; treasury must cover amount",
+        r_pay_cash: "Record in Cash Flow + Payable", r_pay_cash_res: "Income recorded",
+        r_settle: "Settle Debt", r_debt_not_found: "Debt not found", r_debt_not_found_res: "\"Debt not found\"",
+        r_balance_zero: "Balance ≤ 0.01 after payment", r_balance_zero_res: "Marked fully settled, removed from active list",
+        r_payable_settle: "Payable settlement", r_payable_settle_res: "Expense recorded; treasury must cover amount",
+        r_receivable_settle: "Receivable settlement", r_receivable_settle_res: "Income recorded",
+        r_add_asset: "Add Fixed Asset", r_asset_name: "Asset name required", r_asset_name_res: "\"Asset name is required\"",
+        r_invalid_amount: "Invalid amount", r_invalid_amount_res: "\"Invalid amount\"",
+        r_rec_treasury: "Record in Treasury + purchase_price > 0", r_rec_treasury_res: "Treasury must be sufficient",
+        r_current_value: "Current value", r_current_value_res: "Optional; defaults to purchase price",
+        r_update_value: "Update Fixed Asset Value", r_value_neg: "Value cannot be negative", r_value_neg_res: "\"Value cannot be negative\"",
+        r_invalid_value: "Invalid value", r_invalid_value_res: "\"Invalid value\"",
+        r_asset_not_found: "Asset not found", r_asset_not_found_res: "\"Asset not found\"",
+        r_sell: "Sell/Dispose Fixed Asset", r_sale_pos: "Sale amount > 0", r_sale_pos_res: "Income recorded in treasury",
+        r_sale_zero: "Sale amount = 0 (disposal)", r_sale_zero_res: "Expense = current value (write-off); treasury must be sufficient",
+        r_sale_neg: "Sale amount cannot be negative", r_sale_neg_res: "Dialog rejects negative input",
+        r_general: "General", r_smart_ledger: "Smart ledger", r_smart_ledger_desc: "Same entity: multiple entries are netted into one balance",
+        r_soft_delete: "Soft delete", r_soft_delete_desc: "Deleting a debt marks it settled (not physically removed)",
+        r_overdue: "Overdue", r_overdue_desc: "Debts with due date < today show red bar and red due date",
+        m_add: "Add debt success", m_add_msg: "\"Saved successfully\" (green)",
+        m_settle: "Settle success", m_settle_msg: "\"Settled successfully\" (green)",
+        m_delete: "Delete success", m_delete_msg: "\"Deleted\" (green)",
+        m_asset_add: "Add fixed asset success", m_asset_add_msg: "\"Fixed asset added successfully\" (green)",
+        m_update: "Update value success", m_update_msg: "\"Value updated\" (green)",
+        m_sell: "Sell success", m_sell_msg: "\"Asset sold successfully\" (green)",
+        m_dispose: "Dispose success", m_dispose_msg: "\"Asset disposed\" (green)",
+        m_treasury: "Treasury insufficient", m_treasury_msg: "\"Insufficient treasury balance. (Current: X.XX)\" (red)",
+        m_name_req: "Name required", m_name_req_msg: "\"Name is required\" (red)",
+        m_amount_pos: "Amount must be positive", m_amount_pos_msg: "\"Amount must be positive\" (red)",
+        m_debt_not_found: "Debt not found", m_debt_not_found_msg: "\"Debt not found\" (red)",
+        m_asset_name: "Asset name required", m_asset_name_msg: "\"Asset name is required\" (red)",
+        m_invalid_amount: "Invalid amount", m_invalid_amount_msg: "\"Invalid amount\" (red)",
+        m_value_neg: "Value cannot be negative", m_value_neg_msg: "\"Value cannot be negative\" (red)",
+        m_asset_not_found: "Asset not found", m_asset_not_found_msg: "\"Asset not found\" (red)",
+        tip1: "Liquid Assets exclude fixed assets and show cash-like items (receivables, pipeline, loans).",
+        tip2: "Net = Liquid Assets − Liabilities; indicates your liquid financial position.",
+        tip3: "Pipeline and Delivery Rate affect only forecast rows (orange \"Forecast\" badge); manual and system rows are fixed.",
+        tip4: "Record in Cash Flow links debt and treasury: cash movements are logged in the Expenses module.",
+        tip5: "Same-entity netting keeps one balance per person; adding a receivable and a payable for the same person produces a net balance.",
+        tip6: "Settle reduces the debt; use partial amounts for installments.",
+        tip7: "Fixed assets are separate from liquid assets; use Update Value for depreciation.",
+        tip8: "Disposal (sale amount 0) writes off the current value as an expense."
+      },
+      ar: {
+        btn_back: "العودة للرئيسية", doc_badge: "دليل المستخدم", doc_title: "الديون / المركز المالي وسجل العمليات", doc_version: "الإصدار ١.٠",
+        nav_features: "المميزات", nav_pricing: "الأسعار", nav_privacy: "الخصوصية", nav_contact: "تواصل معنا", nav_download: "تحميل الآن",
+        footer_tagline: "الطريقة الأذكى لإدارة أعمالك في التجارة الإلكترونية.",
+        footer_nav: "التنقل", footer_contact_hd: "تواصل معنا", footer_legal: "قانوني", footer_privacy_link: "سياسة الخصوصية", footer_location: "القاهرة، مصر", footer_copy: "© ٢٠٢٦ مالي سيستمز. جميع الحقوق محفوظة.",
+        h2_purpose: "نبذة عن الموديول", h2_ui: "عناصر الواجهة", h2_workflow: "خطوات العمل", h2_rules: "قواعد العمل والتحقق", h2_messages: "الرسائل والتنبيهات", h2_tips: "نصائح",
+        th_element: "العنصر", th_description: "الوصف", th_card: "البطاقة", th_tab: "التبويب", th_content: "المحتوى", th_rule: "القاعدة", th_result: "النتيجة", th_situation: "الموقف", th_message: "الرسالة",
+        purpose_p1a: "وحدة الديون تعرض وضعك المالي: الأصول السائلة (المستحقات، قيد التنفيذ، رصيد الشحن، قروض الموظفين)، الأصول الثابتة (المعدات، العقارات)، والالتزامات (المستحقات للغير، مستحقات الموظفين، دين الشحن). يمكنك إضافة ديون يدوية (مستحقات ومديونيات)، تسويتها بدفع كامل أو جزئي، متابعة السجل، وإدارة الأصول الثابتة (إضافة، تحديث القيمة، البيع أو التصرف). محاكي التوقعات يسمح بتعديل معدل التسليم وتضمين/استبعاد قيد التنفيذ. الديون المتأخرة ",
+        purpose_strong: "مميزة",
+        purpose_p1b: "، والمركز الصافي يعرض وضعك المالي السائل.",
+        h3_header: "منطقة الرأس", h3_kpi: "بطاقات المؤشرات", h3_forecast: "محاكي التوقعات (في الرأس)", h3_tabs: "التبويبات",
+        h3_assets: "جدول الأصول", h3_liabilities: "جدول الالتزامات", h3_fixed: "جدول الأصول الثابتة",
+        h3_add_debt: "نافذة إضافة دين", h3_settle: "نافذة التسوية", h3_history: "سجل التاريخ",
+        h3_add_asset: "نافذة إضافة أصل ثابت", h3_update_value: "نافذة تحديث القيمة", h3_sell: "نافذة البيع/التصرف",
+        h_title: "العنوان", h_title_desc: "«المركز المالي وسجل العمليات» / «الديون»",
+        h_refresh: "أيقونة — إعادة تحميل كل البيانات", h_add: "إضافة قيد جديد", h_add_desc: "زر — إضافة دين جديد (مستحق أو مديونية)",
+        kpi_liquid: "الأصول السائلة", kpi_liquid_desc: "المستحقات، قيد التنفيذ، رصيد الشحن، قروض الموظفين (لا تشمل الأصول الثابتة)",
+        kpi_fixed: "الأصول الثابتة", kpi_fixed_desc: "مجموع القيم الحالية لكل الأصول الثابتة",
+        kpi_liabilities: "الالتزامات", kpi_liabilities_desc: "المستحقات للغير، مستحقات الموظفين اليوم، دين الشحن",
+        kpi_net: "الصافي", kpi_net_desc: "الأصول السائلة − الالتزامات (أخضر إن موجب، أحمر إن سالب)",
+        kpi_overdue: "المتأخر", kpi_overdue_desc: "إجمالي مبلغ الديون المتأخرة",
+        forecast_pipeline: "مفتاح — تضمين أو استبعاد طلبات قيد التنفيذ في حسابات الأصول",
+        forecast_info: "معلومات قيد التنفيذ", forecast_info_desc: "يعرض عدد طلبات قيد التنفيذ",
+        forecast_rate: "معدل التسليم", forecast_rate_desc: "شريط ٠–١٠٠٪ — النسبة المطبقة على قيم قيد التنفيذ وقيد الشحن",
+        tab_assets: "جدول — المستحقات، قيد التنفيذ، رصيد الشحن، قروض الموظفين، ملخص الأصول الثابتة",
+        tab_liabilities: "جدول — المستحقات للغير، مستحقات الموظفين اليوم، دين الشحن",
+        tab_fixed: "الأصول الثابتة", tab_fixed_desc: "جدول — قائمة الأصول مع زر إضافة وإجراءات لكل صف",
+        th_column: "العمود",
+        assets_source: "اسم الصف (مثل قيد التنفيذ، قيد الشحن، اسم الشخص)",
+        assets_type: "شارة الفئة (توقعات، سجل، رواتب، يدوي، استثمار)",
+        assets_amount: "القيمة (أخضر)", assets_due: "تاريخ الاستحقاق", assets_due_desc: "تاريخ الاستحقاق أو \"-\"",
+        assets_actions: "السجل (📜)، التسوية (✓) للقيود اليدوية؛ \"-\" لصفوف النظام",
+        liab_source: "اسم الصف (مثل مستحقات الموظفين اليوم، اسم الشخص)", liab_type: "شارة الفئة",
+        liab_amount: "القيمة (أحمر)", liab_due: "تاريخ الاستحقاق", liab_due_desc: "تاريخ الاستحقاق أو \"-\"؛ المتأخر يظهر بالأحمر مع شريط أيسر",
+        liab_actions: "السجل، التسوية للقيود اليدوية",
+        fixed_name: "اسم الأصل", fixed_name_desc: "اسم الأصل",
+        fixed_date: "تاريخ الشراء", fixed_date_desc: "تاريخ الحصول",
+        fixed_price: "سعر الشراء", fixed_price_desc: "التكلفة الأصلية",
+        fixed_value: "القيمة الحالية", fixed_value_desc: "القيمة المحدّثة/المُستهلكة",
+        fixed_actions: "تحديث القيمة (✎)، البيع/التصرف (🗑)",
+        debt_name: "حقل نصوص — اسم الشخص/الكيان؛ اقتراحات تظهر أثناء الكتابة",
+        debt_amount: "حقل نصوص — المبلغ الرقمي", debt_type: "قائمة — مستحق أو مديونية",
+        debt_notes: "حقل نصوص — اختياري", debt_due: "تاريخ الاستحقاق", debt_due_desc: "زر — يفتح منتقي التاريخ",
+        debt_cash: "تسجيل في التدفق النقدي", debt_cash_desc: "مربع اختيار — تسجيل المعاملة في الخزينة (مفعّل افتراضيًا)",
+        debt_buttons: "أزرار",
+        settle_info: "يعرض اسم الكيان والمبلغ والنوع (مستحق/مديونية)",
+        settle_amount: "حقل نصوص — المبلغ المدفوع (افتراضي: المبلغ الكامل)",
+        settle_notes: "حقل نصوص — اختياري", settle_buttons: "أزرار",
+        history_table: "التاريخ، النوع، المبلغ، الرصيد، الملاحظات لكل معاملة",
+        asset_name: "اسم الأصل", asset_name_desc: "حقل نصوص — الاسم",
+        asset_date: "تاريخ الشراء", asset_date_desc: "زر — منتقي التاريخ",
+        asset_price: "سعر الشراء", asset_price_desc: "حقل نصوص — التكلفة الأصلية",
+        asset_value: "القيمة الحالية", asset_value_desc: "حقل نصوص — اختياري؛ افتراضي سعر الشراء",
+        asset_treasury: "تسجيل الدفع في الخزينة", asset_treasury_desc: "مفتاح — خصم الشراء من النقد (مفعّل افتراضيًا)",
+        asset_notes: "حقل نصوص — اختياري", asset_buttons: "أزرار",
+        update_name: "عرض", update_value: "حقل نصوص — القيمة الجديدة (للإهلاك اليدوي)", update_buttons: "أزرار",
+        sell_info: "يعرض اسم الأصل والقيمة الحالية",
+        sell_amount: "مبلغ البيع", sell_amount_desc: "حقل نصوص — سعر البيع؛ ٠ = تصرف (لم يُستلم نقد)",
+        sell_notes: "حقل نصوص — اختياري", sell_buttons: "أزرار",
+        w1_title: "١. إضافة دين جديد (مستحق أو مديونية)", w1_1: "انقر على إضافة قيد جديد.",
+        w1_2: "أدخل الاسم (الشخص أو الكيان). أثناء الكتابة تظهر اقتراحات من القيود الحالية؛ انقر واحدًا للتعبئة.",
+        w1_3: "أدخل المبلغ (رقم موجب).",
+        w1_4: "اختر النوع: مستحق (هم مدينون لك) أو مديونية (أنت مدين لهم).",
+        w1_5: "أدخل الملاحظات وحدّد تاريخ الاستحقاق اختياريًا.",
+        w1_6: "حدّد تسجيل في التدفق النقدي إن كانت المعاملة تتضمن نقدًا فعليًا: مستحق + محدد = أعطيتهم نقدًا (مصروف)؛ مديونية + محدد = أعطوك نقدًا (دخل).",
+        w1_7: "انقر على حفظ.",
+        w1_8: "نجاح: شريط أخضر؛ الجداول تتحدّث. إن كان للكيان نفس الدين بالفعل، يُدمج المبلغ الجديد مع الرصيد الحالي. إن كانت الخزينة غير كافية: «رصيد الخزينة غير كافٍ. (الحالي: X.XX)».",
+        w2_title: "٢. تسوية دين (كامل أو جزئي)", w2_1: "في جدول الأصول أو الالتزامات، ابحث عن القيد اليدوي وانقر على التسوية (✓).",
+        w2_2: "أدخل المبلغ الذي تدفعه (افتراضي: المبلغ الكامل).", w2_3: "أضف ملاحظات اختياريًا.", w2_4: "انقر على تأكيد.",
+        w2_5: "إن دفع المبلغ الرصيد الكامل (أو ضمن ٠.٠١)، يُعتبر الدين مسوّى ويُزال من القائمة النشطة.",
+        w2_6: "إن جزئي: يبقى الرصيد المتبقي؛ يمكنك التسوية لاحقًا مجددًا.",
+        w2_7: "النظام يسجل أثر النقد في وحدة المصروفات. الخزينة تُفحص عند دفع مديونية.",
+        w3_title: "٣. عرض سجل الدين", w3_1: "في جدول الأصول أو الالتزامات، انقر على السجل (📜) لقيد يدوي.",
+        w3_2: "تظهر نافذة سجل المعاملات: التاريخ، النوع، المبلغ، الرصيد بعد، الملاحظات.", w3_3: "انقر إغلاق للخروج.",
+        w4_title: "٤. إضافة أصل ثابت", w4_1: "افتح تبويب الأصول الثابتة.", w4_2: "انقر على إضافة أصل ثابت.",
+        w4_3: "أدخل اسم الأصل، تاريخ الشراء، وسعر الشراء.",
+        w4_4: "أدخل القيمة الحالية اختياريًا (افتراضي سعر الشراء إن تُرك فارغًا).",
+        w4_5: "بدّل تسجيل الدفع في الخزينة — إن مفعّل، يُخصم الشراء من النقد (الخزينة يجب أن تكون كافية).",
+        w4_6: "انقر حفظ. نجاح: شريط أخضر؛ جدول الأصول الثابتة يتحدّث.",
+        w5_title: "٥. تحديث قيمة أصل ثابت (إهلاك)", w5_1: "في جدول الأصول الثابتة، انقر على تحديث القيمة (✎) على الأصل.",
+        w5_2: "أدخل القيمة الحالية الجديدة.", w5_3: "انقر حفظ. نجاح: شريط أخضر؛ القيمة تتحدّث (بدون أثر خزينة).",
+        w6_title: "٦. بيع أو تصرف أصل ثابت", w6_1: "في جدول الأصول الثابتة، انقر على بيع/تصرف (🗑).",
+        w6_2: "للبيع: أدخل مبلغ البيع (مثل ٥٠٠٠). يُسجّل الدخل في الخزينة.",
+        w6_3: "للتصرف: أدخل ٠. تُسحَب القيمة الحالية كمصروف.",
+        w6_4: "انقر تأكيد. نجاح: يُزال الأصل؛ الخزينة تتحدّث. للتصرف، الخزينة يجب أن تكون كافية.",
+        w7_title: "٧. ضبط التوقعات (معدل التسليم وقيد التنفيذ)", w7_1: "مفتاح قيد التنفيذ: أغلقه لاستبعاد طلبات قيد التنفيذ من حسابات الأصول.",
+        w7_2: "شريط معدل التسليم: حرّكه لتعديل النسبة المطبقة على قيم قيد التنفيذ وقيد الشحن (مثل ٨٥٪ = تتوقع استلام ٨٥٪).",
+        w7_3: "بطاقات المؤشرات والجداول تتحدّث فورًا عند تغيير الشريط أو المفتاح.",
+        w8_title: "٨. تحديث البيانات", w8_1: "انقر على تحديث في الرأس.", w8_2: "تُعاد تحميل كل البيانات من القاعدة؛ المؤشرات والجداول تتحدّث.",
+        r_add_debt: "إضافة دين", r_name_req: "الاسم مطلوب", r_name_req_res: "«الاسم مطلوب»",
+        r_amount_pos: "المبلغ يجب أن يكون موجبًا", r_amount_pos_res: "«المبلغ يجب أن يكون موجبًا»",
+        r_same_entity: "نفس الكيان", r_same_entity_res: "المبلغ يُدمج مع الرصيد الحالي؛ النوع قد ينقلب",
+        r_rec_cash: "تسجيل في التدفق النقدي + مستحق", r_rec_cash_res: "يُسجّل مصروف؛ الخزينة يجب أن تغطي المبلغ",
+        r_pay_cash: "تسجيل في التدفق النقدي + مديونية", r_pay_cash_res: "يُسجّل دخل",
+        r_settle: "تسوية الدين", r_debt_not_found: "الدين غير موجود", r_debt_not_found_res: "«الدين غير موجود»",
+        r_balance_zero: "الرصيد ≤ ٠.٠١ بعد الدفع", r_balance_zero_res: "يُعتبر مسوّى بالكامل، يُزال من القائمة النشطة",
+        r_payable_settle: "تسوية مديونية", r_payable_settle_res: "يُسجّل مصروف؛ الخزينة يجب أن تغطي المبلغ",
+        r_receivable_settle: "تسوية مستحق", r_receivable_settle_res: "يُسجّل دخل",
+        r_add_asset: "إضافة أصل ثابت", r_asset_name: "اسم الأصل مطلوب", r_asset_name_res: "«اسم الأصل مطلوب»",
+        r_invalid_amount: "مبلغ غير صالح", r_invalid_amount_res: "«مبلغ غير صالح»",
+        r_rec_treasury: "تسجيل في الخزينة + سعر_الشراء > ٠", r_rec_treasury_res: "الخزينة يجب أن تكون كافية",
+        r_current_value: "القيمة الحالية", r_current_value_res: "اختياري؛ افتراضي سعر الشراء",
+        r_update_value: "تحديث قيمة أصل ثابت", r_value_neg: "القيمة لا يمكن أن تكون سالبة", r_value_neg_res: "«القيمة لا يمكن أن تكون سالبة»",
+        r_invalid_value: "قيمة غير صالحة", r_invalid_value_res: "«قيمة غير صالحة»",
+        r_asset_not_found: "الأصل غير موجود", r_asset_not_found_res: "«الأصل غير موجود»",
+        r_sell: "بيع/تصرف أصل ثابت", r_sale_pos: "مبلغ البيع > ٠", r_sale_pos_res: "يُسجّل الدخل في الخزينة",
+        r_sale_zero: "مبلغ البيع = ٠ (تصرف)", r_sale_zero_res: "المصروف = القيمة الحالية (شطب)؛ الخزينة يجب أن تكون كافية",
+        r_sale_neg: "مبلغ البيع لا يمكن أن يكون سالبًا", r_sale_neg_res: "النافذة ترفض الإدخال السالب",
+        r_general: "عام", r_smart_ledger: "سجل ذكي", r_smart_ledger_desc: "نفس الكيان: القيود المتعددة تُدمج في رصيد واحد",
+        r_soft_delete: "حذف ناعم", r_soft_delete_desc: "حذف دين يصنّفه كمسوّى (لا يُزال فعليًا)",
+        r_overdue: "متأخر", r_overdue_desc: "الديون بتاريخ استحقاق < اليوم تظهر بشريط أحمر وتاريخ أحمر",
+        m_add: "نجاح إضافة دين", m_add_msg: "«تم الحفظ بنجاح» (أخضر)",
+        m_settle: "نجاح التسوية", m_settle_msg: "«تم التسوية بنجاح» (أخضر)",
+        m_delete: "نجاح الحذف", m_delete_msg: "«تم الحذف» (أخضر)",
+        m_asset_add: "نجاح إضافة أصل ثابت", m_asset_add_msg: "«تم إضافة الأصل الثابت بنجاح» (أخضر)",
+        m_update: "نجاح تحديث القيمة", m_update_msg: "«تم تحديث القيمة» (أخضر)",
+        m_sell: "نجاح البيع", m_sell_msg: "«تم بيع الأصل بنجاح» (أخضر)",
+        m_dispose: "نجاح التصرف", m_dispose_msg: "«تم التصرف بالأصل» (أخضر)",
+        m_treasury: "الخزينة غير كافية", m_treasury_msg: "«رصيد الخزينة غير كافٍ. (الحالي: X.XX)» (أحمر)",
+        m_name_req: "الاسم مطلوب", m_name_req_msg: "«الاسم مطلوب» (أحمر)",
+        m_amount_pos: "المبلغ يجب أن يكون موجبًا", m_amount_pos_msg: "«المبلغ يجب أن يكون موجبًا» (أحمر)",
+        m_debt_not_found: "الدين غير موجود", m_debt_not_found_msg: "«الدين غير موجود» (أحمر)",
+        m_asset_name: "اسم الأصل مطلوب", m_asset_name_msg: "«اسم الأصل مطلوب» (أحمر)",
+        m_invalid_amount: "مبلغ غير صالح", m_invalid_amount_msg: "«مبلغ غير صالح» (أحمر)",
+        m_value_neg: "القيمة لا يمكن أن تكون سالبة", m_value_neg_msg: "«القيمة لا يمكن أن تكون سالبة» (أحمر)",
+        m_asset_not_found: "الأصل غير موجود", m_asset_not_found_msg: "«الأصل غير موجود» (أحمر)",
+        tip1: "الأصول السائلة لا تشمل الأصول الثابتة وتعرض عناصر شبيهة بالنقد (المستحقات، قيد التنفيذ، القروض).",
+        tip2: "الصافي = الأصول السائلة − الالتزامات؛ يعرض وضعك المالي السائل.",
+        tip3: "قيد التنفيذ ومعدل التسليم يؤثران فقط على صفوف التوقعات (شارة «توقعات» برتقالية)؛ الصفوف اليدوية والنظامية ثابتة.",
+        tip4: "تسجيل في التدفق النقدي يربط الدين بالخزينة: حركات النقد تُسجّل في وحدة المصروفات.",
+        tip5: "دمج نفس الكيان يحافظ على رصيد واحد لكل شخص؛ إضافة مستحق ومديونية لنفس الشخص ينتج رصيدًا صافيًا.",
+        tip6: "التسوية تقلّل الدين؛ استخدم مبالغ جزئية للأقساط.",
+        tip7: "الأصول الثابتة منفصلة عن الأصول السائلة؛ استخدم تحديث القيمة للإهلاك.",
+        tip8: "التصرف (مبلغ البيع ٠) يشطب القيمة الحالية كمصروف."
+      }
+    };
+
+    let currentLang = 'en';
+    function applyLang(lang) {
+      currentLang = lang;
+      const html = document.documentElement;
+      html.lang = lang;
+      html.dir = lang === 'ar' ? 'rtl' : 'ltr';
+      const texts = T[lang];
+      document.querySelectorAll('[data-i18n]').forEach(el => {
+        const key = el.getAttribute('data-i18n');
+        if (texts[key] !== undefined) el.textContent = texts[key];
+      });
+      const label = lang === 'en' ? 'العربية' : 'English';
+      document.getElementById('lang-label').textContent = label;
+      document.getElementById('lang-label-mobile').textContent = label;
+      try { localStorage.setItem('maly_lang', lang); } catch(e) {}
+    }
+    function toggleLang() { applyLang(currentLang === 'en' ? 'ar' : 'en'); }
+    function toggleMenu() {
+      const menu = document.getElementById('mobile-menu');
+      const icon = document.getElementById('hamburger-icon');
+      menu.classList.toggle('open');
+      icon.className = menu.classList.contains('open') ? 'fa-solid fa-xmark' : 'fa-solid fa-bars';
+    }
+    function closeMenu() {
+      document.getElementById('mobile-menu').classList.remove('open');
+      document.getElementById('hamburger-icon').className = 'fa-solid fa-bars';
+    }
+    window.addEventListener('scroll', () => { document.getElementById('navbar').classList.toggle('scrolled', window.scrollY > 10); }, { passive: true });
+    (function init() {
+      let saved = 'en';
+      try { saved = localStorage.getItem('maly_lang') || 'en'; } catch(e) {}
+      applyLang(saved);
+    })();
+  </script>
+</body>
+</html>

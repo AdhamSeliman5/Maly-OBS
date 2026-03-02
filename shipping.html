@@ -1,0 +1,668 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Maly - OBS | Shipping Module — User Guide</title>
+  <meta name="description" content="Shipping module user guide: courier management, delivery status, collection, loans, and PDF export in Maly - OBS." />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;800&family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+
+  <style>
+    :root {
+      --primary: #1B3D6F; --primary-light: #2A5498; --accent: #C5974A; --accent-light: #F0DDB8;
+      --bg: #F5F1EB; --surface: #FFFFFF; --surface-alt: #F9F6F0; --text: #1A1A2E; --text-muted: #64748B;
+      --text-light: #94A3B8; --border: #E2D9CC; --border-light: #EDE8E0;
+      --shadow-sm: 0 2px 8px rgba(27,61,111,0.07); --shadow-md: 0 8px 32px rgba(27,61,111,0.10);
+      --radius-sm: 8px; --radius-md: 14px; --nav-h: 76px;
+      --font-en: 'Inter', sans-serif; --font-ar: 'Cairo', sans-serif; --transition: 0.25s ease;
+    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; font-size: 16px; }
+    body { font-family: var(--font-en); background-color: var(--bg); color: var(--text); line-height: 1.65; overflow-x: hidden; }
+    html[lang="ar"] body { font-family: var(--font-ar); }
+    img { max-width: 100%; display: block; }
+    a { color: inherit; text-decoration: none; }
+    ul { list-style: none; }
+    button { cursor: pointer; font-family: inherit; }
+    .container { max-width: 1160px; margin: 0 auto; padding: 0 24px; }
+
+    nav { position: fixed; top: 0; left: 0; right: 0; height: var(--nav-h); background: rgba(245, 241, 235, 0.92); backdrop-filter: blur(14px); border-bottom: 1px solid var(--border-light); z-index: 1000; transition: box-shadow var(--transition); }
+    nav.scrolled { box-shadow: var(--shadow-md); }
+    .nav-inner { display: flex; align-items: center; justify-content: space-between; height: 100%; }
+    .nav-logo { display: flex; align-items: center; gap: 10px; font-weight: 800; font-size: 1.2rem; color: var(--primary); }
+    .nav-logo img { height: 48px; width: auto; max-width: 220px; object-fit: contain; }
+    @media (max-width: 768px) { .nav-logo img.nav-logo-desktop { display: none; } .nav-logo img.nav-logo-mobile { display: block !important; } }
+    .nav-logo img.nav-logo-mobile { display: none; }
+    .nav-links { display: flex; align-items: center; gap: 8px; }
+    .nav-links a { font-size: 0.9rem; font-weight: 500; color: var(--text-muted); padding: 6px 14px; border-radius: var(--radius-sm); transition: color var(--transition), background var(--transition); }
+    .nav-links a:hover { color: var(--primary); background: rgba(27,61,111,0.06); }
+    .nav-right { display: flex; align-items: center; gap: 12px; }
+    .lang-btn { display: flex; align-items: center; gap: 6px; font-size: 0.82rem; font-weight: 600; color: var(--primary); background: var(--surface); border: 1.5px solid var(--border); padding: 6px 14px; border-radius: 20px; transition: all var(--transition); }
+    .lang-btn:hover { border-color: var(--primary); background: rgba(27,61,111,0.04); }
+    .btn-nav-cta { font-size: 0.88rem; font-weight: 600; color: #fff; background: var(--primary); padding: 8px 20px; border-radius: 8px; transition: background var(--transition), transform var(--transition); }
+    .btn-nav-cta:hover { background: var(--primary-light); transform: translateY(-1px); }
+    .hamburger { display: none; background: none; border: none; font-size: 1.4rem; color: var(--primary); }
+    .mobile-menu { display: none; flex-direction: column; background: var(--surface); border-bottom: 1px solid var(--border); padding: 12px 24px 20px; gap: 4px; }
+    .mobile-menu.open { display: flex; }
+    .mobile-menu a { font-size: 0.95rem; font-weight: 500; color: var(--text); padding: 10px 4px; border-bottom: 1px solid var(--border-light); }
+    .mobile-menu a:last-child { border: none; }
+    .mobile-menu .lang-btn { margin-top: 8px; width: fit-content; }
+
+    .doc-main { padding-top: calc(var(--nav-h) + 48px); padding-bottom: 80px; }
+    .doc-inner { max-width: 840px; margin: 0 auto; }
+    .btn-back { display: inline-flex; align-items: center; gap: 8px; font-size: 0.9rem; font-weight: 600; color: var(--primary); background: var(--surface); border: 1.5px solid var(--border); padding: 10px 20px; border-radius: var(--radius-sm); margin-bottom: 32px; transition: all var(--transition); box-shadow: var(--shadow-sm); }
+    .btn-back:hover { border-color: var(--primary); background: rgba(27,61,111,0.04); }
+    html[dir="rtl"] .btn-back i { transform: scaleX(-1); }
+    .doc-header { margin-bottom: 40px; }
+    .doc-header .doc-badge { display: inline-block; font-size: 0.75rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--accent); background: var(--accent-light); padding: 4px 12px; border-radius: 20px; margin-bottom: 12px; }
+    .doc-header h1 { font-size: clamp(1.8rem, 3vw, 2.4rem); font-weight: 800; color: var(--text); margin-bottom: 12px; line-height: 1.2; }
+    .doc-header .doc-meta { font-size: 0.9rem; color: var(--text-muted); }
+    .doc-content h2 { font-size: 1.35rem; font-weight: 700; color: var(--primary); margin-top: 48px; margin-bottom: 20px; padding-bottom: 8px; border-bottom: 2px solid var(--border-light); }
+    .doc-content h2:first-of-type { margin-top: 0; }
+    .doc-content h3 { font-size: 1.1rem; font-weight: 700; color: var(--text); margin-top: 32px; margin-bottom: 14px; }
+    .doc-content p { font-size: 1rem; color: var(--text-muted); margin-bottom: 16px; line-height: 1.75; }
+    .doc-content ul.doc-list { list-style: disc; padding-left: 24px; margin-bottom: 20px; }
+    html[dir="rtl"] .doc-content ul.doc-list { padding-left: 0; padding-right: 24px; }
+    .doc-content ul.doc-list li { margin-bottom: 8px; color: var(--text-muted); line-height: 1.7; }
+    .doc-content ul.doc-list li strong { color: var(--text); }
+    .doc-table-wrapper { overflow-x: auto; margin: 24px 0; border-radius: var(--radius-sm); border: 1px solid var(--border-light); box-shadow: var(--shadow-sm); }
+    .doc-table { width: 100%; border-collapse: collapse; font-size: 0.95rem; }
+    .doc-table th, .doc-table td { padding: 14px 18px; text-align: left; border-bottom: 1px solid var(--border-light); vertical-align: top; }
+    html[dir="rtl"] .doc-table th, html[dir="rtl"] .doc-table td { text-align: right; }
+    .doc-table th { background: var(--surface-alt); font-weight: 700; color: var(--primary); }
+    .doc-table tr:last-child td { border-bottom: none; }
+    .doc-table tr:hover td { background: rgba(27,61,111,0.02); }
+    .callout { padding: 20px 24px; border-radius: var(--radius-md); margin: 24px 0; border-left: 4px solid; display: flex; gap: 14px; align-items: flex-start; }
+    html[dir="rtl"] .callout { border-left: none; border-right: 4px solid; }
+    .callout i { font-size: 1.2rem; flex-shrink: 0; margin-top: 2px; }
+    .callout-content { flex: 1; }
+    .callout-tip { background: rgba(34, 197, 94, 0.08); border-color: #22c55e; color: #166534; }
+    .callout-tip i { color: #22c55e; }
+
+    footer { background: #111827; color: #9CA3AF; padding: 60px 0 30px; }
+    .footer-grid { display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 40px; margin-bottom: 50px; }
+    .footer-brand .nav-logo { color: #fff; margin-bottom: 14px; }
+    .footer-brand .nav-logo img { height: 40px; width: auto; max-width: 200px; object-fit: contain; filter: brightness(0) invert(1); opacity: 0.9; }
+    .footer-brand p { font-size: 0.88rem; line-height: 1.7; max-width: 260px; color: #9CA3AF; }
+    .footer-brand .social-row { display: flex; gap: 10px; margin-top: 20px; }
+    .footer-social { width: 36px; height: 36px; border-radius: 50%; background: rgba(255,255,255,0.08); color: #D1D5DB; display: flex; align-items: center; justify-content: center; font-size: 0.9rem; transition: background var(--transition), color var(--transition); }
+    .footer-social:hover { background: var(--accent); color: #fff; }
+    .footer-col h4 { font-size: 0.85rem; font-weight: 700; color: #E5E7EB; text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 18px; }
+    .footer-col ul li { margin-bottom: 10px; }
+    .footer-col ul li a { font-size: 0.88rem; color: #9CA3AF; transition: color var(--transition); }
+    .footer-col ul li a:hover { color: #fff; }
+    .footer-col ul li span { font-size: 0.88rem; color: #9CA3AF; font-family: var(--font-en); }
+    .footer-bottom { border-top: 1px solid rgba(255,255,255,0.08); padding-top: 28px; display: flex; align-items: center; justify-content: space-between; gap: 12px; flex-wrap: wrap; }
+    .footer-bottom p { font-size: 0.82rem; }
+    html[dir="rtl"] .footer-grid { direction: rtl; }
+    html[dir="rtl"] .footer-brand p { max-width: 100%; }
+    html[dir="rtl"] .footer-bottom { flex-direction: row-reverse; }
+
+    @media (max-width: 768px) { .nav-links, .btn-nav-cta { display: none; } .hamburger { display: block; } .doc-main { padding-top: calc(var(--nav-h) + 32px); padding-bottom: 48px; } .footer-grid { grid-template-columns: 1fr 1fr; } .footer-brand { grid-column: 1 / -1; } }
+    @media (max-width: 480px) { .container { padding: 0 18px; } .doc-table th, .doc-table td { padding: 10px 14px; font-size: 0.88rem; } .footer-grid { grid-template-columns: 1fr; } }
+  </style>
+</head>
+<body>
+
+  <nav id="navbar">
+    <div class="container">
+      <div class="nav-inner">
+        <a href="index.html" class="nav-logo">
+          <img src="assets/logo_splash_light.png" alt="Maly OBS Logo" class="nav-logo-desktop" />
+          <img src="assets/logo_icon.png" alt="Maly OBS" class="nav-logo-mobile" />
+          <span>Maly&nbsp;-&nbsp;OBS</span>
+        </a>
+        <div class="nav-links">
+          <a href="index.html#features" data-i18n="nav_features">Features</a>
+          <a href="index.html#pricing" data-i18n="nav_pricing">Pricing</a>
+          <a href="index.html#privacy" data-i18n="nav_privacy">Privacy</a>
+          <a href="index.html#contact" data-i18n="nav_contact">Contact</a>
+        </div>
+        <div class="nav-right">
+          <button class="lang-btn" id="lang-toggle" onclick="toggleLang()">
+            <i class="fa-solid fa-globe"></i>
+            <span id="lang-label">العربية</span>
+          </button>
+          <a href="https://drive.google.com/uc?export=download&id=15Vp6Mm15r9nkoK8qhC0GpUmpAVAORZhd" target="_blank" rel="noopener" class="btn-nav-cta" data-i18n="nav_download">Download Now</a>
+          <button class="hamburger" onclick="toggleMenu()" aria-label="Menu"><i class="fa-solid fa-bars" id="hamburger-icon"></i></button>
+        </div>
+      </div>
+    </div>
+    <div class="mobile-menu" id="mobile-menu">
+      <a href="index.html#features" onclick="closeMenu()" data-i18n="nav_features">Features</a>
+      <a href="index.html#pricing" onclick="closeMenu()" data-i18n="nav_pricing">Pricing</a>
+      <a href="index.html#privacy" onclick="closeMenu()" data-i18n="nav_privacy">Privacy</a>
+      <a href="index.html#contact" onclick="closeMenu()" data-i18n="nav_contact">Contact</a>
+      <a href="https://drive.google.com/uc?export=download&id=15Vp6Mm15r9nkoK8qhC0GpUmpAVAORZhd" target="_blank" rel="noopener" onclick="closeMenu()" data-i18n="nav_download">Download Now</a>
+      <button class="lang-btn" onclick="toggleLang(); closeMenu();"><i class="fa-solid fa-globe"></i><span id="lang-label-mobile">العربية</span></button>
+    </div>
+  </nav>
+
+  <main class="doc-main">
+    <div class="container">
+      <div class="doc-inner">
+        <a href="index.html" class="btn-back">
+          <i class="fa-solid fa-arrow-left"></i>
+          <span data-i18n="btn_back">Back to Home</span>
+        </a>
+
+        <header class="doc-header">
+          <span class="doc-badge" data-i18n="doc_badge">User Guide</span>
+          <h1 data-i18n="doc_title">Shipping</h1>
+          <p class="doc-meta">Maly - OBS (Online Business System) · <span data-i18n="doc_version">Version 1.0</span></p>
+        </header>
+
+        <div class="doc-content">
+          <h2 data-i18n="h2_purpose">Module Purpose</h2>
+          <p><span data-i18n="purpose_p1a">The Shipping module manages orders that have been handed over to a courier (shipping company). You select a company, view its active (in-transit) orders, update their delivery status (Delivered, Partial, Returned, Damaged), adjust shipping fees and extra costs, then process collection to finalize them. The module also tracks loans (advances) between you and the courier, generates collection reports, and exports PDF analytics. Net settlement uses </span><strong data-i18n="purpose_strong">total amount minus shipping fees</strong><span data-i18n="purpose_p1b"> (deposit is not used in the calculation).</span></p>
+
+          <h2 data-i18n="h2_ui">UI Elements</h2>
+
+          <h3 data-i18n="h3_header">Header Area</h3>
+          <div class="doc-table-wrapper">
+            <table class="doc-table">
+              <thead><tr><th data-i18n="th_element">Element</th><th data-i18n="th_description">Description</th></tr></thead>
+              <tbody>
+                <tr><td><strong data-i18n="h_dropdown">Shipping Company Dropdown</strong></td><td data-i18n="h_dropdown_desc">Select the courier to work with</td></tr>
+                <tr><td><strong data-i18n="h_add">Add Company</strong></td><td data-i18n="h_add_desc">Green + icon — add a new shipping company</td></tr>
+                <tr><td><strong data-i18n="h_delete">Delete Company</strong></td><td data-i18n="h_delete_desc">Red trash icon — delete the selected company</td></tr>
+                <tr><td><strong data-i18n="h_search">Search</strong></td><td data-i18n="h_search_desc">Text field — search orders by order ID, customer name, phone, or governorate</td></tr>
+                <tr><td><strong data-i18n="h_pdf">Export PDF</strong></td><td data-i18n="h_pdf_desc">PDF icon — generate shipping report PDF for the selected company</td></tr>
+                <tr><td><strong data-i18n="h_refresh">Refresh</strong></td><td data-i18n="h_refresh_desc">Refresh icon — reload data</td></tr>
+                <tr><td><strong data-i18n="h_process">Process Collection (X)</strong></td><td data-i18n="h_process_desc">Button — process selected orders (X = count); disabled when none selected</td></tr>
+              </tbody>
+            </table>
+          </div>
+
+          <h3 data-i18n="h3_kpi">KPI Cards (Header)</h3>
+          <div class="doc-table-wrapper">
+            <table class="doc-table">
+              <thead><tr><th data-i18n="th_card">Card</th><th data-i18n="th_description">Description</th></tr></thead>
+              <tbody>
+                <tr><td><strong>Active Orders</strong></td><td data-i18n="kpi_active">Number of orders in transit</td></tr>
+                <tr><td><strong>Pending Amount</strong></td><td data-i18n="kpi_pending">Total net value (total − shipping fees) of active orders</td></tr>
+                <tr><td><strong>Loan</strong></td><td data-i18n="kpi_loan">Outstanding loan balance with the courier</td></tr>
+                <tr><td><strong>Net Due</strong></td><td data-i18n="kpi_net">Pending amount minus loan (what the courier owes or you owe)</td></tr>
+                <tr><td><strong>Delivery Rate</strong></td><td data-i18n="kpi_rate">Percentage of delivered vs returned/damaged</td></tr>
+              </tbody>
+            </table>
+          </div>
+
+          <h3 data-i18n="h3_tabs">Tabs</h3>
+          <div class="doc-table-wrapper">
+            <table class="doc-table">
+              <thead><tr><th data-i18n="th_tab">Tab</th><th data-i18n="th_content">Content</th></tr></thead>
+              <tbody>
+                <tr><td><strong>Analytics</strong></td><td data-i18n="tab_analytics">Avg delivery days, Delivered/Returned/Damaged counts, Order types pie chart, Avg days by governorate, Governorate performance bars</td></tr>
+                <tr><td><strong>Active Orders</strong></td><td data-i18n="tab_orders">Data table with orders, checkboxes, status dropdowns, editable fields</td></tr>
+                <tr><td><strong>Ledger</strong></td><td data-i18n="tab_ledger">Add Loan button, ledger entries table with pagination, Repay button per unpaid loan</td></tr>
+              </tbody>
+            </table>
+          </div>
+
+          <h3 data-i18n="h3_ordertable">Orders Table (Active Orders Tab)</h3>
+          <div class="doc-table-wrapper">
+            <table class="doc-table">
+              <thead><tr><th data-i18n="th_column">Column</th><th data-i18n="th_description">Description</th></tr></thead>
+              <tbody>
+                <tr><td><strong>Checkbox</strong></td><td data-i18n="col_check">Select order for processing (header checkbox = Select All)</td></tr>
+                <tr><td><strong>Order ID</strong></td><td data-i18n="col_id">Order code</td></tr>
+                <tr><td><strong>Customer</strong></td><td data-i18n="col_customer">Name and governorate</td></tr>
+                <tr><td><strong>Products</strong></td><td data-i18n="col_products">Product summary</td></tr>
+                <tr><td><strong>Total</strong></td><td data-i18n="col_total">Order total amount</td></tr>
+                <tr><td><strong>Ship Cost</strong></td><td data-i18n="col_ship">Editable text field — shipping fees</td></tr>
+                <tr><td><strong>Net</strong></td><td data-i18n="col_net">Calculated: Total − Ship Cost (auto-updates when Ship Cost changes)</td></tr>
+                <tr><td><strong>Status</strong></td><td data-i18n="col_status">Dropdown: Delivered, Partial, Returned, Damaged</td></tr>
+                <tr><td><strong>Extra</strong></td><td data-i18n="col_extra">Editable when status is Returned or Damaged — extra cost (Shipped on Sender) or compensation</td></tr>
+                <tr><td><strong>Date</strong></td><td data-i18n="col_date">Delivery date button — opens date picker</td></tr>
+              </tbody>
+            </table>
+          </div>
+
+          <h3 data-i18n="h3_ledger">Ledger Tab</h3>
+          <div class="doc-table-wrapper">
+            <table class="doc-table">
+              <thead><tr><th data-i18n="th_element">Element</th><th data-i18n="th_description">Description</th></tr></thead>
+              <tbody>
+                <tr><td><strong>Add Loan</strong></td><td data-i18n="ledger_add">Button to add a loan (advance from/to courier)</td></tr>
+                <tr><td><strong>Ledger Table</strong></td><td data-i18n="ledger_table">Entries: #, Date, Type, Amount, Description, Repay action</td></tr>
+                <tr><td><strong>Pagination</strong></td><td data-i18n="ledger_pagination">Previous/Next ledger pages</td></tr>
+                <tr><td><strong>Repay</strong></td><td data-i18n="ledger_repay">Button on unpaid loan rows — open repay dialog</td></tr>
+              </tbody>
+            </table>
+          </div>
+
+          <h2 data-i18n="h2_workflow">Step-by-Step Workflow</h2>
+
+          <h3 data-i18n="w1_title">1. Select a Shipping Company</h3>
+          <ul class="doc-list">
+            <li data-i18n="w1_1">Open the Shipping module.</li>
+            <li data-i18n="w1_2">Use the Shipping Company dropdown to choose a courier.</li>
+            <li data-i18n="w1_3">The system loads active orders, ledger, and analytics for that company.</li>
+          </ul>
+
+          <h3 data-i18n="w2_title">2. Add or Delete a Shipping Company</h3>
+          <p data-i18n="w2_add">Add</p>
+          <ul class="doc-list">
+            <li data-i18n="w2_add1">Click the green + icon.</li>
+            <li data-i18n="w2_add2">Enter the company name.</li>
+            <li data-i18n="w2_add3">Click Add.</li>
+            <li data-i18n="w2_add4">Success: "Success" snackbar.</li>
+          </ul>
+          <p data-i18n="w2_del">Delete</p>
+          <ul class="doc-list">
+            <li data-i18n="w2_del1">Select the company in the dropdown.</li>
+            <li data-i18n="w2_del2">Click the red trash icon.</li>
+            <li data-i18n="w2_del3">Confirm in the dialog.</li>
+            <li data-i18n="w2_del4">Success: "Deleted". If orders are still assigned: "Cannot delete: X orders still assigned".</li>
+          </ul>
+
+          <h3 data-i18n="w3_title">3. Search Orders</h3>
+          <ul class="doc-list">
+            <li data-i18n="w3_1">Type in the Search field (order ID, customer name, phone, governorate).</li>
+            <li data-i18n="w3_2">Press Enter.</li>
+            <li data-i18n="w3_3">The orders list filters and pagination resets.</li>
+          </ul>
+
+          <h3 data-i18n="w4_title">4. Update Order Status and Amounts</h3>
+          <ul class="doc-list">
+            <li data-i18n="w4_1">In the Active Orders tab, for each order: Ship Cost (edit fees; Net recalculates), Status (Delivered, Partial, Returned, Damaged), Extra (when Returned/Damaged — Shipped on Sender cost or compensation), Date (pick delivery date).</li>
+            <li data-i18n="w4_2">Check the orders you want to settle.</li>
+            <li data-i18n="w4_3">For Partial status: when you check the order, a Partial Delivery dialog opens. Enter delivered quantities and unit prices per item, then Confirm. New price = sum(delivered × unit price) + shipping.</li>
+          </ul>
+
+          <h3 data-i18n="w5_title">5. Process Collection</h3>
+          <ul class="doc-list">
+            <li data-i18n="w5_1">Check the orders to settle.</li>
+            <li data-i18n="w5_2">Click Process Collection (X).</li>
+            <li data-i18n="w5_3">In the dialog: selected count, Total Delivered, Shipping, Extra, Net Amount, Unified Delivery Date (optional), Cash Received (default = Net), Report Orders Older Than (Days) (default 7).</li>
+            <li data-i18n="w5_4">Click Process.</li>
+            <li data-i18n="w5_5">The system: updates order statuses, records ledger entries, generates Collection Excel report (Settlement Details, Pending Orders, Stale Orders), opens the file.</li>
+            <li data-i18n="w5_6">Success: "Processed Successfully!" and "Collection report saved and opened".</li>
+          </ul>
+
+          <h3 data-i18n="w6_title">6. Add a Loan</h3>
+          <ul class="doc-list">
+            <li data-i18n="w6_1">Go to the Ledger tab.</li>
+            <li data-i18n="w6_2">Click Add Loan.</li>
+            <li data-i18n="w6_3">Positive: company receives advance from courier (Treasury increases). Negative: company gives advance to courier (Treasury decreases; must have sufficient treasury).</li>
+            <li data-i18n="w6_4">Click Add.</li>
+            <li data-i18n="w6_5">Success: "Loan Added". If insufficient: "Insufficient treasury balance. (Current: X)".</li>
+          </ul>
+
+          <h3 data-i18n="w7_title">7. Repay a Loan</h3>
+          <ul class="doc-list">
+            <li data-i18n="w7_1">In the Ledger tab, find an unpaid loan (has Repay button).</li>
+            <li data-i18n="w7_2">Click Repay.</li>
+            <li data-i18n="w7_3">Enter the Repay Amount (default = original amount).</li>
+            <li data-i18n="w7_4">Click Repay.</li>
+            <li data-i18n="w7_5">Success: "Repaid Successfully".</li>
+          </ul>
+
+          <h3 data-i18n="w8_title">8. Export PDF Report</h3>
+          <ul class="doc-list">
+            <li data-i18n="w8_1">Select a shipping company.</li>
+            <li data-i18n="w8_2">Click the PDF icon in the header.</li>
+            <li data-i18n="w8_3">Loading overlay: "Generating PDF...".</li>
+            <li data-i18n="w8_4">The system creates a PDF in Desktop\Reports\Shipping\ and opens it.</li>
+            <li data-i18n="w8_5">Success: "PDF Report Saved: [path]".</li>
+          </ul>
+
+          <h2 data-i18n="h2_rules">Business Rules & Validations</h2>
+
+          <h3 data-i18n="r_process">Process Collection</h3>
+          <div class="doc-table-wrapper">
+            <table class="doc-table">
+              <thead><tr><th data-i18n="th_condition">Condition</th><th data-i18n="th_result">Result</th></tr></thead>
+              <tbody>
+                <tr><td data-i18n="pc_nocompany">No company selected</td><td data-i18n="pc_nocompany_res">Error shown</td></tr>
+                <tr><td data-i18n="pc_noorders">No orders selected</td><td data-i18n="pc_noorders_res">Error: "No orders selected"</td></tr>
+                <tr><td data-i18n="pc_cash0">Cash Received = 0 and Net < 0</td><td data-i18n="pc_cash0_res">Company pays courier; Treasury must be sufficient — otherwise: "Insufficient treasury balance"</td></tr>
+                <tr><td data-i18n="pc_cashdiff">Cash ≠ Net</td><td data-i18n="pc_cashdiff_res">Difference becomes a Loan (advance) in the ledger</td></tr>
+                <tr><td data-i18n="pc_partial">Partial status</td><td data-i18n="pc_partial_res">Must provide delivered quantities and unit prices in the Partial Delivery dialog</td></tr>
+              </tbody>
+            </table>
+          </div>
+
+          <h3 data-i18n="r_net">Net Calculation (Rule 4 — NO DEPOSIT)</h3>
+          <div class="doc-table-wrapper">
+            <table class="doc-table">
+              <thead><tr><th data-i18n="th_status">Status</th><th>Net</th></tr></thead>
+              <tbody>
+                <tr><td><strong>Delivered</strong></td><td data-i18n="net_delivered">Total − Ship Cost</td></tr>
+                <tr><td><strong>Partial</strong></td><td data-i18n="net_partial">New Price (from partial dialog) − Ship Cost</td></tr>
+                <tr><td><strong>Returned</strong> (no extra)</td><td>0</td></tr>
+                <tr><td><strong>Returned</strong> (with extra = Shipped on Sender)</td><td data-i18n="net_returned">−Extra</td></tr>
+                <tr><td><strong>Damaged</strong></td><td data-i18n="net_damaged">+Extra (compensation)</td></tr>
+              </tbody>
+            </table>
+          </div>
+
+          <h3 data-i18n="r_loan">Add Loan</h3>
+          <div class="doc-table-wrapper">
+            <table class="doc-table">
+              <thead><tr><th data-i18n="th_amount">Amount</th><th data-i18n="th_effect">Effect</th></tr></thead>
+              <tbody>
+                <tr><td><strong>Positive</strong></td><td data-i18n="loan_pos">Company receives advance from courier; Treasury increases</td></tr>
+                <tr><td><strong>Negative</strong></td><td data-i18n="loan_neg">Company gives advance to courier; Treasury decreases — must have sufficient treasury</td></tr>
+              </tbody>
+            </table>
+          </div>
+
+          <h3 data-i18n="r_delete">Delete Company</h3>
+          <ul class="doc-list">
+            <li data-i18n="r_delete1">Cannot delete if any orders are still assigned to the company.</li>
+            <li data-i18n="r_delete2">Error: "Cannot delete: X orders still assigned".</li>
+          </ul>
+
+          <h3 data-i18n="r_partial">Partial Delivery</h3>
+          <ul class="doc-list">
+            <li data-i18n="r_partial1">Enter Delivered Qty and Unit Price per item (bundles shown as components).</li>
+            <li data-i18n="r_partial2">New Price = sum(delivered × unit price) + shipping.</li>
+            <li data-i18n="r_partial3">Returned items go to quarantine; reserved stock is released.</li>
+          </ul>
+
+          <h2 data-i18n="h2_messages">Messages & Alerts</h2>
+          <div class="doc-table-wrapper">
+            <table class="doc-table">
+              <thead><tr><th data-i18n="th_situation">Situation</th><th data-i18n="th_message">Message</th></tr></thead>
+              <tbody>
+                <tr><td data-i18n="m_loading">Loading</td><td data-i18n="m_loading_msg">"Loading..." overlay</td></tr>
+                <tr><td data-i18n="m_process">Process success</td><td data-i18n="m_process_msg">"Processed Successfully!" (green)</td></tr>
+                <tr><td data-i18n="m_report">Collection report</td><td data-i18n="m_report_msg">"Collection report saved and opened" (teal)</td></tr>
+                <tr><td data-i18n="m_fail">Process failure</td><td data-i18n="m_fail_msg">Treasury/localized error (red)</td></tr>
+                <tr><td data-i18n="m_add_ok">Add company success</td><td data-i18n="m_add_ok_msg">"Success" (green)</td></tr>
+                <tr><td data-i18n="m_del_ok">Delete company success</td><td data-i18n="m_del_ok_msg">"Deleted" (green)</td></tr>
+                <tr><td data-i18n="m_del_fail">Delete company failure</td><td data-i18n="m_del_fail_msg">"Cannot delete: X orders still assigned" (red)</td></tr>
+                <tr><td data-i18n="m_loan_ok">Add loan success</td><td data-i18n="m_loan_ok_msg">"Loan Added" (green)</td></tr>
+                <tr><td data-i18n="m_loan_fail">Add loan failure</td><td data-i18n="m_loan_fail_msg">"Insufficient treasury balance. (Current: X)" or backend error (red)</td></tr>
+                <tr><td data-i18n="m_repay_ok">Repay success</td><td data-i18n="m_repay_ok_msg">"Repaid Successfully" (green)</td></tr>
+                <tr><td data-i18n="m_repay_fail">Repay failure</td><td data-i18n="m_repay_fail_msg">Treasury/localized error (red)</td></tr>
+                <tr><td data-i18n="m_pdf_ok">PDF export success</td><td data-i18n="m_pdf_ok_msg">"PDF Report Saved: [path]" (green)</td></tr>
+                <tr><td data-i18n="m_pdf_fail">PDF export failure</td><td data-i18n="m_pdf_fail_msg">Error message (red)</td></tr>
+                <tr><td data-i18n="m_pdf_nocompany">No company for PDF</td><td data-i18n="m_pdf_nocompany_msg">"Select Company" (red)</td></tr>
+                <tr><td data-i18n="m_stale">Stale days</td><td data-i18n="m_stale_msg">Must be 1–365 (clamped if out of range)</td></tr>
+              </tbody>
+            </table>
+          </div>
+
+          <h2 data-i18n="h2_tips">Tips</h2>
+          <div class="callout callout-tip">
+            <i class="fa-solid fa-lightbulb"></i>
+            <div class="callout-content">
+              <ul class="doc-list" style="margin-bottom:0;">
+                <li data-i18n="tip1">Unified Delivery Date: Use when all selected orders were delivered on the same date.</li>
+                <li data-i18n="tip2">Partial Delivery: For partial shipments, open the dialog, enter delivered quantities and unit prices per item.</li>
+                <li data-i18n="tip3">Returned + Extra: When a return has "Shipped on Sender" cost, set status to Returned and fill Extra. The system records it as Shipped on Sender.</li>
+                <li data-i18n="tip4">Damaged + Extra: Enter compensation amount in Extra for damaged items.</li>
+                <li data-i18n="tip5">Net Due = Pending − Loan; negative means you owe the courier.</li>
+                <li data-i18n="tip6">Collection Excel: Includes Settlement Details, Pending Orders, and Stale Orders (orders older than the entered days).</li>
+                <li data-i18n="tip7">Ledger: Loan (سلفة), Order Closing, Cash Payout, Loan Repayment, Return Cost, Compensation appear as different transaction types.</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <footer>
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <div class="nav-logo" style="color:#fff; margin-bottom:14px; display:flex; align-items:center; gap:10px;">
+            <img src="assets/logo_splash_light.png" alt="Maly OBS" />
+            <span>Maly&nbsp;-&nbsp;OBS</span>
+          </div>
+          <p data-i18n="footer_tagline">The smartest way to run your e-commerce business in Egypt.</p>
+          <div class="social-row">
+            <a href="https://www.linkedin.com/in/adhamseliman/" target="_blank" rel="noopener" class="footer-social"><i class="fa-brands fa-linkedin-in"></i></a>
+            <a href="https://web.facebook.com/sadham122" target="_blank" rel="noopener" class="footer-social"><i class="fa-brands fa-facebook-f"></i></a>
+            <a href="https://www.youtube.com/@adhamseliman458" target="_blank" rel="noopener" class="footer-social"><i class="fa-brands fa-youtube"></i></a>
+            <a href="https://wa.me/201100028752" target="_blank" rel="noopener" class="footer-social"><i class="fa-brands fa-whatsapp"></i></a>
+          </div>
+        </div>
+        <div class="footer-col">
+          <h4 data-i18n="footer_nav">Navigate</h4>
+          <ul>
+            <li><a href="index.html#features" data-i18n="nav_features">Features</a></li>
+            <li><a href="index.html#pricing" data-i18n="nav_pricing">Pricing</a></li>
+            <li><a href="index.html#privacy" data-i18n="nav_privacy">Privacy</a></li>
+            <li><a href="index.html#contact" data-i18n="nav_contact">Contact</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4 data-i18n="footer_contact_hd">Contact</h4>
+          <ul>
+            <li><span>asoliman548@gmail.com</span></li>
+            <li><span>01100028752</span></li>
+            <li><span data-i18n="footer_location">Cairo, Egypt</span></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4 data-i18n="footer_legal">Legal</h4>
+          <ul><li><a href="index.html#privacy" data-i18n="footer_privacy_link">Privacy Policy</a></li></ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p data-i18n="footer_copy">© 2026 Maly Systems. All rights reserved.</p>
+        <p style="font-family:var(--font-en); font-style:italic; color:#6B7280; font-size:0.8rem;">"It's not just about money. It's Control."</p>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    const T = {
+      en: {
+        btn_back: "Back to Home", doc_badge: "User Guide", doc_title: "Shipping", doc_version: "Version 1.0",
+        nav_features: "Features", nav_pricing: "Pricing", nav_privacy: "Privacy", nav_contact: "Contact", nav_download: "Download Now",
+        footer_tagline: "The smartest way to run your e-commerce business in Egypt.",
+        footer_nav: "Navigate", footer_contact_hd: "Contact", footer_legal: "Legal", footer_privacy_link: "Privacy Policy", footer_location: "Cairo, Egypt", footer_copy: "© 2026 Maly Systems. All rights reserved.",
+        h2_purpose: "Module Purpose", h2_ui: "UI Elements", h2_workflow: "Step-by-Step Workflow", h2_rules: "Business Rules & Validations", h2_messages: "Messages & Alerts", h2_tips: "Tips",
+        th_element: "Element", th_description: "Description", th_card: "Card", th_tab: "Tab", th_content: "Content", th_column: "Column", th_condition: "Condition", th_result: "Result", th_status: "Status", th_amount: "Amount", th_effect: "Effect", th_situation: "Situation", th_message: "Message",
+        purpose_p1a: "The Shipping module manages orders that have been handed over to a courier (shipping company). You select a company, view its active (in-transit) orders, update their delivery status (Delivered, Partial, Returned, Damaged), adjust shipping fees and extra costs, then process collection to finalize them. The module also tracks loans (advances) between you and the courier, generates collection reports, and exports PDF analytics. Net settlement uses ",
+        purpose_strong: "total amount minus shipping fees",
+        purpose_p1b: " (deposit is not used in the calculation).",
+        h3_header: "Header Area", h3_kpi: "KPI Cards (Header)", h3_tabs: "Tabs", h3_ordertable: "Orders Table (Active Orders Tab)", h3_ledger: "Ledger Tab",
+        h_dropdown: "Shipping Company Dropdown", h_dropdown_desc: "Select the courier to work with",
+        h_add: "Add Company", h_add_desc: "Green + icon — add a new shipping company",
+        h_delete: "Delete Company", h_delete_desc: "Red trash icon — delete the selected company",
+        h_search: "Search", h_search_desc: "Text field — search orders by order ID, customer name, phone, or governorate",
+        h_pdf: "Export PDF", h_pdf_desc: "PDF icon — generate shipping report PDF for the selected company",
+        h_refresh: "Refresh", h_refresh_desc: "Refresh icon — reload data",
+        h_process: "Process Collection (X)", h_process_desc: "Button — process selected orders (X = count); disabled when none selected",
+        kpi_active: "Number of orders in transit", kpi_pending: "Total net value (total − shipping fees) of active orders",
+        kpi_loan: "Outstanding loan balance with the courier",
+        kpi_net: "Pending amount minus loan (what the courier owes or you owe)",
+        kpi_rate: "Percentage of delivered vs returned/damaged",
+        tab_analytics: "Avg delivery days, Delivered/Returned/Damaged counts, Order types pie chart, Avg days by governorate, Governorate performance bars",
+        tab_orders: "Data table with orders, checkboxes, status dropdowns, editable fields",
+        tab_ledger: "Add Loan button, ledger entries table with pagination, Repay button per unpaid loan",
+        col_check: "Select order for processing (header checkbox = Select All)", col_id: "Order code", col_customer: "Name and governorate",
+        col_products: "Product summary", col_total: "Order total amount", col_ship: "Editable text field — shipping fees",
+        col_net: "Calculated: Total − Ship Cost (auto-updates when Ship Cost changes)",
+        col_status: "Dropdown: Delivered, Partial, Returned, Damaged",
+        col_extra: "Editable when status is Returned or Damaged — extra cost (Shipped on Sender) or compensation",
+        col_date: "Delivery date button — opens date picker",
+        ledger_add: "Button to add a loan (advance from/to courier)",
+        ledger_table: "Entries: #, Date, Type, Amount, Description, Repay action",
+        ledger_pagination: "Previous/Next ledger pages", ledger_repay: "Button on unpaid loan rows — open repay dialog",
+        w1_title: "1. Select a Shipping Company", w1_1: "Open the Shipping module.", w1_2: "Use the Shipping Company dropdown to choose a courier.", w1_3: "The system loads active orders, ledger, and analytics for that company.",
+        w2_title: "2. Add or Delete a Shipping Company", w2_add: "Add", w2_del: "Delete",
+        w2_add1: "Click the green + icon.", w2_add2: "Enter the company name.", w2_add3: "Click Add.", w2_add4: "Success: \"Success\" snackbar.",
+        w2_del1: "Select the company in the dropdown.", w2_del2: "Click the red trash icon.", w2_del3: "Confirm in the dialog.",
+        w2_del4: "Success: \"Deleted\". If orders are still assigned: \"Cannot delete: X orders still assigned\".",
+        w3_title: "3. Search Orders", w3_1: "Type in the Search field (order ID, customer name, phone, governorate).", w3_2: "Press Enter.", w3_3: "The orders list filters and pagination resets.",
+        w4_title: "4. Update Order Status and Amounts",
+        w4_1: "In the Active Orders tab, for each order: Ship Cost (edit fees; Net recalculates), Status (Delivered, Partial, Returned, Damaged), Extra (when Returned/Damaged — Shipped on Sender cost or compensation), Date (pick delivery date).",
+        w4_2: "Check the orders you want to settle.", w4_3: "For Partial status: when you check the order, a Partial Delivery dialog opens. Enter delivered quantities and unit prices per item, then Confirm. New price = sum(delivered × unit price) + shipping.",
+        w5_title: "5. Process Collection",
+        w5_1: "Check the orders to settle.", w5_2: "Click Process Collection (X).",
+        w5_3: "In the dialog: selected count, Total Delivered, Shipping, Extra, Net Amount, Unified Delivery Date (optional), Cash Received (default = Net), Report Orders Older Than (Days) (default 7).",
+        w5_4: "Click Process.", w5_5: "The system: updates order statuses, records ledger entries, generates Collection Excel report (Settlement Details, Pending Orders, Stale Orders), opens the file.",
+        w5_6: "Success: \"Processed Successfully!\" and \"Collection report saved and opened\".",
+        w6_title: "6. Add a Loan",
+        w6_1: "Go to the Ledger tab.", w6_2: "Click Add Loan.",
+        w6_3: "Positive: company receives advance from courier (Treasury increases). Negative: company gives advance to courier (Treasury decreases; must have sufficient treasury).",
+        w6_4: "Click Add.", w6_5: "Success: \"Loan Added\". If insufficient: \"Insufficient treasury balance. (Current: X)\".",
+        w7_title: "7. Repay a Loan", w7_1: "In the Ledger tab, find an unpaid loan (has Repay button).", w7_2: "Click Repay.", w7_3: "Enter the Repay Amount (default = original amount).", w7_4: "Click Repay.", w7_5: "Success: \"Repaid Successfully\".",
+        w8_title: "8. Export PDF Report", w8_1: "Select a shipping company.", w8_2: "Click the PDF icon in the header.", w8_3: "Loading overlay: \"Generating PDF...\".", w8_4: "The system creates a PDF in Desktop\\Reports\\Shipping\\ and opens it.", w8_5: "Success: \"PDF Report Saved: [path]\".",
+        r_process: "Process Collection", r_net: "Net Calculation (Rule 4 — NO DEPOSIT)", r_loan: "Add Loan", r_delete: "Delete Company", r_partial: "Partial Delivery",
+        pc_nocompany: "No company selected", pc_nocompany_res: "Error shown",
+        pc_noorders: "No orders selected", pc_noorders_res: "Error: \"No orders selected\"",
+        pc_cash0: "Cash Received = 0 and Net < 0", pc_cash0_res: "Company pays courier; Treasury must be sufficient — otherwise: \"Insufficient treasury balance\"",
+        pc_cashdiff: "Cash ≠ Net", pc_cashdiff_res: "Difference becomes a Loan (advance) in the ledger",
+        pc_partial: "Partial status", pc_partial_res: "Must provide delivered quantities and unit prices in the Partial Delivery dialog",
+        net_delivered: "Total − Ship Cost", net_partial: "New Price (from partial dialog) − Ship Cost", net_returned: "−Extra", net_damaged: "+Extra (compensation)",
+        loan_pos: "Company receives advance from courier; Treasury increases",
+        loan_neg: "Company gives advance to courier; Treasury decreases — must have sufficient treasury",
+        r_delete1: "Cannot delete if any orders are still assigned to the company.", r_delete2: "Error: \"Cannot delete: X orders still assigned\".",
+        r_partial1: "Enter Delivered Qty and Unit Price per item (bundles shown as components).",
+        r_partial2: "New Price = sum(delivered × unit price) + shipping.", r_partial3: "Returned items go to quarantine; reserved stock is released.",
+        m_loading: "Loading", m_loading_msg: "\"Loading...\" overlay", m_process: "Process success", m_process_msg: "\"Processed Successfully!\" (green)",
+        m_report: "Collection report", m_report_msg: "\"Collection report saved and opened\" (teal)",
+        m_fail: "Process failure", m_fail_msg: "Treasury/localized error (red)",
+        m_add_ok: "Add company success", m_add_ok_msg: "\"Success\" (green)", m_del_ok: "Delete company success", m_del_ok_msg: "\"Deleted\" (green)",
+        m_del_fail: "Delete company failure", m_del_fail_msg: "\"Cannot delete: X orders still assigned\" (red)",
+        m_loan_ok: "Add loan success", m_loan_ok_msg: "\"Loan Added\" (green)",
+        m_loan_fail: "Add loan failure", m_loan_fail_msg: "\"Insufficient treasury balance. (Current: X)\" or backend error (red)",
+        m_repay_ok: "Repay success", m_repay_ok_msg: "\"Repaid Successfully\" (green)", m_repay_fail: "Repay failure", m_repay_fail_msg: "Treasury/localized error (red)",
+        m_pdf_ok: "PDF export success", m_pdf_ok_msg: "\"PDF Report Saved: [path]\" (green)",
+        m_pdf_fail: "PDF export failure", m_pdf_fail_msg: "Error message (red)",
+        m_pdf_nocompany: "No company for PDF", m_pdf_nocompany_msg: "\"Select Company\" (red)",
+        m_stale: "Stale days", m_stale_msg: "Must be 1–365 (clamped if out of range)",
+        tip1: "Unified Delivery Date: Use when all selected orders were delivered on the same date.",
+        tip2: "Partial Delivery: For partial shipments, open the dialog, enter delivered quantities and unit prices per item.",
+        tip3: "Returned + Extra: When a return has \"Shipped on Sender\" cost, set status to Returned and fill Extra. The system records it as Shipped on Sender.",
+        tip4: "Damaged + Extra: Enter compensation amount in Extra for damaged items.",
+        tip5: "Net Due = Pending − Loan; negative means you owe the courier.",
+        tip6: "Collection Excel: Includes Settlement Details, Pending Orders, and Stale Orders (orders older than the entered days).",
+        tip7: "Ledger: Loan (سلفة), Order Closing, Cash Payout, Loan Repayment, Return Cost, Compensation appear as different transaction types."
+      },
+      ar: {
+        btn_back: "العودة للرئيسية", doc_badge: "دليل المستخدم", doc_title: "الشحن", doc_version: "الإصدار ١.٠",
+        nav_features: "المميزات", nav_pricing: "الأسعار", nav_privacy: "الخصوصية", nav_contact: "تواصل معنا", nav_download: "تحميل الآن",
+        footer_tagline: "الطريقة الأذكى لإدارة أعمالك في التجارة الإلكترونية.",
+        footer_nav: "التنقل", footer_contact_hd: "تواصل معنا", footer_legal: "قانوني", footer_privacy_link: "سياسة الخصوصية", footer_location: "القاهرة، مصر", footer_copy: "© ٢٠٢٦ مالي سيستمز. جميع الحقوق محفوظة.",
+        h2_purpose: "نبذة عن الموديول", h2_ui: "عناصر الواجهة", h2_workflow: "خطوات العمل", h2_rules: "قواعد العمل والتحقق", h2_messages: "الرسائل والتنبيهات", h2_tips: "نصائح",
+        th_element: "العنصر", th_description: "الوصف", th_card: "البطاقة", th_tab: "التبويب", th_content: "المحتوى", th_column: "العمود", th_condition: "الشرط", th_result: "النتيجة", th_status: "الحالة", th_amount: "المبلغ", th_effect: "التأثير", th_situation: "الموقف", th_message: "الرسالة",
+        purpose_p1a: "وحدة الشحن تدير الطلبات التي تم تسليمها لشركة الشحن. تختار الشركة، تعرض طلباتها النشطة (قيد النقل)، تحدّث حالة التسليم (مُسلّم، جزئي، مرتجع، تالف)، تعدّل رسوم الشحن والتكاليف الإضافية، ثم تُنفّذ التحصيل لإتمامها. الوحدة تتتبع القروض (السلف) بينك وبين الشركة، تولد تقارير التحصيل، وتُصدّر تحليلات PDF. التسوية الصافية تستخدم ",
+        purpose_strong: "إجمالي المبلغ مطروحًا رسوم الشحن",
+        purpose_p1b: " (الوديعة لا تُستخدم في الحساب).",
+        h3_header: "منطقة الرأس", h3_kpi: "بطاقات المؤشرات (الرأس)", h3_tabs: "التبويبات", h3_ordertable: "جدول الطلبات (تبويب الطلبات النشطة)", h3_ledger: "تبويب السجل",
+        h_dropdown: "قائمة شركات الشحن", h_dropdown_desc: "اختر شركة الشحن للعمل معها",
+        h_add: "إضافة شركة", h_add_desc: "أيقونة + خضراء — إضافة شركة شحن جديدة",
+        h_delete: "حذف شركة", h_delete_desc: "أيقونة سلة حمراء — حذف الشركة المختارة",
+        h_search: "البحث", h_search_desc: "حقل نصوص — البحث بالرمز أو اسم العميل أو الهاتف أو المحافظة",
+        h_pdf: "تصدير PDF", h_pdf_desc: "أيقونة PDF — إنشاء تقرير PDF للشركة المختارة",
+        h_refresh: "تحديث", h_refresh_desc: "أيقونة التحديث — إعادة تحميل البيانات",
+        h_process: "تحصيل (X)", h_process_desc: "زر — معالجة الطلبات المختارة (X = العدد)؛ معطّل عند عدم الاختيار",
+        kpi_active: "عدد الطلبات قيد النقل", kpi_pending: "إجمالي الصافي (الإجمالي − رسوم الشحن) للطلبات النشطة",
+        kpi_loan: "رصيد القرض المستحق مع الشركة", kpi_net: "المبلغ المعلّق مطروحًا القرض (ما تدين به الشركة أو تدين به)",
+        kpi_rate: "نسبة المُسلّم مقابل المرتجع/التالف",
+        tab_analytics: "متوسط أيام التسليم، أعداد المُسلّم/المرتجع/التالف، رسم أنواع الطلبات، متوسط الأيام حسب المحافظة، أشرطة أداء المحافظات",
+        tab_orders: "جدول بيانات بالطلبات، مربعات اختيار، قوائم الحالة، حقول قابلة للتعديل",
+        tab_ledger: "زر إضافة قرض، جدول القيود مع التصفح، زر سداد لكل قرض غير مسدود",
+        col_check: "اختيار الطلب للمعالجة (مربع الرأس = تحديد الكل)", col_id: "رمز الطلب", col_customer: "الاسم والمحافظة",
+        col_products: "ملخص المنتجات", col_total: "إجمالي الطلب", col_ship: "حقل قابل للتعديل — رسوم الشحن",
+        col_net: "محسوب: الإجمالي − رسوم الشحن (يحدّث تلقائيًا عند تغيير الرسوم)",
+        col_status: "قائمة: مُسلّم، جزئي، مرتجع، تالف",
+        col_extra: "قابل للتعديل عند المرتجع أو التالف — تكلفة إضافية (شحن على المرسل) أو تعويض",
+        col_date: "زر تاريخ التسليم — يفتح منتقي التاريخ",
+        ledger_add: "زر إضافة قرض (سلف من/إلى الشركة)",
+        ledger_table: "القيود: #، التاريخ، النوع، المبلغ، الوصف، إجراء السداد",
+        ledger_pagination: "صفحات السجل السابق/التالي", ledger_repay: "زر على صفوف القروض غير المسدودة — فتح نافذة السداد",
+        w1_title: "١. اختيار شركة الشحن", w1_1: "افتح وحدة الشحن.", w1_2: "استخدم قائمة شركات الشحن لاختيار الشركة.", w1_3: "النظام يحمّل الطلبات النشطة والسجل والتحليلات لتلك الشركة.",
+        w2_title: "٢. إضافة أو حذف شركة الشحن", w2_add: "إضافة", w2_del: "حذف",
+        w2_add1: "انقر على أيقونة + الخضراء.", w2_add2: "أدخل اسم الشركة.", w2_add3: "انقر على إضافة.", w2_add4: "نجاح: شريط «نجاح».",
+        w2_del1: "اختر الشركة من القائمة.", w2_del2: "انقر على أيقونة السلة الحمراء.", w2_del3: "أكّد في النافذة.",
+        w2_del4: "نجاح: «تم الحذف». إن كانت الطلبات ما زالت مُعيَّنة: «لا يمكن الحذف: X طلبات ما زالت مُعيَّنة».",
+        w3_title: "٣. البحث عن الطلبات", w3_1: "اكتب في حقل البحث (رمز الطلب، اسم العميل، الهاتف، المحافظة).", w3_2: "اضغط Enter.", w3_3: "تُصفَّى قائمة الطلبات ويُعاد تعيين التصفح.",
+        w4_title: "٤. تحديث حالة الطلب والمبالغ",
+        w4_1: "في تبويب الطلبات النشطة، لكل طلب: رسوم الشحن (عدّل؛ الصافي يُحسب تلقائيًا)، الحالة (مُسلّم، جزئي، مرتجع، تالف)، إضافي (عند المرتجع/التالف — تكلفة الشحن على المرسل أو تعويض)، التاريخ (اختر تاريخ التسليم).",
+        w4_2: "حدّد الطلبات التي تريد تسويتها.", w4_3: "للحالة جزئي: عند تحديد الطلب تفتح نافذة التسليم الجزئي. أدخل الكميات المُسلَّمة وأسعار الوحدة لكل عنصر، ثم أكّد. السعر الجديد = مجموع(مُسلّم × سعر الوحدة) + الشحن.",
+        w5_title: "٥. تنفيذ التحصيل",
+        w5_1: "حدّد الطلبات للتسوية.", w5_2: "انقر على تحصيل (X).",
+        w5_3: "في النافذة: عدد المختارين، إجمالي المُسلّم، الشحن، الإضافي، المبلغ الصافي، تاريخ التسليم الموحّد (اختياري)، النقد المستلم (افتراضي = الصافي)، الطلبات الأقدم من (أيام) (افتراضي ٧).",
+        w5_4: "انقر على معالجة.", w5_5: "النظام: يحدّث حالات الطلبات، يسجّل قيود السجل، يولد تقرير Excel للتحصيل (تفاصيل التسوية، الطلبات المعلقة، الطلبات القديمة)، يفتح الملف.",
+        w5_6: "نجاح: «تمت المعالجة بنجاح!» و«تم حفظ تقرير التحصيل وفتحه».",
+        w6_title: "٦. إضافة قرض",
+        w6_1: "انتقل إلى تبويب السجل.", w6_2: "انقر على إضافة قرض.",
+        w6_3: "موجب: الشركة تستلم سلفة من شركة الشحن (تزيد الخزينة). سالب: الشركة تعطي سلفة لشركة الشحن (تنقص الخزينة؛ يجب توفر خزينة كافية).",
+        w6_4: "انقر على إضافة.", w6_5: "نجاح: «تم إضافة القرض». إن غير كافية: «رصيد خزينة غير كافٍ. (الحالي: X)».",
+        w7_title: "٧. سداد قرض", w7_1: "في تبويب السجل، ابحث عن قرض غير مسدود (لديه زر سداد).", w7_2: "انقر على سداد.", w7_3: "أدخل مبلغ السداد (افتراضي = المبلغ الأصلي).", w7_4: "انقر على سداد.", w7_5: "نجاح: «تم السداد بنجاح».",
+        w8_title: "٨. تصدير تقرير PDF", w8_1: "اختر شركة الشحن.", w8_2: "انقر على أيقونة PDF في الرأس.", w8_3: "طبقة تحميل: «جاري إنشاء PDF...».", w8_4: "النظام ينشئ PDF في Desktop\\Reports\\Shipping\\ ويفتحه.", w8_5: "نجاح: «تم حفظ تقرير PDF: [المسار]».",
+        r_process: "تنفيذ التحصيل", r_net: "حساب الصافي (القاعدة ٤ — بدون وديعة)", r_loan: "إضافة قرض", r_delete: "حذف الشركة", r_partial: "التسليم الجزئي",
+        pc_nocompany: "لم تُختر شركة", pc_nocompany_res: "يظهر خطأ",
+        pc_noorders: "لم تُختر طلبات", pc_noorders_res: "خطأ: «لم تُختر طلبات»",
+        pc_cash0: "النقد المستلم = ٠ والصافي < ٠", pc_cash0_res: "الشركة تدفع للشاحن؛ الخزينة يجب أن تكون كافية — وإلا: «رصيد خزينة غير كافٍ»",
+        pc_cashdiff: "النقد ≠ الصافي", pc_cashdiff_res: "الفرق يصبح قرضًا (سلفة) في السجل",
+        pc_partial: "حالة جزئي", pc_partial_res: "يجب تقديم الكميات المُسلَّمة وأسعار الوحدة في نافذة التسليم الجزئي",
+        net_delivered: "الإجمالي − رسوم الشحن", net_partial: "السعر الجديد (من نافذة الجزئي) − رسوم الشحن", net_returned: "−إضافي", net_damaged: "+إضافي (تعويض)",
+        loan_pos: "الشركة تستلم سلفة من الشاحن؛ تزيد الخزينة",
+        loan_neg: "الشركة تعطي سلفة للشاحن؛ تنقص الخزينة — يجب توفر خزينة كافية",
+        r_delete1: "لا يمكن الحذف إن كانت أي طلبات مُعيَّنة للشركة.", r_delete2: "خطأ: «لا يمكن الحذف: X طلبات ما زالت مُعيَّنة».",
+        r_partial1: "أدخل الكمية المُسلَّمة وسعر الوحدة لكل عنصر (الحزم تُعرض كمكونات).",
+        r_partial2: "السعر الجديد = مجموع(مُسلّم × سعر الوحدة) + الشحن.", r_partial3: "العناصر المرتجعة تذهب للحجر؛ يُحرَّر المخزون المحجوز.",
+        m_loading: "تحميل", m_loading_msg: "طبقة «جاري التحميل...»", m_process: "نجاح المعالجة", m_process_msg: "«تمت المعالجة بنجاح!» (أخضر)",
+        m_report: "تقرير التحصيل", m_report_msg: "«تم حفظ تقرير التحصيل وفتحه» (تركواز)",
+        m_fail: "فشل المعالجة", m_fail_msg: "خطأ خزينة/محلي (أحمر)",
+        m_add_ok: "نجاح إضافة شركة", m_add_ok_msg: "«نجاح» (أخضر)", m_del_ok: "نجاح حذف شركة", m_del_ok_msg: "«تم الحذف» (أخضر)",
+        m_del_fail: "فشل حذف شركة", m_del_fail_msg: "«لا يمكن الحذف: X طلبات ما زالت مُعيَّنة» (أحمر)",
+        m_loan_ok: "نجاح إضافة قرض", m_loan_ok_msg: "«تم إضافة القرض» (أخضر)",
+        m_loan_fail: "فشل إضافة قرض", m_loan_fail_msg: "«رصيد خزينة غير كافٍ. (الحالي: X)» أو خطأ خلفية (أحمر)",
+        m_repay_ok: "نجاح السداد", m_repay_ok_msg: "«تم السداد بنجاح» (أخضر)", m_repay_fail: "فشل السداد", m_repay_fail_msg: "خطأ خزينة/محلي (أحمر)",
+        m_pdf_ok: "نجاح تصدير PDF", m_pdf_ok_msg: "«تم حفظ تقرير PDF: [المسار]» (أخضر)",
+        m_pdf_fail: "فشل تصدير PDF", m_pdf_fail_msg: "رسالة خطأ (أحمر)",
+        m_pdf_nocompany: "لا شركة للـ PDF", m_pdf_nocompany_msg: "«اختر شركة» (أحمر)",
+        m_stale: "أيام القديمة", m_stale_msg: "يجب أن تكون ١–٣٦٥ (تُحدَّد إن خرجت عن النطاق)",
+        tip1: "تاريخ التسليم الموحّد: استخدمه عندما تم تسليم كل الطلبات المختارة في نفس اليوم.",
+        tip2: "التسليم الجزئي: للشحنات الجزئية، افتح النافذة وأدخل الكميات المُسلَّمة وأسعار الوحدة لكل عنصر.",
+        tip3: "مرتجع + إضافي: عندما يكون للمرجع تكلفة «شحن على المرسل»، حدّد الحالة مرتجع واملأ الإضافي. النظام يسجّلها كشحن على المرسل.",
+        tip4: "تالف + إضافي: أدخل مبلغ التعويض في الإضافي للعناصر التالفة.",
+        tip5: "المستحق الصافي = المعلّق − القرض؛ السالب يعني أنك تدين للشاحن.",
+        tip6: "Excel التحصيل: يتضمن تفاصيل التسوية، الطلبات المعلقة، والطلبات القديمة (الطلبات الأقدم من الأيام المدخلة).",
+        tip7: "السجل: القرض (سلفة)، إقفال الطلب، دفع نقدي، سداد قرض، تكلفة الإرجاع، التعويض تظهر كأنواع معاملات مختلفة."
+      }
+    };
+
+    let currentLang = 'en';
+    function applyLang(lang) {
+      currentLang = lang;
+      const html = document.documentElement;
+      html.lang = lang;
+      html.dir = lang === 'ar' ? 'rtl' : 'ltr';
+      const texts = T[lang];
+      document.querySelectorAll('[data-i18n]').forEach(el => {
+        const key = el.getAttribute('data-i18n');
+        if (texts[key] !== undefined) el.textContent = texts[key];
+      });
+      const label = lang === 'en' ? 'العربية' : 'English';
+      document.getElementById('lang-label').textContent = label;
+      document.getElementById('lang-label-mobile').textContent = label;
+      try { localStorage.setItem('maly_lang', lang); } catch(e) {}
+    }
+    function toggleLang() { applyLang(currentLang === 'en' ? 'ar' : 'en'); }
+    function toggleMenu() {
+      const menu = document.getElementById('mobile-menu');
+      const icon = document.getElementById('hamburger-icon');
+      menu.classList.toggle('open');
+      icon.className = menu.classList.contains('open') ? 'fa-solid fa-xmark' : 'fa-solid fa-bars';
+    }
+    function closeMenu() {
+      document.getElementById('mobile-menu').classList.remove('open');
+      document.getElementById('hamburger-icon').className = 'fa-solid fa-bars';
+    }
+    window.addEventListener('scroll', () => { document.getElementById('navbar').classList.toggle('scrolled', window.scrollY > 10); }, { passive: true });
+    (function init() {
+      let saved = 'en';
+      try { saved = localStorage.getItem('maly_lang') || 'en'; } catch(e) {}
+      applyLang(saved);
+    })();
+  </script>
+</body>
+</html>

@@ -1,0 +1,719 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Maly - OBS | Preparation Module — User Guide</title>
+  <meta name="description" content="Preparation module user guide: order picking, defer, cancel, bundle unbox, and export in Maly - OBS." />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;800&family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+
+  <style>
+    :root {
+      --primary: #1B3D6F; --primary-light: #2A5498; --accent: #C5974A; --accent-light: #F0DDB8;
+      --bg: #F5F1EB; --surface: #FFFFFF; --surface-alt: #F9F6F0; --text: #1A1A2E; --text-muted: #64748B;
+      --text-light: #94A3B8; --border: #E2D9CC; --border-light: #EDE8E0;
+      --shadow-sm: 0 2px 8px rgba(27,61,111,0.07); --shadow-md: 0 8px 32px rgba(27,61,111,0.10);
+      --radius-sm: 8px; --radius-md: 14px; --nav-h: 76px;
+      --font-en: 'Inter', sans-serif; --font-ar: 'Cairo', sans-serif; --transition: 0.25s ease;
+    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; font-size: 16px; }
+    body { font-family: var(--font-en); background-color: var(--bg); color: var(--text); line-height: 1.65; overflow-x: hidden; }
+    html[lang="ar"] body { font-family: var(--font-ar); }
+    img { max-width: 100%; display: block; }
+    a { color: inherit; text-decoration: none; }
+    ul { list-style: none; }
+    button { cursor: pointer; font-family: inherit; }
+    .container { max-width: 1160px; margin: 0 auto; padding: 0 24px; }
+
+    nav { position: fixed; top: 0; left: 0; right: 0; height: var(--nav-h); background: rgba(245, 241, 235, 0.92); backdrop-filter: blur(14px); border-bottom: 1px solid var(--border-light); z-index: 1000; transition: box-shadow var(--transition); }
+    nav.scrolled { box-shadow: var(--shadow-md); }
+    .nav-inner { display: flex; align-items: center; justify-content: space-between; height: 100%; }
+    .nav-logo { display: flex; align-items: center; gap: 10px; font-weight: 800; font-size: 1.2rem; color: var(--primary); }
+    .nav-logo img { height: 48px; width: auto; max-width: 220px; object-fit: contain; }
+    @media (max-width: 768px) { .nav-logo img.nav-logo-desktop { display: none; } .nav-logo img.nav-logo-mobile { display: block !important; } }
+    .nav-logo img.nav-logo-mobile { display: none; }
+    .nav-links { display: flex; align-items: center; gap: 8px; }
+    .nav-links a { font-size: 0.9rem; font-weight: 500; color: var(--text-muted); padding: 6px 14px; border-radius: var(--radius-sm); transition: color var(--transition), background var(--transition); }
+    .nav-links a:hover { color: var(--primary); background: rgba(27,61,111,0.06); }
+    .nav-right { display: flex; align-items: center; gap: 12px; }
+    .lang-btn { display: flex; align-items: center; gap: 6px; font-size: 0.82rem; font-weight: 600; color: var(--primary); background: var(--surface); border: 1.5px solid var(--border); padding: 6px 14px; border-radius: 20px; transition: all var(--transition); }
+    .lang-btn:hover { border-color: var(--primary); background: rgba(27,61,111,0.04); }
+    .btn-nav-cta { font-size: 0.88rem; font-weight: 600; color: #fff; background: var(--primary); padding: 8px 20px; border-radius: 8px; transition: background var(--transition), transform var(--transition); }
+    .btn-nav-cta:hover { background: var(--primary-light); transform: translateY(-1px); }
+    .hamburger { display: none; background: none; border: none; font-size: 1.4rem; color: var(--primary); }
+    .mobile-menu { display: none; flex-direction: column; background: var(--surface); border-bottom: 1px solid var(--border); padding: 12px 24px 20px; gap: 4px; }
+    .mobile-menu.open { display: flex; }
+    .mobile-menu a { font-size: 0.95rem; font-weight: 500; color: var(--text); padding: 10px 4px; border-bottom: 1px solid var(--border-light); }
+    .mobile-menu a:last-child { border: none; }
+    .mobile-menu .lang-btn { margin-top: 8px; width: fit-content; }
+
+    .doc-main { padding-top: calc(var(--nav-h) + 48px); padding-bottom: 80px; }
+    .doc-inner { max-width: 840px; margin: 0 auto; }
+    .btn-back { display: inline-flex; align-items: center; gap: 8px; font-size: 0.9rem; font-weight: 600; color: var(--primary); background: var(--surface); border: 1.5px solid var(--border); padding: 10px 20px; border-radius: var(--radius-sm); margin-bottom: 32px; transition: all var(--transition); box-shadow: var(--shadow-sm); }
+    .btn-back:hover { border-color: var(--primary); background: rgba(27,61,111,0.04); }
+    html[dir="rtl"] .btn-back i { transform: scaleX(-1); }
+    .doc-header { margin-bottom: 40px; }
+    .doc-header .doc-badge { display: inline-block; font-size: 0.75rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--accent); background: var(--accent-light); padding: 4px 12px; border-radius: 20px; margin-bottom: 12px; }
+    .doc-header h1 { font-size: clamp(1.8rem, 3vw, 2.4rem); font-weight: 800; color: var(--text); margin-bottom: 12px; line-height: 1.2; }
+    .doc-header .doc-meta { font-size: 0.9rem; color: var(--text-muted); }
+    .doc-content h2 { font-size: 1.35rem; font-weight: 700; color: var(--primary); margin-top: 48px; margin-bottom: 20px; padding-bottom: 8px; border-bottom: 2px solid var(--border-light); }
+    .doc-content h2:first-of-type { margin-top: 0; }
+    .doc-content h3 { font-size: 1.1rem; font-weight: 700; color: var(--text); margin-top: 32px; margin-bottom: 14px; }
+    .doc-content p { font-size: 1rem; color: var(--text-muted); margin-bottom: 16px; line-height: 1.75; }
+    .doc-content ul.doc-list { list-style: disc; padding-left: 24px; margin-bottom: 20px; }
+    html[dir="rtl"] .doc-content ul.doc-list { padding-left: 0; padding-right: 24px; }
+    .doc-content ul.doc-list li { margin-bottom: 8px; color: var(--text-muted); line-height: 1.7; }
+    .doc-content ul.doc-list li strong { color: var(--text); }
+    .doc-table-wrapper { overflow-x: auto; margin: 24px 0; border-radius: var(--radius-sm); border: 1px solid var(--border-light); box-shadow: var(--shadow-sm); }
+    .doc-table { width: 100%; border-collapse: collapse; font-size: 0.95rem; }
+    .doc-table th, .doc-table td { padding: 14px 18px; text-align: left; border-bottom: 1px solid var(--border-light); vertical-align: top; }
+    html[dir="rtl"] .doc-table th, html[dir="rtl"] .doc-table td { text-align: right; }
+    .doc-table th { background: var(--surface-alt); font-weight: 700; color: var(--primary); }
+    .doc-table tr:last-child td { border-bottom: none; }
+    .doc-table tr:hover td { background: rgba(27,61,111,0.02); }
+    .callout { padding: 20px 24px; border-radius: var(--radius-md); margin: 24px 0; border-left: 4px solid; display: flex; gap: 14px; align-items: flex-start; }
+    html[dir="rtl"] .callout { border-left: none; border-right: 4px solid; }
+    .callout i { font-size: 1.2rem; flex-shrink: 0; margin-top: 2px; }
+    .callout-content { flex: 1; }
+    .callout-content p:last-child { margin-bottom: 0; }
+    .callout-tip { background: rgba(34, 197, 94, 0.08); border-color: #22c55e; color: #166534; }
+    .callout-tip i { color: #22c55e; }
+    .callout-alert { background: rgba(234, 179, 8, 0.08); border-color: #eab308; color: #854d0e; }
+    .callout-alert i { color: #eab308; }
+
+    footer { background: #111827; color: #9CA3AF; padding: 60px 0 30px; }
+    .footer-grid { display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 40px; margin-bottom: 50px; }
+    .footer-brand .nav-logo { color: #fff; margin-bottom: 14px; }
+    .footer-brand .nav-logo img { height: 40px; width: auto; max-width: 200px; object-fit: contain; filter: brightness(0) invert(1); opacity: 0.9; }
+    .footer-brand p { font-size: 0.88rem; line-height: 1.7; max-width: 260px; color: #9CA3AF; }
+    .footer-brand .social-row { display: flex; gap: 10px; margin-top: 20px; }
+    .footer-social { width: 36px; height: 36px; border-radius: 50%; background: rgba(255,255,255,0.08); color: #D1D5DB; display: flex; align-items: center; justify-content: center; font-size: 0.9rem; transition: background var(--transition), color var(--transition); }
+    .footer-social:hover { background: var(--accent); color: #fff; }
+    .footer-col h4 { font-size: 0.85rem; font-weight: 700; color: #E5E7EB; text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 18px; }
+    .footer-col ul li { margin-bottom: 10px; }
+    .footer-col ul li a { font-size: 0.88rem; color: #9CA3AF; transition: color var(--transition); }
+    .footer-col ul li a:hover { color: #fff; }
+    .footer-col ul li span { font-size: 0.88rem; color: #9CA3AF; font-family: var(--font-en); }
+    .footer-bottom { border-top: 1px solid rgba(255,255,255,0.08); padding-top: 28px; display: flex; align-items: center; justify-content: space-between; gap: 12px; flex-wrap: wrap; }
+    .footer-bottom p { font-size: 0.82rem; }
+    html[dir="rtl"] .footer-grid { direction: rtl; }
+    html[dir="rtl"] .footer-brand p { max-width: 100%; }
+    html[dir="rtl"] .footer-bottom { flex-direction: row-reverse; }
+
+    @media (max-width: 768px) { .nav-links, .btn-nav-cta { display: none; } .hamburger { display: block; } .doc-main { padding-top: calc(var(--nav-h) + 32px); padding-bottom: 48px; } .footer-grid { grid-template-columns: 1fr 1fr; } .footer-brand { grid-column: 1 / -1; } }
+    @media (max-width: 480px) { .container { padding: 0 18px; } .doc-table th, .doc-table td { padding: 10px 14px; font-size: 0.88rem; } .footer-grid { grid-template-columns: 1fr; } }
+  </style>
+</head>
+<body>
+
+  <nav id="navbar">
+    <div class="container">
+      <div class="nav-inner">
+        <a href="index.html" class="nav-logo">
+          <img src="assets/logo_splash_light.png" alt="Maly OBS Logo" class="nav-logo-desktop" />
+          <img src="assets/logo_icon.png" alt="Maly OBS" class="nav-logo-mobile" />
+          <span>Maly&nbsp;-&nbsp;OBS</span>
+        </a>
+        <div class="nav-links">
+          <a href="index.html#features" data-i18n="nav_features">Features</a>
+          <a href="index.html#pricing" data-i18n="nav_pricing">Pricing</a>
+          <a href="index.html#privacy" data-i18n="nav_privacy">Privacy</a>
+          <a href="index.html#contact" data-i18n="nav_contact">Contact</a>
+        </div>
+        <div class="nav-right">
+          <button class="lang-btn" id="lang-toggle" onclick="toggleLang()">
+            <i class="fa-solid fa-globe"></i>
+            <span id="lang-label">العربية</span>
+          </button>
+          <a href="https://drive.google.com/uc?export=download&id=15Vp6Mm15r9nkoK8qhC0GpUmpAVAORZhd" target="_blank" rel="noopener" class="btn-nav-cta" data-i18n="nav_download">Download Now</a>
+          <button class="hamburger" onclick="toggleMenu()" aria-label="Menu"><i class="fa-solid fa-bars" id="hamburger-icon"></i></button>
+        </div>
+      </div>
+    </div>
+    <div class="mobile-menu" id="mobile-menu">
+      <a href="index.html#features" onclick="closeMenu()" data-i18n="nav_features">Features</a>
+      <a href="index.html#pricing" onclick="closeMenu()" data-i18n="nav_pricing">Pricing</a>
+      <a href="index.html#privacy" onclick="closeMenu()" data-i18n="nav_privacy">Privacy</a>
+      <a href="index.html#contact" onclick="closeMenu()" data-i18n="nav_contact">Contact</a>
+      <a href="https://drive.google.com/uc?export=download&id=15Vp6Mm15r9nkoK8qhC0GpUmpAVAORZhd" target="_blank" rel="noopener" onclick="closeMenu()" data-i18n="nav_download">Download Now</a>
+      <button class="lang-btn" onclick="toggleLang(); closeMenu();"><i class="fa-solid fa-globe"></i><span id="lang-label-mobile">العربية</span></button>
+    </div>
+  </nav>
+
+  <main class="doc-main">
+    <div class="container">
+      <div class="doc-inner">
+        <a href="index.html" class="btn-back">
+          <i class="fa-solid fa-arrow-left"></i>
+          <span data-i18n="btn_back">Back to Home</span>
+        </a>
+
+        <header class="doc-header">
+          <span class="doc-badge" data-i18n="doc_badge">User Guide</span>
+          <h1 data-i18n="doc_title">Preparation Hub</h1>
+          <p class="doc-meta">Maly - OBS (Online Business System) · <span data-i18n="doc_version">Version 1.0</span></p>
+        </header>
+
+        <div class="doc-content">
+          <h2 data-i18n="h2_purpose">Module Purpose</h2>
+          <p><span data-i18n="purpose_p1a">The Preparation module manages orders that are ready to be picked and packed but have not yet been handed over to a shipping company. You can mark orders as </span><strong data-i18n="purpose_strong">prepared</strong><span data-i18n="purpose_p1b">, see which ones have enough stock, defer or cancel orders, modify bundles, and export prepared orders to Excel or ship them to a courier. Deferred orders appear in a separate tab and "wake up" a configurable number of days before their due date.</span></p>
+
+          <h2 data-i18n="h2_ui">UI Elements</h2>
+
+          <h3 data-i18n="h3_header">Header Area</h3>
+          <div class="doc-table-wrapper">
+            <table class="doc-table">
+              <thead><tr><th data-i18n="th_element">Element</th><th data-i18n="th_description">Description</th></tr></thead>
+              <tbody>
+                <tr><td><strong data-i18n="h_stat">Stat Badges</strong></td><td data-i18n="h_stat_desc">Total, Ready, Prepared, Shortage, Exchange/Missing counts</td></tr>
+                <tr><td><strong data-i18n="h_export">Export Options</strong></td><td data-i18n="h_export_desc">Button to export prepared orders (disabled when no prepared orders)</td></tr>
+                <tr><td><strong data-i18n="h_sync">Sync</strong></td><td data-i18n="h_sync_desc">Cloud icon — sync orders from Google Sheets</td></tr>
+                <tr><td><strong data-i18n="h_settings">Settings</strong></td><td data-i18n="h_settings_desc">Gear icon — open Preparation Settings</td></tr>
+                <tr><td><strong data-i18n="h_search">Search</strong></td><td data-i18n="h_search_desc">Text field — search by order code, customer name, or products</td></tr>
+                <tr><td><strong data-i18n="h_filter_gov">Filter by Governorate</strong></td><td data-i18n="h_filter_gov_desc">Location icon — filter by one or more governorates</td></tr>
+                <tr><td><strong data-i18n="h_filter_type">Filter by Type</strong></td><td data-i18n="h_filter_type_desc">Filter icon — filter by All, Ready, Exchange, Missing, or Shortage only</td></tr>
+              </tbody>
+            </table>
+          </div>
+
+          <h3 data-i18n="h3_orders">Orders Tab (Main Area)</h3>
+          <div class="doc-table-wrapper">
+            <table class="doc-table">
+              <thead><tr><th data-i18n="th_element">Element</th><th data-i18n="th_description">Description</th></tr></thead>
+              <tbody>
+                <tr><td><strong data-i18n="o_list">Orders List</strong></td><td data-i18n="o_list_desc">Paginated cards showing each order with order ID, customer name, products, governorate, status badge, and action buttons</td></tr>
+                <tr><td><strong data-i18n="o_pagination">Pagination</strong></td><td data-i18n="o_pagination_desc">Previous / Next page buttons and page counter</td></tr>
+                <tr><td><strong data-i18n="o_panel">Right Panel</strong></td><td data-i18n="o_panel_desc">Auto-Prepare Options, Unmark All, and Picking List (grouped quantities)</td></tr>
+              </tbody>
+            </table>
+          </div>
+
+          <h3 data-i18n="h3_ordercard">Order Card (Per Order)</h3>
+          <div class="doc-table-wrapper">
+            <table class="doc-table">
+              <thead><tr><th data-i18n="th_element">Element</th><th data-i18n="th_description">Description</th></tr></thead>
+              <tbody>
+                <tr><td><strong>Star</strong></td><td data-i18n="c_star">Toggle urgent priority (filled = urgent, outlined = normal)</td></tr>
+                <tr><td><strong>Order ID & Type Badge</strong></td><td data-i18n="c_id">e.g. #123, New / Exchange / Missing</td></tr>
+                <tr><td><strong>Stock Indicator</strong></td><td data-i18n="c_stock">e.g. 3/5 — items in stock / total items needed</td></tr>
+                <tr><td><strong>Customer Name</strong></td><td data-i18n="c_customer">Customer name</td></tr>
+                <tr><td><strong>Products</strong></td><td data-i18n="c_products">Product line summary</td></tr>
+                <tr><td><strong>Governorate Badge</strong></td><td data-i18n="c_gov">Governorate name</td></tr>
+                <tr><td><strong>Status Badge</strong></td><td data-i18n="c_status">Ready / Shortage / Packed / Unknown</td></tr>
+                <tr><td><strong>Prepare / Undo Button</strong></td><td data-i18n="c_prepare">Mark as prepared or unmark</td></tr>
+                <tr><td><strong>More Menu (⋮)</strong></td><td data-i18n="c_menu">View Details, Show Shortage, Modify Bundle, Defer, Cancel</td></tr>
+              </tbody>
+            </table>
+          </div>
+
+          <h3 data-i18n="h3_deferred">Deferred Tab</h3>
+          <div class="doc-table-wrapper">
+            <table class="doc-table">
+              <thead><tr><th data-i18n="th_element">Element</th><th data-i18n="th_description">Description</th></tr></thead>
+              <tbody>
+                <tr><td><strong>Deferred List</strong></td><td data-i18n="d_list">Orders scheduled for later, with countdown (days left / Due Today / Overdue) and due date</td></tr>
+                <tr><td><strong>Info Banner</strong></td><td data-i18n="d_banner">Explains deferred orders behavior</td></tr>
+              </tbody>
+            </table>
+          </div>
+
+          <h3 data-i18n="h3_dialogs">Dialogs</h3>
+          <div class="doc-table-wrapper">
+            <table class="doc-table">
+              <thead><tr><th data-i18n="th_dialog">Dialog</th><th data-i18n="th_purpose">Purpose</th></tr></thead>
+              <tbody>
+                <tr><td><strong>Filter by Governorate</strong></td><td data-i18n="dlg_gov">Checkboxes to select governorates; Clear All, Cancel, Confirm</td></tr>
+                <tr><td><strong>Filter by Type</strong></td><td data-i18n="dlg_type">Options: All Orders, Ready to Prepare, Exchange, Missing Items, Shortage Only</td></tr>
+                <tr><td><strong>Preparation Settings</strong></td><td data-i18n="dlg_settings">Set "Days before due date" for deferred wake-up</td></tr>
+                <tr><td><strong>Confirm Cancellation</strong></td><td data-i18n="dlg_cancel">Yes / No to cancel an order</td></tr>
+                <tr><td><strong>Defer Order</strong></td><td data-i18n="dlg_defer">Date picker to select due date</td></tr>
+                <tr><td><strong>Shortage Details</strong></td><td data-i18n="dlg_shortage">Product name, needed, available, shortage per line</td></tr>
+                <tr><td><strong>Order Details</strong></td><td data-i18n="dlg_order">Customer, phone, address, governorate, total, notes</td></tr>
+                <tr><td><strong>Unbox Bundle</strong></td><td data-i18n="dlg_unbox">Adjust component quantities, remove items, confirm unbox</td></tr>
+                <tr><td><strong>Auto-Prepare Options</strong></td><td data-i18n="dlg_auto">Current Page or All Pending</td></tr>
+                <tr><td><strong>Unmark All Confirm</strong></td><td data-i18n="dlg_unmark">Yes / No to unmark all prepared orders</td></tr>
+                <tr><td><strong>Export Options</strong></td><td data-i18n="dlg_export">Courier dropdown, Ship Date picker; Excel Only or Ship & Export</td></tr>
+              </tbody>
+            </table>
+          </div>
+
+          <h2 data-i18n="h2_workflow">Step-by-Step Workflow</h2>
+
+          <h3 data-i18n="w1_title">1. View and Filter Orders</h3>
+          <ul class="doc-list">
+            <li data-i18n="w1_1">Open the Preparation module.</li>
+            <li data-i18n="w1_2">Use Search to find orders by code, name, phone, or products.</li>
+            <li data-i18n="w1_3">Click Filter by Governorate to limit by governorate(s) → select → Confirm.</li>
+            <li data-i18n="w1_4">Click Filter by Type to show All, Ready, Exchange, Missing, or Shortage only.</li>
+            <li data-i18n="w1_5">Use pagination if there are many orders.</li>
+          </ul>
+
+          <h3 data-i18n="w2_title">2. Mark an Order as Prepared</h3>
+          <p data-i18n="w2_single">Single order</p>
+          <ul class="doc-list">
+            <li data-i18n="w2_1">Ensure the order shows Ready (stock indicator green or sufficient).</li>
+            <li data-i18n="w2_2">Click Prepare on the order card.</li>
+            <li data-i18n="w2_3">The system checks stock. If OK, the order is marked prepared and the list refreshes.</li>
+            <li data-i18n="w2_4">If stock is insufficient, you see: "Insufficient stock for: [product name]".</li>
+          </ul>
+          <p data-i18n="w2_bulk">Bulk (auto-prepare)</p>
+          <ul class="doc-list">
+            <li data-i18n="w2_5">Click Auto-Prepare Options in the right panel.</li>
+            <li data-i18n="w2_6">Choose Current Page (this page only) or All Pending.</li>
+            <li data-i18n="w2_7">The system prepares all eligible orders.</li>
+            <li data-i18n="w2_8">A snackbar shows: "Auto-prepared orders: [count]".</li>
+          </ul>
+
+          <h3 data-i18n="w3_title">3. Unmark a Prepared Order</h3>
+          <ul class="doc-list">
+            <li data-i18n="w3_1">Click Undo on a prepared order card.</li>
+            <li data-i18n="w3_2">The order returns to pending (not prepared).</li>
+          </ul>
+          <p data-i18n="w3_all">Unmark all</p>
+          <ul class="doc-list">
+            <li data-i18n="w3_3">Click Unmark All in the right panel.</li>
+            <li data-i18n="w3_4">Confirm in the dialog.</li>
+            <li data-i18n="w3_5">All prepared orders are unmarked.</li>
+          </ul>
+
+          <h3 data-i18n="w4_title">4. Defer an Order</h3>
+          <ul class="doc-list">
+            <li data-i18n="w4_1">Open the ⋮ menu on the order.</li>
+            <li data-i18n="w4_2">Choose Defer Order.</li>
+            <li data-i18n="w4_3">Select a due date in the date picker.</li>
+            <li data-i18n="w4_4">Click Defer.</li>
+            <li data-i18n="w4_5">The order moves to the Deferred tab and its stock reservation is released.</li>
+          </ul>
+
+          <h3 data-i18n="w5_title">5. Cancel an Order</h3>
+          <ul class="doc-list">
+            <li data-i18n="w5_1">Open the ⋮ menu on the order.</li>
+            <li data-i18n="w5_2">Choose Cancel Order.</li>
+            <li data-i18n="w5_3">Confirm in the dialog.</li>
+            <li data-i18n="w5_4">The order is cancelled, its status updates in the system and Google Sheets, and its stock reservation is released.</li>
+          </ul>
+
+          <h3 data-i18n="w6_title">6. Modify a Bundle (Unbox)</h3>
+          <ul class="doc-list">
+            <li data-i18n="w6_1">Open the ⋮ menu on an order that has bundles.</li>
+            <li data-i18n="w6_2">Choose Modify Bundle.</li>
+            <li data-i18n="w6_3">Adjust quantities with +/- or type in the field.</li>
+            <li data-i18n="w6_4">Click the delete icon to remove a component (sets quantity to 0).</li>
+            <li data-i18n="w6_5">At least one component must remain — otherwise you get: "Keep at least one component".</li>
+            <li data-i18n="w6_6">Click Confirm Unbox.</li>
+            <li data-i18n="w6_7">The bundle is replaced by the chosen components and quantities.</li>
+          </ul>
+
+          <h3 data-i18n="w7_title">7. Export / Ship Prepared Orders</h3>
+          <ul class="doc-list">
+            <li data-i18n="w7_1">Ensure at least one order is marked prepared.</li>
+            <li data-i18n="w7_2">Click Export Options (X) where X is the count of prepared orders.</li>
+            <li data-i18n="w7_3">Select Courier (shipping company).</li>
+            <li data-i18n="w7_4">Pick Ship Date.</li>
+            <li data-i18n="w7_5a">Excel Only — generate Excel file only (no status change).</li>
+            <li data-i18n="w7_5b">Ship & Export — update orders to Shipped, assign courier and ship date, deduct stock, export Excel, and sync to Google Sheets.</li>
+            <li data-i18n="w7_6">If using Ship & Export, courier is required; otherwise you see an error.</li>
+          </ul>
+
+          <h3 data-i18n="w8_title">8. Sync Orders from Google Sheets</h3>
+          <ul class="doc-list">
+            <li data-i18n="w8_1">Click the Cloud Sync icon in the header.</li>
+            <li data-i18n="w8_2">A loading overlay appears.</li>
+            <li data-i18n="w8_3">When done, a snackbar shows success or error and the list refreshes.</li>
+          </ul>
+
+          <h3 data-i18n="w9_title">9. Adjust Deferred Orders Settings</h3>
+          <ul class="doc-list">
+            <li data-i18n="w9_1">Click Settings in the header.</li>
+            <li data-i18n="w9_2">Set Days before due date (e.g. 5).</li>
+            <li data-i18n="w9_3">Click Save.</li>
+            <li data-i18n="w9_4">Deferred orders appear in the main Orders tab when their due date is within that many days.</li>
+          </ul>
+
+          <h2 data-i18n="h2_rules">Business Rules & Validations</h2>
+
+          <h3 data-i18n="r_required">Required Conditions to Prepare</h3>
+          <ul class="doc-list">
+            <li data-i18n="r_req1">Order must be Ready (stock status = available).</li>
+            <li data-i18n="r_req2">Order must have no unknown items (all items mapped to variants).</li>
+            <li data-i18n="r_req3">Current stock (minus reserved) must be sufficient for the order quantity.</li>
+          </ul>
+
+          <h3 data-i18n="r_validation">Prepare Validation</h3>
+          <div class="doc-table-wrapper">
+            <table class="doc-table">
+              <thead><tr><th data-i18n="th_condition">Condition</th><th data-i18n="th_result">Result</th></tr></thead>
+              <tbody>
+                <tr><td data-i18n="v_insuff">Insufficient stock</td><td data-i18n="v_insuff_res">Error: "Insufficient stock for: [product name]"</td></tr>
+                <tr><td data-i18n="v_unknown">Order has unknown items</td><td data-i18n="v_unknown_res">Prepare button disabled</td></tr>
+                <tr><td data-i18n="v_notready">Order not Ready (shortage)</td><td data-i18n="v_notready_res">Prepare button disabled</td></tr>
+              </tbody>
+            </table>
+          </div>
+
+          <h3 data-i18n="r_defer">Defer / Cancel</h3>
+          <ul class="doc-list">
+            <li data-i18n="r_defer1">Defer and Cancel release reserved stock immediately.</li>
+            <li data-i18n="r_defer2">Cancelled orders are excluded from the preparation list.</li>
+            <li data-i18n="r_defer3">Cancellation syncs status to Google Sheets (e.g. ملغى).</li>
+          </ul>
+
+          <h3 data-i18n="r_bundle">Bundle Explosion (Unbox)</h3>
+          <ul class="doc-list">
+            <li data-i18n="r_bundle1">At least one component must have quantity > 0; otherwise: "Keep at least one component".</li>
+            <li data-i18n="r_bundle2">After unbox, the order is marked as manually modified so sync does not overwrite it.</li>
+          </ul>
+
+          <h3 data-i18n="r_export">Export</h3>
+          <div class="doc-table-wrapper">
+            <table class="doc-table">
+              <thead><tr><th data-i18n="th_action">Action</th><th data-i18n="th_requirements">Requirements</th></tr></thead>
+              <tbody>
+                <tr><td data-i18n="ex_excel">Excel Only</td><td data-i18n="ex_excel_req">No courier required</td></tr>
+                <tr><td data-i18n="ex_ship">Ship & Export</td><td data-i18n="ex_ship_req">Courier required — error if not selected</td></tr>
+              </tbody>
+            </table>
+          </div>
+
+          <h3 data-i18n="r_order_types">Order Types</h3>
+          <ul class="doc-list">
+            <li><strong>New</strong> (جديد) — <span data-i18n="ot_new">standard new order</span>.</li>
+            <li><strong>Exchange</strong> (استبدال) — <span data-i18n="ot_exchange">exchange order</span>.</li>
+            <li><strong>Missing Items</strong> (ارسال نواقص / نواقص) — <span data-i18n="ot_missing">missing items order</span>.</li>
+          </ul>
+
+          <h3 data-i18n="r_excluded">Excluded Orders</h3>
+          <p data-i18n="r_excluded_p">Orders with status Cancelled, Delivered, Returned (and Arabic equivalents) do not appear in the preparation list.</p>
+
+          <h2 data-i18n="h2_messages">Messages & Alerts</h2>
+          <div class="doc-table-wrapper">
+            <table class="doc-table">
+              <thead><tr><th data-i18n="th_situation">Situation</th><th data-i18n="th_message">Message</th></tr></thead>
+              <tbody>
+                <tr><td data-i18n="m_loading">Loading</td><td data-i18n="m_loading_msg">"Loading..." overlay</td></tr>
+                <tr><td data-i18n="m_prepare_ok">Prepare success</td><td data-i18n="m_prepare_ok_msg">"Success" (green)</td></tr>
+                <tr><td data-i18n="m_prepare_fail">Prepare failure</td><td data-i18n="m_prepare_fail_msg">"Insufficient stock for: [name]" or exception text (red)</td></tr>
+                <tr><td data-i18n="m_bulk">Bulk prepare</td><td data-i18n="m_bulk_msg">"Auto-prepared orders: [count]" (green)</td></tr>
+                <tr><td data-i18n="m_unmark">Unmark all</td><td data-i18n="m_unmark_msg">"Unmarked [count] orders" (green)</td></tr>
+                <tr><td data-i18n="m_cancel">Cancel success</td><td data-i18n="m_cancel_msg">"Order cancelled" (green)</td></tr>
+                <tr><td data-i18n="m_defer">Defer success</td><td data-i18n="m_defer_msg">"Order deferred to [date]" (green)</td></tr>
+                <tr><td data-i18n="m_defer_fail">Defer/Cancel failure</td><td data-i18n="m_defer_fail_msg">Exception message (red)</td></tr>
+                <tr><td data-i18n="m_unbox">Bundle unbox success</td><td data-i18n="m_unbox_msg">"Bundle exploded successfully" (green)</td></tr>
+                <tr><td data-i18n="m_bundle_val">Bundle validation</td><td data-i18n="m_bundle_val_msg">"Keep at least one component" (yellow)</td></tr>
+                <tr><td data-i18n="m_no_bundle">No bundles</td><td data-i18n="m_no_bundle_msg">"No bundles in this order" (yellow)</td></tr>
+                <tr><td data-i18n="m_export_ok">Export success</td><td data-i18n="m_export_ok_msg">"Exported [count] orders" (green)</td></tr>
+                <tr><td data-i18n="m_export_fail">Export failure</td><td data-i18n="m_export_fail_msg">Exception message (red)</td></tr>
+                <tr><td data-i18n="m_sync">Sync</td><td data-i18n="m_sync_msg">Success or error message (blue / red)</td></tr>
+                <tr><td data-i18n="m_settings">Save settings</td><td data-i18n="m_settings_msg">"Success" (green)</td></tr>
+                <tr><td data-i18n="m_load">Load error</td><td data-i18n="m_load_msg">"Error: [message]" (red)</td></tr>
+              </tbody>
+            </table>
+          </div>
+
+          <h2 data-i18n="h2_tips">Tips</h2>
+          <div class="callout callout-tip">
+            <i class="fa-solid fa-lightbulb"></i>
+            <div class="callout-content">
+              <ul class="doc-list" style="margin-bottom:0;">
+                <li data-i18n="tip1">Use the Star to mark urgent orders; they appear first in the list.</li>
+                <li data-i18n="tip2">Stock indicator (e.g. 3/5) shows how many item types are in stock versus total.</li>
+                <li data-i18n="tip3">For shortage, use Show Shortage to see exactly what is missing.</li>
+                <li data-i18n="tip4">Deferred tab shows orders scheduled for later with countdown (green = OK, yellow = soon, red = due/overdue).</li>
+                <li data-i18n="tip5">Picking List aggregates quantities across all prepared orders for efficient picking.</li>
+                <li data-i18n="tip6">Export Excel Only when you only need a file without changing order status.</li>
+                <li data-i18n="tip7">Use Ship & Export when you hand over to a courier and want status updated in the system and Sheets.</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <footer>
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <div class="nav-logo" style="color:#fff; margin-bottom:14px; display:flex; align-items:center; gap:10px;">
+            <img src="assets/logo_splash_light.png" alt="Maly OBS" />
+            <span>Maly&nbsp;-&nbsp;OBS</span>
+          </div>
+          <p data-i18n="footer_tagline">The smartest way to run your e-commerce business in Egypt.</p>
+          <div class="social-row">
+            <a href="https://www.linkedin.com/in/adhamseliman/" target="_blank" rel="noopener" class="footer-social"><i class="fa-brands fa-linkedin-in"></i></a>
+            <a href="https://web.facebook.com/sadham122" target="_blank" rel="noopener" class="footer-social"><i class="fa-brands fa-facebook-f"></i></a>
+            <a href="https://www.youtube.com/@adhamseliman458" target="_blank" rel="noopener" class="footer-social"><i class="fa-brands fa-youtube"></i></a>
+            <a href="https://wa.me/201100028752" target="_blank" rel="noopener" class="footer-social"><i class="fa-brands fa-whatsapp"></i></a>
+          </div>
+        </div>
+        <div class="footer-col">
+          <h4 data-i18n="footer_nav">Navigate</h4>
+          <ul>
+            <li><a href="index.html#features" data-i18n="nav_features">Features</a></li>
+            <li><a href="index.html#pricing" data-i18n="nav_pricing">Pricing</a></li>
+            <li><a href="index.html#privacy" data-i18n="nav_privacy">Privacy</a></li>
+            <li><a href="index.html#contact" data-i18n="nav_contact">Contact</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4 data-i18n="footer_contact_hd">Contact</h4>
+          <ul>
+            <li><span>asoliman548@gmail.com</span></li>
+            <li><span>01100028752</span></li>
+            <li><span data-i18n="footer_location">Cairo, Egypt</span></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4 data-i18n="footer_legal">Legal</h4>
+          <ul>
+            <li><a href="index.html#privacy" data-i18n="footer_privacy_link">Privacy Policy</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p data-i18n="footer_copy">© 2026 Maly Systems. All rights reserved.</p>
+        <p style="font-family:var(--font-en); font-style:italic; color:#6B7280; font-size:0.8rem;">"It's not just about money. It's Control."</p>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    const T = {
+      en: {
+        btn_back: "Back to Home", doc_badge: "User Guide", doc_title: "Preparation Hub", doc_version: "Version 1.0",
+        nav_features: "Features", nav_pricing: "Pricing", nav_privacy: "Privacy", nav_contact: "Contact", nav_download: "Download Now",
+        footer_tagline: "The smartest way to run your e-commerce business in Egypt.",
+        footer_nav: "Navigate", footer_contact_hd: "Contact", footer_legal: "Legal", footer_privacy_link: "Privacy Policy", footer_location: "Cairo, Egypt", footer_copy: "© 2026 Maly Systems. All rights reserved.",
+        h2_purpose: "Module Purpose", h2_ui: "UI Elements", h2_workflow: "Step-by-Step Workflow", h2_rules: "Business Rules & Validations", h2_messages: "Messages & Alerts", h2_tips: "Tips",
+        th_element: "Element", th_description: "Description", th_dialog: "Dialog", th_purpose: "Purpose", th_condition: "Condition", th_result: "Result", th_action: "Action", th_requirements: "Requirements", th_situation: "Situation", th_message: "Message",
+        purpose_p1a: "The Preparation module manages orders that are ready to be picked and packed but have not yet been handed over to a shipping company. You can mark orders as ", purpose_strong: "prepared", purpose_p1b: ", see which ones have enough stock, defer or cancel orders, modify bundles, and export prepared orders to Excel or ship them to a courier. Deferred orders appear in a separate tab and \"wake up\" a configurable number of days before their due date.",
+        h3_header: "Header Area", h3_orders: "Orders Tab (Main Area)", h3_ordercard: "Order Card (Per Order)", h3_deferred: "Deferred Tab", h3_dialogs: "Dialogs",
+        h_stat: "Stat Badges", h_stat_desc: "Total, Ready, Prepared, Shortage, Exchange/Missing counts",
+        h_export: "Export Options", h_export_desc: "Button to export prepared orders (disabled when no prepared orders)",
+        h_sync: "Sync", h_sync_desc: "Cloud icon — sync orders from Google Sheets",
+        h_settings: "Settings", h_settings_desc: "Gear icon — open Preparation Settings",
+        h_search: "Search", h_search_desc: "Text field — search by order code, customer name, or products",
+        h_filter_gov: "Filter by Governorate", h_filter_gov_desc: "Location icon — filter by one or more governorates",
+        h_filter_type: "Filter by Type", h_filter_type_desc: "Filter icon — filter by All, Ready, Exchange, Missing, or Shortage only",
+        o_list: "Orders List", o_list_desc: "Paginated cards showing each order with order ID, customer name, products, governorate, status badge, and action buttons",
+        o_pagination: "Pagination", o_pagination_desc: "Previous / Next page buttons and page counter",
+        o_panel: "Right Panel", o_panel_desc: "Auto-Prepare Options, Unmark All, and Picking List (grouped quantities)",
+        c_star: "Toggle urgent priority (filled = urgent, outlined = normal)", c_id: "e.g. #123, New / Exchange / Missing",
+        c_stock: "e.g. 3/5 — items in stock / total items needed", c_customer: "Customer name", c_products: "Product line summary",
+        c_gov: "Governorate name", c_status: "Ready / Shortage / Packed / Unknown", c_prepare: "Mark as prepared or unmark",
+        c_menu: "View Details, Show Shortage, Modify Bundle, Defer, Cancel",
+        d_list: "Orders scheduled for later, with countdown (days left / Due Today / Overdue) and due date",
+        d_banner: "Explains deferred orders behavior",
+        dlg_gov: "Checkboxes to select governorates; Clear All, Cancel, Confirm",
+        dlg_type: "Options: All Orders, Ready to Prepare, Exchange, Missing Items, Shortage Only",
+        dlg_settings: "Set \"Days before due date\" for deferred wake-up", dlg_cancel: "Yes / No to cancel an order",
+        dlg_defer: "Date picker to select due date", dlg_shortage: "Product name, needed, available, shortage per line",
+        dlg_order: "Customer, phone, address, governorate, total, notes",
+        dlg_unbox: "Adjust component quantities, remove items, confirm unbox",
+        dlg_auto: "Current Page or All Pending", dlg_unmark: "Yes / No to unmark all prepared orders",
+        dlg_export: "Courier dropdown, Ship Date picker; Excel Only or Ship & Export",
+        w1_title: "1. View and Filter Orders", w1_1: "Open the Preparation module.", w1_2: "Use Search to find orders by code, name, phone, or products.",
+        w1_3: "Click Filter by Governorate to limit by governorate(s) → select → Confirm.",
+        w1_4: "Click Filter by Type to show All, Ready, Exchange, Missing, or Shortage only.", w1_5: "Use pagination if there are many orders.",
+        w2_title: "2. Mark an Order as Prepared", w2_single: "Single order", w2_bulk: "Bulk (auto-prepare)",
+        w2_1: "Ensure the order shows Ready (stock indicator green or sufficient).", w2_2: "Click Prepare on the order card.",
+        w2_3: "The system checks stock. If OK, the order is marked prepared and the list refreshes.",
+        w2_4: "If stock is insufficient, you see: \"Insufficient stock for: [product name]\".",
+        w2_5: "Click Auto-Prepare Options in the right panel.", w2_6: "Choose Current Page (this page only) or All Pending.",
+        w2_7: "The system prepares all eligible orders.", w2_8: "A snackbar shows: \"Auto-prepared orders: [count]\".",
+        w3_title: "3. Unmark a Prepared Order", w3_1: "Click Undo on a prepared order card.", w3_2: "The order returns to pending (not prepared).",
+        w3_all: "Unmark all", w3_3: "Click Unmark All in the right panel.", w3_4: "Confirm in the dialog.", w3_5: "All prepared orders are unmarked.",
+        w4_title: "4. Defer an Order", w4_1: "Open the ⋮ menu on the order.", w4_2: "Choose Defer Order.", w4_3: "Select a due date in the date picker.",
+        w4_4: "Click Defer.", w4_5: "The order moves to the Deferred tab and its stock reservation is released.",
+        w5_title: "5. Cancel an Order", w5_1: "Open the ⋮ menu on the order.", w5_2: "Choose Cancel Order.", w5_3: "Confirm in the dialog.",
+        w5_4: "The order is cancelled, its status updates in the system and Google Sheets, and its stock reservation is released.",
+        w6_title: "6. Modify a Bundle (Unbox)", w6_1: "Open the ⋮ menu on an order that has bundles.", w6_2: "Choose Modify Bundle.",
+        w6_3: "Adjust quantities with +/- or type in the field.", w6_4: "Click the delete icon to remove a component (sets quantity to 0).",
+        w6_5: "At least one component must remain — otherwise you get: \"Keep at least one component\".", w6_6: "Click Confirm Unbox.",
+        w6_7: "The bundle is replaced by the chosen components and quantities.",
+        w7_title: "7. Export / Ship Prepared Orders", w7_1: "Ensure at least one order is marked prepared.",
+        w7_2: "Click Export Options (X) where X is the count of prepared orders.", w7_3: "Select Courier (shipping company).", w7_4: "Pick Ship Date.",
+        w7_5a: "Excel Only — generate Excel file only (no status change).",
+        w7_5b: "Ship & Export — update orders to Shipped, assign courier and ship date, deduct stock, export Excel, and sync to Google Sheets.",
+        w7_6: "If using Ship & Export, courier is required; otherwise you see an error.",
+        w8_title: "8. Sync Orders from Google Sheets", w8_1: "Click the Cloud Sync icon in the header.", w8_2: "A loading overlay appears.",
+        w8_3: "When done, a snackbar shows success or error and the list refreshes.",
+        w9_title: "9. Adjust Deferred Orders Settings", w9_1: "Click Settings in the header.", w9_2: "Set Days before due date (e.g. 5).", w9_3: "Click Save.",
+        w9_4: "Deferred orders appear in the main Orders tab when their due date is within that many days.",
+        r_required: "Required Conditions to Prepare", r_req1: "Order must be Ready (stock status = available).",
+        r_req2: "Order must have no unknown items (all items mapped to variants).",
+        r_req3: "Current stock (minus reserved) must be sufficient for the order quantity.",
+        r_validation: "Prepare Validation", th_condition: "Condition", th_result: "Result",
+        v_insuff: "Insufficient stock", v_insuff_res: "Error: \"Insufficient stock for: [product name]\"",
+        v_unknown: "Order has unknown items", v_unknown_res: "Prepare button disabled",
+        v_notready: "Order not Ready (shortage)", v_notready_res: "Prepare button disabled",
+        r_defer: "Defer / Cancel", r_defer1: "Defer and Cancel release reserved stock immediately.",
+        r_defer2: "Cancelled orders are excluded from the preparation list.", r_defer3: "Cancellation syncs status to Google Sheets (e.g. ملغى).",
+        r_bundle: "Bundle Explosion (Unbox)", r_bundle1: "At least one component must have quantity > 0; otherwise: \"Keep at least one component\".",
+        r_bundle2: "After unbox, the order is marked as manually modified so sync does not overwrite it.",
+        r_export: "Export", ex_excel: "Excel Only", ex_excel_req: "No courier required",
+        ex_ship: "Ship & Export", ex_ship_req: "Courier required — error if not selected",
+        r_order_types: "Order Types", ot_new: "standard new order", ot_exchange: "exchange order", ot_missing: "missing items order",
+        r_excluded: "Excluded Orders", r_excluded_p: "Orders with status Cancelled, Delivered, Returned (and Arabic equivalents) do not appear in the preparation list.",
+        m_loading: "Loading", m_loading_msg: "\"Loading...\" overlay", m_prepare_ok: "Prepare success", m_prepare_ok_msg: "\"Success\" (green)",
+        m_prepare_fail: "Prepare failure", m_prepare_fail_msg: "\"Insufficient stock for: [name]\" or exception text (red)",
+        m_bulk: "Bulk prepare", m_bulk_msg: "\"Auto-prepared orders: [count]\" (green)",
+        m_unmark: "Unmark all", m_unmark_msg: "\"Unmarked [count] orders\" (green)",
+        m_cancel: "Cancel success", m_cancel_msg: "\"Order cancelled\" (green)",
+        m_defer: "Defer success", m_defer_msg: "\"Order deferred to [date]\" (green)",
+        m_defer_fail: "Defer/Cancel failure", m_defer_fail_msg: "Exception message (red)",
+        m_unbox: "Bundle unbox success", m_unbox_msg: "\"Bundle exploded successfully\" (green)",
+        m_bundle_val: "Bundle validation", m_bundle_val_msg: "\"Keep at least one component\" (yellow)",
+        m_no_bundle: "No bundles", m_no_bundle_msg: "\"No bundles in this order\" (yellow)",
+        m_export_ok: "Export success", m_export_ok_msg: "\"Exported [count] orders\" (green)",
+        m_export_fail: "Export failure", m_export_fail_msg: "Exception message (red)",
+        m_sync: "Sync", m_sync_msg: "Success or error message (blue / red)",
+        m_settings: "Save settings", m_settings_msg: "\"Success\" (green)", m_load: "Load error", m_load_msg: "\"Error: [message]\" (red)",
+        tip1: "Use the Star to mark urgent orders; they appear first in the list.",
+        tip2: "Stock indicator (e.g. 3/5) shows how many item types are in stock versus total.",
+        tip3: "For shortage, use Show Shortage to see exactly what is missing.",
+        tip4: "Deferred tab shows orders scheduled for later with countdown (green = OK, yellow = soon, red = due/overdue).",
+        tip5: "Picking List aggregates quantities across all prepared orders for efficient picking.",
+        tip6: "Export Excel Only when you only need a file without changing order status.",
+        tip7: "Use Ship & Export when you hand over to a courier and want status updated in the system and Sheets."
+      },
+      ar: {
+        btn_back: "العودة للرئيسية", doc_badge: "دليل المستخدم", doc_title: "مركز التجهيز", doc_version: "الإصدار ١.٠",
+        nav_features: "المميزات", nav_pricing: "الأسعار", nav_privacy: "الخصوصية", nav_contact: "تواصل معنا", nav_download: "تحميل الآن",
+        footer_tagline: "الطريقة الأذكى لإدارة أعمالك في التجارة الإلكترونية.",
+        footer_nav: "التنقل", footer_contact_hd: "تواصل معنا", footer_legal: "قانوني", footer_privacy_link: "سياسة الخصوصية", footer_location: "القاهرة، مصر", footer_copy: "© ٢٠٢٦ مالي سيستمز. جميع الحقوق محفوظة.",
+        h2_purpose: "نبذة عن الموديول", h2_ui: "عناصر الواجهة", h2_workflow: "خطوات العمل", h2_rules: "قواعد العمل والتحقق", h2_messages: "الرسائل والتنبيهات", h2_tips: "نصائح",
+        th_element: "العنصر", th_description: "الوصف", th_dialog: "النافذة", th_purpose: "الغرض", th_condition: "الشرط", th_result: "النتيجة", th_action: "الإجراء", th_requirements: "المتطلبات", th_situation: "الموقف", th_message: "الرسالة",
+        purpose_p1a: "وحدة التجهيز تدير الطلبات الجاهزة للتقطيع والتعبئة والتي لم تُسلّم بعد لشركة الشحن. يمكنك تحديد الطلبات ", purpose_strong: "كمُجهّزة", purpose_p1b: "، معرفة أيهما لديها مخزون كافٍ، تأجيل أو إلغاء الطلبات، تعديل الحزم، وتصدير الطلبات المُجهّزة إلى Excel أو إرسالها للشركة. الطلبات المؤجلة تظهر في تبويب منفصل و«تستيقظ» قبل تاريخ استحقاقها بعدد أيام قابل للتكوين.",
+        h3_header: "منطقة الرأس", h3_orders: "تبويب الطلبات (المنطقة الرئيسية)", h3_ordercard: "بطاقة الطلب (لكل طلب)", h3_deferred: "تبويب المؤجلة", h3_dialogs: "النوافذ",
+        h_stat: "شارات الإحصائيات", h_stat_desc: "الإجمالي، الجاهزة، المُجهّزة، النقص، الاستبدال/النواقص",
+        h_export: "خيارات التصدير", h_export_desc: "زر لتصدير الطلبات المُجهّزة (معطّل عند عدم وجود طلبات مُجهّزة)",
+        h_sync: "المزامنة", h_sync_desc: "أيقونة السحابة — مزامنة الطلبات من Google Sheets",
+        h_settings: "الإعدادات", h_settings_desc: "أيقونة الترس — فتح إعدادات التجهيز",
+        h_search: "البحث", h_search_desc: "حقل نصوص — البحث برمز الطلب أو اسم العميل أو المنتجات",
+        h_filter_gov: "تصفية بالمحافظة", h_filter_gov_desc: "أيقونة الموقع — تصفية بمحافظة واحدة أو أكثر",
+        h_filter_type: "تصفية بالنوع", h_filter_type_desc: "أيقونة التصفية — تصفية حسب الكل، الجاهزة، الاستبدال، النواقص، أو النقص فقط",
+        o_list: "قائمة الطلبات", o_list_desc: "بطاقات مُرقّمة تعرض كل طلب مع رمز الطلب واسم العميل والمنتجات والمحافظة وشارة الحالة وأزرار الإجراءات",
+        o_pagination: "التصفح", o_pagination_desc: "أزرار السابق / التالي وعداد الصفحات",
+        o_panel: "اللوحة الجانبية", o_panel_desc: "خيارات التجهيز التلقائي، إلغاء الكل، وقائمة الالتقاط (الكميات المجمّعة)",
+        c_star: "تبديل الأولوية العاجلة (مُعبأة = عاجل، فارغة = عادي)", c_id: "مثل #123، جديد / استبدال / نواقص",
+        c_stock: "مثل 3/5 — العناصر المتوفرة / إجمالي المطلوب", c_customer: "اسم العميل", c_products: "ملخص خط المنتج",
+        c_gov: "اسم المحافظة", c_status: "جاهزة / نقص / مُعبّأة / غير معروف", c_prepare: "تحديد كمُجهّزة أو إلغاء التحديد",
+        c_menu: "عرض التفاصيل، عرض النقص، تعديل الحزمة، تأجيل، إلغاء",
+        d_list: "الطلبات المجدولة لاحقًا، مع العد التنازلي (أيام متبقية / مستحق اليوم / متأخر) وتاريخ الاستحقاق",
+        d_banner: "توضح سلوك الطلبات المؤجلة",
+        dlg_gov: "مربعات اختيار لاختيار المحافظات؛ مسح الكل، إلغاء، تأكيد",
+        dlg_type: "خيارات: كل الطلبات، جاهزة للتجهيز، استبدال، نواقص، نقص فقط",
+        dlg_settings: "تعيين «الأيام قبل تاريخ الاستحقاق» لاستيقاظ المؤجلة", dlg_cancel: "نعم / لا لإلغاء الطلب",
+        dlg_defer: "منتقي التاريخ لاختيار تاريخ الاستحقاق", dlg_shortage: "اسم المنتج، المطلوب، المتوفر، النقص لكل سطر",
+        dlg_order: "العميل، الهاتف، العنوان، المحافظة، الإجمالي، الملاحظات",
+        dlg_unbox: "تعديل كميات المكونات، إزالة العناصر، تأكيد الفتح",
+        dlg_auto: "الصفحة الحالية أو كل المعلقة", dlg_unmark: "نعم / لا لإلغاء تحديد كل الطلبات المُجهّزة",
+        dlg_export: "قائمة شركات الشحن، منتقي تاريخ الشحن؛ Excel فقط أو الشحن والتصدير",
+        w1_title: "١. عرض وتصفية الطلبات", w1_1: "افتح وحدة التجهيز.", w1_2: "استخدم البحث للعثور على الطلبات بالرمز أو الاسم أو الهاتف أو المنتجات.",
+        w1_3: "انقر على تصفية بالمحافظة للحد بمحافظة أو أكثر → اختر → تأكيد.",
+        w1_4: "انقر على تصفية بالنوع لعرض الكل، الجاهزة، الاستبدال، النواقص، أو النقص فقط.", w1_5: "استخدم التصفح إن كان هناك طلبات كثيرة.",
+        w2_title: "٢. تحديد طلب كمُجهّز", w2_single: "طلب واحد", w2_bulk: "بالجملة (تجهيز تلقائي)",
+        w2_1: "تأكد أن الطلب يظهر جاهز (مؤشر المخزون أخضر أو كافٍ).", w2_2: "انقر على تجهيز في بطاقة الطلب.",
+        w2_3: "النظام يتحقق من المخزون. إن كان كافٍ، يُحدّد الطلب كمُجهّز وتُحدّث القائمة.",
+        w2_4: "إن كان المخزون غير كافٍ، ترى: «مخزون غير كافٍ لـ: [اسم المنتج]».",
+        w2_5: "انقر على خيارات التجهيز التلقائي في اللوحة الجانبية.", w2_6: "اختر الصفحة الحالية فقط أو كل المعلقة.",
+        w2_7: "النظام يجهّز كل الطلبات المؤهلة.", w2_8: "يظهر شريط: «تم تجهيز [عدد] طلبات تلقائيًا».",
+        w3_title: "٣. إلغاء تحديد طلب مُجهّز", w3_1: "انقر على تراجع في بطاقة الطلب المُجهّز.", w3_2: "يعود الطلب إلى معلق (غير مُجهّز).",
+        w3_all: "إلغاء الكل", w3_3: "انقر على إلغاء الكل في اللوحة الجانبية.", w3_4: "أكّد في النافذة.", w3_5: "تُلغى تحديد كل الطلبات المُجهّزة.",
+        w4_title: "٤. تأجيل طلب", w4_1: "افتح قائمة ⋮ على الطلب.", w4_2: "اختر تأجيل الطلب.", w4_3: "اختر تاريخ الاستحقاق في منتقي التاريخ.",
+        w4_4: "انقر على تأجيل.", w4_5: "ينتقل الطلب إلى تبويب المؤجلة ويُحرّر حجز المخزون.",
+        w5_title: "٥. إلغاء طلب", w5_1: "افتح قائمة ⋮ على الطلب.", w5_2: "اختر إلغاء الطلب.", w5_3: "أكّد في النافذة.",
+        w5_4: "يُلغى الطلب، تُحدّث حالته في النظام وGoogle Sheets، ويُحرّر حجز المخزون.",
+        w6_title: "٦. تعديل حزمة (فتح)", w6_1: "افتح قائمة ⋮ على طلب يحتوي حزمًا.", w6_2: "اختر تعديل الحزمة.",
+        w6_3: "عدّل الكميات بـ +/- أو اكتب في الحقل.", w6_4: "انقر على أيقونة الحذف لإزالة مكون (يُحدّد الكمية إلى ٠).",
+        w6_5: "يجب بقاء مكون واحد على الأقل — وإلا ترى: «أبقِ مكونًا واحدًا على الأقل».", w6_6: "انقر على تأكيد الفتح.",
+        w6_7: "تُستبدل الحزمة بالمكونات والكميات المختارة.",
+        w7_title: "٧. تصدير / شحن الطلبات المُجهّزة", w7_1: "تأكد أن طلبًا واحدًا على الأقل مُجهّز.",
+        w7_2: "انقر على خيارات التصدير (X) حيث X عدد الطلبات المُجهّزة.", w7_3: "اختر شركة الشحن.", w7_4: "اختر تاريخ الشحن.",
+        w7_5a: "Excel فقط — إنشاء ملف Excel فقط (بدون تغيير الحالة).",
+        w7_5b: "الشحن والتصدير — تحديث الطلبات إلى مُشحَن، تعيين الشركة وتاريخ الشحن، خصم المخزون، تصدير Excel، ومزامنة مع Google Sheets.",
+        w7_6: "إن استخدمت الشحن والتصدير، شركة الشحن مطلوبة؛ وإلا ترى خطأ.",
+        w8_title: "٨. مزامنة الطلبات من Google Sheets", w8_1: "انقر على أيقونة مزامنة السحابة في الرأس.", w8_2: "تظهر طبقة تحميل.",
+        w8_3: "عند الانتهاء، يظهر شريط نجاح أو خطأ وتُحدّث القائمة.",
+        w9_title: "٩. ضبط إعدادات الطلبات المؤجلة", w9_1: "انقر على الإعدادات في الرأس.", w9_2: "تعيين الأيام قبل تاريخ الاستحقاق (مثل ٥).", w9_3: "انقر على حفظ.",
+        w9_4: "تظهر الطلبات المؤجلة في تبويب الطلبات الرئيسي عندما يكون تاريخ استحقاقها خلال ذلك العدد من الأيام.",
+        r_required: "الشروط المطلوبة للتجهيز", r_req1: "يجب أن يكون الطلب جاهزًا (حالة المخزون = متوفر).",
+        r_req2: "يجب أن لا يحتوي الطلب على عناصر غير معروفة (جميع العناصر مُربطة بمتغيرات).",
+        r_req3: "المخزون الحالي (مطروحًا المحجوز) يجب أن يكون كافٍ لكمية الطلب.",
+        r_validation: "التحقق من التجهيز", v_insuff: "مخزون غير كافٍ", v_insuff_res: "خطأ: «مخزون غير كافٍ لـ: [اسم المنتج]»",
+        v_unknown: "الطلب فيه عناصر غير معروفة", v_unknown_res: "زر التجهيز معطّل",
+        v_notready: "الطلب غير جاهز (نقص)", v_notready_res: "زر التجهيز معطّل",
+        r_defer: "التأجيل / الإلغاء", r_defer1: "التأجيل والإلغاء يحرّران المخزون المحجوز فورًا.",
+        r_defer2: "الطلبات الملغاة مستبعدة من قائمة التجهيز.", r_defer3: "الإلغاء يزامن الحالة إلى Google Sheets (مثل ملغى).",
+        r_bundle: "تفكيك الحزمة (الفتح)", r_bundle1: "مكون واحد على الأقل يجب أن تكون كميته > ٠؛ وإلا: «أبقِ مكونًا واحدًا على الأقل».",
+        r_bundle2: "بعد الفتح، يُحدّد الطلب كمُعدّل يدويًا حتى لا تُستبدله المزامنة.",
+        r_export: "التصدير", ex_excel: "Excel فقط", ex_excel_req: "لا تتطلب شركة شحن",
+        ex_ship: "الشحن والتصدير", ex_ship_req: "شركة الشحن مطلوبة — خطأ إن لم تُختَر",
+        r_order_types: "أنواع الطلبات", ot_new: "طلب جديد عادي", ot_exchange: "طلب استبدال", ot_missing: "طلب نواقص",
+        r_excluded: "الطلبات المستبعدة", r_excluded_p: "الطلبات ذات الحالة ملغى أو مُسلّم أو مُرجع (ومعادلاتها العربية) لا تظهر في قائمة التجهيز.",
+        m_loading: "تحميل", m_loading_msg: "طبقة «جاري التحميل...»", m_prepare_ok: "نجاح التجهيز", m_prepare_ok_msg: "«نجاح» (أخضر)",
+        m_prepare_fail: "فشل التجهيز", m_prepare_fail_msg: "«مخزون غير كافٍ لـ: [الاسم]» أو نص الاستثناء (أحمر)",
+        m_bulk: "التجهيز بالجملة", m_bulk_msg: "«تم تجهيز [عدد] طلبات تلقائيًا» (أخضر)",
+        m_unmark: "إلغاء الكل", m_unmark_msg: "«تم إلغاء تحديد [عدد] طلبات» (أخضر)",
+        m_cancel: "نجاح الإلغاء", m_cancel_msg: "«تم إلغاء الطلب» (أخضر)",
+        m_defer: "نجاح التأجيل", m_defer_msg: "«تم تأجيل الطلب إلى [التاريخ]» (أخضر)",
+        m_defer_fail: "فشل التأجيل/الإلغاء", m_defer_fail_msg: "رسالة الاستثناء (أحمر)",
+        m_unbox: "نجاح فتح الحزمة", m_unbox_msg: "«تم تفكيك الحزمة بنجاح» (أخضر)",
+        m_bundle_val: "التحقق من الحزمة", m_bundle_val_msg: "«أبقِ مكونًا واحدًا على الأقل» (أصفر)",
+        m_no_bundle: "لا حزم", m_no_bundle_msg: "«لا توجد حزم في هذا الطلب» (أصفر)",
+        m_export_ok: "نجاح التصدير", m_export_ok_msg: "«تم تصدير [عدد] طلبات» (أخضر)",
+        m_export_fail: "فشل التصدير", m_export_fail_msg: "رسالة الاستثناء (أحمر)",
+        m_sync: "المزامنة", m_sync_msg: "رسالة نجاح أو خطأ (أزرق / أحمر)",
+        m_settings: "حفظ الإعدادات", m_settings_msg: "«نجاح» (أخضر)", m_load: "خطأ التحميل", m_load_msg: "«خطأ: [الرسالة]» (أحمر)",
+        tip1: "استخدم النجمة لتحديد الطلبات العاجلة؛ تظهر أولاً في القائمة.",
+        tip2: "مؤشر المخزون (مثل 3/5) يعرض كم نوع عنصر متوفر مقابل الإجمالي.",
+        tip3: "للنقص، استخدم عرض النقص لمعرفة ما ينقص بالضبط.",
+        tip4: "تبويب المؤجلة يعرض الطلبات المجدولة لاحقًا مع العد التنازلي (أخضر = حسنًا، أصفر = قريبًا، أحمر = مستحق/متأخر).",
+        tip5: "قائمة الالتقاط تجمع الكميات من كل الطلبات المُجهّزة للالتقاط بكفاءة.",
+        tip6: "صدّر Excel فقط عندما تحتاج ملفًا فقط دون تغيير حالة الطلب.",
+        tip7: "استخدم الشحن والتصدير عند التسليم لشركة الشحن وتريد تحديث الحالة في النظام وSheets."
+      }
+    };
+
+    let currentLang = 'en';
+    function applyLang(lang) {
+      currentLang = lang;
+      const html = document.documentElement;
+      html.lang = lang;
+      html.dir = lang === 'ar' ? 'rtl' : 'ltr';
+      const texts = T[lang];
+      document.querySelectorAll('[data-i18n]').forEach(el => {
+        const key = el.getAttribute('data-i18n');
+        if (texts[key] !== undefined) el.textContent = texts[key];
+      });
+      const label = lang === 'en' ? 'العربية' : 'English';
+      document.getElementById('lang-label').textContent = label;
+      document.getElementById('lang-label-mobile').textContent = label;
+      try { localStorage.setItem('maly_lang', lang); } catch(e) {}
+    }
+    function toggleLang() { applyLang(currentLang === 'en' ? 'ar' : 'en'); }
+    function toggleMenu() {
+      const menu = document.getElementById('mobile-menu');
+      const icon = document.getElementById('hamburger-icon');
+      menu.classList.toggle('open');
+      icon.className = menu.classList.contains('open') ? 'fa-solid fa-xmark' : 'fa-solid fa-bars';
+    }
+    function closeMenu() {
+      document.getElementById('mobile-menu').classList.remove('open');
+      document.getElementById('hamburger-icon').className = 'fa-solid fa-bars';
+    }
+    window.addEventListener('scroll', () => { document.getElementById('navbar').classList.toggle('scrolled', window.scrollY > 10); }, { passive: true });
+    (function init() {
+      let saved = 'en';
+      try { saved = localStorage.getItem('maly_lang') || 'en'; } catch(e) {}
+      applyLang(saved);
+    })();
+  </script>
+</body>
+</html>
