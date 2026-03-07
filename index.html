@@ -419,6 +419,15 @@
       color: var(--text-muted);
       line-height: 1.7;
     }
+    .feature-card-cloud {
+      border-color: rgba(197, 151, 74, 0.35);
+      background: linear-gradient(135deg, var(--surface) 0%, rgba(197, 151, 74, 0.04) 100%);
+    }
+    .feature-card-cloud:hover { border-color: var(--accent); }
+    .feature-card-cloud .feature-icon {
+      background: linear-gradient(135deg, rgba(197, 151, 74, 0.15) 0%, rgba(27, 61, 111, 0.08) 100%);
+      color: var(--accent);
+    }
 
     /* =========================================================
        PRICING
@@ -454,10 +463,11 @@
 
     .pricing-grid {
       display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 28px;
-      max-width: 860px;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 24px;
+      max-width: 720px;
       margin: 0 auto;
+      justify-items: center;
     }
 
     .pricing-card {
@@ -470,6 +480,14 @@
     .pricing-card.pro {
       border-color: var(--primary);
       box-shadow: var(--shadow-lg);
+    }
+    .pricing-card.pro-cloud {
+      border-color: var(--accent);
+      box-shadow: 0 12px 40px rgba(197, 151, 74, 0.18);
+      transform: scale(1.02);
+    }
+    .pricing-card.pro-cloud .plan-badge {
+      background: linear-gradient(135deg, var(--accent) 0%, #d4a84e 100%);
     }
 
     .plan-badge {
@@ -823,6 +841,8 @@
     ========================================================= */
     @media (max-width: 1024px) {
       .features-grid { grid-template-columns: repeat(2, 1fr); }
+      .pricing-grid { grid-template-columns: 1fr; max-width: 440px; }
+      .pricing-card.pro-cloud { transform: none; }
       .footer-grid { grid-template-columns: 1fr 1fr; }
     }
 
@@ -885,7 +905,7 @@
             <i class="fa-solid fa-globe"></i>
             <span id="lang-label">العربية</span>
           </button>
-          <a href="https://drive.google.com/uc?export=download&id=15Vp6Mm15r9nkoK8qhC0GpUmpAVAORZhd" target="_blank" rel="noopener" class="btn-nav-cta" data-i18n="nav_download">Download Now</a>
+          <a href="https://github.com/AdhamSeliman5/Maly-OBS/releases/download/v1.0/Maly-OBS.V1.0.rar" target="_blank" rel="noopener" class="btn-nav-cta" data-i18n="nav_download">Download Now</a>
           <button class="hamburger" onclick="toggleMenu()" aria-label="Menu">
             <i class="fa-solid fa-bars" id="hamburger-icon"></i>
           </button>
@@ -899,7 +919,7 @@
       <a href="#pricing"   onclick="closeMenu()" data-i18n="nav_pricing">Pricing</a>
       <a href="#privacy"   onclick="closeMenu()" data-i18n="nav_privacy">Privacy</a>
       <a href="#contact"   onclick="closeMenu()" data-i18n="nav_contact">Contact</a>
-      <a href="https://drive.google.com/uc?export=download&id=15Vp6Mm15r9nkoK8qhC0GpUmpAVAORZhd" target="_blank" rel="noopener" onclick="closeMenu()" data-i18n="nav_download">Download Now</a>
+      <a href="https://github.com/AdhamSeliman5/Maly-OBS/releases/download/v1.0/Maly-OBS.V1.0.rar" target="_blank" rel="noopener" onclick="closeMenu()" data-i18n="nav_download">Download Now</a>
       <button class="lang-btn" onclick="toggleLang(); closeMenu();">
         <i class="fa-solid fa-globe"></i>
         <span id="lang-label-mobile">العربية</span>
@@ -930,7 +950,7 @@
       </p>
 
       <div class="hero-ctas reveal" style="transition-delay:0.22s">
-        <a href="https://drive.google.com/uc?export=download&id=15Vp6Mm15r9nkoK8qhC0GpUmpAVAORZhd" target="_blank" rel="noopener" class="btn-primary">
+        <a href="https://github.com/AdhamSeliman5/Maly-OBS/releases/download/v1.0/Maly-OBS.V1.0.rar" target="_blank" rel="noopener" class="btn-primary">
           <i class="fa-solid fa-download"></i>
           <span data-i18n="hero_cta">Download Now</span>
         </a>
@@ -942,7 +962,7 @@
 
       <div class="hero-stats reveal" style="transition-delay:0.28s">
         <div class="hero-stat">
-          <div class="stat-num">12</div>
+          <div class="stat-num">11</div>
           <div class="stat-label" data-i18n="stat_modules">Integrated Modules</div>
         </div>
         <div class="hero-stat">
@@ -1124,13 +1144,13 @@
           <a href="#contact" class="btn-plan btn-plan-outline" data-i18n="cta_basic">Get Started</a>
         </div>
 
-        <!-- Pro -->
-        <div class="pricing-card pro reveal" style="transition-delay:0.1s">
-          <div class="plan-badge" data-i18n="pro_badge">Most Popular</div>
-          <p class="plan-name" data-i18n="pro_name">Pro</p>
+        <!-- Advanced (Standard) -->
+        <div class="pricing-card pro reveal" style="transition-delay:0.08s">
+          <div class="plan-badge" data-i18n="advanced_badge">Most Popular</div>
+          <p class="plan-name" data-i18n="advanced_name">Advanced</p>
           <div class="plan-price">1,100 <span class="currency" data-i18n="plan_currency_egp">EGP</span></div>
           <p class="plan-period" data-i18n="plan_per_month">per month</p>
-          <p class="plan-desc" data-i18n="pro_desc">Full visibility. Full control. Every feature unlocked.</p>
+          <p class="plan-desc" data-i18n="advanced_desc">Full visibility. Full control. Every feature unlocked for single-device use.</p>
           <ul class="plan-features">
             <li><i class="fa-solid fa-check chk"></i><span data-i18n="pro_includes_basic">Everything in Basic, plus:</span></li>
             <li><i class="fa-solid fa-check chk"></i><span data-i18n="feat_dash">Real-time Dashboard</span></li>
@@ -1139,7 +1159,7 @@
             <li><i class="fa-solid fa-check chk"></i><span data-i18n="feat_scenarios">Scenario Financial Simulations</span></li>
             <li><i class="fa-solid fa-check chk"></i><span data-i18n="feat_partner">Partner Share &amp; Equity Management</span></li>
           </ul>
-          <a href="https://drive.google.com/uc?export=download&id=15Vp6Mm15r9nkoK8qhC0GpUmpAVAORZhd" target="_blank" rel="noopener" class="btn-plan btn-plan-fill" data-i18n="cta_pro">Download Now</a>
+          <a href="https://github.com/AdhamSeliman5/Maly-OBS/releases/download/v1.0/Maly-OBS.V1.0.rar" target="_blank" rel="noopener" class="btn-plan btn-plan-fill" data-i18n="cta_advanced">Download Now</a>
         </div>
 
       </div>
@@ -1220,7 +1240,7 @@
               </div>
             </a>
 
-            <a href="https://www.linkedin.com/in/adhamseliman/" target="_blank" rel="noopener" class="contact-card">
+            <a href="https://www.linkedin.com/company/maly-obs/" target="_blank" rel="noopener" class="contact-card">
               <div class="contact-card-icon"><i class="fa-brands fa-linkedin"></i></div>
               <div>
                 <div class="contact-card-label">LinkedIn</div>
@@ -1234,19 +1254,19 @@
         <div class="contact-download-box reveal" style="transition-delay:0.1s">
           <h3 data-i18n="dl_box_title">Start Your Free Trial</h3>
           <p data-i18n="dl_box_sub">Download Maly - OBS now and get 1 full week to explore every module — completely free, no commitment required.</p>
-          <a href="https://drive.google.com/uc?export=download&id=15Vp6Mm15r9nkoK8qhC0GpUmpAVAORZhd" target="_blank" rel="noopener" class="btn-download">
+          <a href="https://github.com/AdhamSeliman5/Maly-OBS/releases/download/v1.0/Maly-OBS.V1.0.rar" target="_blank" rel="noopener" class="btn-download">
             <i class="fa-solid fa-download"></i>
             <span data-i18n="dl_box_btn">Download Now</span>
           </a>
 
           <div class="social-links">
-            <a href="https://www.linkedin.com/in/adhamseliman/" target="_blank" rel="noopener" class="social-link" aria-label="LinkedIn">
+            <a href="https://www.linkedin.com/company/maly-obs/" target="_blank" rel="noopener" class="social-link" aria-label="LinkedIn">
               <i class="fa-brands fa-linkedin-in"></i>
             </a>
-            <a href="https://web.facebook.com/sadham122" target="_blank" rel="noopener" class="social-link" aria-label="Facebook">
+            <a href="https://www.facebook.com/MalyOBS" target="_blank" rel="noopener" class="social-link" aria-label="Facebook">
               <i class="fa-brands fa-facebook-f"></i>
             </a>
-            <a href="https://www.youtube.com/@adhamseliman458" target="_blank" rel="noopener" class="social-link" aria-label="YouTube">
+            <a href="https://www.youtube.com/@Maly-OBS" target="_blank" rel="noopener" class="social-link" aria-label="YouTube">
               <i class="fa-brands fa-youtube"></i>
             </a>
             <a href="https://wa.me/201100028752" target="_blank" rel="noopener" class="social-link" aria-label="WhatsApp">
@@ -1270,9 +1290,9 @@
           </div>
           <p data-i18n="footer_tagline">The smartest way to run your e-commerce business in Egypt.</p>
           <div class="social-row">
-            <a href="https://www.linkedin.com/in/adhamseliman/" target="_blank" rel="noopener" class="footer-social" aria-label="LinkedIn"><i class="fa-brands fa-linkedin-in"></i></a>
-            <a href="https://web.facebook.com/sadham122" target="_blank" rel="noopener" class="footer-social" aria-label="Facebook"><i class="fa-brands fa-facebook-f"></i></a>
-            <a href="https://www.youtube.com/@adhamseliman458" target="_blank" rel="noopener" class="footer-social" aria-label="YouTube"><i class="fa-brands fa-youtube"></i></a>
+            <a href="https://www.linkedin.com/company/maly-obs/" target="_blank" rel="noopener" class="footer-social" aria-label="LinkedIn"><i class="fa-brands fa-linkedin-in"></i></a>
+            <a href="https://www.facebook.com/MalyOBS" target="_blank" rel="noopener" class="footer-social" aria-label="Facebook"><i class="fa-brands fa-facebook-f"></i></a>
+            <a href="https://www.youtube.com/@Maly-OBS" target="_blank" rel="noopener" class="footer-social" aria-label="YouTube"><i class="fa-brands fa-youtube"></i></a>
             <a href="https://wa.me/201100028752" target="_blank" rel="noopener" class="footer-social" aria-label="WhatsApp"><i class="fa-brands fa-whatsapp"></i></a>
           </div>
         </div>
@@ -1343,7 +1363,7 @@
         // Features
         feat_eyebrow:  "Modules",
         feat_title:    "Everything Your Business Needs",
-        feat_sub:      "12 integrated modules covering every aspect of your e-commerce operations.",
+        feat_sub:      "11 integrated modules covering every aspect of your e-commerce operations.",
 
         f1_title: "Dashboard",
         f1_desc:  "The main analytics screen showing your business performance at a glance. View KPIs, charts, and lists for sales, deliveries, returns, top products, and campaign performance. Sync orders from Google Sheets to keep data current.",
@@ -1391,9 +1411,9 @@
         plan_currency_egp:"EGP",
         plan_per_month:   "per month",
         basic_desc:       "All operational modules to run your day-to-day business.",
-        pro_badge:        "Most Popular",
-        pro_name:         "Pro",
-        pro_desc:         "Full visibility. Full control. Every feature unlocked.",
+        advanced_badge:   "Most Popular",
+        advanced_name:    "Advanced",
+        advanced_desc:    "Full visibility. Full control. Every feature unlocked for single-device use.",
         pro_includes_basic: "Everything in Basic, plus:",
         feat_inv:         "Advanced Inventory Management",
         feat_mfg:         "Manufacturing & Bundle Builder",
@@ -1411,7 +1431,7 @@
         feat_scenarios:   "Scenario Financial Simulations",
         feat_partner:     "Partner Share & Equity Management",
         cta_basic:        "Get Started",
-        cta_pro:          "Download Now",
+        cta_advanced:     "Download Now",
 
         // Privacy
         privacy_eyebrow:       "Legal",
@@ -1464,7 +1484,7 @@
         // Features
         feat_eyebrow:  "الوحدات",
         feat_title:    "كل ما يحتاجه عملك",
-        feat_sub:      "١٢ وحدة متكاملة تغطي كل جانب من جوانب عمليات التجارة الإلكترونية.",
+        feat_sub:      "١١ وحدة متكاملة تغطي كل جانب من جوانب عمليات التجارة الإلكترونية.",
 
         f1_title: "لوحة التحكم",
         f1_desc:  "الشاشة الرئيسية للتحليلات تعرض أداء عملك بنظرة واحدة. اعرض مؤشرات الأداء والرسوم البيانية والقوائم للمبيعات والتسليمات والمرتجعات وأفضل المنتجات وأداء الحملات. مزامنة الطلبات من Google Sheets لإبقاء البيانات محدثة.",
@@ -1512,9 +1532,9 @@
         plan_currency_egp:"جنيه",
         plan_per_month:   "في الشهر",
         basic_desc:       "جميع الوحدات التشغيلية لإدارة أعمالك اليومية.",
-        pro_badge:        "الأكثر شيوعًا",
-        pro_name:         "الاحترافية",
-        pro_desc:         "رؤية كاملة. تحكم كامل. جميع الميزات مفعّلة.",
+        advanced_badge:   "الأكثر شيوعًا",
+        advanced_name:    "المتقدمة",
+        advanced_desc:    "رؤية كاملة. تحكم كامل. جميع الميزات مفعّلة للاستخدام على جهاز واحد.",
         pro_includes_basic: "كل ما في الأساسية، بالإضافة إلى:",
         feat_inv:         "إدارة المخزون المتقدمة",
         feat_mfg:         "التصنيع وبناء الحزم",
@@ -1532,7 +1552,7 @@
         feat_scenarios:   "محاكاة السيناريوهات المالية",
         feat_partner:     "إدارة حصص الشركاء وحقوق الملكية",
         cta_basic:        "ابدأ الآن",
-        cta_pro:          "تحميل الآن",
+        cta_advanced:     "تحميل الآن",
 
         // Privacy
         privacy_eyebrow:       "قانوني",
