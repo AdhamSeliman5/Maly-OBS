@@ -3,107 +3,100 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Maly - OBS | Ads Module — User Guide</title>
-  <meta name="description" content="Ads module user guide: campaigns, daily spend, marketing analytics, ROAS, CPA, PDF export in Maly - OBS." />
+  <title>Maly - OBS | Ads / Campaigns &amp; Marketing Analytics</title>
+  <meta name="description" content="Advertising campaigns, daily spend tracking, ROAS, CPA, CPI, and marketing analytics in Maly - OBS." />
+
+  <link rel="icon" type="image/png" href="assets/logo_icon.png" />
+  <link rel="shortcut icon" href="assets/icon.ico" />
 
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;800&family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
 
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>tailwind.config = { corePlugins: { preflight: false } }</script>
+
   <style>
-    :root {
-      --primary: #1B3D6F; --primary-light: #2A5498; --accent: #C5974A; --accent-light: #F0DDB8;
-      --bg: #F5F1EB; --surface: #FFFFFF; --surface-alt: #F9F6F0; --text: #1A1A2E; --text-muted: #64748B;
-      --text-light: #94A3B8; --border: #E2D9CC; --border-light: #EDE8E0;
-      --shadow-sm: 0 2px 8px rgba(27,61,111,0.07); --shadow-md: 0 8px 32px rgba(27,61,111,0.10);
-      --radius-sm: 8px; --radius-md: 14px; --nav-h: 76px;
-      --font-en: 'Inter', sans-serif; --font-ar: 'Cairo', sans-serif; --transition: 0.25s ease;
-    }
+    :root { --primary: #1B3D6F; --primary-light: #2A5498; --accent: #C5974A; --accent-light: #F0DDB8; --bg: #F5F1EB; --surface: #FFFFFF; --surface-alt: #F9F6F0; --text: #1A1A2E; --text-muted: #64748B; --text-light: #94A3B8; --border: #E2D9CC; --border-light: #EDE8E0; --shadow-sm: 0 2px 8px rgba(27,61,111,0.07); --shadow-md: 0 8px 32px rgba(27,61,111,0.10); --shadow-lg: 0 20px 60px rgba(27,61,111,0.13); --radius-sm: 8px; --radius-md: 14px; --radius-lg: 20px; --nav-h: 72px; --font-en: 'Inter', sans-serif; --font-ar: 'Cairo', sans-serif; --transition: 0.25s ease; }
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
     html { scroll-behavior: smooth; font-size: 16px; }
-    body { font-family: var(--font-en); background-color: var(--bg); color: var(--text); line-height: 1.65; overflow-x: hidden; }
+    body { font-family: var(--font-en); background: var(--bg); color: var(--text); line-height: 1.65; overflow-x: hidden; }
     html[lang="ar"] body { font-family: var(--font-ar); }
     img { max-width: 100%; display: block; }
     a { color: inherit; text-decoration: none; }
     ul { list-style: none; }
     button { cursor: pointer; font-family: inherit; }
     .container { max-width: 1160px; margin: 0 auto; padding: 0 24px; }
-
-    nav { position: fixed; top: 0; left: 0; right: 0; height: var(--nav-h); background: rgba(245, 241, 235, 0.92); backdrop-filter: blur(14px); border-bottom: 1px solid var(--border-light); z-index: 1000; transition: box-shadow var(--transition); }
+    nav { position: fixed; top: 0; left: 0; right: 0; height: var(--nav-h); background: rgba(245, 241, 235, 0.85); backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px); border-bottom: 1px solid var(--border-light); z-index: 1000; }
     nav.scrolled { box-shadow: var(--shadow-md); }
     .nav-inner { display: flex; align-items: center; justify-content: space-between; height: 100%; }
-    .nav-logo { display: flex; align-items: center; gap: 10px; font-weight: 800; font-size: 1.2rem; color: var(--primary); }
-    .nav-logo img { height: 48px; width: auto; max-width: 220px; object-fit: contain; }
+    .nav-logo { display: flex; align-items: center; gap: 8px; font-weight: 800; font-size: 1.1rem; color: var(--primary); }
+    .nav-logo img { height: 40px; width: auto; max-width: 180px; object-fit: contain; }
     @media (max-width: 768px) { .nav-logo img.nav-logo-desktop { display: none; } .nav-logo img.nav-logo-mobile { display: block !important; } }
     .nav-logo img.nav-logo-mobile { display: none; }
-    .nav-links { display: flex; align-items: center; gap: 8px; }
-    .nav-links a { font-size: 0.9rem; font-weight: 500; color: var(--text-muted); padding: 6px 14px; border-radius: var(--radius-sm); transition: color var(--transition), background var(--transition); }
+    .nav-links { display: flex; align-items: center; gap: 6px; }
+    .nav-links a { font-size: 0.88rem; font-weight: 500; color: var(--text-muted); padding: 6px 12px; border-radius: var(--radius-sm); transition: all var(--transition); }
     .nav-links a:hover { color: var(--primary); background: rgba(27,61,111,0.06); }
     .nav-right { display: flex; align-items: center; gap: 12px; }
     .lang-btn { display: flex; align-items: center; gap: 6px; font-size: 0.82rem; font-weight: 600; color: var(--primary); background: var(--surface); border: 1.5px solid var(--border); padding: 6px 14px; border-radius: 20px; transition: all var(--transition); }
     .lang-btn:hover { border-color: var(--primary); background: rgba(27,61,111,0.04); }
-    .btn-nav-cta { font-size: 0.88rem; font-weight: 600; color: #fff; background: var(--primary); padding: 8px 20px; border-radius: 8px; transition: background var(--transition), transform var(--transition); }
+    .btn-nav-cta { font-size: 0.85rem; font-weight: 600; color: #fff; background: var(--primary); padding: 8px 18px; border-radius: var(--radius-sm); transition: all var(--transition); }
     .btn-nav-cta:hover { background: var(--primary-light); transform: translateY(-1px); }
-    .hamburger { display: none; background: none; border: none; font-size: 1.4rem; color: var(--primary); }
-    .mobile-menu { display: none; flex-direction: column; background: var(--surface); border-bottom: 1px solid var(--border); padding: 12px 24px 20px; gap: 4px; }
+    .hamburger { display: none; background: none; border: none; font-size: 1.25rem; color: var(--primary); }
+    .mobile-menu { display: none; flex-direction: column; background: var(--surface); border-bottom: 1px solid var(--border); padding: 12px 20px; gap: 4px; }
     .mobile-menu.open { display: flex; }
-    .mobile-menu a { font-size: 0.95rem; font-weight: 500; color: var(--text); padding: 10px 4px; border-bottom: 1px solid var(--border-light); }
+    .mobile-menu a { font-size: 0.92rem; font-weight: 500; color: var(--text); padding: 10px 4px; border-bottom: 1px solid var(--border-light); }
     .mobile-menu a:last-child { border: none; }
     .mobile-menu .lang-btn { margin-top: 8px; width: fit-content; }
-
-    .doc-main { padding-top: calc(var(--nav-h) + 48px); padding-bottom: 80px; }
-    .doc-inner { max-width: 840px; margin: 0 auto; }
-    .btn-back { display: inline-flex; align-items: center; gap: 8px; font-size: 0.9rem; font-weight: 600; color: var(--primary); background: var(--surface); border: 1.5px solid var(--border); padding: 10px 20px; border-radius: var(--radius-sm); margin-bottom: 32px; transition: all var(--transition); box-shadow: var(--shadow-sm); }
-    .btn-back:hover { border-color: var(--primary); background: rgba(27,61,111,0.04); }
-    html[dir="rtl"] .btn-back i { transform: scaleX(-1); }
-    .doc-header { margin-bottom: 40px; }
-    .doc-header .doc-badge { display: inline-block; font-size: 0.75rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--accent); background: var(--accent-light); padding: 4px 12px; border-radius: 20px; margin-bottom: 12px; }
-    .doc-header h1 { font-size: clamp(1.8rem, 3vw, 2.4rem); font-weight: 800; color: var(--text); margin-bottom: 12px; line-height: 1.2; }
-    .doc-header .doc-meta { font-size: 0.9rem; color: var(--text-muted); }
-    .doc-content h2 { font-size: 1.35rem; font-weight: 700; color: var(--primary); margin-top: 48px; margin-bottom: 20px; padding-bottom: 8px; border-bottom: 2px solid var(--border-light); }
-    .doc-content h2:first-of-type { margin-top: 0; }
-    .doc-content h3 { font-size: 1.1rem; font-weight: 700; color: var(--text); margin-top: 32px; margin-bottom: 14px; }
-    .doc-content p { font-size: 1rem; color: var(--text-muted); margin-bottom: 16px; line-height: 1.75; }
-    .doc-content ul.doc-list { list-style: disc; padding-left: 24px; margin-bottom: 20px; }
-    html[dir="rtl"] .doc-content ul.doc-list { padding-left: 0; padding-right: 24px; }
-    .doc-content ul.doc-list li { margin-bottom: 8px; color: var(--text-muted); line-height: 1.7; }
-    .doc-content ul.doc-list li strong { color: var(--text); }
-    .doc-table-wrapper { overflow-x: auto; margin: 24px 0; border-radius: var(--radius-sm); border: 1px solid var(--border-light); box-shadow: var(--shadow-sm); }
-    .doc-table { width: 100%; border-collapse: collapse; font-size: 0.95rem; }
-    .doc-table th, .doc-table td { padding: 14px 18px; text-align: left; border-bottom: 1px solid var(--border-light); vertical-align: top; }
-    html[dir="rtl"] .doc-table th, html[dir="rtl"] .doc-table td { text-align: right; }
-    .doc-table th { background: var(--surface-alt); font-weight: 700; color: var(--primary); }
-    .doc-table tr:last-child td { border-bottom: none; }
-    .doc-table tr:hover td { background: rgba(27,61,111,0.02); }
-    .callout { padding: 20px 24px; border-radius: var(--radius-md); margin: 24px 0; border-left: 4px solid; display: flex; gap: 14px; align-items: flex-start; }
-    html[dir="rtl"] .callout { border-left: none; border-right: 4px solid; }
-    .callout i { font-size: 1.2rem; flex-shrink: 0; margin-top: 2px; }
-    .callout-content { flex: 1; }
-    .callout-tip { background: rgba(34, 197, 94, 0.08); border-color: #22c55e; color: #166534; }
-    .callout-tip i { color: #22c55e; }
-
-    footer { background: #111827; color: #9CA3AF; padding: 60px 0 30px; }
-    .footer-grid { display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 40px; margin-bottom: 50px; }
-    .footer-brand .nav-logo { color: #fff; margin-bottom: 14px; }
-    .footer-brand .nav-logo img { height: 40px; width: auto; max-width: 200px; object-fit: contain; filter: brightness(0) invert(1); opacity: 0.9; }
-    .footer-brand p { font-size: 0.88rem; line-height: 1.7; max-width: 260px; color: #9CA3AF; }
-    .footer-brand .social-row { display: flex; gap: 10px; margin-top: 20px; }
-    .footer-social { width: 36px; height: 36px; border-radius: 50%; background: rgba(255,255,255,0.08); color: #D1D5DB; display: flex; align-items: center; justify-content: center; font-size: 0.9rem; transition: background var(--transition), color var(--transition); }
+    .breadcrumbs { padding-top: calc(var(--nav-h) + 24px); padding-bottom: 16px; font-size: 0.88rem; color: var(--text-muted); }
+    .breadcrumbs a:hover { color: var(--primary); }
+    .breadcrumbs span { color: var(--text-light); margin: 0 8px; }
+    .module-hero { padding: 48px 0 80px; }
+    .module-hero .hero-headline { font-size: clamp(1.9rem, 3.5vw, 2.75rem); font-weight: 800; color: var(--text); line-height: 1.2; margin-bottom: 18px; }
+    .module-hero .hero-desc { font-size: 1.05rem; color: var(--text-muted); margin-bottom: 24px; line-height: 1.7; max-width: 540px; }
+    .module-hero .hero-bullets { margin-bottom: 28px; }
+    .module-hero .hero-bullets li { display: flex; align-items: center; gap: 10px; font-size: 0.95rem; color: var(--text); margin-bottom: 10px; }
+    .module-hero .hero-bullets li i, .module-hero .hero-bullets li svg { color: #22c55e; flex-shrink: 0; width: 18px; height: 18px; }
+    .btn-module-cta { display: inline-flex; align-items: center; gap: 8px; padding: 14px 28px; background: var(--primary); color: #fff; font-weight: 700; font-size: 0.95rem; border-radius: var(--radius-sm); transition: all var(--transition); box-shadow: 0 4px 18px rgba(27,61,111,0.22); }
+    .btn-module-cta:hover { background: var(--primary-light); transform: translateY(-2px); box-shadow: 0 8px 24px rgba(27,61,111,0.28); }
+    .cap-card { background: var(--surface); border: 1px solid var(--border-light); border-radius: var(--radius-md); padding: 28px 24px; transition: all var(--transition); }
+    .cap-card:hover { border-color: var(--primary); box-shadow: var(--shadow-md); }
+    .cap-card .cap-icon { width: 44px; height: 44px; border-radius: 10px; background: linear-gradient(135deg, rgba(27,61,111,0.08) 0%, rgba(197,151,74,0.1) 100%); display: flex; align-items: center; justify-content: center; color: var(--primary); margin-bottom: 16px; }
+    .cap-card .cap-icon svg { width: 22px; height: 22px; }
+    .cap-card h3 { font-size: 1.1rem; font-weight: 700; color: var(--text); margin-bottom: 8px; }
+    .cap-card p { font-size: 0.9rem; color: var(--text-muted); line-height: 1.6; }
+    .step-num { width: 36px; height: 36px; border-radius: 50%; background: var(--primary); color: #fff; font-weight: 800; font-size: 1rem; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+    .step-content h4 { font-size: 1rem; font-weight: 700; color: var(--text); margin-bottom: 6px; }
+    .step-content p { font-size: 0.92rem; color: var(--text-muted); line-height: 1.6; }
+    .explore-card { background: var(--surface); border: 1px solid var(--border-light); border-radius: var(--radius-sm); padding: 20px 18px; display: flex; align-items: center; gap: 14px; transition: all var(--transition); }
+    .explore-card:hover { border-color: var(--primary); box-shadow: var(--shadow-sm); color: var(--primary); }
+    .explore-card .explore-icon { width: 40px; height: 40px; border-radius: 8px; background: rgba(27,61,111,0.06); display: flex; align-items: center; justify-content: center; color: var(--primary); flex-shrink: 0; }
+    .explore-card .explore-icon i, .explore-card .explore-icon svg { font-size: 1.1rem; width: 20px; height: 20px; }
+    .cta-strip { background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%); padding: 56px 24px; text-align: center; color: #fff; }
+    .cta-strip h2 { font-size: clamp(1.5rem, 2.5vw, 2rem); font-weight: 800; margin-bottom: 10px; }
+    .cta-strip p { font-size: 1rem; opacity: 0.9; margin-bottom: 24px; max-width: 500px; margin-left: auto; margin-right: auto; }
+    .cta-strip .btn-cta { display: inline-flex; align-items: center; gap: 8px; padding: 14px 32px; background: var(--accent); color: #fff; font-weight: 700; font-size: 1rem; border-radius: var(--radius-sm); transition: all var(--transition); box-shadow: 0 4px 14px rgba(0,0,0,0.2); }
+    .cta-strip .btn-cta:hover { transform: translateY(-2px); box-shadow: 0 8px 20px rgba(0,0,0,0.25); filter: brightness(1.05); }
+    footer { background: #111827; color: #9CA3AF; padding: 56px 0 28px; }
+    .footer-grid { display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 36px; margin-bottom: 40px; }
+    .footer-brand .nav-logo { color: #fff; margin-bottom: 12px; display: flex; align-items: center; gap: 8px; }
+    .footer-brand .nav-logo img { height: 40px; width: auto; filter: brightness(0) invert(1); opacity: 0.9; }
+    .footer-brand p { font-size: 0.85rem; line-height: 1.65; max-width: 260px; color: #9CA3AF; }
+    .footer-brand .social-row { display: flex; gap: 8px; margin-top: 16px; }
+    .footer-social { width: 34px; height: 34px; border-radius: 50%; background: rgba(255,255,255,0.08); color: #D1D5DB; display: flex; align-items: center; justify-content: center; font-size: 0.85rem; transition: all var(--transition); }
     .footer-social:hover { background: var(--accent); color: #fff; }
-    .footer-col h4 { font-size: 0.85rem; font-weight: 700; color: #E5E7EB; text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 18px; }
-    .footer-col ul li { margin-bottom: 10px; }
-    .footer-col ul li a { font-size: 0.88rem; color: #9CA3AF; transition: color var(--transition); }
+    .footer-col h4 { font-size: 0.8rem; font-weight: 700; color: #E5E7EB; text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 16px; }
+    .footer-col ul li { margin-bottom: 8px; }
+    .footer-col ul li a { font-size: 0.85rem; color: #9CA3AF; transition: color var(--transition); }
     .footer-col ul li a:hover { color: #fff; }
-    .footer-col ul li span { font-size: 0.88rem; color: #9CA3AF; font-family: var(--font-en); }
-    .footer-bottom { border-top: 1px solid rgba(255,255,255,0.08); padding-top: 28px; display: flex; align-items: center; justify-content: space-between; gap: 12px; flex-wrap: wrap; }
-    .footer-bottom p { font-size: 0.82rem; }
-    html[dir="rtl"] .footer-grid { direction: rtl; }
-    html[dir="rtl"] .footer-brand p { max-width: 100%; }
-    html[dir="rtl"] .footer-bottom { flex-direction: row-reverse; }
-
-    @media (max-width: 768px) { .nav-links, .btn-nav-cta { display: none; } .hamburger { display: block; } .doc-main { padding-top: calc(var(--nav-h) + 32px); padding-bottom: 48px; } .footer-grid { grid-template-columns: 1fr 1fr; } .footer-brand { grid-column: 1 / -1; } }
-    @media (max-width: 480px) { .container { padding: 0 18px; } .doc-table th, .doc-table td { padding: 10px 14px; font-size: 0.88rem; } .footer-grid { grid-template-columns: 1fr; } }
+    .footer-col ul li span { font-size: 0.85rem; color: #9CA3AF; font-family: var(--font-en); }
+    .footer-bottom { border-top: 1px solid rgba(255,255,255,0.08); padding-top: 24px; display: flex; align-items: center; justify-content: space-between; gap: 12px; flex-wrap: wrap; }
+    .footer-bottom p { font-size: 0.78rem; }
+    .reveal { opacity: 0; transform: translateY(24px); transition: opacity 0.5s ease, transform 0.5s ease; }
+    .reveal.visible { opacity: 1; transform: translateY(0); }
+    @media (max-width: 768px) { .nav-links, .btn-nav-cta { display: none; } .hamburger { display: block; } .footer-grid { grid-template-columns: 1fr 1fr; } .footer-brand { grid-column: 1 / -1; } }
+    @media (max-width: 480px) { .container { padding: 0 18px; } .footer-grid { grid-template-columns: 1fr; } }
   </style>
 </head>
 <body>
@@ -114,435 +107,171 @@
         <a href="index.html" class="nav-logo">
           <img src="assets/logo_splash_light.png" alt="Maly OBS Logo" class="nav-logo-desktop" />
           <img src="assets/logo_icon.png" alt="Maly OBS" class="nav-logo-mobile" />
-          <span>Maly&nbsp;-&nbsp;OBS</span>
         </a>
         <div class="nav-links">
           <a href="index.html#features" data-i18n="nav_features">Features</a>
           <a href="index.html#pricing" data-i18n="nav_pricing">Pricing</a>
+          <a href="index.html#faq" data-i18n="nav_faq">FAQ</a>
           <a href="index.html#privacy" data-i18n="nav_privacy">Privacy</a>
           <a href="index.html#contact" data-i18n="nav_contact">Contact</a>
         </div>
         <div class="nav-right">
-          <button class="lang-btn" id="lang-toggle" onclick="toggleLang()">
-            <i class="fa-solid fa-globe"></i>
-            <span id="lang-label">العربية</span>
-          </button>
+          <button class="lang-btn" id="lang-toggle" onclick="toggleLang()"><i class="fa-solid fa-globe"></i><span id="lang-label">العربية</span></button>
           <a href="https://github.com/AdhamSeliman5/Maly-OBS/releases/download/v1.0/Maly-OBS.V1.0.rar" target="_blank" rel="noopener" class="btn-nav-cta" data-i18n="nav_download">Download Now</a>
-          <button class="hamburger" onclick="toggleMenu()" aria-label="Menu"><i class="fa-solid fa-bars" id="hamburger-icon"></i></button>
+          <button class="hamburger" onclick="document.getElementById('mobile-menu').classList.toggle('open')" aria-label="Menu"><i class="fa-solid fa-bars" id="hamburger-icon"></i></button>
         </div>
       </div>
     </div>
     <div class="mobile-menu" id="mobile-menu">
-      <a href="index.html#features" onclick="closeMenu()" data-i18n="nav_features">Features</a>
-      <a href="index.html#pricing" onclick="closeMenu()" data-i18n="nav_pricing">Pricing</a>
-      <a href="index.html#privacy" onclick="closeMenu()" data-i18n="nav_privacy">Privacy</a>
-      <a href="index.html#contact" onclick="closeMenu()" data-i18n="nav_contact">Contact</a>
-      <a href="https://github.com/AdhamSeliman5/Maly-OBS/releases/download/v1.0/Maly-OBS.V1.0.rar" target="_blank" rel="noopener" onclick="closeMenu()" data-i18n="nav_download">Download Now</a>
-      <button class="lang-btn" onclick="toggleLang(); closeMenu();"><i class="fa-solid fa-globe"></i><span id="lang-label-mobile">العربية</span></button>
+      <a href="index.html#features" onclick="document.getElementById('mobile-menu').classList.remove('open')" data-i18n="nav_features">Features</a>
+      <a href="index.html#pricing" onclick="document.getElementById('mobile-menu').classList.remove('open')" data-i18n="nav_pricing">Pricing</a>
+      <a href="index.html#faq" onclick="document.getElementById('mobile-menu').classList.remove('open')" data-i18n="nav_faq">FAQ</a>
+      <a href="index.html#privacy" onclick="document.getElementById('mobile-menu').classList.remove('open')" data-i18n="nav_privacy">Privacy</a>
+      <a href="index.html#contact" onclick="document.getElementById('mobile-menu').classList.remove('open')" data-i18n="nav_contact">Contact</a>
+      <a href="https://github.com/AdhamSeliman5/Maly-OBS/releases/download/v1.0/Maly-OBS.V1.0.rar" target="_blank" rel="noopener" data-i18n="nav_download">Download Now</a>
+      <button class="lang-btn" onclick="toggleLang(); document.getElementById('mobile-menu').classList.remove('open');"><i class="fa-solid fa-globe"></i><span id="lang-label-mobile">العربية</span></button>
     </div>
   </nav>
 
-  <main class="doc-main">
+  <div class="container breadcrumbs">
+    <a href="index.html" data-i18n="breadcrumb_home">Home</a>
+    <span aria-hidden="true">›</span>
+    <a href="index.html#features" data-i18n="breadcrumb_features">Features</a>
+    <span aria-hidden="true">›</span>
+    <span style="color:var(--text); font-weight:600;" data-i18n="ads_breadcrumb">Ads</span>
+  </div>
+
+  <section class="module-hero">
     <div class="container">
-      <div class="doc-inner">
-        <a href="index.html" class="btn-back">
-          <i class="fa-solid fa-arrow-left"></i>
-          <span data-i18n="btn_back">Back to Home</span>
-        </a>
-
-        <header class="doc-header">
-          <span class="doc-badge" data-i18n="doc_badge">User Guide</span>
-          <h1 data-i18n="doc_title">Ads / Campaigns & Marketing Analytics</h1>
-          <p class="doc-meta">Maly - OBS (Online Business System) · <span data-i18n="doc_version">Version 1.0</span></p>
-        </header>
-
-        <div class="doc-content">
-          <h2 data-i18n="h2_purpose">Module Purpose</h2>
-          <p><span data-i18n="purpose_p1a">The Ads module manages advertising campaigns, daily spend tracking, and marketing analytics. You create campaigns per platform (Facebook, Google, TikTok, Snapchat), set budgets, record daily spend per campaign, and record ad charges (platform top-ups) as expenses. Analytics shows spend, revenue (from orders linked to campaigns), </span><strong data-i18n="purpose_strong">ROAS, CPA, CPI</strong><span data-i18n="purpose_p1b">, campaign delivery rate (delivered vs total orders), platform breakdown, and exportable reports. Charts support bar and line views; data can be filtered by date range, platform, and campaign.</span></p>
-
-          <h2 data-i18n="h2_ui">UI Elements</h2>
-
-          <h3 data-i18n="h3_header">Header Area</h3>
-          <div class="doc-table-wrapper">
-            <table class="doc-table">
-              <thead><tr><th data-i18n="th_element">Element</th><th data-i18n="th_description">Description</th></tr></thead>
-              <tbody>
-                <tr><td><strong data-i18n="h_title">Title</strong></td><td data-i18n="h_title_desc">"Ads Manager" / "Campaigns Manager" subtitle</td></tr>
-                <tr><td><strong>Refresh</strong></td><td data-i18n="h_refresh">Icon button — reload current tab data</td></tr>
-              </tbody>
-            </table>
-          </div>
-
-          <h3 data-i18n="h3_tabs">Tabs</h3>
-          <div class="doc-table-wrapper">
-            <table class="doc-table">
-              <thead><tr><th data-i18n="th_tab">Tab</th><th data-i18n="th_content">Content</th></tr></thead>
-              <tbody>
-                <tr><td><strong data-i18n="tab_campaigns">Campaigns Manager</strong></td><td data-i18n="tab_campaigns_desc">Campaign table, New Campaign, New Charge, pagination</td></tr>
-                <tr><td><strong data-i18n="tab_daily">Daily Spend Entry</strong></td><td data-i18n="tab_daily_desc">Date picker, spend matrix per campaign, Copy Previous Day, Save</td></tr>
-                <tr><td><strong data-i18n="tab_analytics">Analytics & ROI</strong></td><td data-i18n="tab_analytics_desc">KPIs, Platform Breakdown, charts, Campaign Performance table, filters, PDF export</td></tr>
-              </tbody>
-            </table>
-          </div>
-
-          <h3 data-i18n="h3_campaigns">Campaigns Manager Tab</h3>
-          <div class="doc-table-wrapper">
-            <table class="doc-table">
-              <thead><tr><th data-i18n="th_element">Element</th><th data-i18n="th_description">Description</th></tr></thead>
-              <tbody>
-                <tr><td><strong data-i18n="camp_new_charge">New Charge</strong></td><td data-i18n="camp_new_charge_desc">Button — record platform top-up (expense)</td></tr>
-                <tr><td><strong data-i18n="camp_new">New Campaign</strong></td><td data-i18n="camp_new_desc">Button — add campaign</td></tr>
-                <tr><td><strong data-i18n="camp_table">Campaign Table</strong></td><td data-i18n="camp_table_desc">Columns: ID, Name, Platform, Budget, Total Spend, Status, Actions</td></tr>
-                <tr><td><strong>Status</strong></td><td data-i18n="camp_status">Switch — Active / Paused per row</td></tr>
-                <tr><td><strong>Actions per row</strong></td><td data-i18n="camp_actions">Edit (✎), Delete (🗑)</td></tr>
-                <tr><td><strong>Pagination</strong></td><td data-i18n="camp_pagination">Previous / Page X of Y / Next — 10 campaigns per page</td></tr>
-                <tr><td><strong data-i18n="camp_budget">Budget Exceeded</strong></td><td data-i18n="camp_budget_desc">Red warning icon when total spend > budget</td></tr>
-              </tbody>
-            </table>
-          </div>
-
-          <h3 data-i18n="h3_campaign_dialog">Add/Edit Campaign Dialog</h3>
-          <div class="doc-table-wrapper">
-            <table class="doc-table">
-              <thead><tr><th data-i18n="th_element">Element</th><th data-i18n="th_description">Description</th></tr></thead>
-              <tbody>
-                <tr><td><strong>Name</strong></td><td data-i18n="camp_dlg_name">Text field — campaign name</td></tr>
-                <tr><td><strong>Platform</strong></td><td data-i18n="camp_dlg_platform">Dropdown — Facebook, Google, TikTok, Snapchat</td></tr>
-                <tr><td><strong>Budget</strong></td><td data-i18n="camp_dlg_budget">Text field — budget amount</td></tr>
-                <tr><td><strong>Active</strong></td><td data-i18n="camp_dlg_active">Switch — Active or Paused</td></tr>
-                <tr><td><strong>Save / Cancel</strong></td><td data-i18n="camp_dlg_buttons">Buttons</td></tr>
-              </tbody>
-            </table>
-          </div>
-
-          <h3 data-i18n="h3_charge">New Charge Dialog</h3>
-          <div class="doc-table-wrapper">
-            <table class="doc-table">
-              <thead><tr><th data-i18n="th_element">Element</th><th data-i18n="th_description">Description</th></tr></thead>
-              <tbody>
-                <tr><td><strong>Platform</strong></td><td data-i18n="charge_platform">Dropdown — Facebook, Google, TikTok, Snapchat</td></tr>
-                <tr><td><strong data-i18n="charge_amount">Charge Amount</strong></td><td data-i18n="charge_amount_desc">Text field — amount (EGP suffix)</td></tr>
-                <tr><td><strong>Date</strong></td><td data-i18n="charge_date">Read-only date with calendar picker</td></tr>
-                <tr><td><strong>Notes</strong></td><td data-i18n="charge_notes">Text field — optional</td></tr>
-                <tr><td><strong>Info</strong></td><td data-i18n="charge_info">"This charge will be recorded as an expense and cannot be edited"</td></tr>
-                <tr><td><strong>Save / Cancel</strong></td><td data-i18n="charge_buttons">Buttons</td></tr>
-              </tbody>
-            </table>
-          </div>
-
-          <h3 data-i18n="h3_daily">Daily Spend Tab</h3>
-          <div class="doc-table-wrapper">
-            <table class="doc-table">
-              <thead><tr><th data-i18n="th_element">Element</th><th data-i18n="th_description">Description</th></tr></thead>
-              <tbody>
-                <tr><td><strong>Date</strong></td><td data-i18n="daily_date">Button — opens date picker (default: today)</td></tr>
-                <tr><td><strong data-i18n="daily_copy">Copy Previous Day</strong></td><td data-i18n="daily_copy_desc">Button — copy yesterday's spend into today's fields</td></tr>
-                <tr><td><strong>Save</strong></td><td data-i18n="daily_save">Button — save daily spend for all campaigns</td></tr>
-                <tr><td><strong data-i18n="daily_list">Spend List</strong></td><td data-i18n="daily_list_desc">One row per active campaign — Name, Platform, Spend input (EGP)</td></tr>
-              </tbody>
-            </table>
-          </div>
-
-          <h3 data-i18n="h3_analytics_filter">Analytics Tab — Filter Bar</h3>
-          <div class="doc-table-wrapper">
-            <table class="doc-table">
-              <thead><tr><th data-i18n="th_element">Element</th><th data-i18n="th_description">Description</th></tr></thead>
-              <tbody>
-                <tr><td><strong data-i18n="ana_date">Date Range</strong></td><td data-i18n="ana_date_desc">Clickable field — opens date range picker (presets + custom)</td></tr>
-                <tr><td><strong>Platform</strong></td><td data-i18n="ana_platform">Dropdown — All, Facebook, Google, TikTok, Snapchat</td></tr>
-                <tr><td><strong>Name</strong></td><td data-i18n="ana_name">Dropdown — All or specific campaign</td></tr>
-                <tr><td><strong>Refresh</strong></td><td data-i18n="ana_refresh">Icon button — reload analytics</td></tr>
-                <tr><td><strong data-i18n="ana_export">Export PDF</strong></td><td data-i18n="ana_export_desc">Icon button — generate and open PDF report</td></tr>
-              </tbody>
-            </table>
-          </div>
-
-          <h3 data-i18n="h3_analytics_kpi">Analytics Tab — KPI Cards</h3>
-          <div class="doc-table-wrapper">
-            <table class="doc-table">
-              <thead><tr><th data-i18n="th_card">Card</th><th data-i18n="th_description">Description</th></tr></thead>
-              <tbody>
-                <tr><td><strong data-i18n="kpi_spend">Total Spend</strong></td><td data-i18n="kpi_spend_desc">Sum of daily spend in range</td></tr>
-                <tr><td><strong>Revenue</strong></td><td data-i18n="kpi_revenue_desc">Sum of order revenue from campaign-linked orders</td></tr>
-                <tr><td><strong>ROAS</strong></td><td data-i18n="kpi_roas_desc">Revenue ÷ Spend</td></tr>
-                <tr><td><strong>CPA</strong></td><td data-i18n="kpi_cpa_desc">Spend ÷ Orders (cost per order)</td></tr>
-                <tr><td><strong>CPI</strong></td><td data-i18n="kpi_cpi_desc">Spend ÷ Items (cost per item)</td></tr>
-                <tr><td><strong data-i18n="kpi_delivery">Campaign Delivery Rate</strong></td><td data-i18n="kpi_delivery_desc">% of orders delivered or partially delivered</td></tr>
-              </tbody>
-            </table>
-          </div>
-
-          <h3 data-i18n="h3_platform">Analytics Tab — Platform Breakdown Table</h3>
-          <div class="doc-table-wrapper">
-            <table class="doc-table">
-              <thead><tr><th data-i18n="th_column">Column</th><th data-i18n="th_description">Description</th></tr></thead>
-              <tbody>
-                <tr><td><strong>Platform</strong></td><td data-i18n="plat_platform">Facebook, Google, TikTok, Snapchat</td></tr>
-                <tr><td><strong>Spend</strong></td><td data-i18n="plat_spend">Total spend in range</td></tr>
-                <tr><td><strong>Orders</strong></td><td data-i18n="plat_orders">Order count</td></tr>
-                <tr><td><strong>Revenue</strong></td><td data-i18n="plat_revenue">Total revenue</td></tr>
-                <tr><td><strong>ROAS</strong></td><td data-i18n="plat_roas">Revenue ÷ Spend (green ≥ 2, red &lt; 2)</td></tr>
-                <tr><td><strong>CPA</strong></td><td data-i18n="plat_cpa">Cost per order</td></tr>
-              </tbody>
-            </table>
-          </div>
-
-          <h3 data-i18n="h3_charts">Analytics Tab — Charts</h3>
-          <div class="doc-table-wrapper">
-            <table class="doc-table">
-              <thead><tr><th data-i18n="th_element">Element</th><th data-i18n="th_description">Description</th></tr></thead>
-              <tbody>
-                <tr><td><strong data-i18n="chart_toggle">Chart Toggle</strong></td><td data-i18n="chart_toggle_desc">Bar Chart / Line Chart</td></tr>
-                <tr><td><strong>Charts</strong></td><td data-i18n="chart_desc">Spend, Revenue, ROAS, CPA — over time (by month if range &gt; 30 days, by day if ≤ 30 days)</td></tr>
-              </tbody>
-            </table>
-          </div>
-
-          <h3 data-i18n="h3_performance">Analytics Tab — Campaign Performance Table</h3>
-          <div class="doc-table-wrapper">
-            <table class="doc-table">
-              <thead><tr><th data-i18n="th_column">Column</th><th data-i18n="th_description">Description</th></tr></thead>
-              <tbody>
-                <tr><td><strong>Name</strong></td><td data-i18n="perf_name">Campaign name with platform icon</td></tr>
-                <tr><td><strong>Spend</strong></td><td data-i18n="perf_spend">Total spend</td></tr>
-                <tr><td><strong>Revenue</strong></td><td data-i18n="perf_revenue">Total revenue</td></tr>
-                <tr><td><strong>Orders</strong></td><td data-i18n="perf_orders">Order count</td></tr>
-                <tr><td><strong>Items</strong></td><td data-i18n="perf_items">Item count</td></tr>
-                <tr><td><strong>ROAS</strong></td><td data-i18n="perf_roas">Revenue ÷ Spend (green ≥ 2, red &lt; 2)</td></tr>
-                <tr><td><strong>CPA</strong></td><td data-i18n="perf_cpa">Cost per order</td></tr>
-                <tr><td><strong>CPI</strong></td><td data-i18n="perf_cpi">Cost per item</td></tr>
-                <tr><td><strong data-i18n="perf_delivery">Campaign Delivery Rate</strong></td><td data-i18n="perf_delivery_desc">% delivered/partial (green ≥ 50%, orange ≥ 25%, red &lt; 25%)</td></tr>
-                <tr><td><strong>Sort</strong></td><td data-i18n="perf_sort">Click column header to sort</td></tr>
-              </tbody>
-            </table>
-          </div>
-
-          <h2 data-i18n="h2_workflow">Step-by-Step Workflow</h2>
-
-          <h3 data-i18n="w1_title">1. Add a Campaign</h3>
-          <ul class="doc-list">
-            <li data-i18n="w1_1">Open Campaigns Manager tab.</li>
-            <li data-i18n="w1_2">Click New Campaign.</li>
-            <li data-i18n="w1_3">Enter Name (required).</li>
-            <li data-i18n="w1_4">Select Platform (Facebook, Google, TikTok, Snapchat).</li>
-            <li data-i18n="w1_5">Enter Budget (can be 0).</li>
-            <li data-i18n="w1_6">Set Active switch (on = Active, off = Paused).</li>
-            <li data-i18n="w1_7">Click Save.</li>
-            <li data-i18n="w1_8">Success: green snackbar; table refreshes. Dialog stays open if Name is empty.</li>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-10 md:gap-12 items-center">
+        <div>
+          <h1 class="hero-headline" data-i18n="ads_hero_headline">Campaigns, Spend &amp; ROI at Your Fingertips</h1>
+          <p class="hero-desc" data-i18n="ads_hero_desc">The Ads module manages advertising campaigns, daily spend tracking, and marketing analytics. Create campaigns per platform (Facebook, Google, TikTok, Snapchat), set budgets, record daily spend, and record ad charges (platform top-ups) as expenses. Analytics shows ROAS, CPA, CPI, campaign delivery rate, and exportable PDF reports.</p>
+          <ul class="hero-bullets">
+            <li><svg viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg><span data-i18n="ads_bullet_1">Campaigns Manager: Name, Platform, Budget, Total Spend, Active/Paused with Edit &amp; Delete</span></li>
+            <li><svg viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg><span data-i18n="ads_bullet_2">Daily Spend Entry with Copy Previous Day; New Charge for platform top-ups (recorded as expense)</span></li>
+            <li><svg viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg><span data-i18n="ads_bullet_3">Analytics: KPIs, Platform Breakdown, charts (Bar/Line), Campaign Performance, PDF export</span></li>
           </ul>
+          <a href="https://github.com/AdhamSeliman5/Maly-OBS/releases/download/v1.0/Maly-OBS.V1.0.rar" target="_blank" rel="noopener" class="btn-module-cta"><i class="fa-solid fa-download"></i><span data-i18n="mod_download_now">Download Now</span></a>
+        </div>
+        <div class="flex justify-center md:justify-end order-first md:order-2">
+          <img src="assets/images/feat-ads.png" alt="Ads module interface" class="w-full max-w-md rounded-xl shadow-lg border border-gray-200/80 object-cover" />
+        </div>
+      </div>
+    </div>
+  </section>
 
-          <h3 data-i18n="w2_title">2. Edit a Campaign</h3>
-          <ul class="doc-list">
-            <li data-i18n="w2_1">In the Campaigns Manager table, click Edit (✎).</li>
-            <li data-i18n="w2_2">Change Name, Platform, Budget, or Active status.</li>
-            <li data-i18n="w2_3">Click Save.</li>
-            <li data-i18n="w2_4">Success: green snackbar; table refreshes.</li>
-          </ul>
+  <section class="py-16 md:py-20" style="background: var(--surface);">
+    <div class="container">
+      <div class="text-center mb-12">
+        <div class="inline-block text-xs font-bold tracking-widest uppercase text-[var(--accent)] bg-[var(--accent-light)] px-4 py-1.5 rounded-full mb-4" data-i18n="mod_capabilities">Capabilities</div>
+        <h2 class="text-2xl md:text-3xl font-extrabold text-[var(--text)] mb-3" data-i18n="mod_what_you_can_do">What You Can Do</h2>
+        <p class="text-[var(--text-muted)] max-w-xl mx-auto" data-i18n="mod_key_features">Key features at your fingertips.</p>
+      </div>
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+        <div class="cap-card reveal">
+          <div class="cap-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 5v2m0 4v2m0 4v2M5 5a2 2 0 00-2 2v3a2 2 0 110 4v3a2 2 0 002 2h14a2 2 0 002-2v-3a2 2 0 110-4V7a2 2 0 00-2-2H5z"/></svg></div>
+          <h3 data-i18n="ads_cap1_title">Campaign Management</h3>
+          <p data-i18n="ads_cap1_desc">Create campaigns for Facebook, Google, TikTok, Snapchat. Set Name, Platform, Budget. Edit, Delete, or toggle Active/Paused. Budget exceeded warning when spend &gt; budget.</p>
+        </div>
+        <div class="cap-card reveal">
+          <div class="cap-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg></div>
+          <h3 data-i18n="ads_cap2_title">Daily Spend &amp; Charges</h3>
+          <p data-i18n="ads_cap2_desc">Record daily spend per active campaign. Copy Previous Day to speed data entry. New Charge records platform top-ups as protected Ads expenses.</p>
+        </div>
+        <div class="cap-card reveal">
+          <div class="cap-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/></svg></div>
+          <h3 data-i18n="ads_cap3_title">Analytics &amp; ROI</h3>
+          <p data-i18n="ads_cap3_desc">Total Spend, Revenue, ROAS, CPA, CPI, Campaign Delivery Rate. Filter by date range, platform, campaign. Platform Breakdown table with sortable columns.</p>
+        </div>
+        <div class="cap-card reveal">
+          <div class="cap-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg></div>
+          <h3 data-i18n="ads_cap4_title">Charts &amp; PDF Export</h3>
+          <p data-i18n="ads_cap4_desc">Bar and Line chart views for Spend, Revenue, ROAS, CPA over time. Export Analytics to PDF with current filters—stats, charts, and platform breakdown included.</p>
+        </div>
+      </div>
+    </div>
+  </section>
 
-          <h3 data-i18n="w3_title">3. Toggle Campaign Status (Active/Paused)</h3>
-          <ul class="doc-list">
-            <li data-i18n="w3_1">In the Campaigns Manager table, use the Status switch on the row.</li>
-            <li data-i18n="w3_2">Switch ON = Active, OFF = Paused.</li>
-            <li data-i18n="w3_3">The table refreshes automatically.</li>
-            <li data-i18n="w3_4">Paused campaigns do not appear in Daily Spend (only Active campaigns).</li>
-          </ul>
-
-          <h3 data-i18n="w4_title">4. Delete a Campaign</h3>
-          <ul class="doc-list">
-            <li data-i18n="w4_1">In the Campaigns Manager table, click Delete (🗑).</li>
-            <li data-i18n="w4_2">Confirm in the dialog.</li>
-            <li data-i18n="w4_3">Success: green snackbar; campaign is removed.</li>
-            <li data-i18n="w4_4">Cannot delete if the campaign has linked orders or spend data: "Cannot delete: Campaign has linked orders or spend data."</li>
-          </ul>
-
-          <h3 data-i18n="w5_title">5. Record a New Charge (Platform Top-Up)</h3>
-          <ul class="doc-list">
-            <li data-i18n="w5_1">In Campaigns Manager, click New Charge.</li>
-            <li data-i18n="w5_2">Select Platform (Facebook, Google, TikTok, Snapchat).</li>
-            <li data-i18n="w5_3">Enter Charge Amount.</li>
-            <li data-i18n="w5_4">Adjust Date if needed (default: today).</li>
-            <li data-i18n="w5_5">Optionally add Notes.</li>
-            <li data-i18n="w5_6">Click Save.</li>
-            <li data-i18n="w5_7">Success: "Ad charge saved successfully"; amount is recorded as an expense (Ads category) and cannot be edited. Empty amount: dialog stays open.</li>
-          </ul>
-
-          <h3 data-i18n="w6_title">6. Record Daily Spend</h3>
-          <ul class="doc-list">
-            <li data-i18n="w6_1">Open Daily Spend Entry tab.</li>
-            <li data-i18n="w6_2">Click the Date button to select the day.</li>
-            <li data-i18n="w6_3">For each active campaign, enter the Spend amount in the input (0 if none).</li>
-            <li data-i18n="w6_4">Click Save.</li>
-            <li data-i18n="w6_5">Success: "Spend Saved"; values are stored for that date. Negative values treated as 0.</li>
-          </ul>
-
-          <h3 data-i18n="w7_title">7. Copy Previous Day's Spend</h3>
-          <ul class="doc-list">
-            <li data-i18n="w7_1">In Daily Spend tab, select the desired date.</li>
-            <li data-i18n="w7_2">Click Copy Previous Day.</li>
-            <li data-i18n="w7_3">The system copies yesterday's spend into today's inputs for matching campaigns.</li>
-            <li data-i18n="w7_4">If yesterday has no data or all zeros: "No previous day data" (red snackbar).</li>
-          </ul>
-
-          <h3 data-i18n="w8_title">8. View Analytics</h3>
-          <ul class="doc-list">
-            <li data-i18n="w8_1">Open Analytics & ROI tab.</li>
-            <li data-i18n="w8_2">Select Date Range (presets or custom). Optionally filter by Platform or Campaign.</li>
-            <li data-i18n="w8_3">Click Refresh (or change filters) to reload.</li>
-            <li data-i18n="w8_4">View KPIs, Platform Breakdown, charts, and Campaign Performance table. Toggle Bar Chart / Line Chart. Click column headers to sort.</li>
-          </ul>
-
-          <h3 data-i18n="w9_title">9. Export Analytics to PDF</h3>
-          <ul class="doc-list">
-            <li data-i18n="w9_1">In Analytics tab, set Date Range, Platform, and Campaign filters.</li>
-            <li data-i18n="w9_2">Click Export PDF (picture icon).</li>
-            <li data-i18n="w9_3">A PDF report is generated and opens automatically.</li>
-            <li data-i18n="w9_4">Success: "PDF saved" (green). Failure: error message (red).</li>
-          </ul>
-
-          <h2 data-i18n="h2_rules">Business Rules & Validations</h2>
-
-          <h3 data-i18n="r_add_campaign">Add/Edit Campaign</h3>
-          <div class="doc-table-wrapper">
-            <table class="doc-table">
-              <thead><tr><th data-i18n="th_rule">Rule</th><th data-i18n="th_result">Result</th></tr></thead>
-              <tbody>
-                <tr><td data-i18n="r_name_req">Name required</td><td data-i18n="r_name_req_res">Dialog stays open; no snackbar</td></tr>
-                <tr><td data-i18n="r_budget">Budget</td><td data-i18n="r_budget_res">Can be 0; no validation</td></tr>
-                <tr><td data-i18n="r_platform">Platform</td><td data-i18n="r_platform_res">One of Facebook, Google, TikTok, Snapchat</td></tr>
-              </tbody>
-            </table>
+  <section class="py-16 md:py-20">
+    <div class="container">
+      <div class="text-center mb-12">
+        <div class="inline-block text-xs font-bold tracking-widest uppercase text-[var(--accent)] bg-[var(--accent-light)] px-4 py-1.5 rounded-full mb-4" data-i18n="mod_workflow">Workflow</div>
+        <h2 class="text-2xl md:text-3xl font-extrabold text-[var(--text)] mb-3" data-i18n="ads_workflow_title">How It Works</h2>
+        <p class="text-[var(--text-muted)] max-w-xl mx-auto" data-i18n="mod_get_started">Get started in minutes.</p>
+      </div>
+      <div class="max-w-2xl mx-auto space-y-8">
+        <div class="flex gap-5 items-start reveal">
+          <div class="step-num">1</div>
+          <div class="step-content">
+            <h4 data-i18n="ads_step1_title">Add a Campaign</h4>
+            <p data-i18n="ads_step1_desc">Open Campaigns Manager. Click New Campaign. Enter Name, select Platform (Facebook, Google, TikTok, Snapchat), set Budget, toggle Active. Save. Edit or Delete via row actions.</p>
           </div>
-
-          <h3 data-i18n="r_delete_campaign">Delete Campaign</h3>
-          <div class="doc-table-wrapper">
-            <table class="doc-table">
-              <thead><tr><th data-i18n="th_rule">Rule</th><th data-i18n="th_result">Result</th></tr></thead>
-              <tbody>
-                <tr><td data-i18n="r_has_linked">Has linked orders or spend</td><td data-i18n="r_has_linked_res">"Cannot delete: Campaign has linked orders or spend data."</td></tr>
-                <tr><td data-i18n="r_no_linked">No linked data</td><td data-i18n="r_no_linked_res">Campaign deleted</td></tr>
-              </tbody>
-            </table>
+        </div>
+        <div class="flex gap-5 items-start reveal">
+          <div class="step-num">2</div>
+          <div class="step-content">
+            <h4 data-i18n="ads_step2_title">Record New Charge (Platform Top-Up)</h4>
+            <p data-i18n="ads_step2_desc">Click New Charge. Select Platform, enter Amount, adjust Date if needed. Save. The charge is recorded as an Ads expense and cannot be edited. Treasury must be sufficient.</p>
           </div>
-
-          <h3 data-i18n="r_new_charge">New Charge</h3>
-          <div class="doc-table-wrapper">
-            <table class="doc-table">
-              <thead><tr><th data-i18n="th_rule">Rule</th><th data-i18n="th_result">Result</th></tr></thead>
-              <tbody>
-                <tr><td data-i18n="r_amount_req">Amount required</td><td data-i18n="r_amount_req_res">Dialog stays open</td></tr>
-                <tr><td data-i18n="r_valid_amount">Valid amount</td><td data-i18n="r_valid_amount_res">Recorded as Expense (Ads, is_auto=1); cannot be edited</td></tr>
-                <tr><td data-i18n="r_treasury">Treasury</td><td data-i18n="r_treasury_res">Must be sufficient (standard expense validation)</td></tr>
-              </tbody>
-            </table>
+        </div>
+        <div class="flex gap-5 items-start reveal">
+          <div class="step-num">3</div>
+          <div class="step-content">
+            <h4 data-i18n="ads_step3_title">Enter Daily Spend</h4>
+            <p data-i18n="ads_step3_desc">Open Daily Spend Entry. Select date. Enter spend per active campaign (0 if none). Use Copy Previous Day to copy yesterday's values. Save. Negative values are treated as 0.</p>
           </div>
-
-          <h3 data-i18n="r_daily_spend">Daily Spend</h3>
-          <div class="doc-table-wrapper">
-            <table class="doc-table">
-              <thead><tr><th data-i18n="th_rule">Rule</th><th data-i18n="th_result">Result</th></tr></thead>
-              <tbody>
-                <tr><td data-i18n="r_negative">Negative values</td><td data-i18n="r_negative_res">Treated as 0</td></tr>
-                <tr><td data-i18n="r_no_campaigns">No campaigns</td><td data-i18n="r_no_campaigns_res">Empty state shown</td></tr>
-                <tr><td data-i18n="r_active_only">Only Active campaigns</td><td data-i18n="r_active_only_res">Shown in spend list</td></tr>
-                <tr><td data-i18n="r_save">Save</td><td data-i18n="r_save_res">Updates existing or inserts new; skips if amount = 0 and no existing row</td></tr>
-              </tbody>
-            </table>
-          </div>
-
-          <h3 data-i18n="r_analytics">Analytics</h3>
-          <div class="doc-table-wrapper">
-            <table class="doc-table">
-              <thead><tr><th data-i18n="th_rule">Rule</th><th data-i18n="th_description">Description</th></tr></thead>
-              <tbody>
-                <tr><td data-i18n="r_date_range">Date range</td><td data-i18n="r_date_range_desc">Applied to both spend and orders</td></tr>
-                <tr><td data-i18n="r_orders">Orders</td><td data-i18n="r_orders_desc">Includes active + archived; excludes Cancelled</td></tr>
-                <tr><td data-i18n="r_revenue">Revenue</td><td data-i18n="r_revenue_desc">Sum of order_price (or total_amount fallback)</td></tr>
-                <tr><td data-i18n="r_roas">ROAS</td><td data-i18n="r_roas_desc">Revenue ÷ Spend; 0 if no spend</td></tr>
-                <tr><td data-i18n="r_cpa">CPA</td><td data-i18n="r_cpa_desc">Spend ÷ Orders; 0 if no orders</td></tr>
-                <tr><td data-i18n="r_cpi">CPI</td><td data-i18n="r_cpi_desc">Spend ÷ Items; 0 if no items</td></tr>
-                <tr><td data-i18n="r_delivery">Campaign Delivery Rate</td><td data-i18n="r_delivery_desc">(Delivered + Partially Delivered) ÷ Total Orders × 100</td></tr>
-              </tbody>
-            </table>
-          </div>
-
-          <h2 data-i18n="h2_messages">Messages & Alerts</h2>
-          <div class="doc-table-wrapper">
-            <table class="doc-table">
-              <thead><tr><th data-i18n="th_situation">Situation</th><th data-i18n="th_message">Message</th></tr></thead>
-              <tbody>
-                <tr><td data-i18n="m_campaign_saved">Campaign saved</td><td data-i18n="m_campaign_saved_msg">"Campaign Saved Successfully" (green)</td></tr>
-                <tr><td data-i18n="m_campaign_deleted">Campaign deleted</td><td data-i18n="m_campaign_deleted_msg">"Campaign Deleted" (green)</td></tr>
-                <tr><td data-i18n="m_delete_blocked">Delete blocked</td><td data-i18n="m_delete_blocked_msg">"Cannot delete: Campaign has linked orders or spend data." (red)</td></tr>
-                <tr><td data-i18n="m_charge_saved">Charge saved</td><td data-i18n="m_charge_saved_msg">"Ad charge saved successfully" (green)</td></tr>
-                <tr><td data-i18n="m_charge_failed">Charge failed</td><td data-i18n="m_charge_failed_msg">Error message (red)</td></tr>
-                <tr><td data-i18n="m_spend_saved">Daily spend saved</td><td data-i18n="m_spend_saved_msg">"Spend Saved" (green)</td></tr>
-                <tr><td data-i18n="m_no_previous">No previous day data</td><td data-i18n="m_no_previous_msg">"No previous day data" (red)</td></tr>
-                <tr><td data-i18n="m_pdf_saved">PDF saved</td><td data-i18n="m_pdf_saved_msg">"PDF saved" (green)</td></tr>
-                <tr><td data-i18n="m_error">Error</td><td data-i18n="m_error_msg">Generic error message (red)</td></tr>
-              </tbody>
-            </table>
-          </div>
-
-          <h2 data-i18n="h2_tips">Tips</h2>
-          <div class="callout callout-tip">
-            <i class="fa-solid fa-lightbulb"></i>
-            <div class="callout-content">
-              <ul class="doc-list" style="margin-bottom:0;">
-                <li data-i18n="tip1">Budget Exceeded: Total spend vs budget is shown per campaign; red icon when over budget.</li>
-                <li data-i18n="tip2">Daily Spend: Only Active campaigns appear; Paused campaigns are excluded.</li>
-                <li data-i18n="tip3">Copy Previous Day: Copies from the day before the selected date.</li>
-                <li data-i18n="tip4">New Charge: Records a platform top-up as a protected expense; use for ad account refills.</li>
-                <li data-i18n="tip5">Analytics: Uses both active and archived orders; cancelled orders are excluded.</li>
-                <li data-i18n="tip6">ROAS: Green when ≥ 2; red when &lt; 2 in tables.</li>
-                <li data-i18n="tip7">Campaign Delivery Rate: Percentage of orders that are Delivered or Partially Delivered.</li>
-                <li data-i18n="tip8">Charts: Range &gt; 30 days = grouped by month; range ≤ 30 days = by day.</li>
-                <li data-i18n="tip9">PDF Export: Uses the current date range and filters; report includes stats, charts, and platform breakdown.</li>
-                <li data-i18n="tip10">Pagination: Campaigns Manager shows 10 campaigns per page.</li>
-              </ul>
-            </div>
+        </div>
+        <div class="flex gap-5 items-start reveal">
+          <div class="step-num">4</div>
+          <div class="step-content">
+            <h4 data-i18n="ads_step4_title">View Analytics &amp; Export PDF</h4>
+            <p data-i18n="ads_step4_desc">Open Analytics &amp; ROI. Set Date Range, Platform, and Campaign filters. View KPIs, Platform Breakdown, charts (toggle Bar/Line), and Campaign Performance table. Click Export PDF to generate a report.</p>
           </div>
         </div>
       </div>
     </div>
-  </main>
+  </section>
+
+  <section class="py-16 md:py-20" style="background: var(--surface);">
+    <div class="container">
+      <div class="text-center mb-12">
+        <div class="inline-block text-xs font-bold tracking-widest uppercase text-[var(--accent)] bg-[var(--accent-light)] px-4 py-1.5 rounded-full mb-4" data-i18n="mod_explore">Explore</div>
+        <h2 class="text-2xl md:text-3xl font-extrabold text-[var(--text)] mb-3" data-i18n="mod_other_modules">Other Modules</h2>
+        <p class="text-[var(--text-muted)] max-w-xl mx-auto" data-i18n="mod_discover_more">Discover more of what Maly - OBS can do.</p>
+      </div>
+      <div class="grid grid-cols-1 sm:grid-cols-3 gap-5">
+        <a href="dashboard.html" class="explore-card"><div class="explore-icon"><i class="fa-solid fa-chart-line"></i></div><span class="font-semibold" data-i18n="explore_dashboard">Dashboard</span></a>
+        <a href="expenses.html" class="explore-card"><div class="explore-icon"><i class="fa-solid fa-wallet"></i></div><span class="font-semibold" data-i18n="explore_expenses">Expenses</span></a>
+        <a href="reports.html" class="explore-card"><div class="explore-icon"><i class="fa-solid fa-file-chart-line"></i></div><span class="font-semibold" data-i18n="explore_reports">Reports</span></a>
+      </div>
+    </div>
+  </section>
+
+  <section class="cta-strip">
+    <div class="container">
+      <h2 data-i18n="mod_cta_headline">Ready to Own Your Numbers?</h2>
+      <p data-i18n="ads_cta_sub">Download Maly - OBS now and manage Ads along with 10 more modules. 1 week free trial—no credit card required.</p>
+      <a href="https://github.com/AdhamSeliman5/Maly-OBS/releases/download/v1.0/Maly-OBS.V1.0.rar" target="_blank" rel="noopener" class="btn-cta"><i class="fa-solid fa-download"></i><span data-i18n="mod_download_now">Download Now</span></a>
+    </div>
+  </section>
 
   <footer>
     <div class="container">
       <div class="footer-grid">
         <div class="footer-brand">
-          <div class="nav-logo" style="color:#fff; margin-bottom:14px; display:flex; align-items:center; gap:10px;">
-            <img src="assets/logo_splash_light.png" alt="Maly OBS" />
-            <span>Maly&nbsp;-&nbsp;OBS</span>
-          </div>
+          <a href="index.html" class="nav-logo"><img src="assets/logo_splash_light.png" alt="Maly OBS" /></a>
           <p data-i18n="footer_tagline">The smartest way to run your e-commerce business in Egypt.</p>
           <div class="social-row">
-            <a href="https://www.linkedin.com/company/maly-obs/" target="_blank" rel="noopener" class="footer-social"><i class="fa-brands fa-linkedin-in"></i></a>
-            <a href="https://www.facebook.com/MalyOBS" target="_blank" rel="noopener" class="footer-social"><i class="fa-brands fa-facebook-f"></i></a>
-            <a href="https://www.youtube.com/@Maly-OBS" target="_blank" rel="noopener" class="footer-social"><i class="fa-brands fa-youtube"></i></a>
-            <a href="https://wa.me/201100028752" target="_blank" rel="noopener" class="footer-social"><i class="fa-brands fa-whatsapp"></i></a>
+            <a href="https://www.linkedin.com/company/maly-obs/" target="_blank" rel="noopener" class="footer-social" aria-label="LinkedIn"><i class="fa-brands fa-linkedin-in"></i></a>
+            <a href="https://www.facebook.com/MalyOBS" target="_blank" rel="noopener" class="footer-social" aria-label="Facebook"><i class="fa-brands fa-facebook-f"></i></a>
+            <a href="https://www.youtube.com/@Maly-OBS" target="_blank" rel="noopener" class="footer-social" aria-label="YouTube"><i class="fa-brands fa-youtube"></i></a>
+            <a href="https://wa.me/201100028752" target="_blank" rel="noopener" class="footer-social" aria-label="WhatsApp"><i class="fa-brands fa-whatsapp"></i></a>
           </div>
         </div>
-        <div class="footer-col">
-          <h4 data-i18n="footer_nav">Navigate</h4>
-          <ul>
-            <li><a href="index.html#features" data-i18n="nav_features">Features</a></li>
-            <li><a href="index.html#pricing" data-i18n="nav_pricing">Pricing</a></li>
-            <li><a href="index.html#privacy" data-i18n="nav_privacy">Privacy</a></li>
-            <li><a href="index.html#contact" data-i18n="nav_contact">Contact</a></li>
-          </ul>
-        </div>
-        <div class="footer-col">
-          <h4 data-i18n="footer_contact_hd">Contact</h4>
-          <ul>
-            <li><span>asoliman548@gmail.com</span></li>
-            <li><span>01100028752</span></li>
-            <li><span data-i18n="footer_location">Cairo, Egypt</span></li>
-          </ul>
-        </div>
-        <div class="footer-col">
-          <h4 data-i18n="footer_legal">Legal</h4>
-          <ul><li><a href="index.html#privacy" data-i18n="footer_privacy_link">Privacy Policy</a></li></ul>
-        </div>
+        <div class="footer-col"><h4 data-i18n="footer_nav">Navigate</h4><ul><li><a href="index.html#features" data-i18n="nav_features">Features</a></li><li><a href="index.html#pricing" data-i18n="nav_pricing">Pricing</a></li><li><a href="index.html#faq" data-i18n="nav_faq">FAQ</a></li><li><a href="index.html#privacy" data-i18n="nav_privacy">Privacy</a></li><li><a href="index.html#contact" data-i18n="nav_contact">Contact</a></li></ul></div>
+        <div class="footer-col"><h4 data-i18n="footer_contact">Contact</h4><ul><li><span>asoliman548@gmail.com</span></li><li><span>01100028752</span></li><li><span data-i18n="footer_location">Cairo, Egypt</span></li></ul></div>
+        <div class="footer-col"><h4 data-i18n="footer_legal">Legal</h4><ul><li><a href="index.html#privacy" data-i18n="footer_privacy">Privacy Policy</a></li></ul></div>
       </div>
       <div class="footer-bottom">
         <p data-i18n="footer_copy">© 2026 Maly Systems. All rights reserved.</p>
@@ -551,292 +280,50 @@
     </div>
   </footer>
 
+  <script src="js/i18n-modules.js"></script>
   <script>
-    const T = {
+    MalyI18n.init({
       en: {
-        btn_back: "Back to Home", doc_badge: "User Guide", doc_title: "Ads / Campaigns & Marketing Analytics", doc_version: "Version 1.0",
-        nav_features: "Features", nav_pricing: "Pricing", nav_privacy: "Privacy", nav_contact: "Contact", nav_download: "Download Now",
-        footer_tagline: "The smartest way to run your e-commerce business in Egypt.",
-        footer_nav: "Navigate", footer_contact_hd: "Contact", footer_legal: "Legal", footer_privacy_link: "Privacy Policy", footer_location: "Cairo, Egypt", footer_copy: "© 2026 Maly Systems. All rights reserved.",
-        h2_purpose: "Module Purpose", h2_ui: "UI Elements", h2_workflow: "Step-by-Step Workflow", h2_rules: "Business Rules & Validations", h2_messages: "Messages & Alerts", h2_tips: "Tips",
-        th_element: "Element", th_description: "Description", th_card: "Card", th_tab: "Tab", th_content: "Content", th_rule: "Rule", th_result: "Result", th_situation: "Situation", th_message: "Message",
-        purpose_p1a: "The Ads module manages advertising campaigns, daily spend tracking, and marketing analytics. You create campaigns per platform (Facebook, Google, TikTok, Snapchat), set budgets, record daily spend per campaign, and record ad charges (platform top-ups) as expenses. Analytics shows spend, revenue (from orders linked to campaigns), ",
-        purpose_strong: "ROAS, CPA, CPI",
-        purpose_p1b: ", campaign delivery rate (delivered vs total orders), platform breakdown, and exportable reports. Charts support bar and line views; data can be filtered by date range, platform, and campaign.",
-        h3_header: "Header Area", h3_tabs: "Tabs", h3_campaigns: "Campaigns Manager Tab",
-        h3_campaign_dialog: "Add/Edit Campaign Dialog", h3_charge: "New Charge Dialog", h3_daily: "Daily Spend Tab",
-        h3_analytics_filter: "Analytics Tab — Filter Bar", h3_analytics_kpi: "Analytics Tab — KPI Cards",
-        h3_platform: "Analytics Tab — Platform Breakdown Table", h3_charts: "Analytics Tab — Charts", h3_performance: "Analytics Tab — Campaign Performance Table",
-        h_title: "Title", h_title_desc: "\"Ads Manager\" / \"Campaigns Manager\" subtitle",
-        h_refresh: "Icon button — reload current tab data",
-        tab_campaigns: "Campaigns Manager", tab_campaigns_desc: "Campaign table, New Campaign, New Charge, pagination",
-        tab_daily: "Daily Spend Entry", tab_daily_desc: "Date picker, spend matrix per campaign, Copy Previous Day, Save",
-        tab_analytics: "Analytics & ROI", tab_analytics_desc: "KPIs, Platform Breakdown, charts, Campaign Performance table, filters, PDF export",
-        camp_new_charge: "New Charge", camp_new_charge_desc: "Button — record platform top-up (expense)",
-        camp_new: "New Campaign", camp_new_desc: "Button — add campaign",
-        camp_table: "Campaign Table", camp_table_desc: "Columns: ID, Name, Platform, Budget, Total Spend, Status, Actions",
-        camp_status: "Switch — Active / Paused per row", camp_actions: "Edit (✎), Delete (🗑)",
-        camp_pagination: "Previous / Page X of Y / Next — 10 campaigns per page",
-        camp_budget: "Budget Exceeded", camp_budget_desc: "Red warning icon when total spend > budget",
-        camp_dlg_name: "Text field — campaign name", camp_dlg_platform: "Dropdown — Facebook, Google, TikTok, Snapchat",
-        camp_dlg_budget: "Text field — budget amount", camp_dlg_active: "Switch — Active or Paused", camp_dlg_buttons: "Buttons",
-        charge_platform: "Dropdown — Facebook, Google, TikTok, Snapchat",
-        charge_amount: "Charge Amount", charge_amount_desc: "Text field — amount (EGP suffix)",
-        charge_date: "Read-only date with calendar picker", charge_notes: "Text field — optional",
-        charge_info: "\"This charge will be recorded as an expense and cannot be edited\"", charge_buttons: "Buttons",
-        daily_date: "Button — opens date picker (default: today)",
-        daily_copy: "Copy Previous Day", daily_copy_desc: "Button — copy yesterday's spend into today's fields",
-        daily_save: "Button — save daily spend for all campaigns",
-        daily_list: "Spend List", daily_list_desc: "One row per active campaign — Name, Platform, Spend input (EGP)",
-        ana_date: "Date Range", ana_date_desc: "Clickable field — opens date range picker (presets + custom)",
-        ana_platform: "Dropdown — All, Facebook, Google, TikTok, Snapchat",
-        ana_name: "Dropdown — All or specific campaign", ana_refresh: "Icon button — reload analytics",
-        ana_export: "Export PDF", ana_export_desc: "Icon button — generate and open PDF report",
-        kpi_spend: "Total Spend", kpi_spend_desc: "Sum of daily spend in range",
-        kpi_revenue_desc: "Sum of order revenue from campaign-linked orders",
-        kpi_roas_desc: "Revenue ÷ Spend", kpi_cpa_desc: "Spend ÷ Orders (cost per order)",
-        kpi_cpi_desc: "Spend ÷ Items (cost per item)",
-        kpi_delivery: "Campaign Delivery Rate", kpi_delivery_desc: "% of orders delivered or partially delivered",
-        plat_platform: "Facebook, Google, TikTok, Snapchat", plat_spend: "Total spend in range",
-        plat_orders: "Order count", plat_revenue: "Total revenue",
-        plat_roas: "Revenue ÷ Spend (green ≥ 2, red < 2)", plat_cpa: "Cost per order",
-        chart_toggle: "Chart Toggle", chart_toggle_desc: "Bar Chart / Line Chart",
-        chart_desc: "Spend, Revenue, ROAS, CPA — over time (by month if range > 30 days, by day if ≤ 30 days)",
-        perf_name: "Campaign name with platform icon", perf_spend: "Total spend", perf_revenue: "Total revenue",
-        perf_orders: "Order count", perf_items: "Item count",
-        perf_roas: "Revenue ÷ Spend (green ≥ 2, red < 2)", perf_cpa: "Cost per order", perf_cpi: "Cost per item",
-        perf_delivery: "Campaign Delivery Rate", perf_delivery_desc: "% delivered/partial (green ≥ 50%, orange ≥ 25%, red < 25%)",
-        perf_sort: "Click column header to sort",
-        th_column: "Column",
-        w1_title: "1. Add a Campaign", w1_1: "Open Campaigns Manager tab.", w1_2: "Click New Campaign.",
-        w1_3: "Enter Name (required).", w1_4: "Select Platform (Facebook, Google, TikTok, Snapchat).",
-        w1_5: "Enter Budget (can be 0).", w1_6: "Set Active switch (on = Active, off = Paused).",
-        w1_7: "Click Save.", w1_8: "Success: green snackbar; table refreshes. Dialog stays open if Name is empty.",
-        w2_title: "2. Edit a Campaign", w2_1: "In the Campaigns Manager table, click Edit (✎).",
-        w2_2: "Change Name, Platform, Budget, or Active status.", w2_3: "Click Save.", w2_4: "Success: green snackbar; table refreshes.",
-        w3_title: "3. Toggle Campaign Status (Active/Paused)", w3_1: "In the Campaigns Manager table, use the Status switch on the row.",
-        w3_2: "Switch ON = Active, OFF = Paused.", w3_3: "The table refreshes automatically.",
-        w3_4: "Paused campaigns do not appear in Daily Spend (only Active campaigns).",
-        w4_title: "4. Delete a Campaign", w4_1: "In the Campaigns Manager table, click Delete (🗑).",
-        w4_2: "Confirm in the dialog.", w4_3: "Success: green snackbar; campaign is removed.",
-        w4_4: "Cannot delete if the campaign has linked orders or spend data: \"Cannot delete: Campaign has linked orders or spend data.\"",
-        w5_title: "5. Record a New Charge (Platform Top-Up)", w5_1: "In Campaigns Manager, click New Charge.",
-        w5_2: "Select Platform (Facebook, Google, TikTok, Snapchat).", w5_3: "Enter Charge Amount.",
-        w5_4: "Adjust Date if needed (default: today).", w5_5: "Optionally add Notes.", w5_6: "Click Save.",
-        w5_7: "Success: \"Ad charge saved successfully\"; amount is recorded as an expense (Ads category) and cannot be edited. Empty amount: dialog stays open.",
-        w6_title: "6. Record Daily Spend", w6_1: "Open Daily Spend Entry tab.", w6_2: "Click the Date button to select the day.",
-        w6_3: "For each active campaign, enter the Spend amount in the input (0 if none).", w6_4: "Click Save.",
-        w6_5: "Success: \"Spend Saved\"; values are stored for that date. Negative values treated as 0.",
-        w7_title: "7. Copy Previous Day's Spend", w7_1: "In Daily Spend tab, select the desired date.",
-        w7_2: "Click Copy Previous Day.", w7_3: "The system copies yesterday's spend into today's inputs for matching campaigns.",
-        w7_4: "If yesterday has no data or all zeros: \"No previous day data\" (red snackbar).",
-        w8_title: "8. View Analytics", w8_1: "Open Analytics & ROI tab.",
-        w8_2: "Select Date Range (presets or custom). Optionally filter by Platform or Campaign.",
-        w8_3: "Click Refresh (or change filters) to reload.",
-        w8_4: "View KPIs, Platform Breakdown, charts, and Campaign Performance table. Toggle Bar Chart / Line Chart. Click column headers to sort.",
-        w9_title: "9. Export Analytics to PDF", w9_1: "In Analytics tab, set Date Range, Platform, and Campaign filters.",
-        w9_2: "Click Export PDF (picture icon).", w9_3: "A PDF report is generated and opens automatically.",
-        w9_4: "Success: \"PDF saved\" (green). Failure: error message (red).",
-        r_add_campaign: "Add/Edit Campaign", r_name_req: "Name required", r_name_req_res: "Dialog stays open; no snackbar",
-        r_budget: "Budget", r_budget_res: "Can be 0; no validation",
-        r_platform: "Platform", r_platform_res: "One of Facebook, Google, TikTok, Snapchat",
-        r_delete_campaign: "Delete Campaign", r_has_linked: "Has linked orders or spend",
-        r_has_linked_res: "\"Cannot delete: Campaign has linked orders or spend data.\"",
-        r_no_linked: "No linked data", r_no_linked_res: "Campaign deleted",
-        r_new_charge: "New Charge", r_amount_req: "Amount required", r_amount_req_res: "Dialog stays open",
-        r_valid_amount: "Valid amount", r_valid_amount_res: "Recorded as Expense (Ads, is_auto=1); cannot be edited",
-        r_treasury: "Treasury", r_treasury_res: "Must be sufficient (standard expense validation)",
-        r_daily_spend: "Daily Spend", r_negative: "Negative values", r_negative_res: "Treated as 0",
-        r_no_campaigns: "No campaigns", r_no_campaigns_res: "Empty state shown",
-        r_active_only: "Only Active campaigns", r_active_only_res: "Shown in spend list",
-        r_save: "Save", r_save_res: "Updates existing or inserts new; skips if amount = 0 and no existing row",
-        r_analytics: "Analytics", r_date_range: "Date range", r_date_range_desc: "Applied to both spend and orders",
-        r_orders: "Orders", r_orders_desc: "Includes active + archived; excludes Cancelled",
-        r_revenue: "Revenue", r_revenue_desc: "Sum of order_price (or total_amount fallback)",
-        r_roas: "ROAS", r_roas_desc: "Revenue ÷ Spend; 0 if no spend",
-        r_cpa: "CPA", r_cpa_desc: "Spend ÷ Orders; 0 if no orders",
-        r_cpi: "CPI", r_cpi_desc: "Spend ÷ Items; 0 if no items",
-        r_delivery: "Campaign Delivery Rate", r_delivery_desc: "(Delivered + Partially Delivered) ÷ Total Orders × 100",
-        m_campaign_saved: "Campaign saved", m_campaign_saved_msg: "\"Campaign Saved Successfully\" (green)",
-        m_campaign_deleted: "Campaign deleted", m_campaign_deleted_msg: "\"Campaign Deleted\" (green)",
-        m_delete_blocked: "Delete blocked", m_delete_blocked_msg: "\"Cannot delete: Campaign has linked orders or spend data.\" (red)",
-        m_charge_saved: "Charge saved", m_charge_saved_msg: "\"Ad charge saved successfully\" (green)",
-        m_charge_failed: "Charge failed", m_charge_failed_msg: "Error message (red)",
-        m_spend_saved: "Daily spend saved", m_spend_saved_msg: "\"Spend Saved\" (green)",
-        m_no_previous: "No previous day data", m_no_previous_msg: "\"No previous day data\" (red)",
-        m_pdf_saved: "PDF saved", m_pdf_saved_msg: "\"PDF saved\" (green)",
-        m_error: "Error", m_error_msg: "Generic error message (red)",
-        tip1: "Budget Exceeded: Total spend vs budget is shown per campaign; red icon when over budget.",
-        tip2: "Daily Spend: Only Active campaigns appear; Paused campaigns are excluded.",
-        tip3: "Copy Previous Day: Copies from the day before the selected date.",
-        tip4: "New Charge: Records a platform top-up as a protected expense; use for ad account refills.",
-        tip5: "Analytics: Uses both active and archived orders; cancelled orders are excluded.",
-        tip6: "ROAS: Green when ≥ 2; red when < 2 in tables.",
-        tip7: "Campaign Delivery Rate: Percentage of orders that are Delivered or Partially Delivered.",
-        tip8: "Charts: Range > 30 days = grouped by month; range ≤ 30 days = by day.",
-        tip9: "PDF Export: Uses the current date range and filters; report includes stats, charts, and platform breakdown.",
-        tip10: "Pagination: Campaigns Manager shows 10 campaigns per page."
+        ads_breadcrumb: "Ads",
+        ads_hero_headline: "Campaigns, Spend & ROI at Your Fingertips",
+        ads_hero_desc: "The Ads module manages advertising campaigns, daily spend tracking, and marketing analytics. Create campaigns per platform (Facebook, Google, TikTok, Snapchat), set budgets, record daily spend, and record ad charges (platform top-ups) as expenses. Analytics shows ROAS, CPA, CPI, campaign delivery rate, and exportable PDF reports.",
+        ads_bullet_1: "Campaigns Manager: Name, Platform, Budget, Total Spend, Active/Paused with Edit & Delete",
+        ads_bullet_2: "Daily Spend Entry with Copy Previous Day; New Charge for platform top-ups (recorded as expense)",
+        ads_bullet_3: "Analytics: KPIs, Platform Breakdown, charts (Bar/Line), Campaign Performance, PDF export",
+        ads_cap1_title: "Campaign Management", ads_cap1_desc: "Create campaigns for Facebook, Google, TikTok, Snapchat. Set Name, Platform, Budget. Edit, Delete, or toggle Active/Paused. Budget exceeded warning when spend > budget.",
+        ads_cap2_title: "Daily Spend & Charges", ads_cap2_desc: "Record daily spend per active campaign. Copy Previous Day to speed data entry. New Charge records platform top-ups as protected Ads expenses.",
+        ads_cap3_title: "Analytics & ROI", ads_cap3_desc: "Total Spend, Revenue, ROAS, CPA, CPI, Campaign Delivery Rate. Filter by date range, platform, campaign. Platform Breakdown table with sortable columns.",
+        ads_cap4_title: "Charts & PDF Export", ads_cap4_desc: "Bar and Line chart views for Spend, Revenue, ROAS, CPA over time. Export Analytics to PDF with current filters—stats, charts, and platform breakdown included.",
+        ads_workflow_title: "How It Works",
+        ads_step1_title: "Add a Campaign", ads_step1_desc: "Open Campaigns Manager. Click New Campaign. Enter Name, select Platform (Facebook, Google, TikTok, Snapchat), set Budget, toggle Active. Save. Edit or Delete via row actions.",
+        ads_step2_title: "Record New Charge (Platform Top-Up)", ads_step2_desc: "Click New Charge. Select Platform, enter Amount, adjust Date if needed. Save. The charge is recorded as an Ads expense and cannot be edited. Treasury must be sufficient.",
+        ads_step3_title: "Enter Daily Spend", ads_step3_desc: "Open Daily Spend Entry. Select date. Enter spend per active campaign (0 if none). Use Copy Previous Day to copy yesterday's values. Save. Negative values are treated as 0.",
+        ads_step4_title: "View Analytics & Export PDF", ads_step4_desc: "Open Analytics & ROI. Set Date Range, Platform, and Campaign filters. View KPIs, Platform Breakdown, charts (toggle Bar/Line), and Campaign Performance table. Click Export PDF to generate a report.",
+        ads_cta_sub: "Download Maly - OBS now and manage Ads along with 10 more modules. 1 week free trial—no credit card required.",
       },
       ar: {
-        btn_back: "العودة للرئيسية", doc_badge: "دليل المستخدم", doc_title: "الإعلانات / الحملات وتحليلات التسويق", doc_version: "الإصدار ١.٠",
-        nav_features: "المميزات", nav_pricing: "الأسعار", nav_privacy: "الخصوصية", nav_contact: "تواصل معنا", nav_download: "تحميل الآن",
-        footer_tagline: "الطريقة الأذكى لإدارة أعمالك في التجارة الإلكترونية.",
-        footer_nav: "التنقل", footer_contact_hd: "تواصل معنا", footer_legal: "قانوني", footer_privacy_link: "سياسة الخصوصية", footer_location: "القاهرة، مصر", footer_copy: "© ٢٠٢٦ مالي سيستمز. جميع الحقوق محفوظة.",
-        h2_purpose: "نبذة عن الموديول", h2_ui: "عناصر الواجهة", h2_workflow: "خطوات العمل", h2_rules: "قواعد العمل والتحقق", h2_messages: "الرسائل والتنبيهات", h2_tips: "نصائح",
-        th_element: "العنصر", th_description: "الوصف", th_card: "البطاقة", th_tab: "التبويب", th_content: "المحتوى", th_rule: "القاعدة", th_result: "النتيجة", th_situation: "الموقف", th_message: "الرسالة",
-        purpose_p1a: "وحدة الإعلانات تدير الحملات الإعلانية، تتبع الإنفاق اليومي، وتحليلات التسويق. تنشئ حملات لكل منصة (فيسبوك، جوجل، تيك توك، سناب شات)، تحدد الميزانيات، تسجّل الإنفاق اليومي لكل حملة، وتسجّل رسوم الإعلانات (شحن الحسابات) كمصروفات. التحليلات تعرض الإنفاق، الإيرادات (من الطلبات المرتبطة بالحملات)، ",
-        purpose_strong: "ROAS، CPA، CPI",
-        purpose_p1b: "، معدل توصيل الحملات (المسلّمة مقابل إجمالي الطلبات)، توزيع المنصات، وتقارير قابلة للتصدير. المخططات تدعم عرض الأعمدة والخطوط؛ البيانات يمكن تصفيتها بالنطاق الزمني والمنصة والحملة.",
-        h3_header: "منطقة الرأس", h3_tabs: "التبويبات", h3_campaigns: "تبويب مدير الحملات",
-        h3_campaign_dialog: "نافذة إضافة/تعديل حملة", h3_charge: "نافذة رسوم جديدة", h3_daily: "تبويب الإنفاق اليومي",
-        h3_analytics_filter: "تبويب التحليلات — شريط الفلاتر", h3_analytics_kpi: "تبويب التحليلات — بطاقات المؤشرات",
-        h3_platform: "تبويب التحليلات — جدول توزيع المنصات", h3_charts: "تبويب التحليلات — المخططات",
-        h3_performance: "تبويب التحليلات — جدول أداء الحملات",
-        h_title: "العنوان", h_title_desc: "«مدير الإعلانات» / «مدير الحملات» فرعي",
-        h_refresh: "أيقونة — إعادة تحميل بيانات التبويب الحالي",
-        tab_campaigns: "مدير الحملات", tab_campaigns_desc: "جدول الحملات، حملة جديدة، رسوم جديدة، ترقيم الصفحات",
-        tab_daily: "إدخال الإنفاق اليومي", tab_daily_desc: "منتقي التاريخ، مصفوفة الإنفاق لكل حملة، نسخ اليوم السابق، حفظ",
-        tab_analytics: "التحليلات والعائد", tab_analytics_desc: "المؤشرات، توزيع المنصات، المخططات، جدول أداء الحملات، الفلاتر، تصدير PDF",
-        camp_new_charge: "رسوم جديدة", camp_new_charge_desc: "زر — تسجيل شحن المنصة (مصروف)",
-        camp_new: "حملة جديدة", camp_new_desc: "زر — إضافة حملة",
-        camp_table: "جدول الحملات", camp_table_desc: "أعمدة: المعرّف، الاسم، المنصة، الميزانية، إجمالي الإنفاق، الحالة، الإجراءات",
-        camp_status: "مفتاح — نشط / متوقف لكل صف", camp_actions: "تعديل (✎)، حذف (🗑)",
-        camp_pagination: "السابق / الصفحة X من Y / التالي — ١٠ حملات لكل صفحة",
-        camp_budget: "تجاوز الميزانية", camp_budget_desc: "أيقونة تحذير حمراء عندما إجمالي الإنفاق > الميزانية",
-        camp_dlg_name: "حقل نصوص — اسم الحملة", camp_dlg_platform: "قائمة — فيسبوك، جوجل، تيك توك، سناب شات",
-        camp_dlg_budget: "حقل نصوص — مبلغ الميزانية", camp_dlg_active: "مفتاح — نشط أو متوقف", camp_dlg_buttons: "أزرار",
-        charge_platform: "قائمة — فيسبوك، جوجل، تيك توك، سناب شات",
-        charge_amount: "مبلغ الشحن", charge_amount_desc: "حقل نصوص — المبلغ (لاحقة جنيه)",
-        charge_date: "تاريخ للقراءة فقط مع منتقي التقويم", charge_notes: "حقل نصوص — اختياري",
-        charge_info: "«هذه الرسوم ستُسجّل كمصروف ولا يمكن تعديلها»", charge_buttons: "أزرار",
-        daily_date: "زر — يفتح منتقي التاريخ (افتراضي: اليوم)",
-        daily_copy: "نسخ اليوم السابق", daily_copy_desc: "زر — نسخ إنفاق أمس إلى حقول اليوم",
-        daily_save: "زر — حفظ الإنفاق اليومي لكل الحملات",
-        daily_list: "قائمة الإنفاق", daily_list_desc: "صف لكل حملة نشطة — الاسم، المنصة، إدخال الإنفاق (جنيه)",
-        ana_date: "النطاق الزمني", ana_date_desc: "حقل قابل للنقر — يفتح منتقي النطاق (جاهز + مخصص)",
-        ana_platform: "قائمة — الكل، فيسبوك، جوجل، تيك توك، سناب شات",
-        ana_name: "قائمة — الكل أو حملة محددة", ana_refresh: "أيقونة — إعادة تحميل التحليلات",
-        ana_export: "تصدير PDF", ana_export_desc: "أيقونة — إنشاء وفتح تقرير PDF",
-        kpi_spend: "إجمالي الإنفاق", kpi_spend_desc: "مجموع الإنفاق اليومي في النطاق",
-        kpi_revenue_desc: "مجموع إيرادات الطلبات من الطلبات المرتبطة بالحملات",
-        kpi_roas_desc: "الإيرادات ÷ الإنفاق", kpi_cpa_desc: "الإنفاق ÷ الطلبات (التكلفة لكل طلب)",
-        kpi_cpi_desc: "الإنفاق ÷ العناصر (التكلفة لكل عنصر)",
-        kpi_delivery: "معدل توصيل الحملات", kpi_delivery_desc: "% الطلبات المسلّمة أو المسلّمة جزئيًا",
-        plat_platform: "فيسبوك، جوجل، تيك توك، سناب شات", plat_spend: "إجمالي الإنفاق في النطاق",
-        plat_orders: "عدد الطلبات", plat_revenue: "إجمالي الإيرادات",
-        plat_roas: "الإيرادات ÷ الإنفاق (أخضر ≥ ٢، أحمر < ٢)", plat_cpa: "التكلفة لكل طلب",
-        chart_toggle: "تبديل المخطط", chart_toggle_desc: "مخطط أعمدة / مخطط خطي",
-        chart_desc: "الإنفاق، الإيرادات، ROAS، CPA — عبر الزمن (بالشهر إن النطاق > ٣٠ يومًا، باليوم إن ≤ ٣٠ يومًا)",
-        perf_name: "اسم الحملة مع أيقونة المنصة", perf_spend: "إجمالي الإنفاق", perf_revenue: "إجمالي الإيرادات",
-        perf_orders: "عدد الطلبات", perf_items: "عدد العناصر",
-        perf_roas: "الإيرادات ÷ الإنفاق (أخضر ≥ ٢، أحمر < ٢)", perf_cpa: "التكلفة لكل طلب", perf_cpi: "التكلفة لكل عنصر",
-        perf_delivery: "معدل توصيل الحملات", perf_delivery_desc: "% مسلّم/جزئي (أخضر ≥ ٥٠٪، برتقالي ≥ ٢٥٪، أحمر < ٢٥٪)",
-        perf_sort: "انقر على رأس العمود للفرز",
-        th_column: "العمود",
-        w1_title: "١. إضافة حملة", w1_1: "افتح تبويب مدير الحملات.", w1_2: "انقر على حملة جديدة.",
-        w1_3: "أدخل الاسم (مطلوب).", w1_4: "اختر المنصة (فيسبوك، جوجل، تيك توك، سناب شات).",
-        w1_5: "أدخل الميزانية (يمكن ٠).", w1_6: "فعّل مفتاح النشط (مفعّل = نشط، معطّل = متوقف).",
-        w1_7: "انقر على حفظ.", w1_8: "نجاح: شريط أخضر؛ الجدول يتحدّث. النافذة تبقى مفتوحة إن كان الاسم فارغًا.",
-        w2_title: "٢. تعديل حملة", w2_1: "في جدول مدير الحملات، انقر على تعديل (✎).",
-        w2_2: "غيّر الاسم أو المنصة أو الميزانية أو حالة النشط.", w2_3: "انقر على حفظ.", w2_4: "نجاح: شريط أخضر؛ الجدول يتحدّث.",
-        w3_title: "٣. تبديل حالة الحملة (نشط/متوقف)", w3_1: "في جدول مدير الحملات، استخدم مفتاح الحالة على الصف.",
-        w3_2: "مفتاح مفعّل = نشط، معطّل = متوقف.", w3_3: "الجدول يتحدّث تلقائيًا.",
-        w3_4: "الحملات المتوقفة لا تظهر في الإنفاق اليومي (فقط الحملات النشطة).",
-        w4_title: "٤. حذف حملة", w4_1: "في جدول مدير الحملات، انقر على حذف (🗑).",
-        w4_2: "أكّد في النافذة.", w4_3: "نجاح: شريط أخضر؛ تُزال الحملة.",
-        w4_4: "لا يمكن الحذف إن كانت للحملة طلبات أو بيانات إنفاق مرتبطة: «لا يمكن الحذف: الحملة لها طلبات أو بيانات إنفاق مرتبطة».",
-        w5_title: "٥. تسجيل رسوم جديدة (شحن المنصة)", w5_1: "في مدير الحملات، انقر على رسوم جديدة.",
-        w5_2: "اختر المنصة (فيسبوك، جوجل، تيك توك، سناب شات).", w5_3: "أدخل مبلغ الشحن.",
-        w5_4: "عدّل التاريخ إن لزم (افتراضي: اليوم).", w5_5: "أضف ملاحظات اختياريًا.", w5_6: "انقر على حفظ.",
-        w5_7: "نجاح: «تم حفظ رسوم الإعلان بنجاح»؛ المبلغ يُسجّل كمصروف (فئة الإعلانات) ولا يمكن تعديله. مبلغ فارغ: النافذة تبقى مفتوحة.",
-        w6_title: "٦. تسجيل الإنفاق اليومي", w6_1: "افتح تبويب إدخال الإنفاق اليومي.", w6_2: "انقر على زر التاريخ لاختيار اليوم.",
-        w6_3: "لكل حملة نشطة، أدخل مبلغ الإنفاق في الحقل (٠ إن لم يكن).", w6_4: "انقر على حفظ.",
-        w6_5: "نجاح: «تم حفظ الإنفاق»؛ القيم تُخزّن لذلك التاريخ. القيم السالبة تُعامل ك٠.",
-        w7_title: "٧. نسخ إنفاق اليوم السابق", w7_1: "في تبويب الإنفاق اليومي، حدّد التاريخ المطلوب.",
-        w7_2: "انقر على نسخ اليوم السابق.", w7_3: "النظام ينسخ إنفاق أمس إلى حقول اليوم للحملات المطابقة.",
-        w7_4: "إن كان أمس بلا بيانات أو كلها أصفار: «لا بيانات لليوم السابق» (شريط أحمر).",
-        w8_title: "٨. عرض التحليلات", w8_1: "افتح تبويب التحليلات والعائد.",
-        w8_2: "حدّد النطاق الزمني (جاهز أو مخصص). صفّ حسب المنصة أو الحملة اختياريًا.",
-        w8_3: "انقر على تحديث (أو غيّر الفلاتر) لإعادة التحميل.",
-        w8_4: "انظر المؤشرات، توزيع المنصات، المخططات، وجدول أداء الحملات. بدّل مخطط الأعمدة/الخطي. انقر رؤوس الأعمدة للفرز.",
-        w9_title: "٩. تصدير التحليلات لـ PDF", w9_1: "في تبويب التحليلات، حدّد فلاتر النطاق الزمني والمنصة والحملة.",
-        w9_2: "انقر على تصدير PDF (أيقونة صورة).", w9_3: "يُولّد تقرير PDF ويُفتح تلقائيًا.",
-        w9_4: "نجاح: «تم حفظ PDF» (أخضر). فشل: رسالة خطأ (أحمر).",
-        r_add_campaign: "إضافة/تعديل حملة", r_name_req: "الاسم مطلوب", r_name_req_res: "النافذة تبقى مفتوحة؛ لا شريط",
-        r_budget: "الميزانية", r_budget_res: "يمكن ٠؛ لا تحقق",
-        r_platform: "المنصة", r_platform_res: "واحدة من فيسبوك، جوجل، تيك توك، سناب شات",
-        r_delete_campaign: "حذف حملة", r_has_linked: "لها طلبات أو إنفاق مرتبط",
-        r_has_linked_res: "«لا يمكن الحذف: الحملة لها طلبات أو بيانات إنفاق مرتبطة»",
-        r_no_linked: "لا بيانات مرتبطة", r_no_linked_res: "تُحذف الحملة",
-        r_new_charge: "رسوم جديدة", r_amount_req: "المبلغ مطلوب", r_amount_req_res: "النافذة تبقى مفتوحة",
-        r_valid_amount: "مبلغ صالح", r_valid_amount_res: "يُسجّل كمصروف (إعلانات، is_auto=١)؛ لا يمكن تعديله",
-        r_treasury: "الخزينة", r_treasury_res: "يجب أن تكون كافية (التحقق المعياري للمصروفات)",
-        r_daily_spend: "الإنفاق اليومي", r_negative: "قيم سالبة", r_negative_res: "تُعامل ك٠",
-        r_no_campaigns: "لا حملات", r_no_campaigns_res: "يُعرض وضع فارغ",
-        r_active_only: "فقط الحملات النشطة", r_active_only_res: "تظهر في قائمة الإنفاق",
-        r_save: "حفظ", r_save_res: "يحدّث الموجود أو يُدخل جديدًا؛ يتخطى إن المبلغ = ٠ ولا صف موجود",
-        r_analytics: "التحليلات", r_date_range: "النطاق الزمني", r_date_range_desc: "يُطبّق على الإنفاق والطلبات",
-        r_orders: "الطلبات", r_orders_desc: "يشمل النشطة + المؤرشفة؛ يستبعد الملغاة",
-        r_revenue: "الإيرادات", r_revenue_desc: "مجموع order_price (أو total_amount احتياطي)",
-        r_roas: "ROAS", r_roas_desc: "الإيرادات ÷ الإنفاق؛ ٠ إن لم يكن إنفاق",
-        r_cpa: "CPA", r_cpa_desc: "الإنفاق ÷ الطلبات؛ ٠ إن لم تكن طلبات",
-        r_cpi: "CPI", r_cpi_desc: "الإنفاق ÷ العناصر؛ ٠ إن لم تكن عناصر",
-        r_delivery: "معدل توصيل الحملات", r_delivery_desc: "(المسلّمة + المسلّمة جزئيًا) ÷ إجمالي الطلبات × ١٠٠",
-        m_campaign_saved: "تم حفظ الحملة", m_campaign_saved_msg: "«تم حفظ الحملة بنجاح» (أخضر)",
-        m_campaign_deleted: "تم حذف الحملة", m_campaign_deleted_msg: "«تم حذف الحملة» (أخضر)",
-        m_delete_blocked: "الحذف محظور", m_delete_blocked_msg: "«لا يمكن الحذف: الحملة لها طلبات أو بيانات إنفاق مرتبطة» (أحمر)",
-        m_charge_saved: "تم حفظ الرسوم", m_charge_saved_msg: "«تم حفظ رسوم الإعلان بنجاح» (أخضر)",
-        m_charge_failed: "فشل الرسوم", m_charge_failed_msg: "رسالة خطأ (أحمر)",
-        m_spend_saved: "تم حفظ الإنفاق اليومي", m_spend_saved_msg: "«تم حفظ الإنفاق» (أخضر)",
-        m_no_previous: "لا بيانات لليوم السابق", m_no_previous_msg: "«لا بيانات لليوم السابق» (أحمر)",
-        m_pdf_saved: "تم حفظ PDF", m_pdf_saved_msg: "«تم حفظ PDF» (أخضر)",
-        m_error: "خطأ", m_error_msg: "رسالة خطأ عامة (أحمر)",
-        tip1: "تجاوز الميزانية: الإنفاق الإجمالي مقابل الميزانية يُعرض لكل حملة؛ أيقونة حمراء عند التجاوز.",
-        tip2: "الإنفاق اليومي: فقط الحملات النشطة تظهر؛ الحملات المتوقفة مستبعدة.",
-        tip3: "نسخ اليوم السابق: ينسخ من اليوم قبل التاريخ المحدد.",
-        tip4: "رسوم جديدة: تسجّل شحن المنصة كمصروف محمي؛ استخدم لتعبئة حسابات الإعلانات.",
-        tip5: "التحليلات: تستخدم الطلبات النشطة والمؤرشفة معًا؛ الطلبات الملغاة مستبعدة.",
-        tip6: "ROAS: أخضر عندما ≥ ٢؛ أحمر عندما < ٢ في الجداول.",
-        tip7: "معدل توصيل الحملات: نسبة الطلبات المسلّمة أو المسلّمة جزئيًا.",
-        tip8: "المخططات: النطاق > ٣٠ يومًا = مجمّعة بالشهر؛ النطاق ≤ ٣٠ يومًا = باليوم.",
-        tip9: "تصدير PDF: يستخدم النطاق الزمني والفلاتر الحالية؛ التقرير يشمل الإحصائيات والمخططات وتوزيع المنصات.",
-        tip10: "الترقيم: مدير الحملات يعرض ١٠ حملات لكل صفحة."
+        ads_breadcrumb: "الإعلانات",
+        ads_hero_headline: "الحملات والمصروفات والعائد على الاستثمار بين يديك",
+        ads_hero_desc: "تدرّ وحدة الإعلانات حملات الدعاية، تتبع المصروفات اليومية، وتحليلات التسويق. أنشئ حملات لكل منصة (فيسبوك، جوجل، تيك توك، سناب شات)، حدد الميزانيات، سجّل المصروفات اليومية، وسجّل رسوم الإعلانات (شحن المنصة) كمصروفات. التحليلات تعرض ROAS، CPA، CPI، معدل تقديم الحملات، وتقارير PDF قابلة للتصدير.",
+        ads_bullet_1: "مدير الحملات: الاسم، المنصة، الميزانية، إجمالي المصروفات، نشط/متوقف مع تحرير وحذف",
+        ads_bullet_2: "إدخال المصروفات اليومية مع نسخ اليوم السابق؛ رسم جديد لشحن المنصة (مسجّل كمصروف)",
+        ads_bullet_3: "التحليلات: KPIs، تفصيل المنصات، مخططات (أعمدة/خطوط)، أداء الحملات، تصدير PDF",
+        ads_cap1_title: "إدارة الحملات", ads_cap1_desc: "أنشئ حملات لفيسبوك وجوجل وتيك توك وسناب شات. حدد الاسم والمنصة والميزانية. عدّل أو احذف أو بدّل نشط/متوقف. تحذير بتجاوز الميزانية عندما المصروفات > الميزانية.",
+        ads_cap2_title: "المصروفات اليومية والرسوم", ads_cap2_desc: "سجّل المصروفات اليومية لكل حملة نشطة. انسخ اليوم السابق لتسريع إدخال البيانات. رسم جديد يسجّل شحن المنصة كمصروفات إعلانات محمية.",
+        ads_cap3_title: "التحليلات والعائد على الاستثمار", ads_cap3_desc: "إجمالي المصروفات، الإيرادات، ROAS، CPA، CPI، معدل تقديم الحملات. صفّ حسب نطاق التاريخ والمنصة والحملة. جدول تفصيل المنصات بأعمدة قابلة للفرز.",
+        ads_cap4_title: "المخططات وتصدير PDF", ads_cap4_desc: "عرض مخططات أعمدة وخطوط للمصروفات والإيرادات وROAS وCPA عبر الزمن. صدّر التحليلات إلى PDF بالفلاتر الحالية—الإحصائيات والمخططات وتفصيل المنصات.",
+        ads_workflow_title: "كيف يعمل",
+        ads_step1_title: "إضافة حملة", ads_step1_desc: "افتح مدير الحملات. انقر حملة جديدة. أدخل الاسم، اختر المنصة، حدد الميزانية، بدّل نشط. احفظ. عدّل أو احذف عبر إجراءات الصف.",
+        ads_step2_title: "تسجيل رسم جديد (شحن المنصة)", ads_step2_desc: "انقر رسم جديد. اختر المنصة، أدخل المبلغ، عدّل التاريخ إن لزم. احفظ. الرسم يُسجّل كمصروف إعلانات ولا يمكن تحريره. يجب أن تكون الخزينة كافية.",
+        ads_step3_title: "إدخال المصروفات اليومية", ads_step3_desc: "افتح إدخال المصروفات اليومية. اختر التاريخ. أدخل المصروفات لكل حملة نشطة (0 إن لم يكن هناك). استخدم نسخ اليوم السابق لنسخ قيم الأمس. احفظ. القيم السالبة تُعامل كـ 0.",
+        ads_step4_title: "عرض التحليلات وتصدير PDF", ads_step4_desc: "افتح التحليلات والعائد على الاستثمار. حدد فلاتر نطاق التاريخ والمنصة والحملة. اعرض KPIs وتفصيل المنصات والمخططات (بدّل أعمدة/خطوط) وجدول أداء الحملات. انقر تصدير PDF لإنشاء تقرير.",
+        ads_cta_sub: "حمّل مالي - OBS الآن وأدر الإعلانات مع 10 وحدات إضافية. أسبوع مجاني — لا حاجة لبطاقة ائتمان.",
       }
-    };
-
-    let currentLang = 'en';
-    function applyLang(lang) {
-      currentLang = lang;
-      const html = document.documentElement;
-      html.lang = lang;
-      html.dir = lang === 'ar' ? 'rtl' : 'ltr';
-      const texts = T[lang];
-      document.querySelectorAll('[data-i18n]').forEach(el => {
-        const key = el.getAttribute('data-i18n');
-        if (texts[key] !== undefined) el.textContent = texts[key];
-      });
-      const label = lang === 'en' ? 'العربية' : 'English';
-      document.getElementById('lang-label').textContent = label;
-      document.getElementById('lang-label-mobile').textContent = label;
-      try { localStorage.setItem('maly_lang', lang); } catch(e) {}
-    }
-    function toggleLang() { applyLang(currentLang === 'en' ? 'ar' : 'en'); }
-    function toggleMenu() {
-      const menu = document.getElementById('mobile-menu');
-      const icon = document.getElementById('hamburger-icon');
-      menu.classList.toggle('open');
-      icon.className = menu.classList.contains('open') ? 'fa-solid fa-xmark' : 'fa-solid fa-bars';
-    }
-    function closeMenu() {
-      document.getElementById('mobile-menu').classList.remove('open');
-      document.getElementById('hamburger-icon').className = 'fa-solid fa-bars';
-    }
+    });
     window.addEventListener('scroll', () => { document.getElementById('navbar').classList.toggle('scrolled', window.scrollY > 10); }, { passive: true });
-    (function init() {
-      let saved = 'en';
-      try { saved = localStorage.getItem('maly_lang') || 'en'; } catch(e) {}
-      applyLang(saved);
-    })();
+    document.getElementById('hamburger-icon')?.addEventListener('click', function() { const menu = document.getElementById('mobile-menu'); const isOpen = menu?.classList.toggle('open'); this.className = isOpen ? 'fa-solid fa-xmark' : 'fa-solid fa-bars'; });
+    const revealObserver = new IntersectionObserver((entries) => { entries.forEach(entry => { if (entry.isIntersecting) { entry.target.classList.add('visible'); revealObserver.unobserve(entry.target); } }); }, { threshold: 0.1 });
+    document.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
   </script>
 </body>
 </html>

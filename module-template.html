@@ -3,8 +3,10 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Maly - OBS | Debts / Financial Position &amp; Ledger</title>
-  <meta name="description" content="Financial position, receivables, payables, fixed assets, and debt forecasting in Maly - OBS." />
+  <!-- INJECT: page_title -->
+  <title>Maly - OBS | Smart Dashboard</title>
+  <!-- INJECT: meta_description -->
+  <meta name="description" content="Real-time analytics, KPIs, charts, and Google Sheets sync. See your business performance at a glance with the Maly - OBS Dashboard." />
 
   <link rel="icon" type="image/png" href="assets/logo_icon.png" />
   <link rel="shortcut icon" href="assets/icon.ico" />
@@ -18,7 +20,31 @@
   <script>tailwind.config = { corePlugins: { preflight: false } }</script>
 
   <style>
-    :root { --primary: #1B3D6F; --primary-light: #2A5498; --accent: #C5974A; --accent-light: #F0DDB8; --bg: #F5F1EB; --surface: #FFFFFF; --surface-alt: #F9F6F0; --text: #1A1A2E; --text-muted: #64748B; --text-light: #94A3B8; --border: #E2D9CC; --border-light: #EDE8E0; --shadow-sm: 0 2px 8px rgba(27,61,111,0.07); --shadow-md: 0 8px 32px rgba(27,61,111,0.10); --shadow-lg: 0 20px 60px rgba(27,61,111,0.13); --radius-sm: 8px; --radius-md: 14px; --radius-lg: 20px; --nav-h: 72px; --font-en: 'Inter', sans-serif; --font-ar: 'Cairo', sans-serif; --transition: 0.25s ease; }
+    :root {
+      --primary: #1B3D6F;
+      --primary-light: #2A5498;
+      --accent: #C5974A;
+      --accent-light: #F0DDB8;
+      --bg: #F5F1EB;
+      --surface: #FFFFFF;
+      --surface-alt: #F9F6F0;
+      --text: #1A1A2E;
+      --text-muted: #64748B;
+      --text-light: #94A3B8;
+      --border: #E2D9CC;
+      --border-light: #EDE8E0;
+      --shadow-sm: 0 2px 8px rgba(27,61,111,0.07);
+      --shadow-md: 0 8px 32px rgba(27,61,111,0.10);
+      --shadow-lg: 0 20px 60px rgba(27,61,111,0.13);
+      --radius-sm: 8px;
+      --radius-md: 14px;
+      --radius-lg: 20px;
+      --nav-h: 72px;
+      --font-en: 'Inter', sans-serif;
+      --font-ar: 'Cairo', sans-serif;
+      --transition: 0.25s ease;
+    }
+
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
     html { scroll-behavior: smooth; font-size: 16px; }
     body { font-family: var(--font-en); background: var(--bg); color: var(--text); line-height: 1.65; overflow-x: hidden; }
@@ -27,8 +53,17 @@
     a { color: inherit; text-decoration: none; }
     ul { list-style: none; }
     button { cursor: pointer; font-family: inherit; }
+
     .container { max-width: 1160px; margin: 0 auto; padding: 0 24px; }
-    nav { position: fixed; top: 0; left: 0; right: 0; height: var(--nav-h); background: rgba(245, 241, 235, 0.85); backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px); border-bottom: 1px solid var(--border-light); z-index: 1000; }
+
+    /* Slim Navbar */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; height: var(--nav-h);
+      background: rgba(245, 241, 235, 0.85);
+      backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px);
+      border-bottom: 1px solid var(--border-light);
+      z-index: 1000;
+    }
     nav.scrolled { box-shadow: var(--shadow-md); }
     .nav-inner { display: flex; align-items: center; justify-content: space-between; height: 100%; }
     .nav-logo { display: flex; align-items: center; gap: 8px; font-weight: 800; font-size: 1.1rem; color: var(--primary); }
@@ -49,9 +84,14 @@
     .mobile-menu a { font-size: 0.92rem; font-weight: 500; color: var(--text); padding: 10px 4px; border-bottom: 1px solid var(--border-light); }
     .mobile-menu a:last-child { border: none; }
     .mobile-menu .lang-btn { margin-top: 8px; width: fit-content; }
+
+    /* Breadcrumbs */
     .breadcrumbs { padding-top: calc(var(--nav-h) + 24px); padding-bottom: 16px; font-size: 0.88rem; color: var(--text-muted); }
     .breadcrumbs a:hover { color: var(--primary); }
     .breadcrumbs span { color: var(--text-light); margin: 0 8px; }
+    html[dir="rtl"] .breadcrumbs span { margin: 0 8px; }
+
+    /* Module Hero */
     .module-hero { padding: 48px 0 80px; }
     .module-hero .hero-headline { font-size: clamp(1.9rem, 3.5vw, 2.75rem); font-weight: 800; color: var(--text); line-height: 1.2; margin-bottom: 18px; }
     .module-hero .hero-desc { font-size: 1.05rem; color: var(--text-muted); margin-bottom: 24px; line-height: 1.7; max-width: 540px; }
@@ -60,24 +100,34 @@
     .module-hero .hero-bullets li i, .module-hero .hero-bullets li svg { color: #22c55e; flex-shrink: 0; width: 18px; height: 18px; }
     .btn-module-cta { display: inline-flex; align-items: center; gap: 8px; padding: 14px 28px; background: var(--primary); color: #fff; font-weight: 700; font-size: 0.95rem; border-radius: var(--radius-sm); transition: all var(--transition); box-shadow: 0 4px 18px rgba(27,61,111,0.22); }
     .btn-module-cta:hover { background: var(--primary-light); transform: translateY(-2px); box-shadow: 0 8px 24px rgba(27,61,111,0.28); }
+
+    /* Capabilities Grid */
     .cap-card { background: var(--surface); border: 1px solid var(--border-light); border-radius: var(--radius-md); padding: 28px 24px; transition: all var(--transition); }
     .cap-card:hover { border-color: var(--primary); box-shadow: var(--shadow-md); }
     .cap-card .cap-icon { width: 44px; height: 44px; border-radius: 10px; background: linear-gradient(135deg, rgba(27,61,111,0.08) 0%, rgba(197,151,74,0.1) 100%); display: flex; align-items: center; justify-content: center; color: var(--primary); margin-bottom: 16px; }
     .cap-card .cap-icon svg { width: 22px; height: 22px; }
     .cap-card h3 { font-size: 1.1rem; font-weight: 700; color: var(--text); margin-bottom: 8px; }
     .cap-card p { font-size: 0.9rem; color: var(--text-muted); line-height: 1.6; }
+
+    /* How It Works */
     .step-num { width: 36px; height: 36px; border-radius: 50%; background: var(--primary); color: #fff; font-weight: 800; font-size: 1rem; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
     .step-content h4 { font-size: 1rem; font-weight: 700; color: var(--text); margin-bottom: 6px; }
     .step-content p { font-size: 0.92rem; color: var(--text-muted); line-height: 1.6; }
+
+    /* Explore Other Modules */
     .explore-card { background: var(--surface); border: 1px solid var(--border-light); border-radius: var(--radius-sm); padding: 20px 18px; display: flex; align-items: center; gap: 14px; transition: all var(--transition); }
     .explore-card:hover { border-color: var(--primary); box-shadow: var(--shadow-sm); color: var(--primary); }
     .explore-card .explore-icon { width: 40px; height: 40px; border-radius: 8px; background: rgba(27,61,111,0.06); display: flex; align-items: center; justify-content: center; color: var(--primary); flex-shrink: 0; }
     .explore-card .explore-icon i, .explore-card .explore-icon svg { font-size: 1.1rem; width: 20px; height: 20px; }
+
+    /* Final CTA Strip */
     .cta-strip { background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%); padding: 56px 24px; text-align: center; color: #fff; }
     .cta-strip h2 { font-size: clamp(1.5rem, 2.5vw, 2rem); font-weight: 800; margin-bottom: 10px; }
     .cta-strip p { font-size: 1rem; opacity: 0.9; margin-bottom: 24px; max-width: 500px; margin-left: auto; margin-right: auto; }
     .cta-strip .btn-cta { display: inline-flex; align-items: center; gap: 8px; padding: 14px 32px; background: var(--accent); color: #fff; font-weight: 700; font-size: 1rem; border-radius: var(--radius-sm); transition: all var(--transition); box-shadow: 0 4px 14px rgba(0,0,0,0.2); }
     .cta-strip .btn-cta:hover { transform: translateY(-2px); box-shadow: 0 8px 20px rgba(0,0,0,0.25); filter: brightness(1.05); }
+
+    /* Footer */
     footer { background: #111827; color: #9CA3AF; padding: 56px 0 28px; }
     .footer-grid { display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 36px; margin-bottom: 40px; }
     .footer-brand .nav-logo { color: #fff; margin-bottom: 12px; display: flex; align-items: center; gap: 8px; }
@@ -93,21 +143,35 @@
     .footer-col ul li span { font-size: 0.85rem; color: #9CA3AF; font-family: var(--font-en); }
     .footer-bottom { border-top: 1px solid rgba(255,255,255,0.08); padding-top: 24px; display: flex; align-items: center; justify-content: space-between; gap: 12px; flex-wrap: wrap; }
     .footer-bottom p { font-size: 0.78rem; }
+
+    /* Reveal animation */
     .reveal { opacity: 0; transform: translateY(24px); transition: opacity 0.5s ease, transform 0.5s ease; }
     .reveal.visible { opacity: 1; transform: translateY(0); }
-    @media (max-width: 768px) { .nav-links, .btn-nav-cta { display: none; } .hamburger { display: block; } .footer-grid { grid-template-columns: 1fr 1fr; } .footer-brand { grid-column: 1 / -1; } }
-    @media (max-width: 480px) { .container { padding: 0 18px; } .footer-grid { grid-template-columns: 1fr; } }
+
+    @media (max-width: 768px) {
+      .nav-links, .btn-nav-cta { display: none; }
+      .hamburger { display: block; }
+      .footer-grid { grid-template-columns: 1fr 1fr; }
+      .footer-brand { grid-column: 1 / -1; }
+    }
+    @media (max-width: 480px) {
+      .container { padding: 0 18px; }
+      .footer-grid { grid-template-columns: 1fr; }
+    }
   </style>
 </head>
 <body>
 
+  <!-- ===================== SLIM NAVBAR ===================== -->
   <nav id="navbar">
     <div class="container">
       <div class="nav-inner">
+        <!-- INJECT: nav_logo_link (index.html for module pages) -->
         <a href="index.html" class="nav-logo">
           <img src="assets/logo_splash_light.png" alt="Maly OBS Logo" class="nav-logo-desktop" />
           <img src="assets/logo_icon.png" alt="Maly OBS" class="nav-logo-mobile" />
         </a>
+
         <div class="nav-links">
           <a href="index.html#features" data-i18n="nav_features">Features</a>
           <a href="index.html#pricing" data-i18n="nav_pricing">Pricing</a>
@@ -115,13 +179,17 @@
           <a href="index.html#privacy" data-i18n="nav_privacy">Privacy</a>
           <a href="index.html#contact" data-i18n="nav_contact">Contact</a>
         </div>
+
         <div class="nav-right">
           <button class="lang-btn" id="lang-toggle" onclick="toggleLang()"><i class="fa-solid fa-globe"></i><span id="lang-label">العربية</span></button>
           <a href="https://github.com/AdhamSeliman5/Maly-OBS/releases/download/v1.0/Maly-OBS.V1.0.rar" target="_blank" rel="noopener" class="btn-nav-cta" data-i18n="nav_download">Download Now</a>
-          <button class="hamburger" onclick="document.getElementById('mobile-menu').classList.toggle('open')" aria-label="Menu"><i class="fa-solid fa-bars" id="hamburger-icon"></i></button>
+          <button class="hamburger" onclick="document.getElementById('mobile-menu').classList.toggle('open')" aria-label="Menu">
+            <i class="fa-solid fa-bars" id="hamburger-icon"></i>
+          </button>
         </div>
       </div>
     </div>
+
     <div class="mobile-menu" id="mobile-menu">
       <a href="index.html#features" onclick="document.getElementById('mobile-menu').classList.remove('open')" data-i18n="nav_features">Features</a>
       <a href="index.html#pricing" onclick="document.getElementById('mobile-menu').classList.remove('open')" data-i18n="nav_pricing">Pricing</a>
@@ -133,34 +201,44 @@
     </div>
   </nav>
 
+  <!-- ===================== BREADCRUMBS ===================== -->
+  <!-- INJECT: breadcrumbs - Home > Features > [Module Name] -->
   <div class="container breadcrumbs">
     <a href="index.html" data-i18n="breadcrumb_home">Home</a>
     <span aria-hidden="true">›</span>
     <a href="index.html#features" data-i18n="breadcrumb_features">Features</a>
     <span aria-hidden="true">›</span>
-    <span style="color:var(--text); font-weight:600;" data-i18n="debt_breadcrumb">Debts</span>
+    <!-- INJECT: breadcrumb_current with data-i18n="MOD_breadcrumb" -->
+    <span style="color:var(--text); font-weight:600;" data-i18n="mod_breadcrumb">Smart Dashboard</span>
   </div>
 
+  <!-- ===================== MODULE HERO ===================== -->
   <section class="module-hero">
     <div class="container">
       <div class="grid grid-cols-1 md:grid-cols-2 gap-10 md:gap-12 items-center">
         <div>
-          <h1 class="hero-headline" data-i18n="debt_hero_headline">Your Full Financial Position at a Glance</h1>
-          <p class="hero-desc" data-i18n="debt_hero_desc">The Debts module shows your complete financial position: liquid assets (receivables, pipeline, shipping, staff loans), fixed assets, and liabilities (payables, staff due, shipping debt). Add manual debts, settle full or partial, manage fixed assets, and use the forecast simulator for delivery rate and pipeline.</p>
+          <!-- INJECT: hero_headline with data-i18n="MOD_hero_headline" -->
+          <h1 class="hero-headline" data-i18n="mod_hero_headline">See Your Business at a Glance</h1>
+          <!-- INJECT: hero_description with data-i18n="MOD_hero_desc" -->
+          <p class="hero-desc" data-i18n="mod_hero_desc">The Dashboard is the main analytics screen in Maly - OBS. It shows your business performance using key numbers (KPIs), charts, and lists. Choose a date range to see sales, deliveries, shipping, returns, top products, and campaign performance.</p>
+          <!-- INJECT: hero_bullets - 3 bullet points with SVG check + span -->
           <ul class="hero-bullets">
-            <li><svg viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg><span data-i18n="debt_bullet_1">Liquid assets: Receivables, Pipeline, Shipping, Staff Loans; Liabilities: Payables, Staff Due</span></li>
-            <li><svg viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg><span data-i18n="debt_bullet_2">Add manual Receivable/Payable; Settle full or partial; View settlement history</span></li>
-            <li><svg viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg><span data-i18n="debt_bullet_3">Fixed assets: Add, Update, Sell; Forecast simulator for delivery rate and pipeline</span></li>
+            <!-- INJECT: hero_bullets - each span has data-i18n="MOD_bullet_1", MOD_bullet_2, MOD_bullet_3 -->
+            <li><svg viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg><span data-i18n="mod_bullet_1">Live KPI cards: Revenue, Delivered, To Prepare, In Shipping, Returned</span></li>
+            <li><svg viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg><span data-i18n="mod_bullet_2">Interactive charts: Sales Trend, Status, Shipping Performance</span></li>
+            <li><svg viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg><span data-i18n="mod_bullet_3">Sync orders from Google Sheets to keep data up to date</span></li>
           </ul>
           <a href="https://github.com/AdhamSeliman5/Maly-OBS/releases/download/v1.0/Maly-OBS.V1.0.rar" target="_blank" rel="noopener" class="btn-module-cta"><i class="fa-solid fa-download"></i><span data-i18n="mod_download_now">Download Now</span></a>
         </div>
         <div class="flex justify-center md:justify-end order-first md:order-2">
-          <img src="assets/images/feat-debts.png" alt="Debts module interface" class="w-full max-w-md rounded-xl shadow-lg border border-gray-200/80 object-cover" />
+          <!-- INJECT: hero_image - path e.g. assets/images/feat-dashboard.png -->
+          <img src="assets/images/feat-dashboard.png" alt="Smart Dashboard interface" class="w-full max-w-md rounded-xl shadow-lg border border-gray-200/80 object-cover" />
         </div>
       </div>
     </div>
   </section>
 
+  <!-- ===================== CORE CAPABILITIES GRID ===================== -->
   <section class="py-16 md:py-20" style="background: var(--surface);">
     <div class="container">
       <div class="text-center mb-12">
@@ -168,71 +246,77 @@
         <h2 class="text-2xl md:text-3xl font-extrabold text-[var(--text)] mb-3" data-i18n="mod_what_you_can_do">What You Can Do</h2>
         <p class="text-[var(--text-muted)] max-w-xl mx-auto" data-i18n="mod_key_features">Key features at your fingertips.</p>
       </div>
+
+      <!-- INJECT: capabilities - each h3 has data-i18n="MOD_cap1_title", p has data-i18n="MOD_cap1_desc" etc -->
       <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
         <div class="cap-card reveal">
-          <div class="cap-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 6l3 1m0 0l-3 9a5.002 5.002 0 006.001 0M6 7l3 9M6 7l6-2m6 2l3-1m-3 1l-3 9a5.002 5.002 0 006.001 0M18 7l3 9m-3-9l-6-2m0-2v2m0 16V5m0 16H9m3 0h3"/></svg></div>
-          <h3 data-i18n="debt_cap1_title">Financial Position</h3>
-          <p data-i18n="debt_cap1_desc">View liquid assets (receivables, pipeline, shipping, staff loans) and liabilities (payables, staff due, shipping debt) in one dashboard.</p>
+          <div class="cap-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg></div>
+          <h3 data-i18n="mod_cap1_title">KPI Cards</h3>
+          <p data-i18n="mod_cap1_desc">Total Revenue, Delivered, To Prepare, In Shipping, Returned, and Active Clients at a glance.</p>
         </div>
         <div class="cap-card reveal">
-          <div class="cap-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg></div>
-          <h3 data-i18n="debt_cap2_title">Add &amp; Settle Debts</h3>
-          <p data-i18n="debt_cap2_desc">Add manual Receivable or Payable. Settle in full or partial amounts. View complete settlement history per debt.</p>
+          <div class="cap-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg></div>
+          <h3 data-i18n="mod_cap2_title">Date Range Filter</h3>
+          <p data-i18n="mod_cap2_desc">Choose start and end dates to view analytics for any period—daily, weekly, or monthly.</p>
         </div>
         <div class="cap-card reveal">
-          <div class="cap-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"/></svg></div>
-          <h3 data-i18n="debt_cap3_title">Fixed Assets</h3>
-          <p data-i18n="debt_cap3_desc">Add, update, or sell fixed assets. Track asset value and depreciation. Integrates with your overall financial position.</p>
+          <div class="cap-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg></div>
+          <h3 data-i18n="mod_cap3_title">Sync Orders</h3>
+          <p data-i18n="mod_cap3_desc">Fetch the latest orders from Google Sheets with one click. Data stays current across your workflow.</p>
         </div>
         <div class="cap-card reveal">
-          <div class="cap-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/></svg></div>
-          <h3 data-i18n="debt_cap4_title">Forecast Simulator</h3>
-          <p data-i18n="debt_cap4_desc">Adjust delivery rate and pipeline assumptions. Simulate future cash flow based on expected receivables and payables.</p>
+          <div class="cap-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg></div>
+          <h3 data-i18n="mod_cap4_title">Charts &amp; Lists</h3>
+          <p data-i18n="mod_cap4_desc">Sales Trend, Top Sellers, Status pie chart, Shipping Performance, and More Analytics.</p>
         </div>
       </div>
     </div>
   </section>
 
+  <!-- ===================== HOW IT WORKS ===================== -->
   <section class="py-16 md:py-20">
     <div class="container">
       <div class="text-center mb-12">
         <div class="inline-block text-xs font-bold tracking-widest uppercase text-[var(--accent)] bg-[var(--accent-light)] px-4 py-1.5 rounded-full mb-4" data-i18n="mod_workflow">Workflow</div>
-        <h2 class="text-2xl md:text-3xl font-extrabold text-[var(--text)] mb-3" data-i18n="debt_workflow_title">How It Works</h2>
+        <h2 class="text-2xl md:text-3xl font-extrabold text-[var(--text)] mb-3" data-i18n="mod_workflow_title">How It Works</h2>
         <p class="text-[var(--text-muted)] max-w-xl mx-auto" data-i18n="mod_get_started">Get started in minutes.</p>
       </div>
+
+      <!-- INJECT: steps - each h4 has data-i18n="MOD_step1_title", p has data-i18n="MOD_step1_desc" etc -->
       <div class="max-w-2xl mx-auto space-y-8">
         <div class="flex gap-5 items-start reveal">
           <div class="step-num">1</div>
           <div class="step-content">
-            <h4 data-i18n="debt_step1_title">Add a Debt</h4>
-            <p data-i18n="debt_step1_desc">Click Add Debt. Choose Receivable or Payable. Enter party name, amount, optional due date and notes. Confirm. The debt appears in the appropriate asset or liability section.</p>
+            <h4 data-i18n="mod_step1_title">View the Dashboard</h4>
+            <p data-i18n="mod_step1_desc">Open the Dashboard. The system loads KPIs first, then charts. Default date range is start of year to today.</p>
           </div>
         </div>
         <div class="flex gap-5 items-start reveal">
           <div class="step-num">2</div>
           <div class="step-content">
-            <h4 data-i18n="debt_step2_title">Settle Full or Partial</h4>
-            <p data-i18n="debt_step2_desc">Click Settle on a debt. Enter amount (full or partial). Partial settlement reduces the remaining balance. View history of all settlements for each debt.</p>
+            <h4 data-i18n="mod_step2_title">Change the Date Range</h4>
+            <p data-i18n="mod_step2_desc">Click the Date Range button, choose Start and End dates, then Apply. All dashboard data refreshes for the new range.</p>
           </div>
         </div>
         <div class="flex gap-5 items-start reveal">
           <div class="step-num">3</div>
           <div class="step-content">
-            <h4 data-i18n="debt_step3_title">Manage Fixed Assets</h4>
-            <p data-i18n="debt_step3_desc">Add a fixed asset with name, value, and optional details. Update when needed. Sell to record disposal and update financial position accordingly.</p>
+            <h4 data-i18n="mod_step3_title">Sync Orders from Google Sheets</h4>
+            <p data-i18n="mod_step3_desc">Click Sync Orders. A full-screen overlay shows sync progress. When done, you'll see success or error—dashboard refreshes automatically.</p>
           </div>
         </div>
         <div class="flex gap-5 items-start reveal">
           <div class="step-num">4</div>
           <div class="step-content">
-            <h4 data-i18n="debt_step4_title">Adjust Forecast</h4>
-            <p data-i18n="debt_step4_desc">Use the forecast simulator to adjust delivery rate and pipeline assumptions. See projected cash flow and financial position based on your inputs.</p>
+            <h4 data-i18n="mod_step4_title">Navigate to Preparation or Shipping</h4>
+            <p data-i18n="mod_step4_desc">Click the To Prepare card to open Preparation, or the In Shipping card to open Shipping—seamless navigation between modules.</p>
           </div>
         </div>
       </div>
     </div>
   </section>
 
+  <!-- ===================== EXPLORE OTHER MODULES ===================== -->
   <section class="py-16 md:py-20" style="background: var(--surface);">
     <div class="container">
       <div class="text-center mb-12">
@@ -240,27 +324,46 @@
         <h2 class="text-2xl md:text-3xl font-extrabold text-[var(--text)] mb-3" data-i18n="mod_other_modules">Other Modules</h2>
         <p class="text-[var(--text-muted)] max-w-xl mx-auto" data-i18n="mod_discover_more">Discover more of what Maly - OBS can do.</p>
       </div>
-      <div class="grid grid-cols-1 sm:grid-cols-3 gap-5">
-        <a href="expenses.html" class="explore-card"><div class="explore-icon"><i class="fa-solid fa-wallet"></i></div><span class="font-semibold" data-i18n="explore_expenses">Expenses</span></a>
-        <a href="shipping.html" class="explore-card"><div class="explore-icon"><i class="fa-solid fa-truck"></i></div><span class="font-semibold" data-i18n="explore_shipping">Shipping</span></a>
-        <a href="reports.html" class="explore-card"><div class="explore-icon"><i class="fa-solid fa-file-chart-line"></i></div><span class="font-semibold" data-i18n="explore_reports">Reports</span></a>
+
+      <!-- INJECT: explore_cards - each span has data-i18n="explore_MODULE" -->
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
+        <a href="inventory.html" class="explore-card">
+          <div class="explore-icon"><i class="fa-solid fa-boxes-stacked"></i></div>
+          <span class="font-semibold" data-i18n="explore_inventory">Inventory</span>
+        </a>
+        <a href="preparation.html" class="explore-card">
+          <div class="explore-icon"><i class="fa-solid fa-clipboard-check"></i></div>
+          <span class="font-semibold" data-i18n="explore_preparation">Preparation</span>
+        </a>
+        <a href="shipping.html" class="explore-card">
+          <div class="explore-icon"><i class="fa-solid fa-truck"></i></div>
+          <span class="font-semibold" data-i18n="explore_shipping">Shipping</span>
+        </a>
+        <a href="expenses.html" class="explore-card">
+          <div class="explore-icon"><i class="fa-solid fa-wallet"></i></div>
+          <span class="font-semibold" data-i18n="explore_expenses">Expenses</span>
+        </a>
       </div>
     </div>
   </section>
 
+  <!-- ===================== FINAL CTA STRIP ===================== -->
   <section class="cta-strip">
     <div class="container">
       <h2 data-i18n="mod_cta_headline">Ready to Own Your Numbers?</h2>
-      <p data-i18n="debt_cta_sub">Download Maly - OBS now and manage Debts along with 10 more modules. 1 week free trial—no credit card required.</p>
+      <p data-i18n="mod_cta_sub">Download Maly - OBS now and explore the Dashboard along with 10 more modules. 1 week free trial—no credit card required.</p>
       <a href="https://github.com/AdhamSeliman5/Maly-OBS/releases/download/v1.0/Maly-OBS.V1.0.rar" target="_blank" rel="noopener" class="btn-cta"><i class="fa-solid fa-download"></i><span data-i18n="mod_download_now">Download Now</span></a>
     </div>
   </section>
 
+  <!-- ===================== FOOTER ===================== -->
   <footer>
     <div class="container">
       <div class="footer-grid">
         <div class="footer-brand">
-          <a href="index.html" class="nav-logo"><img src="assets/logo_splash_light.png" alt="Maly OBS" /></a>
+          <a href="index.html" class="nav-logo">
+            <img src="assets/logo_splash_light.png" alt="Maly OBS" />
+          </a>
           <p data-i18n="footer_tagline">The smartest way to run your e-commerce business in Egypt.</p>
           <div class="social-row">
             <a href="https://www.linkedin.com/company/maly-obs/" target="_blank" rel="noopener" class="footer-social" aria-label="LinkedIn"><i class="fa-brands fa-linkedin-in"></i></a>
@@ -269,9 +372,30 @@
             <a href="https://wa.me/201100028752" target="_blank" rel="noopener" class="footer-social" aria-label="WhatsApp"><i class="fa-brands fa-whatsapp"></i></a>
           </div>
         </div>
-        <div class="footer-col"><h4 data-i18n="footer_nav">Navigate</h4><ul><li><a href="index.html#features" data-i18n="nav_features">Features</a></li><li><a href="index.html#pricing" data-i18n="nav_pricing">Pricing</a></li><li><a href="index.html#faq" data-i18n="nav_faq">FAQ</a></li><li><a href="index.html#privacy" data-i18n="nav_privacy">Privacy</a></li><li><a href="index.html#contact" data-i18n="nav_contact">Contact</a></li></ul></div>
-        <div class="footer-col"><h4 data-i18n="footer_contact">Contact</h4><ul><li><span>asoliman548@gmail.com</span></li><li><span>01100028752</span></li><li><span data-i18n="footer_location">Cairo, Egypt</span></li></ul></div>
-        <div class="footer-col"><h4 data-i18n="footer_legal">Legal</h4><ul><li><a href="index.html#privacy" data-i18n="footer_privacy">Privacy Policy</a></li></ul></div>
+        <div class="footer-col">
+          <h4 data-i18n="footer_nav">Navigate</h4>
+          <ul>
+            <li><a href="index.html#features" data-i18n="nav_features">Features</a></li>
+            <li><a href="index.html#pricing" data-i18n="nav_pricing">Pricing</a></li>
+            <li><a href="index.html#faq" data-i18n="nav_faq">FAQ</a></li>
+            <li><a href="index.html#privacy" data-i18n="nav_privacy">Privacy</a></li>
+            <li><a href="index.html#contact" data-i18n="nav_contact">Contact</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4 data-i18n="footer_contact">Contact</h4>
+          <ul>
+            <li><span>asoliman548@gmail.com</span></li>
+            <li><span>01100028752</span></li>
+            <li><span data-i18n="footer_location">Cairo, Egypt</span></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4 data-i18n="footer_legal">Legal</h4>
+          <ul>
+            <li><a href="index.html#privacy" data-i18n="footer_privacy">Privacy Policy</a></li>
+          </ul>
+        </div>
       </div>
       <div class="footer-bottom">
         <p data-i18n="footer_copy">© 2026 Maly Systems. All rights reserved.</p>
@@ -282,47 +406,57 @@
 
   <script src="js/i18n-modules.js"></script>
   <script>
+    /* INJECT: MalyI18n.init with module-specific keys in en and ar. Use mod_ prefix for template placeholders. */
     MalyI18n.init({
       en: {
-        debt_breadcrumb: "Debts",
-        debt_hero_headline: "Your Full Financial Position at a Glance",
-        debt_hero_desc: "The Debts module shows your complete financial position: liquid assets (receivables, pipeline, shipping, staff loans), fixed assets, and liabilities (payables, staff due, shipping debt). Add manual debts, settle full or partial, manage fixed assets, and use the forecast simulator for delivery rate and pipeline.",
-        debt_bullet_1: "Liquid assets: Receivables, Pipeline, Shipping, Staff Loans; Liabilities: Payables, Staff Due",
-        debt_bullet_2: "Add manual Receivable/Payable; Settle full or partial; View settlement history",
-        debt_bullet_3: "Fixed assets: Add, Update, Sell; Forecast simulator for delivery rate and pipeline",
-        debt_cap1_title: "Financial Position", debt_cap1_desc: "View liquid assets (receivables, pipeline, shipping, staff loans) and liabilities (payables, staff due, shipping debt) in one dashboard.",
-        debt_cap2_title: "Add & Settle Debts", debt_cap2_desc: "Add manual Receivable or Payable. Settle in full or partial amounts. View complete settlement history per debt.",
-        debt_cap3_title: "Fixed Assets", debt_cap3_desc: "Add, update, or sell fixed assets. Track asset value and depreciation. Integrates with your overall financial position.",
-        debt_cap4_title: "Forecast Simulator", debt_cap4_desc: "Adjust delivery rate and pipeline assumptions. Simulate future cash flow based on expected receivables and payables.",
-        debt_workflow_title: "How It Works",
-        debt_step1_title: "Add a Debt", debt_step1_desc: "Click Add Debt. Choose Receivable or Payable. Enter party name, amount, optional due date and notes. Confirm. The debt appears in the appropriate asset or liability section.",
-        debt_step2_title: "Settle Full or Partial", debt_step2_desc: "Click Settle on a debt. Enter amount (full or partial). Partial settlement reduces the remaining balance. View history of all settlements for each debt.",
-        debt_step3_title: "Manage Fixed Assets", debt_step3_desc: "Add a fixed asset with name, value, and optional details. Update when needed. Sell to record disposal and update financial position accordingly.",
-        debt_step4_title: "Adjust Forecast", debt_step4_desc: "Use the forecast simulator to adjust delivery rate and pipeline assumptions. See projected cash flow and financial position based on your inputs.",
-        debt_cta_sub: "Download Maly - OBS now and manage Debts along with 10 more modules. 1 week free trial—no credit card required.",
+        mod_breadcrumb: "Smart Dashboard",
+        mod_hero_headline: "See Your Business at a Glance",
+        mod_hero_desc: "The Dashboard is the main analytics screen in Maly - OBS. It shows your business performance using key numbers (KPIs), charts, and lists.",
+        mod_bullet_1: "Live KPI cards: Revenue, Delivered, To Prepare, In Shipping, Returned",
+        mod_bullet_2: "Interactive charts: Sales Trend, Status, Shipping Performance",
+        mod_bullet_3: "Sync orders from Google Sheets to keep data up to date",
+        mod_cap1_title: "KPI Cards", mod_cap1_desc: "Total Revenue, Delivered, To Prepare, In Shipping, Returned, and Active Clients at a glance.",
+        mod_cap2_title: "Date Range Filter", mod_cap2_desc: "Choose start and end dates to view analytics for any period.",
+        mod_cap3_title: "Sync Orders", mod_cap3_desc: "Fetch the latest orders from Google Sheets with one click.",
+        mod_cap4_title: "Charts & Lists", mod_cap4_desc: "Sales Trend, Top Sellers, Status pie chart, Shipping Performance, and More Analytics.",
+        mod_workflow_title: "How It Works",
+        mod_step1_title: "View the Dashboard", mod_step1_desc: "Open the Dashboard. The system loads KPIs first, then charts.",
+        mod_step2_title: "Change the Date Range", mod_step2_desc: "Click the Date Range button, choose Start and End dates, then Apply.",
+        mod_step3_title: "Sync Orders from Google Sheets", mod_step3_desc: "Click Sync Orders. A full-screen overlay shows sync progress.",
+        mod_step4_title: "Navigate to Preparation or Shipping", mod_step4_desc: "Click the To Prepare card to open Preparation, or the In Shipping card to open Shipping.",
+        mod_cta_sub: "Download Maly - OBS now and explore the Dashboard along with 10 more modules. 1 week free trial—no credit card required.",
+        explore_inventory: "Inventory", explore_preparation: "Preparation", explore_shipping: "Shipping", explore_expenses: "Expenses",
       },
       ar: {
-        debt_breadcrumb: "المديونيات",
-        debt_hero_headline: "وضعك المالي الكامل في لمحة",
-        debt_hero_desc: "تعرض وحدة المديونيات وضعك المالي الكامل: الأصول السائلة (المستحقات، خط الأنابيب، الشحن، قروض الموظفين)، الأصول الثابتة، والالتزامات (المستحقّات، مستحق الموظفين، دين الشحن). أضف مديونيات يدوية، سدّد كليًا أو جزئيًا، أدر الأصول الثابتة، واستخدم محاكي التوقعات لمعدل التسليم وخط الأنابيب.",
-        debt_bullet_1: "أصول سائلة: المستحقات، خط الأنابيب، الشحن، قروض الموظفين؛ التزامات: المستحقّات، مستحق الموظفين",
-        debt_bullet_2: "أضف مستحقات/مستحقّات يدوية؛ سدّد كليًا أو جزئيًا؛ عرض سجل التسويات",
-        debt_bullet_3: "أصول ثابتة: إضافة، تحديث، بيع؛ محاكي توقعات لمعدل التسليم وخط الأنابيب",
-        debt_cap1_title: "الوضع المالي", debt_cap1_desc: "عرض الأصول السائلة (المستحقات، خط الأنابيب، الشحن، قروض الموظفين) والالتزامات (المستحقّات، مستحق الموظفين، دين الشحن) في لوحة واحدة.",
-        debt_cap2_title: "إضافة وتسوية المديونيات", debt_cap2_desc: "أضف مستحقات أو مستحقّات يدوية. سدّد بالمبلغ الكامل أو الجزئي. عرض سجل التسويات الكامل لكل مديونية.",
-        debt_cap3_title: "الأصول الثابتة", debt_cap3_desc: "أضف أو حدّث أو بع الأصول الثابتة. تتبع قيمة الأصل والاستهلاك. يتكامل مع وضعك المالي الشامل.",
-        debt_cap4_title: "محاكي التوقعات", debt_cap4_desc: "اضبط معدل التسليم وافتراضات خط الأنابيب. احاكِ التدفق النقدي المستقبلي بناءً على المستحقات والمستحقّات المتوقعة.",
-        debt_workflow_title: "كيف يعمل",
-        debt_step1_title: "إضافة مديونية", debt_step1_desc: "انقر إضافة مديونية. اختر مستحقات أو مستحقّات. أدخل اسم الطرف، المبلغ، تاريخ الاستحقاق الاختياري والملاحظات. أكّد. تظهر المديونية في القسم المناسب من الأصول أو الالتزامات.",
-        debt_step2_title: "التسوية كليًا أو جزئيًا", debt_step2_desc: "انقر تسوية على مديونية. أدخل المبلغ (كامل أو جزئي). التسوية الجزئية تقلل الرصيد المتبقي. عرض سجل كل التسويات لكل مديونية.",
-        debt_step3_title: "إدارة الأصول الثابتة", debt_step3_desc: "أضف أصلًا ثابتًا بالاسم والقيمة وتفاصيل اختيارية. حدّث عند الحاجة. بع لتسجيل التصرف وتحديث الوضع المالي وفقًا.",
-        debt_step4_title: "ضبط التوقعات", debt_step4_desc: "استخدم محاكي التوقعات لضبط معدل التسليم وافتراضات خط الأنابيب. اعرض التدفق النقدي والوضع المالي المتوقع بناءً على مدخلاتك.",
-        debt_cta_sub: "حمّل مالي - OBS الآن وأدر المديونيات مع 10 وحدات إضافية. أسبوع مجاني — لا حاجة لبطاقة ائتمان.",
+        mod_breadcrumb: "لوحة التحكم",
+        mod_hero_headline: "اعرض عملك بنظرة واحدة",
+        mod_hero_desc: "لوحة التحكم هي الشاشة الرئيسية للتحليلات في مالي - OBS.",
+        mod_bullet_1: "بطاقات KPI حية: الإيرادات، المُسلّم، للتجهيز، في الشحن، المرتجع",
+        mod_bullet_2: "رسوم بيانية تفاعلية: اتجاه المبيعات، الحالة، أداء الشحن",
+        mod_bullet_3: "مزامنة الطلبات من Google Sheets لإبقاء البيانات محدثة",
+        mod_cap1_title: "بطاقات KPI", mod_cap1_desc: "إجمالي الإيرادات، المُسلّم، للتجهيز، في الشحن، المرتجع، والعملاء النشطون بنظرة واحدة.",
+        mod_cap2_title: "تصفية نطاق التاريخ", mod_cap2_desc: "اختر تاريخ البداية والنهاية لعرض التحليلات لأي فترة.",
+        mod_cap3_title: "مزامنة الطلبات", mod_cap3_desc: "جلب أحدث الطلبات من Google Sheets بنقرة واحدة.",
+        mod_cap4_title: "الرسوم والقوائم", mod_cap4_desc: "اتجاه المبيعات، الأكثر مبيعًا، مخطط الحالة، أداء الشحن، وتحليلات إضافية.",
+        mod_workflow_title: "كيف يعمل",
+        mod_step1_title: "عرض لوحة التحكم", mod_step1_desc: "افتح لوحة التحكم. يحمّل النظام KPIs أولاً ثم الرسوم.",
+        mod_step2_title: "تغيير نطاق التاريخ", mod_step2_desc: "انقر على زر نطاق التاريخ، اختر تاريخ البداية والنهاية، ثم طبق.",
+        mod_step3_title: "مزامنة الطلبات من Google Sheets", mod_step3_desc: "انقر مزامنة الطلبات. يعرض overlay ملء الشاشة تقدم المزامنة.",
+        mod_step4_title: "الانتقال للتجهيز أو الشحن", mod_step4_desc: "انقر على بطاقة للتجهيز لفتح وحدة التجهيز، أو بطاقة في الشحن لفتح وحدة الشحن.",
+        mod_cta_sub: "حمّل مالي - OBS الآن واستكشف لوحة التحكم مع 10 وحدات إضافية. أسبوع مجاني — لا حاجة لبطاقة ائتمان.",
+        explore_inventory: "المخزون", explore_preparation: "التجهيز", explore_shipping: "الشحن", explore_expenses: "المصروفات",
       }
     });
+
     window.addEventListener('scroll', () => { document.getElementById('navbar').classList.toggle('scrolled', window.scrollY > 10); }, { passive: true });
-    document.getElementById('hamburger-icon')?.addEventListener('click', function() { const menu = document.getElementById('mobile-menu'); const isOpen = menu?.classList.toggle('open'); this.className = isOpen ? 'fa-solid fa-xmark' : 'fa-solid fa-bars'; });
-    const revealObserver = new IntersectionObserver((entries) => { entries.forEach(entry => { if (entry.isIntersecting) { entry.target.classList.add('visible'); revealObserver.unobserve(entry.target); } }); }, { threshold: 0.1 });
+    document.getElementById('hamburger-icon')?.addEventListener('click', function() {
+      const menu = document.getElementById('mobile-menu');
+      const isOpen = menu?.classList.toggle('open');
+      this.className = isOpen ? 'fa-solid fa-xmark' : 'fa-solid fa-bars';
+    });
+    const revealObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => { if (entry.isIntersecting) { entry.target.classList.add('visible'); revealObserver.unobserve(entry.target); } });
+    }, { threshold: 0.1 });
     document.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
   </script>
 </body>

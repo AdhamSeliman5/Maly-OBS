@@ -3,107 +3,100 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Maly - OBS | Reports Module — User Guide</title>
-  <meta name="description" content="Reports module user guide: financial intelligence, KPIs, simulation, partners, distribution in Maly - OBS." />
+  <title>Maly - OBS | Reports / Financial Intelligence &amp; Partner Distribution</title>
+  <meta name="description" content="Financial intelligence, KPIs, simulation, partner distribution, and PDF export in Maly - OBS." />
+
+  <link rel="icon" type="image/png" href="assets/logo_icon.png" />
+  <link rel="shortcut icon" href="assets/icon.ico" />
 
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;800&family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
 
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>tailwind.config = { corePlugins: { preflight: false } }</script>
+
   <style>
-    :root {
-      --primary: #1B3D6F; --primary-light: #2A5498; --accent: #C5974A; --accent-light: #F0DDB8;
-      --bg: #F5F1EB; --surface: #FFFFFF; --surface-alt: #F9F6F0; --text: #1A1A2E; --text-muted: #64748B;
-      --text-light: #94A3B8; --border: #E2D9CC; --border-light: #EDE8E0;
-      --shadow-sm: 0 2px 8px rgba(27,61,111,0.07); --shadow-md: 0 8px 32px rgba(27,61,111,0.10);
-      --radius-sm: 8px; --radius-md: 14px; --nav-h: 76px;
-      --font-en: 'Inter', sans-serif; --font-ar: 'Cairo', sans-serif; --transition: 0.25s ease;
-    }
+    :root { --primary: #1B3D6F; --primary-light: #2A5498; --accent: #C5974A; --accent-light: #F0DDB8; --bg: #F5F1EB; --surface: #FFFFFF; --surface-alt: #F9F6F0; --text: #1A1A2E; --text-muted: #64748B; --text-light: #94A3B8; --border: #E2D9CC; --border-light: #EDE8E0; --shadow-sm: 0 2px 8px rgba(27,61,111,0.07); --shadow-md: 0 8px 32px rgba(27,61,111,0.10); --shadow-lg: 0 20px 60px rgba(27,61,111,0.13); --radius-sm: 8px; --radius-md: 14px; --radius-lg: 20px; --nav-h: 72px; --font-en: 'Inter', sans-serif; --font-ar: 'Cairo', sans-serif; --transition: 0.25s ease; }
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
     html { scroll-behavior: smooth; font-size: 16px; }
-    body { font-family: var(--font-en); background-color: var(--bg); color: var(--text); line-height: 1.65; overflow-x: hidden; }
+    body { font-family: var(--font-en); background: var(--bg); color: var(--text); line-height: 1.65; overflow-x: hidden; }
     html[lang="ar"] body { font-family: var(--font-ar); }
     img { max-width: 100%; display: block; }
     a { color: inherit; text-decoration: none; }
     ul { list-style: none; }
     button { cursor: pointer; font-family: inherit; }
     .container { max-width: 1160px; margin: 0 auto; padding: 0 24px; }
-
-    nav { position: fixed; top: 0; left: 0; right: 0; height: var(--nav-h); background: rgba(245, 241, 235, 0.92); backdrop-filter: blur(14px); border-bottom: 1px solid var(--border-light); z-index: 1000; transition: box-shadow var(--transition); }
+    nav { position: fixed; top: 0; left: 0; right: 0; height: var(--nav-h); background: rgba(245, 241, 235, 0.85); backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px); border-bottom: 1px solid var(--border-light); z-index: 1000; }
     nav.scrolled { box-shadow: var(--shadow-md); }
     .nav-inner { display: flex; align-items: center; justify-content: space-between; height: 100%; }
-    .nav-logo { display: flex; align-items: center; gap: 10px; font-weight: 800; font-size: 1.2rem; color: var(--primary); }
-    .nav-logo img { height: 48px; width: auto; max-width: 220px; object-fit: contain; }
+    .nav-logo { display: flex; align-items: center; gap: 8px; font-weight: 800; font-size: 1.1rem; color: var(--primary); }
+    .nav-logo img { height: 40px; width: auto; max-width: 180px; object-fit: contain; }
     @media (max-width: 768px) { .nav-logo img.nav-logo-desktop { display: none; } .nav-logo img.nav-logo-mobile { display: block !important; } }
     .nav-logo img.nav-logo-mobile { display: none; }
-    .nav-links { display: flex; align-items: center; gap: 8px; }
-    .nav-links a { font-size: 0.9rem; font-weight: 500; color: var(--text-muted); padding: 6px 14px; border-radius: var(--radius-sm); transition: color var(--transition), background var(--transition); }
+    .nav-links { display: flex; align-items: center; gap: 6px; }
+    .nav-links a { font-size: 0.88rem; font-weight: 500; color: var(--text-muted); padding: 6px 12px; border-radius: var(--radius-sm); transition: all var(--transition); }
     .nav-links a:hover { color: var(--primary); background: rgba(27,61,111,0.06); }
     .nav-right { display: flex; align-items: center; gap: 12px; }
     .lang-btn { display: flex; align-items: center; gap: 6px; font-size: 0.82rem; font-weight: 600; color: var(--primary); background: var(--surface); border: 1.5px solid var(--border); padding: 6px 14px; border-radius: 20px; transition: all var(--transition); }
     .lang-btn:hover { border-color: var(--primary); background: rgba(27,61,111,0.04); }
-    .btn-nav-cta { font-size: 0.88rem; font-weight: 600; color: #fff; background: var(--primary); padding: 8px 20px; border-radius: 8px; transition: background var(--transition), transform var(--transition); }
+    .btn-nav-cta { font-size: 0.85rem; font-weight: 600; color: #fff; background: var(--primary); padding: 8px 18px; border-radius: var(--radius-sm); transition: all var(--transition); }
     .btn-nav-cta:hover { background: var(--primary-light); transform: translateY(-1px); }
-    .hamburger { display: none; background: none; border: none; font-size: 1.4rem; color: var(--primary); }
-    .mobile-menu { display: none; flex-direction: column; background: var(--surface); border-bottom: 1px solid var(--border); padding: 12px 24px 20px; gap: 4px; }
+    .hamburger { display: none; background: none; border: none; font-size: 1.25rem; color: var(--primary); }
+    .mobile-menu { display: none; flex-direction: column; background: var(--surface); border-bottom: 1px solid var(--border); padding: 12px 20px; gap: 4px; }
     .mobile-menu.open { display: flex; }
-    .mobile-menu a { font-size: 0.95rem; font-weight: 500; color: var(--text); padding: 10px 4px; border-bottom: 1px solid var(--border-light); }
+    .mobile-menu a { font-size: 0.92rem; font-weight: 500; color: var(--text); padding: 10px 4px; border-bottom: 1px solid var(--border-light); }
     .mobile-menu a:last-child { border: none; }
     .mobile-menu .lang-btn { margin-top: 8px; width: fit-content; }
-
-    .doc-main { padding-top: calc(var(--nav-h) + 48px); padding-bottom: 80px; }
-    .doc-inner { max-width: 840px; margin: 0 auto; }
-    .btn-back { display: inline-flex; align-items: center; gap: 8px; font-size: 0.9rem; font-weight: 600; color: var(--primary); background: var(--surface); border: 1.5px solid var(--border); padding: 10px 20px; border-radius: var(--radius-sm); margin-bottom: 32px; transition: all var(--transition); box-shadow: var(--shadow-sm); }
-    .btn-back:hover { border-color: var(--primary); background: rgba(27,61,111,0.04); }
-    html[dir="rtl"] .btn-back i { transform: scaleX(-1); }
-    .doc-header { margin-bottom: 40px; }
-    .doc-header .doc-badge { display: inline-block; font-size: 0.75rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--accent); background: var(--accent-light); padding: 4px 12px; border-radius: 20px; margin-bottom: 12px; }
-    .doc-header h1 { font-size: clamp(1.8rem, 3vw, 2.4rem); font-weight: 800; color: var(--text); margin-bottom: 12px; line-height: 1.2; }
-    .doc-header .doc-meta { font-size: 0.9rem; color: var(--text-muted); }
-    .doc-content h2 { font-size: 1.35rem; font-weight: 700; color: var(--primary); margin-top: 48px; margin-bottom: 20px; padding-bottom: 8px; border-bottom: 2px solid var(--border-light); }
-    .doc-content h2:first-of-type { margin-top: 0; }
-    .doc-content h3 { font-size: 1.1rem; font-weight: 700; color: var(--text); margin-top: 32px; margin-bottom: 14px; }
-    .doc-content p { font-size: 1rem; color: var(--text-muted); margin-bottom: 16px; line-height: 1.75; }
-    .doc-content ul.doc-list { list-style: disc; padding-left: 24px; margin-bottom: 20px; }
-    html[dir="rtl"] .doc-content ul.doc-list { padding-left: 0; padding-right: 24px; }
-    .doc-content ul.doc-list li { margin-bottom: 8px; color: var(--text-muted); line-height: 1.7; }
-    .doc-content ul.doc-list li strong { color: var(--text); }
-    .doc-table-wrapper { overflow-x: auto; margin: 24px 0; border-radius: var(--radius-sm); border: 1px solid var(--border-light); box-shadow: var(--shadow-sm); }
-    .doc-table { width: 100%; border-collapse: collapse; font-size: 0.95rem; }
-    .doc-table th, .doc-table td { padding: 14px 18px; text-align: left; border-bottom: 1px solid var(--border-light); vertical-align: top; }
-    html[dir="rtl"] .doc-table th, html[dir="rtl"] .doc-table td { text-align: right; }
-    .doc-table th { background: var(--surface-alt); font-weight: 700; color: var(--primary); }
-    .doc-table tr:last-child td { border-bottom: none; }
-    .doc-table tr:hover td { background: rgba(27,61,111,0.02); }
-    .callout { padding: 20px 24px; border-radius: var(--radius-md); margin: 24px 0; border-left: 4px solid; display: flex; gap: 14px; align-items: flex-start; }
-    html[dir="rtl"] .callout { border-left: none; border-right: 4px solid; }
-    .callout i { font-size: 1.2rem; flex-shrink: 0; margin-top: 2px; }
-    .callout-content { flex: 1; }
-    .callout-tip { background: rgba(34, 197, 94, 0.08); border-color: #22c55e; color: #166534; }
-    .callout-tip i { color: #22c55e; }
-
-    footer { background: #111827; color: #9CA3AF; padding: 60px 0 30px; }
-    .footer-grid { display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 40px; margin-bottom: 50px; }
-    .footer-brand .nav-logo { color: #fff; margin-bottom: 14px; }
-    .footer-brand .nav-logo img { height: 40px; width: auto; max-width: 200px; object-fit: contain; filter: brightness(0) invert(1); opacity: 0.9; }
-    .footer-brand p { font-size: 0.88rem; line-height: 1.7; max-width: 260px; color: #9CA3AF; }
-    .footer-brand .social-row { display: flex; gap: 10px; margin-top: 20px; }
-    .footer-social { width: 36px; height: 36px; border-radius: 50%; background: rgba(255,255,255,0.08); color: #D1D5DB; display: flex; align-items: center; justify-content: center; font-size: 0.9rem; transition: background var(--transition), color var(--transition); }
+    .breadcrumbs { padding-top: calc(var(--nav-h) + 24px); padding-bottom: 16px; font-size: 0.88rem; color: var(--text-muted); }
+    .breadcrumbs a:hover { color: var(--primary); }
+    .breadcrumbs span { color: var(--text-light); margin: 0 8px; }
+    .module-hero { padding: 48px 0 80px; }
+    .module-hero .hero-headline { font-size: clamp(1.9rem, 3.5vw, 2.75rem); font-weight: 800; color: var(--text); line-height: 1.2; margin-bottom: 18px; }
+    .module-hero .hero-desc { font-size: 1.05rem; color: var(--text-muted); margin-bottom: 24px; line-height: 1.7; max-width: 540px; }
+    .module-hero .hero-bullets { margin-bottom: 28px; }
+    .module-hero .hero-bullets li { display: flex; align-items: center; gap: 10px; font-size: 0.95rem; color: var(--text); margin-bottom: 10px; }
+    .module-hero .hero-bullets li i, .module-hero .hero-bullets li svg { color: #22c55e; flex-shrink: 0; width: 18px; height: 18px; }
+    .btn-module-cta { display: inline-flex; align-items: center; gap: 8px; padding: 14px 28px; background: var(--primary); color: #fff; font-weight: 700; font-size: 0.95rem; border-radius: var(--radius-sm); transition: all var(--transition); box-shadow: 0 4px 18px rgba(27,61,111,0.22); }
+    .btn-module-cta:hover { background: var(--primary-light); transform: translateY(-2px); box-shadow: 0 8px 24px rgba(27,61,111,0.28); }
+    .cap-card { background: var(--surface); border: 1px solid var(--border-light); border-radius: var(--radius-md); padding: 28px 24px; transition: all var(--transition); }
+    .cap-card:hover { border-color: var(--primary); box-shadow: var(--shadow-md); }
+    .cap-card .cap-icon { width: 44px; height: 44px; border-radius: 10px; background: linear-gradient(135deg, rgba(27,61,111,0.08) 0%, rgba(197,151,74,0.1) 100%); display: flex; align-items: center; justify-content: center; color: var(--primary); margin-bottom: 16px; }
+    .cap-card .cap-icon svg { width: 22px; height: 22px; }
+    .cap-card h3 { font-size: 1.1rem; font-weight: 700; color: var(--text); margin-bottom: 8px; }
+    .cap-card p { font-size: 0.9rem; color: var(--text-muted); line-height: 1.6; }
+    .step-num { width: 36px; height: 36px; border-radius: 50%; background: var(--primary); color: #fff; font-weight: 800; font-size: 1rem; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+    .step-content h4 { font-size: 1rem; font-weight: 700; color: var(--text); margin-bottom: 6px; }
+    .step-content p { font-size: 0.92rem; color: var(--text-muted); line-height: 1.6; }
+    .explore-card { background: var(--surface); border: 1px solid var(--border-light); border-radius: var(--radius-sm); padding: 20px 18px; display: flex; align-items: center; gap: 14px; transition: all var(--transition); }
+    .explore-card:hover { border-color: var(--primary); box-shadow: var(--shadow-sm); color: var(--primary); }
+    .explore-card .explore-icon { width: 40px; height: 40px; border-radius: 8px; background: rgba(27,61,111,0.06); display: flex; align-items: center; justify-content: center; color: var(--primary); flex-shrink: 0; }
+    .explore-card .explore-icon i, .explore-card .explore-icon svg { font-size: 1.1rem; width: 20px; height: 20px; }
+    .cta-strip { background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%); padding: 56px 24px; text-align: center; color: #fff; }
+    .cta-strip h2 { font-size: clamp(1.5rem, 2.5vw, 2rem); font-weight: 800; margin-bottom: 10px; }
+    .cta-strip p { font-size: 1rem; opacity: 0.9; margin-bottom: 24px; max-width: 500px; margin-left: auto; margin-right: auto; }
+    .cta-strip .btn-cta { display: inline-flex; align-items: center; gap: 8px; padding: 14px 32px; background: var(--accent); color: #fff; font-weight: 700; font-size: 1rem; border-radius: var(--radius-sm); transition: all var(--transition); box-shadow: 0 4px 14px rgba(0,0,0,0.2); }
+    .cta-strip .btn-cta:hover { transform: translateY(-2px); box-shadow: 0 8px 20px rgba(0,0,0,0.25); filter: brightness(1.05); }
+    footer { background: #111827; color: #9CA3AF; padding: 56px 0 28px; }
+    .footer-grid { display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 36px; margin-bottom: 40px; }
+    .footer-brand .nav-logo { color: #fff; margin-bottom: 12px; display: flex; align-items: center; gap: 8px; }
+    .footer-brand .nav-logo img { height: 40px; width: auto; filter: brightness(0) invert(1); opacity: 0.9; }
+    .footer-brand p { font-size: 0.85rem; line-height: 1.65; max-width: 260px; color: #9CA3AF; }
+    .footer-brand .social-row { display: flex; gap: 8px; margin-top: 16px; }
+    .footer-social { width: 34px; height: 34px; border-radius: 50%; background: rgba(255,255,255,0.08); color: #D1D5DB; display: flex; align-items: center; justify-content: center; font-size: 0.85rem; transition: all var(--transition); }
     .footer-social:hover { background: var(--accent); color: #fff; }
-    .footer-col h4 { font-size: 0.85rem; font-weight: 700; color: #E5E7EB; text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 18px; }
-    .footer-col ul li { margin-bottom: 10px; }
-    .footer-col ul li a { font-size: 0.88rem; color: #9CA3AF; transition: color var(--transition); }
+    .footer-col h4 { font-size: 0.8rem; font-weight: 700; color: #E5E7EB; text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 16px; }
+    .footer-col ul li { margin-bottom: 8px; }
+    .footer-col ul li a { font-size: 0.85rem; color: #9CA3AF; transition: color var(--transition); }
     .footer-col ul li a:hover { color: #fff; }
-    .footer-col ul li span { font-size: 0.88rem; color: #9CA3AF; font-family: var(--font-en); }
-    .footer-bottom { border-top: 1px solid rgba(255,255,255,0.08); padding-top: 28px; display: flex; align-items: center; justify-content: space-between; gap: 12px; flex-wrap: wrap; }
-    .footer-bottom p { font-size: 0.82rem; }
-    html[dir="rtl"] .footer-grid { direction: rtl; }
-    html[dir="rtl"] .footer-brand p { max-width: 100%; }
-    html[dir="rtl"] .footer-bottom { flex-direction: row-reverse; }
-
-    @media (max-width: 768px) { .nav-links, .btn-nav-cta { display: none; } .hamburger { display: block; } .doc-main { padding-top: calc(var(--nav-h) + 32px); padding-bottom: 48px; } .footer-grid { grid-template-columns: 1fr 1fr; } .footer-brand { grid-column: 1 / -1; } }
-    @media (max-width: 480px) { .container { padding: 0 18px; } .doc-table th, .doc-table td { padding: 10px 14px; font-size: 0.88rem; } .footer-grid { grid-template-columns: 1fr; } }
+    .footer-col ul li span { font-size: 0.85rem; color: #9CA3AF; font-family: var(--font-en); }
+    .footer-bottom { border-top: 1px solid rgba(255,255,255,0.08); padding-top: 24px; display: flex; align-items: center; justify-content: space-between; gap: 12px; flex-wrap: wrap; }
+    .footer-bottom p { font-size: 0.78rem; }
+    .reveal { opacity: 0; transform: translateY(24px); transition: opacity 0.5s ease, transform 0.5s ease; }
+    .reveal.visible { opacity: 1; transform: translateY(0); }
+    @media (max-width: 768px) { .nav-links, .btn-nav-cta { display: none; } .hamburger { display: block; } .footer-grid { grid-template-columns: 1fr 1fr; } .footer-brand { grid-column: 1 / -1; } }
+    @media (max-width: 480px) { .container { padding: 0 18px; } .footer-grid { grid-template-columns: 1fr; } }
   </style>
 </head>
 <body>
@@ -114,375 +107,171 @@
         <a href="index.html" class="nav-logo">
           <img src="assets/logo_splash_light.png" alt="Maly OBS Logo" class="nav-logo-desktop" />
           <img src="assets/logo_icon.png" alt="Maly OBS" class="nav-logo-mobile" />
-          <span>Maly&nbsp;-&nbsp;OBS</span>
         </a>
         <div class="nav-links">
           <a href="index.html#features" data-i18n="nav_features">Features</a>
           <a href="index.html#pricing" data-i18n="nav_pricing">Pricing</a>
+          <a href="index.html#faq" data-i18n="nav_faq">FAQ</a>
           <a href="index.html#privacy" data-i18n="nav_privacy">Privacy</a>
           <a href="index.html#contact" data-i18n="nav_contact">Contact</a>
         </div>
         <div class="nav-right">
-          <button class="lang-btn" id="lang-toggle" onclick="toggleLang()">
-            <i class="fa-solid fa-globe"></i>
-            <span id="lang-label">العربية</span>
-          </button>
+          <button class="lang-btn" id="lang-toggle" onclick="toggleLang()"><i class="fa-solid fa-globe"></i><span id="lang-label">العربية</span></button>
           <a href="https://github.com/AdhamSeliman5/Maly-OBS/releases/download/v1.0/Maly-OBS.V1.0.rar" target="_blank" rel="noopener" class="btn-nav-cta" data-i18n="nav_download">Download Now</a>
-          <button class="hamburger" onclick="toggleMenu()" aria-label="Menu"><i class="fa-solid fa-bars" id="hamburger-icon"></i></button>
+          <button class="hamburger" onclick="document.getElementById('mobile-menu').classList.toggle('open')" aria-label="Menu"><i class="fa-solid fa-bars" id="hamburger-icon"></i></button>
         </div>
       </div>
     </div>
     <div class="mobile-menu" id="mobile-menu">
-      <a href="index.html#features" onclick="closeMenu()" data-i18n="nav_features">Features</a>
-      <a href="index.html#pricing" onclick="closeMenu()" data-i18n="nav_pricing">Pricing</a>
-      <a href="index.html#privacy" onclick="closeMenu()" data-i18n="nav_privacy">Privacy</a>
-      <a href="index.html#contact" onclick="closeMenu()" data-i18n="nav_contact">Contact</a>
-      <a href="https://github.com/AdhamSeliman5/Maly-OBS/releases/download/v1.0/Maly-OBS.V1.0.rar" target="_blank" rel="noopener" onclick="closeMenu()" data-i18n="nav_download">Download Now</a>
-      <button class="lang-btn" onclick="toggleLang(); closeMenu();"><i class="fa-solid fa-globe"></i><span id="lang-label-mobile">العربية</span></button>
+      <a href="index.html#features" onclick="document.getElementById('mobile-menu').classList.remove('open')" data-i18n="nav_features">Features</a>
+      <a href="index.html#pricing" onclick="document.getElementById('mobile-menu').classList.remove('open')" data-i18n="nav_pricing">Pricing</a>
+      <a href="index.html#faq" onclick="document.getElementById('mobile-menu').classList.remove('open')" data-i18n="nav_faq">FAQ</a>
+      <a href="index.html#privacy" onclick="document.getElementById('mobile-menu').classList.remove('open')" data-i18n="nav_privacy">Privacy</a>
+      <a href="index.html#contact" onclick="document.getElementById('mobile-menu').classList.remove('open')" data-i18n="nav_contact">Contact</a>
+      <a href="https://github.com/AdhamSeliman5/Maly-OBS/releases/download/v1.0/Maly-OBS.V1.0.rar" target="_blank" rel="noopener" data-i18n="nav_download">Download Now</a>
+      <button class="lang-btn" onclick="toggleLang(); document.getElementById('mobile-menu').classList.remove('open');"><i class="fa-solid fa-globe"></i><span id="lang-label-mobile">العربية</span></button>
     </div>
   </nav>
 
-  <main class="doc-main">
+  <div class="container breadcrumbs">
+    <a href="index.html" data-i18n="breadcrumb_home">Home</a>
+    <span aria-hidden="true">›</span>
+    <a href="index.html#features" data-i18n="breadcrumb_features">Features</a>
+    <span aria-hidden="true">›</span>
+    <span style="color:var(--text); font-weight:600;" data-i18n="reports_breadcrumb">Reports</span>
+  </div>
+
+  <section class="module-hero">
     <div class="container">
-      <div class="doc-inner">
-        <a href="index.html" class="btn-back">
-          <i class="fa-solid fa-arrow-left"></i>
-          <span data-i18n="btn_back">Back to Home</span>
-        </a>
-
-        <header class="doc-header">
-          <span class="doc-badge" data-i18n="doc_badge">User Guide</span>
-          <h1 data-i18n="doc_title">Reports / Financial Intelligence & Partner Distribution</h1>
-          <p class="doc-meta">Maly - OBS (Online Business System) · <span data-i18n="doc_version">Version 1.0</span></p>
-        </header>
-
-        <div class="doc-content">
-          <h2 data-i18n="h2_purpose">Module Purpose</h2>
-          <p data-i18n="purpose_p1">The Reports module provides the financial overview of your business: assets, liabilities, KPIs, partner distribution, and scenario simulation. You see Net Profit, Revenue, Net Equity, Liquidity, ROI, Burn Rate, Runway, and a detailed breakdown of assets and liabilities. A simulation engine lets you adjust delivery rate, pipeline logic (ship all vs ready only), and inventory valuation to explore "what-if" scenarios. Partners are managed with share percentages, capital, injections, withdrawals, and profit distribution. You can export reports to PDF, close financial periods, and execute partner exits with strict payout calculations.</p>
-
-          <h2 data-i18n="h2_ui">UI Elements</h2>
-
-          <h3 data-i18n="h3_header">Header Area</h3>
-          <div class="doc-table-wrapper">
-            <table class="doc-table">
-              <thead><tr><th data-i18n="th_element">Element</th><th data-i18n="th_description">Description</th></tr></thead>
-              <tbody>
-                <tr><td><strong data-i18n="h_title">Title</strong></td><td data-i18n="h_title_desc">"Financial Reports & Intelligence" / "Financial Position & Partner Distribution"</td></tr>
-                <tr><td><strong>Refresh</strong></td><td data-i18n="h_refresh">Icon button — reload all data</td></tr>
-                <tr><td><strong>Export PDF</strong></td><td data-i18n="h_export">Button — generate and open PDF report</td></tr>
-              </tbody>
-            </table>
-          </div>
-
-          <h3 data-i18n="h3_kpi">KPI Cards (8 cards, clickable)</h3>
-          <div class="doc-table-wrapper">
-            <table class="doc-table">
-              <thead><tr><th data-i18n="th_card">Card</th><th data-i18n="th_description">Description</th></tr></thead>
-              <tbody>
-                <tr><td><strong data-i18n="kpi_profit">Net Profit</strong></td><td data-i18n="kpi_profit_desc">Distribution base (adjusted equity − effective capital)</td></tr>
-                <tr><td><strong data-i18n="kpi_revenue">Net Revenue</strong></td><td data-i18n="kpi_revenue_desc">Total revenue (orders + archived)</td></tr>
-                <tr><td><strong data-i18n="kpi_equity">Net Equity</strong></td><td data-i18n="kpi_equity_desc">Assets − Liabilities</td></tr>
-                <tr><td><strong data-i18n="kpi_liquidity">Net Liquidity</strong></td><td data-i18n="kpi_liquidity_desc">Liquid assets − current liabilities</td></tr>
-                <tr><td><strong data-i18n="kpi_margin">Profit Margin</strong></td><td data-i18n="kpi_margin_desc">Net Profit ÷ Revenue × 100</td></tr>
-                <tr><td><strong data-i18n="kpi_roi">ROI</strong></td><td data-i18n="kpi_roi_desc">Net Profit ÷ Opening Capital × 100</td></tr>
-                <tr><td><strong data-i18n="kpi_burn">Burn Rate</strong></td><td data-i18n="kpi_burn_desc">Average monthly operating expenses</td></tr>
-                <tr><td><strong data-i18n="kpi_runway">Runway</strong></td><td data-i18n="kpi_runway_desc">Months of liquidity at current burn rate</td></tr>
-              </tbody>
-            </table>
-          </div>
-
-          <h3 data-i18n="h3_simulation">Simulation Controls</h3>
-          <div class="doc-table-wrapper">
-            <table class="doc-table">
-              <thead><tr><th data-i18n="th_element">Element</th><th data-i18n="th_description">Description</th></tr></thead>
-              <tbody>
-                <tr><td><strong data-i18n="sim_delivery">Delivery Rate</strong></td><td data-i18n="sim_delivery_desc">Slider 0–100% — expected % of orders delivered</td></tr>
-                <tr><td><strong data-i18n="sim_inventory">Inventory Valuation Rate</strong></td><td data-i18n="sim_inventory_desc">Slider 0–100% — inventory value vs book</td></tr>
-                <tr><td><strong data-i18n="sim_pipeline">Pipeline Execution</strong></td><td data-i18n="sim_pipeline_desc">Switch — Ship All Pipeline or Ship Ready Only</td></tr>
-                <tr><td><strong>Settings</strong></td><td data-i18n="sim_settings">Icon — open Simulation Settings (return cost, moderator bonus, packaging cost)</td></tr>
-                <tr><td><strong>Disclaimer</strong></td><td data-i18n="sim_disclaimer">Info icon — simulation disclaimer</td></tr>
-                <tr><td><strong data-i18n="sim_run">Run Simulation</strong></td><td data-i18n="sim_run_desc">Button — apply current settings and recalculate</td></tr>
-                <tr><td><strong>Reset</strong></td><td data-i18n="sim_reset">Button — clear simulation, return to book value</td></tr>
-              </tbody>
-            </table>
-          </div>
-
-          <h3 data-i18n="h3_tabs">Tabs</h3>
-          <div class="doc-table-wrapper">
-            <table class="doc-table">
-              <thead><tr><th data-i18n="th_tab">Tab</th><th data-i18n="th_content">Content</th></tr></thead>
-              <tbody>
-                <tr><td><strong data-i18n="tab_financial">Financial Breakdown</strong></td><td data-i18n="tab_financial_desc">KPIs, simulation controls, Assets/Liabilities tables, Monthly Performance</td></tr>
-                <tr><td><strong data-i18n="tab_partners">Partners & Distribution</strong></td><td data-i18n="tab_partners_desc">Summary cards, share total bar, Partners table, Add Partner</td></tr>
-              </tbody>
-            </table>
-          </div>
-
-          <h3 data-i18n="h3_financial">Financial Breakdown Tab</h3>
-          <div class="doc-table-wrapper">
-            <table class="doc-table">
-              <thead><tr><th data-i18n="th_element">Element</th><th data-i18n="th_description">Description</th></tr></thead>
-              <tbody>
-                <tr><td><strong>Assets</strong></td><td data-i18n="fin_assets">Cash, Inventory, Staff Loans, Receivables, In Shipping, Pipeline, Shipping Ledger (Credit), Fixed Assets (with Exclude toggle)</td></tr>
-                <tr><td><strong>Liabilities</strong></td><td data-i18n="fin_liabilities">Staff Pending, Payables, Restock Cost, Return Penalties, Moderator Bonus, Packaging Cost, Shipping Ledger (Debt)</td></tr>
-                <tr><td><strong data-i18n="fin_toggle">Fixed Assets Toggle</strong></td><td data-i18n="fin_toggle_desc">"Exclude (Liquid Mode)" — removes fixed assets from equity for liquid view</td></tr>
-                <tr><td><strong data-i18n="fin_monthly">Monthly Performance</strong></td><td data-i18n="fin_monthly_desc">Line chart (Revenue vs Expenses), Bar chart (Net diff), sortable table (Month, Revenue, Expenses, Difference)</td></tr>
-              </tbody>
-            </table>
-          </div>
-
-          <h3 data-i18n="h3_partners_tab">Partners Tab</h3>
-          <div class="doc-table-wrapper">
-            <table class="doc-table">
-              <thead><tr><th data-i18n="th_element">Element</th><th data-i18n="th_description">Description</th></tr></thead>
-              <tbody>
-                <tr><td><strong data-i18n="part_total_cap">Total Capital</strong></td><td data-i18n="part_total_cap_desc">Sum of partner initial capital</td></tr>
-                <tr><td><strong data-i18n="part_base">Distribution Base</strong></td><td data-i18n="part_base_desc">Net Profit available for distribution (adjusted equity − effective capital)</td></tr>
-                <tr><td><strong data-i18n="part_shares">Total Shares</strong></td><td data-i18n="part_shares_desc">Progress bar + percentage (green if 100%, red if not)</td></tr>
-                <tr><td><strong data-i18n="part_add">Add Partner</strong></td><td data-i18n="part_add_desc">Button</td></tr>
-                <tr><td><strong data-i18n="part_table">Partners Table</strong></td><td data-i18n="part_table_desc">Name (click for History), Share %, Capital, Profit/Simulated Share, Withdrawals, Injections, Total Equity, Actions</td></tr>
-              </tbody>
-            </table>
-          </div>
-
-          <h3 data-i18n="h3_add_partner">Add Partner Dialog</h3>
-          <div class="doc-table-wrapper">
-            <table class="doc-table">
-              <thead><tr><th data-i18n="th_element">Element</th><th data-i18n="th_description">Description</th></tr></thead>
-              <tbody>
-                <tr><td><strong>Name</strong></td><td data-i18n="add_part_name">Text field — partner name</td></tr>
-                <tr><td><strong>Share %</strong></td><td data-i18n="add_part_share">Text field — ownership percentage</td></tr>
-                <tr><td><strong>Capital</strong></td><td data-i18n="add_part_capital">Text field — initial capital (optional)</td></tr>
-                <tr><td><strong>Note</strong></td><td data-i18n="add_part_note">"Share must be > 0% and total cannot exceed 100%"</td></tr>
-                <tr><td><strong>Save</strong></td><td data-i18n="add_part_save">Button</td></tr>
-              </tbody>
-            </table>
-          </div>
-
-          <h3 data-i18n="h3_exit">Partner Exit Dialog</h3>
-          <div class="doc-table-wrapper">
-            <table class="doc-table">
-              <thead><tr><th data-i18n="th_element">Element</th><th data-i18n="th_description">Description</th></tr></thead>
-              <tbody>
-                <tr><td><strong>Warning</strong></td><td data-i18n="exit_warning">"Partner will be removed and share redistributed to remaining partners."</td></tr>
-                <tr><td><strong data-i18n="exit_fixed">Include Fixed Assets Valuation</strong></td><td data-i18n="exit_fixed_desc">Switch</td></tr>
-                <tr><td><strong data-i18n="exit_inventory">Inventory Liquidation %</strong></td><td data-i18n="exit_inventory_desc">Slider 0–100%</td></tr>
-                <tr><td><strong>Recalculate</strong></td><td data-i18n="exit_recalc">Button — refresh payout with new valuation</td></tr>
-                <tr><td><strong>Breakdown</strong></td><td data-i18n="exit_breakdown">Assets, Liabilities, Partner status, Net Payout Due</td></tr>
-                <tr><td><strong data-i18n="exit_pay_now">Pay Now (from Treasury)</strong></td><td data-i18n="exit_pay_now_desc">Switch — pay immediately or create debt</td></tr>
-                <tr><td><strong>Due Date</strong></td><td data-i18n="exit_due">Date picker — shown when Pay Now is off</td></tr>
-                <tr><td><strong data-i18n="exit_finalize">Finalize Exit & Remove Partner</strong></td><td data-i18n="exit_finalize_desc">Button</td></tr>
-              </tbody>
-            </table>
-          </div>
-
-          <h2 data-i18n="h2_workflow">Step-by-Step Workflow</h2>
-
-          <h3 data-i18n="w1_title">1. View Financial Breakdown</h3>
-          <ul class="doc-list">
-            <li data-i18n="w1_1">Open Financial Breakdown tab (default).</li>
-            <li data-i18n="w1_2">View the 8 KPI cards.</li>
-            <li data-i18n="w1_3">Click any KPI card to open the Breakdown dialog with the formula.</li>
-            <li data-i18n="w1_4">Scroll to see Assets and Liabilities tables.</li>
-            <li data-i18n="w1_5">Toggle Exclude (Liquid Mode) on Fixed Assets to see liquid equity only.</li>
-            <li data-i18n="w1_6">View Monthly Performance charts and table; click column headers to sort.</li>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-10 md:gap-12 items-center">
+        <div>
+          <h1 class="hero-headline" data-i18n="reports_hero_headline">Financial Intelligence &amp; Partner Distribution</h1>
+          <p class="hero-desc" data-i18n="reports_hero_desc">The Reports module provides the financial overview of your business: assets, liabilities, KPIs (Net Profit, Revenue, Net Equity, Liquidity, ROI, Burn Rate, Runway), partner distribution, and scenario simulation. A simulation engine lets you adjust delivery rate, pipeline logic, and inventory valuation. Partners are managed with share percentages, capital, injections, withdrawals, and profit distribution.</p>
+          <ul class="hero-bullets">
+            <li><svg viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg><span data-i18n="reports_bullet_1">8 clickable KPI cards; Assets &amp; Liabilities tables; Monthly Performance charts</span></li>
+            <li><svg viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg><span data-i18n="reports_bullet_2">Simulation: Delivery Rate, Inventory Valuation, Pipeline Execution (Ship All vs Ready Only)</span></li>
+            <li><svg viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg><span data-i18n="reports_bullet_3">Partners: Share %, Capital, Injections, Withdrawals; Close Period; Partner Exit</span></li>
           </ul>
+          <a href="https://github.com/AdhamSeliman5/Maly-OBS/releases/download/v1.0/Maly-OBS.V1.0.rar" target="_blank" rel="noopener" class="btn-module-cta"><i class="fa-solid fa-download"></i><span data-i18n="mod_download_now">Download Now</span></a>
+        </div>
+        <div class="flex justify-center md:justify-end order-first md:order-2">
+          <img src="assets/images/feat-reports.png" alt="Reports module interface" class="w-full max-w-md rounded-xl shadow-lg border border-gray-200/80 object-cover" />
+        </div>
+      </div>
+    </div>
+  </section>
 
-          <h3 data-i18n="w2_title">2. Run a Simulation</h3>
-          <ul class="doc-list">
-            <li data-i18n="w2_1">Adjust Delivery Rate slider (0–100%).</li>
-            <li data-i18n="w2_2">Adjust Inventory Valuation Rate slider (0–100%).</li>
-            <li data-i18n="w2_3">Set Pipeline Execution: Ship All Pipeline or Ship Ready Only.</li>
-            <li data-i18n="w2_4">Optionally click Settings to set return cost, moderator bonus, packaging cost.</li>
-            <li data-i18n="w2_5">Click Run Simulation.</li>
-            <li data-i18n="w2_6">KPIs, assets, liabilities, and Partners table update with simulated values.</li>
-          </ul>
+  <section class="py-16 md:py-20" style="background: var(--surface);">
+    <div class="container">
+      <div class="text-center mb-12">
+        <div class="inline-block text-xs font-bold tracking-widest uppercase text-[var(--accent)] bg-[var(--accent-light)] px-4 py-1.5 rounded-full mb-4" data-i18n="mod_capabilities">Capabilities</div>
+        <h2 class="text-2xl md:text-3xl font-extrabold text-[var(--text)] mb-3" data-i18n="mod_what_you_can_do">What You Can Do</h2>
+        <p class="text-[var(--text-muted)] max-w-xl mx-auto" data-i18n="mod_key_features">Key features at your fingertips.</p>
+      </div>
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+        <div class="cap-card reveal">
+          <div class="cap-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/></svg></div>
+          <h3 data-i18n="reports_cap1_title">Financial Breakdown</h3>
+          <p data-i18n="reports_cap1_desc">Net Profit, Revenue, Net Equity, Liquidity, Profit Margin, ROI, Burn Rate, Runway. Click any KPI for formula breakdown. Assets and Liabilities tables with Exclude Fixed Assets toggle.</p>
+        </div>
+        <div class="cap-card reveal">
+          <div class="cap-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/></svg></div>
+          <h3 data-i18n="reports_cap2_title">Simulation Engine</h3>
+          <p data-i18n="reports_cap2_desc">Adjust Delivery Rate (0–100%), Inventory Valuation Rate, Pipeline Execution (Ship All vs Ready Only). Settings for return cost, moderator bonus, packaging. Run Simulation or Reset to book value.</p>
+        </div>
+        <div class="cap-card reveal">
+          <div class="cap-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75"/></svg></div>
+          <h3 data-i18n="reports_cap3_title">Partners &amp; Distribution</h3>
+          <p data-i18n="reports_cap3_desc">Add partners with Name, Share %, Capital. Track Injections, Withdrawals, Profit Share. Total Shares bar (green at 100%). Edit, Add Transaction, View History. Close Period when shares = 100%.</p>
+        </div>
+        <div class="cap-card reveal">
+          <div class="cap-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg></div>
+          <h3 data-i18n="reports_cap4_title">Partner Exit &amp; PDF Export</h3>
+          <p data-i18n="reports_cap4_desc">Execute partner exit with valuation controls (Fixed Assets, Inventory Liquidation %). Pay Now or create Payable. Export PDF with current KPIs, simulation params, partners, assets/liabilities.</p>
+        </div>
+      </div>
+    </div>
+  </section>
 
-          <h3 data-i18n="w3_title">3. Reset Simulation</h3>
-          <ul class="doc-list">
-            <li data-i18n="w3_1">Click Reset.</li>
-            <li data-i18n="w3_2">Simulation is cleared; values return to book (historical).</li>
-          </ul>
-
-          <h3 data-i18n="w4_title">4. Add a Partner</h3>
-          <ul class="doc-list">
-            <li data-i18n="w4_1">Open Partners & Distribution tab.</li>
-            <li data-i18n="w4_2">Click Add Partner.</li>
-            <li data-i18n="w4_3">Enter Name (required).</li>
-            <li data-i18n="w4_4">Enter Share % (required; must be > 0; total shares cannot exceed 100%).</li>
-            <li data-i18n="w4_5">Enter Capital (optional; initial investment).</li>
-            <li data-i18n="w4_6">Click Save. Success: green snackbar; table refreshes.</li>
-          </ul>
-
-          <h3 data-i18n="w5_title">5. Edit a Partner</h3>
-          <ul class="doc-list">
-            <li data-i18n="w5_1">In Partners table, click Edit (✎) on the row.</li>
-            <li data-i18n="w5_2">Change Name or Share %.</li>
-            <li data-i18n="w5_3">Capital cannot be changed here.</li>
-            <li data-i18n="w5_4">Click Update. Success: green snackbar; table refreshes.</li>
-          </ul>
-
-          <h3 data-i18n="w6_title">6. Add a Partner Transaction</h3>
-          <ul class="doc-list">
-            <li data-i18n="w6_1">In Partners table, click Add Transaction (💳) on the row.</li>
-            <li data-i18n="w6_2">Select Type: Withdrawal, Cash Injection, or Capital Increase.</li>
-            <li data-i18n="w6_3">Enter Amount (required).</li>
-            <li data-i18n="w6_4">Optionally add Notes. Click Save.</li>
-            <li data-i18n="w6_5">Success: green snackbar. Withdrawal requires sufficient treasury.</li>
-          </ul>
-
-          <h3 data-i18n="w7_title">7. View Partner History</h3>
-          <ul class="doc-list">
-            <li data-i18n="w7_1">Click the partner Name in the Partners table.</li>
-            <li data-i18n="w7_2">A dialog shows Injections, Withdrawals, and Profit Share transactions.</li>
-          </ul>
-
-          <h3 data-i18n="w8_title">8. Exit a Partner</h3>
-          <ul class="doc-list">
-            <li data-i18n="w8_1">In Partners table, click Delete (🗑) on the row.</li>
-            <li data-i18n="w8_2">Pre-validation: "Cannot exit the last remaining partner" or "Total shares must equal exactly 100% before executing an exit" if not met.</li>
-            <li data-i18n="w8_3">Partner Exit dialog opens with valuation controls, Recalculate, and breakdown.</li>
-            <li data-i18n="w8_4">Choose Pay Now (from Treasury) or create a Payable (due date required).</li>
-            <li data-i18n="w8_5">Click Finalize Exit & Remove Partner. Success: partner removed; share redistributed.</li>
-          </ul>
-
-          <h3 data-i18n="w9_title">9. Close a Financial Period</h3>
-          <ul class="doc-list">
-            <li data-i18n="w9_1">Use the Close Period action (if available in the UI).</li>
-            <li data-i18n="w9_2">Validates that total shares = 100%.</li>
-            <li data-i18n="w9_3">Archives the period; moves partner dues to Debts; clears partners ledger.</li>
-            <li data-i18n="w9_4">"Cannot Close: Total Shares are X%. Must be 100%." if shares ≠ 100%.</li>
-          </ul>
-
-          <h3 data-i18n="w10_title">10. Export to PDF</h3>
-          <ul class="doc-list">
-            <li data-i18n="w10_1">Click Export PDF in the header.</li>
-            <li data-i18n="w10_2">A PDF report is generated and opens.</li>
-            <li data-i18n="w10_3">Report includes current KPIs, simulation params (if active), partners, assets/liabilities.</li>
-            <li data-i18n="w10_4">Saved to a fixed path (e.g., Desktop/Reports/Financial report). Success: "PDF saved to [path]" (green).</li>
-          </ul>
-
-          <h2 data-i18n="h2_rules">Business Rules & Validations</h2>
-
-          <h3 data-i18n="r_partners">Partners</h3>
-          <div class="doc-table-wrapper">
-            <table class="doc-table">
-              <thead><tr><th data-i18n="th_rule">Rule</th><th data-i18n="th_result">Result</th></tr></thead>
-              <tbody>
-                <tr><td data-i18n="r_name_req">Name required</td><td data-i18n="r_name_req_res">Dialog stays open</td></tr>
-                <tr><td data-i18n="r_share_req">Share % required</td><td data-i18n="r_share_req_res">Dialog stays open</td></tr>
-                <tr><td data-i18n="r_share_gt0">Share > 0</td><td data-i18n="r_share_gt0_res">"Share must be > 0% and total cannot exceed 100%" (note in UI)</td></tr>
-                <tr><td data-i18n="r_total_100">Total shares ≤ 100%</td><td data-i18n="r_total_100_res">Add/Edit may fail if exceeded</td></tr>
-                <tr><td data-i18n="r_capital">Capital</td><td data-i18n="r_capital_res">Optional; if > 0, recorded as Income (Capital Injection)</td></tr>
-              </tbody>
-            </table>
+  <section class="py-16 md:py-20">
+    <div class="container">
+      <div class="text-center mb-12">
+        <div class="inline-block text-xs font-bold tracking-widest uppercase text-[var(--accent)] bg-[var(--accent-light)] px-4 py-1.5 rounded-full mb-4" data-i18n="mod_workflow">Workflow</div>
+        <h2 class="text-2xl md:text-3xl font-extrabold text-[var(--text)] mb-3" data-i18n="reports_workflow_title">How It Works</h2>
+        <p class="text-[var(--text-muted)] max-w-xl mx-auto" data-i18n="mod_get_started">Get started in minutes.</p>
+      </div>
+      <div class="max-w-2xl mx-auto space-y-8">
+        <div class="flex gap-5 items-start reveal">
+          <div class="step-num">1</div>
+          <div class="step-content">
+            <h4 data-i18n="reports_step1_title">View Financial Breakdown</h4>
+            <p data-i18n="reports_step1_desc">Open Financial Breakdown tab. View the 8 KPI cards—click any to see the formula. Scroll to Assets and Liabilities tables. Toggle Exclude (Liquid Mode) on Fixed Assets. View Monthly Performance charts and sortable table.</p>
           </div>
-
-          <h3 data-i18n="r_exit">Partner Exit</h3>
-          <div class="doc-table-wrapper">
-            <table class="doc-table">
-              <thead><tr><th data-i18n="th_rule">Rule</th><th data-i18n="th_result">Result</th></tr></thead>
-              <tbody>
-                <tr><td data-i18n="r_last_partner">Last partner</td><td data-i18n="r_last_partner_res">"Cannot exit the last remaining partner."</td></tr>
-                <tr><td data-i18n="r_shares_100">Total shares ≠ 100%</td><td data-i18n="r_shares_100_res">"Total shares must equal exactly 100% before executing an exit."</td></tr>
-                <tr><td data-i18n="r_pay_now">Pay Now</td><td data-i18n="r_pay_now_res">Treasury must be sufficient</td></tr>
-                <tr><td data-i18n="r_pay_debt">Pay as debt</td><td data-i18n="r_pay_debt_res">Due date required; "Provide due date" if missing</td></tr>
-              </tbody>
-            </table>
+        </div>
+        <div class="flex gap-5 items-start reveal">
+          <div class="step-num">2</div>
+          <div class="step-content">
+            <h4 data-i18n="reports_step2_title">Run a Simulation</h4>
+            <p data-i18n="reports_step2_desc">Adjust Delivery Rate and Inventory Valuation sliders. Set Pipeline Execution: Ship All Pipeline or Ship Ready Only. Optionally open Settings for return cost, moderator bonus, packaging. Click Run Simulation. KPIs and partners update with simulated values.</p>
           </div>
-
-          <h3 data-i18n="r_close">Close Period</h3>
-          <div class="doc-table-wrapper">
-            <table class="doc-table">
-              <thead><tr><th data-i18n="th_rule">Rule</th><th data-i18n="th_result">Result</th></tr></thead>
-              <tbody>
-                <tr><td data-i18n="r_close_shares">Total shares ≠ 100%</td><td data-i18n="r_close_shares_res">"Cannot Close: Total Shares are X%. Must be 100%."</td></tr>
-                <tr><td data-i18n="r_close_ok">Success</td><td data-i18n="r_close_ok_res">Period archived; partner dues moved to Debts</td></tr>
-              </tbody>
-            </table>
+        </div>
+        <div class="flex gap-5 items-start reveal">
+          <div class="step-num">3</div>
+          <div class="step-content">
+            <h4 data-i18n="reports_step3_title">Add &amp; Manage Partners</h4>
+            <p data-i18n="reports_step3_desc">Open Partners &amp; Distribution. Click Add Partner. Enter Name, Share % (total ≤ 100%), optional Capital. Save. Edit Share %. Add Transaction: Withdrawal, Cash Injection, or Capital Increase. Click partner Name for History. Total Shares must equal 100% before Close or Exit.</p>
           </div>
-
-          <h2 data-i18n="h2_messages">Messages & Alerts</h2>
-          <div class="doc-table-wrapper">
-            <table class="doc-table">
-              <thead><tr><th data-i18n="th_situation">Situation</th><th data-i18n="th_message">Message</th></tr></thead>
-              <tbody>
-                <tr><td data-i18n="m_added">Partner added</td><td data-i18n="m_added_msg">"Partner added" (green)</td></tr>
-                <tr><td data-i18n="m_updated">Partner updated</td><td data-i18n="m_updated_msg">"Partner Updated" (green)</td></tr>
-                <tr><td data-i18n="m_transaction">Transaction added</td><td data-i18n="m_transaction_msg">Success (green)</td></tr>
-                <tr><td data-i18n="m_exit">Partner exit success</td><td data-i18n="m_exit_msg">"Partner Exit Executed" (green)</td></tr>
-                <tr><td data-i18n="m_period">Period closed</td><td data-i18n="m_period_msg">"Period Closed Successfully. Profits moved to Debts." (green)</td></tr>
-                <tr><td data-i18n="m_last_partner">Last partner exit</td><td data-i18n="m_last_partner_msg">"Cannot exit the last remaining partner." (red)</td></tr>
-                <tr><td data-i18n="m_shares_100">Shares not 100%</td><td data-i18n="m_shares_100_msg">"Total shares must equal exactly 100% before executing an exit." (red)</td></tr>
-                <tr><td data-i18n="m_close_shares">Close period shares</td><td data-i18n="m_close_shares_msg">"Cannot Close: Total Shares are X%. Must be 100%." (red)</td></tr>
-                <tr><td data-i18n="m_not_found">Partner not found</td><td data-i18n="m_not_found_msg">"Partner not found" (red)</td></tr>
-                <tr><td data-i18n="m_treasury">Treasury insufficient</td><td data-i18n="m_treasury_msg">"Insufficient treasury balance. (Current: X.XX)" (red)</td></tr>
-                <tr><td data-i18n="m_due_date">Provide due date</td><td data-i18n="m_due_date_msg">"Provide due date" (red)</td></tr>
-                <tr><td data-i18n="m_pdf">PDF saved</td><td data-i18n="m_pdf_msg">"PDF saved to [path]" (green)</td></tr>
-              </tbody>
-            </table>
-          </div>
-
-          <h2 data-i18n="h2_tips">Tips</h2>
-          <div class="callout callout-tip">
-            <i class="fa-solid fa-lightbulb"></i>
-            <div class="callout-content">
-              <ul class="doc-list" style="margin-bottom:0;">
-                <li data-i18n="tip1">Click KPI cards to see the exact formula and components (Explainable BI).</li>
-                <li data-i18n="tip2">Simulation is indicative; delivery rate affects revenue; return/mod bonus/packaging use order counts from settings.</li>
-                <li data-i18n="tip3">Distribution Base = what can be distributed to partners (after effective capital).</li>
-                <li data-i18n="tip4">Total Shares bar: green when 100%; red when not — fix before closing or exiting.</li>
-                <li data-i18n="tip5">Partner Exit uses book value for payout; simulation does not affect exit math.</li>
-                <li data-i18n="tip6">Exclude Fixed Assets shows liquid equity only (no fixed assets in assets total).</li>
-                <li data-i18n="tip7">Monthly Performance shows last 12 months; sort by clicking column headers.</li>
-                <li data-i18n="tip8">Export PDF uses current view (simulated or book) and includes report parameters.</li>
-                <li data-i18n="tip9">Capital in Edit Partner is read-only; use Capital Increase transaction to add.</li>
-                <li data-i18n="tip10">Company Treasury can hold shares when a partner exits (shares transferred to keep total at 100%).</li>
-              </ul>
-            </div>
+        </div>
+        <div class="flex gap-5 items-start reveal">
+          <div class="step-num">4</div>
+          <div class="step-content">
+            <h4 data-i18n="reports_step4_title">Close Period or Exit Partner</h4>
+            <p data-i18n="reports_step4_desc">Close Period archives the period and moves partner dues to Debts (requires shares = 100%). For partner exit: click Delete, set valuation (Fixed Assets, Inventory %), Recalculate, choose Pay Now or create Payable with due date. Finalize Exit. Export PDF for full report.</p>
           </div>
         </div>
       </div>
     </div>
-  </main>
+  </section>
+
+  <section class="py-16 md:py-20" style="background: var(--surface);">
+    <div class="container">
+      <div class="text-center mb-12">
+        <div class="inline-block text-xs font-bold tracking-widest uppercase text-[var(--accent)] bg-[var(--accent-light)] px-4 py-1.5 rounded-full mb-4" data-i18n="mod_explore">Explore</div>
+        <h2 class="text-2xl md:text-3xl font-extrabold text-[var(--text)] mb-3" data-i18n="mod_other_modules">Other Modules</h2>
+        <p class="text-[var(--text-muted)] max-w-xl mx-auto" data-i18n="mod_discover_more">Discover more of what Maly - OBS can do.</p>
+      </div>
+      <div class="grid grid-cols-1 sm:grid-cols-3 gap-5">
+        <a href="debts.html" class="explore-card"><div class="explore-icon"><i class="fa-solid fa-scale-balanced"></i></div><span class="font-semibold" data-i18n="explore_debts">Debts</span></a>
+        <a href="dashboard.html" class="explore-card"><div class="explore-icon"><i class="fa-solid fa-chart-line"></i></div><span class="font-semibold" data-i18n="explore_dashboard">Dashboard</span></a>
+        <a href="expenses.html" class="explore-card"><div class="explore-icon"><i class="fa-solid fa-wallet"></i></div><span class="font-semibold" data-i18n="explore_expenses">Expenses</span></a>
+      </div>
+    </div>
+  </section>
+
+  <section class="cta-strip">
+    <div class="container">
+      <h2 data-i18n="mod_cta_headline">Ready to Own Your Numbers?</h2>
+      <p data-i18n="reports_cta_sub">Download Maly - OBS now and manage Reports along with 10 more modules. 1 week free trial—no credit card required.</p>
+      <a href="https://github.com/AdhamSeliman5/Maly-OBS/releases/download/v1.0/Maly-OBS.V1.0.rar" target="_blank" rel="noopener" class="btn-cta"><i class="fa-solid fa-download"></i><span data-i18n="mod_download_now">Download Now</span></a>
+    </div>
+  </section>
 
   <footer>
     <div class="container">
       <div class="footer-grid">
         <div class="footer-brand">
-          <div class="nav-logo" style="color:#fff; margin-bottom:14px; display:flex; align-items:center; gap:10px;">
-            <img src="assets/logo_splash_light.png" alt="Maly OBS" />
-            <span>Maly&nbsp;-&nbsp;OBS</span>
-          </div>
+          <a href="index.html" class="nav-logo"><img src="assets/logo_splash_light.png" alt="Maly OBS" /></a>
           <p data-i18n="footer_tagline">The smartest way to run your e-commerce business in Egypt.</p>
           <div class="social-row">
-            <a href="https://www.linkedin.com/company/maly-obs/" target="_blank" rel="noopener" class="footer-social"><i class="fa-brands fa-linkedin-in"></i></a>
-            <a href="https://www.facebook.com/MalyOBS" target="_blank" rel="noopener" class="footer-social"><i class="fa-brands fa-facebook-f"></i></a>
-            <a href="https://www.youtube.com/@Maly-OBS" target="_blank" rel="noopener" class="footer-social"><i class="fa-brands fa-youtube"></i></a>
-            <a href="https://wa.me/201100028752" target="_blank" rel="noopener" class="footer-social"><i class="fa-brands fa-whatsapp"></i></a>
+            <a href="https://www.linkedin.com/company/maly-obs/" target="_blank" rel="noopener" class="footer-social" aria-label="LinkedIn"><i class="fa-brands fa-linkedin-in"></i></a>
+            <a href="https://www.facebook.com/MalyOBS" target="_blank" rel="noopener" class="footer-social" aria-label="Facebook"><i class="fa-brands fa-facebook-f"></i></a>
+            <a href="https://www.youtube.com/@Maly-OBS" target="_blank" rel="noopener" class="footer-social" aria-label="YouTube"><i class="fa-brands fa-youtube"></i></a>
+            <a href="https://wa.me/201100028752" target="_blank" rel="noopener" class="footer-social" aria-label="WhatsApp"><i class="fa-brands fa-whatsapp"></i></a>
           </div>
         </div>
-        <div class="footer-col">
-          <h4 data-i18n="footer_nav">Navigate</h4>
-          <ul>
-            <li><a href="index.html#features" data-i18n="nav_features">Features</a></li>
-            <li><a href="index.html#pricing" data-i18n="nav_pricing">Pricing</a></li>
-            <li><a href="index.html#privacy" data-i18n="nav_privacy">Privacy</a></li>
-            <li><a href="index.html#contact" data-i18n="nav_contact">Contact</a></li>
-          </ul>
-        </div>
-        <div class="footer-col">
-          <h4 data-i18n="footer_contact_hd">Contact</h4>
-          <ul>
-            <li><span>asoliman548@gmail.com</span></li>
-            <li><span>01100028752</span></li>
-            <li><span data-i18n="footer_location">Cairo, Egypt</span></li>
-          </ul>
-        </div>
-        <div class="footer-col">
-          <h4 data-i18n="footer_legal">Legal</h4>
-          <ul><li><a href="index.html#privacy" data-i18n="footer_privacy_link">Privacy Policy</a></li></ul>
-        </div>
+        <div class="footer-col"><h4 data-i18n="footer_nav">Navigate</h4><ul><li><a href="index.html#features" data-i18n="nav_features">Features</a></li><li><a href="index.html#pricing" data-i18n="nav_pricing">Pricing</a></li><li><a href="index.html#faq" data-i18n="nav_faq">FAQ</a></li><li><a href="index.html#privacy" data-i18n="nav_privacy">Privacy</a></li><li><a href="index.html#contact" data-i18n="nav_contact">Contact</a></li></ul></div>
+        <div class="footer-col"><h4 data-i18n="footer_contact">Contact</h4><ul><li><span>asoliman548@gmail.com</span></li><li><span>01100028752</span></li><li><span data-i18n="footer_location">Cairo, Egypt</span></li></ul></div>
+        <div class="footer-col"><h4 data-i18n="footer_legal">Legal</h4><ul><li><a href="index.html#privacy" data-i18n="footer_privacy">Privacy Policy</a></li></ul></div>
       </div>
       <div class="footer-bottom">
         <p data-i18n="footer_copy">© 2026 Maly Systems. All rights reserved.</p>
@@ -491,265 +280,50 @@
     </div>
   </footer>
 
+  <script src="js/i18n-modules.js"></script>
   <script>
-    const T = {
+    MalyI18n.init({
       en: {
-        btn_back: "Back to Home", doc_badge: "User Guide", doc_title: "Reports / Financial Intelligence & Partner Distribution", doc_version: "Version 1.0",
-        nav_features: "Features", nav_pricing: "Pricing", nav_privacy: "Privacy", nav_contact: "Contact", nav_download: "Download Now",
-        footer_tagline: "The smartest way to run your e-commerce business in Egypt.",
-        footer_nav: "Navigate", footer_contact_hd: "Contact", footer_legal: "Legal", footer_privacy_link: "Privacy Policy", footer_location: "Cairo, Egypt", footer_copy: "© 2026 Maly Systems. All rights reserved.",
-        h2_purpose: "Module Purpose", h2_ui: "UI Elements", h2_workflow: "Step-by-Step Workflow", h2_rules: "Business Rules & Validations", h2_messages: "Messages & Alerts", h2_tips: "Tips",
-        th_element: "Element", th_description: "Description", th_card: "Card", th_tab: "Tab", th_content: "Content", th_rule: "Rule", th_result: "Result", th_situation: "Situation", th_message: "Message",
-        purpose_p1: "The Reports module provides the financial overview of your business: assets, liabilities, KPIs, partner distribution, and scenario simulation. You see Net Profit, Revenue, Net Equity, Liquidity, ROI, Burn Rate, Runway, and a detailed breakdown of assets and liabilities. A simulation engine lets you adjust delivery rate, pipeline logic (ship all vs ready only), and inventory valuation to explore \"what-if\" scenarios. Partners are managed with share percentages, capital, injections, withdrawals, and profit distribution. You can export reports to PDF, close financial periods, and execute partner exits with strict payout calculations.",
-        h3_header: "Header Area", h3_kpi: "KPI Cards (8 cards, clickable)", h3_simulation: "Simulation Controls", h3_tabs: "Tabs",
-        h3_financial: "Financial Breakdown Tab", h3_partners_tab: "Partners Tab", h3_add_partner: "Add Partner Dialog", h3_exit: "Partner Exit Dialog",
-        h_title: "Title", h_title_desc: "\"Financial Reports & Intelligence\" / \"Financial Position & Partner Distribution\"",
-        h_refresh: "Icon button — reload all data", h_export: "Button — generate and open PDF report",
-        kpi_profit: "Net Profit", kpi_profit_desc: "Distribution base (adjusted equity − effective capital)",
-        kpi_revenue: "Net Revenue", kpi_revenue_desc: "Total revenue (orders + archived)",
-        kpi_equity: "Net Equity", kpi_equity_desc: "Assets − Liabilities",
-        kpi_liquidity: "Net Liquidity", kpi_liquidity_desc: "Liquid assets − current liabilities",
-        kpi_margin: "Profit Margin", kpi_margin_desc: "Net Profit ÷ Revenue × 100",
-        kpi_roi: "ROI", kpi_roi_desc: "Net Profit ÷ Opening Capital × 100",
-        kpi_burn: "Burn Rate", kpi_burn_desc: "Average monthly operating expenses",
-        kpi_runway: "Runway", kpi_runway_desc: "Months of liquidity at current burn rate",
-        sim_delivery: "Delivery Rate", sim_delivery_desc: "Slider 0–100% — expected % of orders delivered",
-        sim_inventory: "Inventory Valuation Rate", sim_inventory_desc: "Slider 0–100% — inventory value vs book",
-        sim_pipeline: "Pipeline Execution", sim_pipeline_desc: "Switch — Ship All Pipeline or Ship Ready Only",
-        sim_settings: "Icon — open Simulation Settings (return cost, moderator bonus, packaging cost)",
-        sim_disclaimer: "Info icon — simulation disclaimer",
-        sim_run: "Run Simulation", sim_run_desc: "Button — apply current settings and recalculate",
-        sim_reset: "Button — clear simulation, return to book value",
-        tab_financial: "Financial Breakdown", tab_financial_desc: "KPIs, simulation controls, Assets/Liabilities tables, Monthly Performance",
-        tab_partners: "Partners & Distribution", tab_partners_desc: "Summary cards, share total bar, Partners table, Add Partner",
-        fin_assets: "Cash, Inventory, Staff Loans, Receivables, In Shipping, Pipeline, Shipping Ledger (Credit), Fixed Assets (with Exclude toggle)",
-        fin_liabilities: "Staff Pending, Payables, Restock Cost, Return Penalties, Moderator Bonus, Packaging Cost, Shipping Ledger (Debt)",
-        fin_toggle: "Fixed Assets Toggle", fin_toggle_desc: "\"Exclude (Liquid Mode)\" — removes fixed assets from equity for liquid view",
-        fin_monthly: "Monthly Performance", fin_monthly_desc: "Line chart (Revenue vs Expenses), Bar chart (Net diff), sortable table (Month, Revenue, Expenses, Difference)",
-        part_total_cap: "Total Capital", part_total_cap_desc: "Sum of partner initial capital",
-        part_base: "Distribution Base", part_base_desc: "Net Profit available for distribution (adjusted equity − effective capital)",
-        part_shares: "Total Shares", part_shares_desc: "Progress bar + percentage (green if 100%, red if not)",
-        part_add: "Add Partner", part_add_desc: "Button",
-        part_table: "Partners Table", part_table_desc: "Name (click for History), Share %, Capital, Profit/Simulated Share, Withdrawals, Injections, Total Equity, Actions",
-        add_part_name: "Text field — partner name", add_part_share: "Text field — ownership percentage",
-        add_part_capital: "Text field — initial capital (optional)",
-        add_part_note: "\"Share must be > 0% and total cannot exceed 100%\"",
-        add_part_save: "Button",
-        exit_warning: "\"Partner will be removed and share redistributed to remaining partners.\"",
-        exit_fixed: "Include Fixed Assets Valuation", exit_fixed_desc: "Switch",
-        exit_inventory: "Inventory Liquidation %", exit_inventory_desc: "Slider 0–100%",
-        exit_recalc: "Button — refresh payout with new valuation",
-        exit_breakdown: "Assets, Liabilities, Partner status, Net Payout Due",
-        exit_pay_now: "Pay Now (from Treasury)", exit_pay_now_desc: "Switch — pay immediately or create debt",
-        exit_due: "Date picker — shown when Pay Now is off",
-        exit_finalize: "Finalize Exit & Remove Partner", exit_finalize_desc: "Button",
-        w1_title: "1. View Financial Breakdown", w1_1: "Open Financial Breakdown tab (default).", w1_2: "View the 8 KPI cards.",
-        w1_3: "Click any KPI card to open the Breakdown dialog with the formula.", w1_4: "Scroll to see Assets and Liabilities tables.",
-        w1_5: "Toggle Exclude (Liquid Mode) on Fixed Assets to see liquid equity only.", w1_6: "View Monthly Performance charts and table; click column headers to sort.",
-        w2_title: "2. Run a Simulation", w2_1: "Adjust Delivery Rate slider (0–100%).", w2_2: "Adjust Inventory Valuation Rate slider (0–100%).",
-        w2_3: "Set Pipeline Execution: Ship All Pipeline or Ship Ready Only.", w2_4: "Optionally click Settings to set return cost, moderator bonus, packaging cost.",
-        w2_5: "Click Run Simulation.", w2_6: "KPIs, assets, liabilities, and Partners table update with simulated values.",
-        w3_title: "3. Reset Simulation", w3_1: "Click Reset.", w3_2: "Simulation is cleared; values return to book (historical).",
-        w4_title: "4. Add a Partner", w4_1: "Open Partners & Distribution tab.", w4_2: "Click Add Partner.", w4_3: "Enter Name (required).",
-        w4_4: "Enter Share % (required; must be > 0; total shares cannot exceed 100%).", w4_5: "Enter Capital (optional; initial investment).",
-        w4_6: "Click Save. Success: green snackbar; table refreshes.",
-        w5_title: "5. Edit a Partner", w5_1: "In Partners table, click Edit (✎) on the row.", w5_2: "Change Name or Share %.",
-        w5_3: "Capital cannot be changed here.", w5_4: "Click Update. Success: green snackbar; table refreshes.",
-        w6_title: "6. Add a Partner Transaction", w6_1: "In Partners table, click Add Transaction (💳) on the row.",
-        w6_2: "Select Type: Withdrawal, Cash Injection, or Capital Increase.", w6_3: "Enter Amount (required).",
-        w6_4: "Optionally add Notes. Click Save.", w6_5: "Success: green snackbar. Withdrawal requires sufficient treasury.",
-        w7_title: "7. View Partner History", w7_1: "Click the partner Name in the Partners table.", w7_2: "A dialog shows Injections, Withdrawals, and Profit Share transactions.",
-        w8_title: "8. Exit a Partner", w8_1: "In Partners table, click Delete (🗑) on the row.",
-        w8_2: "Pre-validation: \"Cannot exit the last remaining partner\" or \"Total shares must equal exactly 100% before executing an exit\" if not met.",
-        w8_3: "Partner Exit dialog opens with valuation controls, Recalculate, and breakdown.",
-        w8_4: "Choose Pay Now (from Treasury) or create a Payable (due date required).",
-        w8_5: "Click Finalize Exit & Remove Partner. Success: partner removed; share redistributed.",
-        w9_title: "9. Close a Financial Period", w9_1: "Use the Close Period action (if available in the UI).",
-        w9_2: "Validates that total shares = 100%.", w9_3: "Archives the period; moves partner dues to Debts; clears partners ledger.",
-        w9_4: "\"Cannot Close: Total Shares are X%. Must be 100%.\" if shares ≠ 100%.",
-        w10_title: "10. Export to PDF", w10_1: "Click Export PDF in the header.", w10_2: "A PDF report is generated and opens.",
-        w10_3: "Report includes current KPIs, simulation params (if active), partners, assets/liabilities.",
-        w10_4: "Saved to a fixed path (e.g., Desktop/Reports/Financial report). Success: \"PDF saved to [path]\" (green).",
-        r_partners: "Partners", r_name_req: "Name required", r_name_req_res: "Dialog stays open",
-        r_share_req: "Share % required", r_share_req_res: "Dialog stays open",
-        r_share_gt0: "Share > 0", r_share_gt0_res: "\"Share must be > 0% and total cannot exceed 100%\" (note in UI)",
-        r_total_100: "Total shares ≤ 100%", r_total_100_res: "Add/Edit may fail if exceeded",
-        r_capital: "Capital", r_capital_res: "Optional; if > 0, recorded as Income (Capital Injection)",
-        r_exit: "Partner Exit", r_last_partner: "Last partner", r_last_partner_res: "\"Cannot exit the last remaining partner.\"",
-        r_shares_100: "Total shares ≠ 100%", r_shares_100_res: "\"Total shares must equal exactly 100% before executing an exit.\"",
-        r_pay_now: "Pay Now", r_pay_now_res: "Treasury must be sufficient",
-        r_pay_debt: "Pay as debt", r_pay_debt_res: "Due date required; \"Provide due date\" if missing",
-        r_close: "Close Period", r_close_shares: "Total shares ≠ 100%", r_close_shares_res: "\"Cannot Close: Total Shares are X%. Must be 100%.\"",
-        r_close_ok: "Success", r_close_ok_res: "Period archived; partner dues moved to Debts",
-        m_added: "Partner added", m_added_msg: "\"Partner added\" (green)",
-        m_updated: "Partner updated", m_updated_msg: "\"Partner Updated\" (green)",
-        m_transaction: "Transaction added", m_transaction_msg: "Success (green)",
-        m_exit: "Partner exit success", m_exit_msg: "\"Partner Exit Executed\" (green)",
-        m_period: "Period closed", m_period_msg: "\"Period Closed Successfully. Profits moved to Debts.\" (green)",
-        m_last_partner: "Last partner exit", m_last_partner_msg: "\"Cannot exit the last remaining partner.\" (red)",
-        m_shares_100: "Shares not 100%", m_shares_100_msg: "\"Total shares must equal exactly 100% before executing an exit.\" (red)",
-        m_close_shares: "Close period shares", m_close_shares_msg: "\"Cannot Close: Total Shares are X%. Must be 100%.\" (red)",
-        m_not_found: "Partner not found", m_not_found_msg: "\"Partner not found\" (red)",
-        m_treasury: "Treasury insufficient", m_treasury_msg: "\"Insufficient treasury balance. (Current: X.XX)\" (red)",
-        m_due_date: "Provide due date", m_due_date_msg: "\"Provide due date\" (red)",
-        m_pdf: "PDF saved", m_pdf_msg: "\"PDF saved to [path]\" (green)",
-        tip1: "Click KPI cards to see the exact formula and components (Explainable BI).",
-        tip2: "Simulation is indicative; delivery rate affects revenue; return/mod bonus/packaging use order counts from settings.",
-        tip3: "Distribution Base = what can be distributed to partners (after effective capital).",
-        tip4: "Total Shares bar: green when 100%; red when not — fix before closing or exiting.",
-        tip5: "Partner Exit uses book value for payout; simulation does not affect exit math.",
-        tip6: "Exclude Fixed Assets shows liquid equity only (no fixed assets in assets total).",
-        tip7: "Monthly Performance shows last 12 months; sort by clicking column headers.",
-        tip8: "Export PDF uses current view (simulated or book) and includes report parameters.",
-        tip9: "Capital in Edit Partner is read-only; use Capital Increase transaction to add.",
-        tip10: "Company Treasury can hold shares when a partner exits (shares transferred to keep total at 100%)."
+        reports_breadcrumb: "Reports",
+        reports_hero_headline: "Financial Intelligence & Partner Distribution",
+        reports_hero_desc: "The Reports module provides the financial overview of your business: assets, liabilities, KPIs (Net Profit, Revenue, Net Equity, Liquidity, ROI, Burn Rate, Runway), partner distribution, and scenario simulation. A simulation engine lets you adjust delivery rate, pipeline logic, and inventory valuation. Partners are managed with share percentages, capital, injections, withdrawals, and profit distribution.",
+        reports_bullet_1: "8 clickable KPI cards; Assets & Liabilities tables; Monthly Performance charts",
+        reports_bullet_2: "Simulation: Delivery Rate, Inventory Valuation, Pipeline Execution (Ship All vs Ready Only)",
+        reports_bullet_3: "Partners: Share %, Capital, Injections, Withdrawals; Close Period; Partner Exit",
+        reports_cap1_title: "Financial Breakdown", reports_cap1_desc: "Net Profit, Revenue, Net Equity, Liquidity, Profit Margin, ROI, Burn Rate, Runway. Click any KPI for formula breakdown. Assets and Liabilities tables with Exclude Fixed Assets toggle.",
+        reports_cap2_title: "Simulation Engine", reports_cap2_desc: "Adjust Delivery Rate (0–100%), Inventory Valuation Rate, Pipeline Execution (Ship All vs Ready Only). Settings for return cost, moderator bonus, packaging. Run Simulation or Reset to book value.",
+        reports_cap3_title: "Partners & Distribution", reports_cap3_desc: "Add partners with Name, Share %, Capital. Track Injections, Withdrawals, Profit Share. Total Shares bar (green at 100%). Edit, Add Transaction, View History. Close Period when shares = 100%.",
+        reports_cap4_title: "Partner Exit & PDF Export", reports_cap4_desc: "Execute partner exit with valuation controls (Fixed Assets, Inventory Liquidation %). Pay Now or create Payable. Export PDF with current KPIs, simulation params, partners, assets/liabilities.",
+        reports_workflow_title: "How It Works",
+        reports_step1_title: "View Financial Breakdown", reports_step1_desc: "Open Financial Breakdown tab. View the 8 KPI cards—click any to see the formula. Scroll to Assets and Liabilities tables. Toggle Exclude (Liquid Mode) on Fixed Assets. View Monthly Performance charts and sortable table.",
+        reports_step2_title: "Run a Simulation", reports_step2_desc: "Adjust Delivery Rate and Inventory Valuation sliders. Set Pipeline Execution: Ship All Pipeline or Ship Ready Only. Optionally open Settings for return cost, moderator bonus, packaging. Click Run Simulation. KPIs and partners update with simulated values.",
+        reports_step3_title: "Add & Manage Partners", reports_step3_desc: "Open Partners & Distribution. Click Add Partner. Enter Name, Share % (total ≤ 100%), optional Capital. Save. Edit Share %. Add Transaction: Withdrawal, Cash Injection, or Capital Increase. Click partner Name for History. Total Shares must equal 100% before Close or Exit.",
+        reports_step4_title: "Close Period or Exit Partner", reports_step4_desc: "Close Period archives the period and moves partner dues to Debts (requires shares = 100%). For partner exit: click Delete, set valuation (Fixed Assets, Inventory %), Recalculate, choose Pay Now or create Payable with due date. Finalize Exit. Export PDF for full report.",
+        reports_cta_sub: "Download Maly - OBS now and manage Reports along with 10 more modules. 1 week free trial—no credit card required.",
       },
       ar: {
-        btn_back: "العودة للرئيسية", doc_badge: "دليل المستخدم", doc_title: "التقارير / الذكاء المالي وتوزيع الشركاء", doc_version: "الإصدار ١.٠",
-        nav_features: "المميزات", nav_pricing: "الأسعار", nav_privacy: "الخصوصية", nav_contact: "تواصل معنا", nav_download: "تحميل الآن",
-        footer_tagline: "الطريقة الأذكى لإدارة أعمالك في التجارة الإلكترونية.",
-        footer_nav: "التنقل", footer_contact_hd: "تواصل معنا", footer_legal: "قانوني", footer_privacy_link: "سياسة الخصوصية", footer_location: "القاهرة، مصر", footer_copy: "© ٢٠٢٦ مالي سيستمز. جميع الحقوق محفوظة.",
-        h2_purpose: "نبذة عن الموديول", h2_ui: "عناصر الواجهة", h2_workflow: "خطوات العمل", h2_rules: "قواعد العمل والتحقق", h2_messages: "الرسائل والتنبيهات", h2_tips: "نصائح",
-        th_element: "العنصر", th_description: "الوصف", th_card: "البطاقة", th_tab: "التبويب", th_content: "المحتوى", th_rule: "القاعدة", th_result: "النتيجة", th_situation: "الموقف", th_message: "الرسالة",
-        purpose_p1: "وحدة التقارير تقدم نظرة مالية شاملة على مشروعك: الأصول، الالتزامات، المؤشرات، توزيع الشركاء، ومحاكاة السيناريوهات. ترى صافي الربح، الإيرادات، صافي حقوق الملكية، السيولة، العائد على الاستثمار، معدل الحرق، المدة المتاحة، وتفصيلاً للأصول والالتزامات. محرّك المحاكاة يسمح بضبط معدل التوصيل، منطق الأنابيب (شحن الكل أو الجاهز فقط)، وتقييم المخزون لاستكشاف سيناريوهات «ماذا لو». الشركاء يُدارون بنسب المشاركة ورأس المال والتدفقات والسحوبات وتوزيع الأرباح. يمكنك تصدير التقارير لـ PDF وإغلاق الفترات المالية وتنفيذ خروج الشركاء بحسابات صارمة.",
-        h3_header: "منطقة الرأس", h3_kpi: "بطاقات المؤشرات (٨ بطاقات، قابلة للنقر)", h3_simulation: "أدوات المحاكاة", h3_tabs: "التبويبات",
-        h3_financial: "تبويب التفصيل المالي", h3_partners_tab: "تبويب الشركاء", h3_add_partner: "نافذة إضافة شريك", h3_exit: "نافذة خروج الشريك",
-        h_title: "العنوان", h_title_desc: "«التقارير المالية والذكاء» / «المركز المالي وتوزيع الشركاء»",
-        h_refresh: "أيقونة — إعادة تحميل كل البيانات", h_export: "زر — إنشاء وفتح تقرير PDF",
-        kpi_profit: "صافي الربح", kpi_profit_desc: "أساس التوزيع (حقوق الملكية المعدّلة − رأس المال الفعّال)",
-        kpi_revenue: "صافي الإيرادات", kpi_revenue_desc: "إجمالي الإيرادات (الطلبات + المؤرشفة)",
-        kpi_equity: "صافي حقوق الملكية", kpi_equity_desc: "الأصول − الالتزامات",
-        kpi_liquidity: "صافي السيولة", kpi_liquidity_desc: "الأصول السائلة − الالتزامات الحالية",
-        kpi_margin: "هامش الربح", kpi_margin_desc: "صافي الربح ÷ الإيرادات × ١٠٠",
-        kpi_roi: "العائد على الاستثمار", kpi_roi_desc: "صافي الربح ÷ رأس المال الافتتاحي × ١٠٠",
-        kpi_burn: "معدل الحرق", kpi_burn_desc: "متوسط المصروفات التشغيلية الشهرية",
-        kpi_runway: "المدة المتاحة", kpi_runway_desc: "أشهر السيولة عند معدل الحرق الحالي",
-        sim_delivery: "معدل التوصيل", sim_delivery_desc: "شريط ٠–١٠٠٪ — النسبة المتوقعة للطلبات المُسلّمة",
-        sim_inventory: "معدل تقييم المخزون", sim_inventory_desc: "شريط ٠–١٠٠٪ — قيمة المخزون مقابل الدفتر",
-        sim_pipeline: "تنفيذ الأنابيب", sim_pipeline_desc: "مفتاح — شحن كل الأنابيب أو الجاهز فقط",
-        sim_settings: "أيقونة — فتح إعدادات المحاكاة (تكلفة المرتجعات، مكافأة الموديرتور، تكلفة التعبئة)",
-        sim_disclaimer: "أيقونة معلومات — إخلاء مسؤولية المحاكاة",
-        sim_run: "تشغيل المحاكاة", sim_run_desc: "زر — تطبيق الإعدادات الحالية وإعادة الحساب",
-        sim_reset: "زر — مسح المحاكاة والعودة للقيمة الدفترية",
-        tab_financial: "التفصيل المالي", tab_financial_desc: "المؤشرات، أدوات المحاكاة، جداول الأصول/الالتزامات، الأداء الشهري",
-        tab_partners: "الشركاء والتوزيع", tab_partners_desc: "بطاقات الملخص، شريط إجمالي الأسهم، جدول الشركاء، إضافة شريك",
-        fin_assets: "النقد، المخزون، قروض الموظفين، المستحقات، في الشحن، الأنابيب، دفتر الشحن (ائتمان)، الأصول الثابتة (مع مفتاح استبعاد)",
-        fin_liabilities: "مستحقات الموظفين، الدائنين، تكلفة إعادة التخزين، غرامات المرتجعات، مكافأة الموديرتور، تكلفة التعبئة، دفتر الشحن (دين)",
-        fin_toggle: "مفتاح الأصول الثابتة", fin_toggle_desc: "«استبعاد (وضع السيولة)» — يزيل الأصول الثابتة من حقوق الملكية للعرض السائل",
-        fin_monthly: "الأداء الشهري", fin_monthly_desc: "مخطط خطي (الإيرادات مقابل المصروفات)، مخطط أعمدة (الفرق الصافي)، جدول قابل للفرز (الشهر، الإيرادات، المصروفات، الفرق)",
-        part_total_cap: "إجمالي رأس المال", part_total_cap_desc: "مجموع رأس مال الشركاء الافتتاحي",
-        part_base: "أساس التوزيع", part_base_desc: "صافي الربح المتاح للتوزيع (حقوق الملكية المعدّلة − رأس المال الفعّال)",
-        part_shares: "إجمالي الأسهم", part_shares_desc: "شريط تقدّم + نسبة (أخضر إن ١٠٠٪، أحمر إن لم يكن)",
-        part_add: "إضافة شريك", part_add_desc: "زر",
-        part_table: "جدول الشركاء", part_table_desc: "الاسم (نقر للسجل)، نسبة المشاركة، رأس المال، حصة الربح/المحاكاة، السحوبات، التدفقات، إجمالي حقوق الملكية، الإجراءات",
-        add_part_name: "حقل نصوص — اسم الشريك", add_part_share: "حقل نصوص — نسبة الملكية",
-        add_part_capital: "حقل نصوص — رأس المال الافتتاحي (اختياري)",
-        add_part_note: "«يجب أن تكون نسبة المشاركة > ٠٪ ولا يتجاوز الإجمالي ١٠٠٪»",
-        add_part_save: "زر",
-        exit_warning: "«سيُزال الشريك وتُعاد توزيع حصته على الشركاء المتبقين.»",
-        exit_fixed: "ضمّن تقييم الأصول الثابتة", exit_fixed_desc: "مفتاح",
-        exit_inventory: "نسبة تصفية المخزون", exit_inventory_desc: "شريط ٠–١٠٠٪",
-        exit_recalc: "زر — تحديث الدفع مع التقييم الجديد",
-        exit_breakdown: "الأصول، الالتزامات، حالة الشريك، صافي المبلغ المستحق",
-        exit_pay_now: "الدفع الآن (من الخزينة)", exit_pay_now_desc: "مفتاح — دفع فوري أو إنشاء دين",
-        exit_due: "منتقي التاريخ — يظهر عندما يكون الدفع الآن معطّل",
-        exit_finalize: "إنهاء الخروج وإزالة الشريك", exit_finalize_desc: "زر",
-        w1_title: "١. عرض التفصيل المالي", w1_1: "افتح تبويب التفصيل المالي (الافتراضي).", w1_2: "اعرض بطاقات المؤشرات الثمانية.",
-        w1_3: "انقر على أي بطاقة مؤشر لفتح نافذة التفصيل مع الصيغة.", w1_4: "مرّر لرؤية جداول الأصول والالتزامات.",
-        w1_5: "فعّل استبعاد (وضع السيولة) على الأصول الثابتة لرؤية حقوق الملكية السائلة فقط.", w1_6: "اعرض مخططات وجدول الأداء الشهري؛ انقر على رؤوس الأعمدة للفرز.",
-        w2_title: "٢. تشغيل محاكاة", w2_1: "عدّل شريط معدل التوصيل (٠–١٠٠٪).", w2_2: "عدّل شريط معدل تقييم المخزون (٠–١٠٠٪).",
-        w2_3: "حدّد تنفيذ الأنابيب: شحن كل الأنابيب أو الجاهز فقط.", w2_4: "انقر اختياريًا على الإعدادات لضبط تكلفة المرتجعات، مكافأة الموديرتور، تكلفة التعبئة.",
-        w2_5: "انقر على تشغيل المحاكاة.", w2_6: "تتحدّث المؤشرات والأصول والالتزامات وجدول الشركاء بقيم المحاكاة.",
-        w3_title: "٣. إعادة ضبط المحاكاة", w3_1: "انقر على إعادة ضبط.", w3_2: "تُمسح المحاكاة؛ تعود القيم إلى الدفتر (التاريخي).",
-        w4_title: "٤. إضافة شريك", w4_1: "افتح تبويب الشركاء والتوزيع.", w4_2: "انقر على إضافة شريك.", w4_3: "أدخل الاسم (مطلوب).",
-        w4_4: "أدخل نسبة المشاركة (مطلوبة؛ يجب أن تكون > ٠؛ لا يتجاوز إجمالي الأسهم ١٠٠٪).", w4_5: "أدخل رأس المال (اختياري؛ استثمار افتتاحي).",
-        w4_6: "انقر على حفظ. نجاح: شريط أخضر؛ الجدول يتحدّث.",
-        w5_title: "٥. تعديل شريك", w5_1: "في جدول الشركاء، انقر على تعديل (✎) على الصف.", w5_2: "غيّر الاسم أو نسبة المشاركة.",
-        w5_3: "رأس المال لا يمكن تغييره هنا.", w5_4: "انقر على تحديث. نجاح: شريط أخضر؛ الجدول يتحدّث.",
-        w6_title: "٦. إضافة معاملة شريك", w6_1: "في جدول الشركاء، انقر على إضافة معاملة (💳) على الصف.",
-        w6_2: "اختر النوع: سحب، إيداع نقدي، أو زيادة رأس المال.", w6_3: "أدخل المبلغ (مطلوب).",
-        w6_4: "أضف ملاحظات اختياريًا. انقر على حفظ.", w6_5: "نجاح: شريط أخضر. السحب يتطلب خزينة كافية.",
-        w7_title: "٧. عرض سجل الشريك", w7_1: "انقر على اسم الشريك في جدول الشركاء.", w7_2: "نافذة تعرض التدفقات والسحوبات ومعاملات حصة الربح.",
-        w8_title: "٨. خروج شريك", w8_1: "في جدول الشركاء، انقر على حذف (🗑) على الصف.",
-        w8_2: "التحقق المسبق: «لا يمكن خروج الشريك الأخير» أو «يجب أن يساوي إجمالي الأسهم ١٠٠٪ بالضبط قبل تنفيذ الخروج» إن لم يُستوفَ.",
-        w8_3: "نافذة خروج الشريك تفتح مع أدوات التقييم وإعادة الحساب والتفصيل.",
-        w8_4: "اختر الدفع الآن (من الخزينة) أو إنشاء دائن (تاريخ الاستحقاق مطلوب).",
-        w8_5: "انقر على إنهاء الخروج وإزالة الشريك. نجاح: الشريك مُزال؛ الأسهم مُعاد توزيعها.",
-        w9_title: "٩. إغلاق فترة مالية", w9_1: "استخدم إجراء إغلاق الفترة (إن مُتاحًا في الواجهة).",
-        w9_2: "يتحقق من أن إجمالي الأسهم = ١٠٠٪.", w9_3: "يُؤرشف الفترة؛ ينقل مستحقات الشركاء للديون؛ يمسح دفتر الشركاء.",
-        w9_4: "«لا يمكن الإغلاق: إجمالي الأسهم X٪. يجب أن تكون ١٠٠٪.» إن لم تكن الأسهم ١٠٠٪.",
-        w10_title: "١٠. تصدير لـ PDF", w10_1: "انقر على تصدير PDF في الرأس.", w10_2: "يُولّد تقرير PDF ويُفتح.",
-        w10_3: "التقرير يشمل المؤشرات الحالية وملامح المحاكاة (إن نشطة) والشركاء والأصول/الالتزامات.",
-        w10_4: "يُحفظ في مسار ثابت (مثل Desktop/Reports/Financial report). نجاح: «تم حفظ PDF في [المسار]» (أخضر).",
-        r_partners: "الشركاء", r_name_req: "الاسم مطلوب", r_name_req_res: "النافذة تبقى مفتوحة",
-        r_share_req: "نسبة المشاركة مطلوبة", r_share_req_res: "النافذة تبقى مفتوحة",
-        r_share_gt0: "نسبة المشاركة > ٠", r_share_gt0_res: "«يجب أن تكون نسبة المشاركة > ٠٪ ولا يتجاوز الإجمالي ١٠٠٪» (ملاحظة في الواجهة)",
-        r_total_100: "إجمالي الأسهم ≤ ١٠٠٪", r_total_100_res: "إضافة/تعديل قد تفشل إن تجاوز",
-        r_capital: "رأس المال", r_capital_res: "اختياري؛ إن > ٠، يُسجّل كإيراد (تدفق رأس المال)",
-        r_exit: "خروج الشريك", r_last_partner: "الشريك الأخير", r_last_partner_res: "«لا يمكن خروج الشريك الأخير المتبقي.»",
-        r_shares_100: "إجمالي الأسهم ≠ ١٠٠٪", r_shares_100_res: "«يجب أن يساوي إجمالي الأسهم ١٠٠٪ بالضبط قبل تنفيذ الخروج.»",
-        r_pay_now: "الدفع الآن", r_pay_now_res: "يجب أن تكون الخزينة كافية",
-        r_pay_debt: "الدفع كدين", r_pay_debt_res: "تاريخ الاستحقاق مطلوب؛ «أدخل تاريخ الاستحقاق» إن كان فارغًا",
-        r_close: "إغلاق الفترة", r_close_shares: "إجمالي الأسهم ≠ ١٠٠٪", r_close_shares_res: "«لا يمكن الإغلاق: إجمالي الأسهم X٪. يجب أن تكون ١٠٠٪.»",
-        r_close_ok: "نجاح", r_close_ok_res: "الفترة مُؤرشفة؛ مستحقات الشركاء نُقلت للديون",
-        m_added: "تمت إضافة شريك", m_added_msg: "«تمت إضافة الشريك» (أخضر)",
-        m_updated: "تم تحديث الشريك", m_updated_msg: "«تم تحديث الشريك» (أخضر)",
-        m_transaction: "تمت إضافة معاملة", m_transaction_msg: "نجاح (أخضر)",
-        m_exit: "نجاح خروج الشريك", m_exit_msg: "«تم تنفيذ خروج الشريك» (أخضر)",
-        m_period: "تم إغلاق الفترة", m_period_msg: "«تم إغلاق الفترة بنجاح. الأرباح نُقلت للديون.» (أخضر)",
-        m_last_partner: "خروج الشريك الأخير", m_last_partner_msg: "«لا يمكن خروج الشريك الأخير المتبقي.» (أحمر)",
-        m_shares_100: "الأسهم ليست ١٠٠٪", m_shares_100_msg: "«يجب أن يساوي إجمالي الأسهم ١٠٠٪ بالضبط قبل تنفيذ الخروج.» (أحمر)",
-        m_close_shares: "أسهم إغلاق الفترة", m_close_shares_msg: "«لا يمكن الإغلاق: إجمالي الأسهم X٪. يجب أن تكون ١٠٠٪.» (أحمر)",
-        m_not_found: "الشريك غير موجود", m_not_found_msg: "«الشريك غير موجود» (أحمر)",
-        m_treasury: "الخزينة غير كافية", m_treasury_msg: "«رصيد الخزينة غير كافٍ. (الحالي: X.XX)» (أحمر)",
-        m_due_date: "أدخل تاريخ الاستحقاق", m_due_date_msg: "«أدخل تاريخ الاستحقاق» (أحمر)",
-        m_pdf: "تم حفظ PDF", m_pdf_msg: "«تم حفظ PDF في [المسار]» (أخضر)",
-        tip1: "انقر على بطاقات المؤشرات لرؤية الصيغة والمكونات الدقيقة (ذكاء الأعمال القابل للشرح).",
-        tip2: "المحاكاة إرشادية؛ معدل التوصيل يؤثر على الإيرادات؛ المرتجعات/مكافأة الموديرتور/التعبئة تستخدم أعداد الطلبات من الإعدادات.",
-        tip3: "أساس التوزيع = ما يمكن توزيعه على الشركاء (بعد رأس المال الفعّال).",
-        tip4: "شريط إجمالي الأسهم: أخضر عند ١٠٠٪؛ أحمر إن لم يكن — أصلح قبل الإغلاق أو الخروج.",
-        tip5: "خروج الشريك يستخدم القيمة الدفترية للدفع؛ المحاكاة لا تؤثر على حساب الخروج.",
-        tip6: "استبعاد الأصول الثابتة يعرض حقوق الملكية السائلة فقط (لا أصول ثابتة في إجمالي الأصول).",
-        tip7: "الأداء الشهري يعرض آخر ١٢ شهرًا؛ افرز بالنقر على رؤوس الأعمدة.",
-        tip8: "تصدير PDF يستخدم العرض الحالي (المحاكاة أو الدفتر) ويتضمن معايير التقرير.",
-        tip9: "رأس المال في تعديل الشريك للقراءة فقط؛ استخدم معاملة زيادة رأس المال للإضافة.",
-        tip10: "خزينة الشركة يمكن أن تحتفظ بأسهم عند خروج شريك (الأسهم تُنقل للإبقاء على الإجمالي عند ١٠٠٪)."
+        reports_breadcrumb: "التقارير",
+        reports_hero_headline: "الذكاء المالي وتوزيع الشركاء",
+        reports_hero_desc: "توفّر وحدة التقارير نظرة شاملة على وضعك المالي: الأصول، الالتزامات، KPIs (صافي الربح، الإيرادات، صافي حقوق الملكية، السيولة، هامش الربح، العائد على الاستثمار، معدل الحرق، المدرج)، توزيع الشركاء، ومحاكاة السيناريوهات. محرك المحاكاة يتيح ضبط معدل التسليم ومنطق خط الأنابيب وتقييم المخزون. يُدار الشركاء بنسب الأسهم، رأس المال، الحقن، السحوبات، وتوزيع الأرباح.",
+        reports_bullet_1: "8 بطاقات KPI قابلة للنقر؛ جداول الأصول والالتزامات؛ مخططات الأداء الشهرية",
+        reports_bullet_2: "المحاكاة: معدل التسليم، تقييم المخزون، تنفيذ خط الأنابيب (شحن الكل vs الجاهز فقط)",
+        reports_bullet_3: "الشركاء: النسبة، رأس المال، الحقن، السحوبات؛ إقفال الفترة؛ خروج الشريك",
+        reports_cap1_title: "التفصيل المالي", reports_cap1_desc: "صافي الربح، الإيرادات، صافي حقوق الملكية، السيولة، هامش الربح، ROI، معدل الحرق، المدرج. انقر أي KPI لتفصيل المعادلة. جداول الأصول والالتزامات مع مفتاح استبعاد الأصول الثابتة.",
+        reports_cap2_title: "محرك المحاكاة", reports_cap2_desc: "اضبط معدل التسليم (0–100%)، معدل تقييم المخزون، تنفيذ خط الأنابيب (شحن الكل vs الجاهز فقط). إعدادات تكلفة المرتجعات، مكافأة المشرف، التعبئة. شغّل المحاكاة أو إعادة التعيين إلى القيمة الدفترية.",
+        reports_cap3_title: "الشركاء والتوزيع", reports_cap3_desc: "أضف شركاء بالاسم، النسبة، رأس المال. تتبع الحقن والسحوبات وحصة الربح. شريط إجمالي الأسهم (أخضر عند 100%). عدّل، أضف معاملة، اعرض السجل. أقم الفترة عندما الأسهم = 100%.",
+        reports_cap4_title: "خروج الشريك وتصدير PDF", reports_cap4_desc: "نفّذ خروج الشريك مع ضوابط التقييم (الأصول الثابتة، نسبة تصفية المخزون). ادفع الآن أو أنشئ مستحقًا. صدّر PDF مع KPIs الحالية ومعاملات المحاكاة والشركاء والأصول/الالتزامات.",
+        reports_workflow_title: "كيف يعمل",
+        reports_step1_title: "عرض التفصيل المالي", reports_step1_desc: "افتح تبويب التفصيل المالي. اعرض 8 بطاقات KPI—انقر أيًا لعرض المعادلة. مرر لجداول الأصول والالتزامات. بدّل استبعاد (وضع السيولة) على الأصول الثابتة. اعرض مخططات وجدول الأداء الشهري القابل للفرز.",
+        reports_step2_title: "تشغيل محاكاة", reports_step2_desc: "اضبط شريطي معدل التسليم وتقييم المخزون. حدد تنفيذ خط الأنابيب: شحن كل خط الأنابيب أو شحن الجاهز فقط. افتح الإعدادات اختياريًا لتكلفة المرتجعات، مكافأة المشرف، التعبئة. انقر تشغيل المحاكاة. تتحدّث KPIs والشركاء بقيم المحاكاة.",
+        reports_step3_title: "إضافة وإدارة الشركاء", reports_step3_desc: "افتح الشركاء والتوزيع. انقر إضافة شريك. أدخل الاسم، النسبة (الإجمالي ≤ 100%)، رأس المال الاختياري. احفظ. عدّل النسبة. أضف معاملة: سحب، حقن نقدي، أو زيادة رأس المال. انقر اسم الشريك للسجل. يجب أن يساوي إجمالي الأسهم 100% قبل الإقفال أو الخروج.",
+        reports_step4_title: "إقفال الفترة أو خروج الشريك", reports_step4_desc: "إقفال الفترة يؤرشف الفترة وينقل مستحقات الشركاء إلى المديونيات (يتطلب الأسهم = 100%). لخروج الشريك: انقر حذف، حدد التقييم (الأصول الثابتة، نسبة المخزون)، أعد الحساب، اختر ادفع الآن أو أنشئ مستحقًا بتاريخ الاستحقاق. أكمل الخروج. صدّر PDF للتقرير الكامل.",
+        reports_cta_sub: "حمّل مالي - OBS الآن وأدر التقارير مع 10 وحدات إضافية. أسبوع مجاني — لا حاجة لبطاقة ائتمان.",
       }
-    };
-
-    let currentLang = 'en';
-    function applyLang(lang) {
-      currentLang = lang;
-      const html = document.documentElement;
-      html.lang = lang;
-      html.dir = lang === 'ar' ? 'rtl' : 'ltr';
-      const texts = T[lang];
-      document.querySelectorAll('[data-i18n]').forEach(el => {
-        const key = el.getAttribute('data-i18n');
-        if (texts[key] !== undefined) el.textContent = texts[key];
-      });
-      const label = lang === 'en' ? 'العربية' : 'English';
-      document.getElementById('lang-label').textContent = label;
-      document.getElementById('lang-label-mobile').textContent = label;
-      try { localStorage.setItem('maly_lang', lang); } catch(e) {}
-    }
-    function toggleLang() { applyLang(currentLang === 'en' ? 'ar' : 'en'); }
-    function toggleMenu() {
-      const menu = document.getElementById('mobile-menu');
-      const icon = document.getElementById('hamburger-icon');
-      menu.classList.toggle('open');
-      icon.className = menu.classList.contains('open') ? 'fa-solid fa-xmark' : 'fa-solid fa-bars';
-    }
-    function closeMenu() {
-      document.getElementById('mobile-menu').classList.remove('open');
-      document.getElementById('hamburger-icon').className = 'fa-solid fa-bars';
-    }
+    });
     window.addEventListener('scroll', () => { document.getElementById('navbar').classList.toggle('scrolled', window.scrollY > 10); }, { passive: true });
-    (function init() {
-      let saved = 'en';
-      try { saved = localStorage.getItem('maly_lang') || 'en'; } catch(e) {}
-      applyLang(saved);
-    })();
+    document.getElementById('hamburger-icon')?.addEventListener('click', function() { const menu = document.getElementById('mobile-menu'); const isOpen = menu?.classList.toggle('open'); this.className = isOpen ? 'fa-solid fa-xmark' : 'fa-solid fa-bars'; });
+    const revealObserver = new IntersectionObserver((entries) => { entries.forEach(entry => { if (entry.isIntersecting) { entry.target.classList.add('visible'); revealObserver.unobserve(entry.target); } }); }, { threshold: 0.1 });
+    document.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
   </script>
 </body>
 </html>

@@ -3,107 +3,100 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Maly - OBS | Manufacturing Module — User Guide</title>
-  <meta name="description" content="Manufacturing module user guide: product bundles, BOM, virtual stock, and analytics in Maly - OBS." />
+  <title>Maly - OBS | Manufacturing / Product Bundles &amp; Kits</title>
+  <meta name="description" content="Product bundles, BOM builder, virtual stock, and manufacturing analytics in Maly - OBS." />
+
+  <link rel="icon" type="image/png" href="assets/logo_icon.png" />
+  <link rel="shortcut icon" href="assets/icon.ico" />
 
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;800&family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
 
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>tailwind.config = { corePlugins: { preflight: false } }</script>
+
   <style>
-    :root {
-      --primary: #1B3D6F; --primary-light: #2A5498; --accent: #C5974A; --accent-light: #F0DDB8;
-      --bg: #F5F1EB; --surface: #FFFFFF; --surface-alt: #F9F6F0; --text: #1A1A2E; --text-muted: #64748B;
-      --text-light: #94A3B8; --border: #E2D9CC; --border-light: #EDE8E0;
-      --shadow-sm: 0 2px 8px rgba(27,61,111,0.07); --shadow-md: 0 8px 32px rgba(27,61,111,0.10);
-      --radius-sm: 8px; --radius-md: 14px; --nav-h: 76px;
-      --font-en: 'Inter', sans-serif; --font-ar: 'Cairo', sans-serif; --transition: 0.25s ease;
-    }
+    :root { --primary: #1B3D6F; --primary-light: #2A5498; --accent: #C5974A; --accent-light: #F0DDB8; --bg: #F5F1EB; --surface: #FFFFFF; --surface-alt: #F9F6F0; --text: #1A1A2E; --text-muted: #64748B; --text-light: #94A3B8; --border: #E2D9CC; --border-light: #EDE8E0; --shadow-sm: 0 2px 8px rgba(27,61,111,0.07); --shadow-md: 0 8px 32px rgba(27,61,111,0.10); --shadow-lg: 0 20px 60px rgba(27,61,111,0.13); --radius-sm: 8px; --radius-md: 14px; --radius-lg: 20px; --nav-h: 72px; --font-en: 'Inter', sans-serif; --font-ar: 'Cairo', sans-serif; --transition: 0.25s ease; }
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
     html { scroll-behavior: smooth; font-size: 16px; }
-    body { font-family: var(--font-en); background-color: var(--bg); color: var(--text); line-height: 1.65; overflow-x: hidden; }
+    body { font-family: var(--font-en); background: var(--bg); color: var(--text); line-height: 1.65; overflow-x: hidden; }
     html[lang="ar"] body { font-family: var(--font-ar); }
     img { max-width: 100%; display: block; }
     a { color: inherit; text-decoration: none; }
     ul { list-style: none; }
     button { cursor: pointer; font-family: inherit; }
     .container { max-width: 1160px; margin: 0 auto; padding: 0 24px; }
-
-    nav { position: fixed; top: 0; left: 0; right: 0; height: var(--nav-h); background: rgba(245, 241, 235, 0.92); backdrop-filter: blur(14px); border-bottom: 1px solid var(--border-light); z-index: 1000; transition: box-shadow var(--transition); }
+    nav { position: fixed; top: 0; left: 0; right: 0; height: var(--nav-h); background: rgba(245, 241, 235, 0.85); backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px); border-bottom: 1px solid var(--border-light); z-index: 1000; }
     nav.scrolled { box-shadow: var(--shadow-md); }
     .nav-inner { display: flex; align-items: center; justify-content: space-between; height: 100%; }
-    .nav-logo { display: flex; align-items: center; gap: 10px; font-weight: 800; font-size: 1.2rem; color: var(--primary); }
-    .nav-logo img { height: 48px; width: auto; max-width: 220px; object-fit: contain; }
+    .nav-logo { display: flex; align-items: center; gap: 8px; font-weight: 800; font-size: 1.1rem; color: var(--primary); }
+    .nav-logo img { height: 40px; width: auto; max-width: 180px; object-fit: contain; }
     @media (max-width: 768px) { .nav-logo img.nav-logo-desktop { display: none; } .nav-logo img.nav-logo-mobile { display: block !important; } }
     .nav-logo img.nav-logo-mobile { display: none; }
-    .nav-links { display: flex; align-items: center; gap: 8px; }
-    .nav-links a { font-size: 0.9rem; font-weight: 500; color: var(--text-muted); padding: 6px 14px; border-radius: var(--radius-sm); transition: color var(--transition), background var(--transition); }
+    .nav-links { display: flex; align-items: center; gap: 6px; }
+    .nav-links a { font-size: 0.88rem; font-weight: 500; color: var(--text-muted); padding: 6px 12px; border-radius: var(--radius-sm); transition: all var(--transition); }
     .nav-links a:hover { color: var(--primary); background: rgba(27,61,111,0.06); }
     .nav-right { display: flex; align-items: center; gap: 12px; }
     .lang-btn { display: flex; align-items: center; gap: 6px; font-size: 0.82rem; font-weight: 600; color: var(--primary); background: var(--surface); border: 1.5px solid var(--border); padding: 6px 14px; border-radius: 20px; transition: all var(--transition); }
     .lang-btn:hover { border-color: var(--primary); background: rgba(27,61,111,0.04); }
-    .btn-nav-cta { font-size: 0.88rem; font-weight: 600; color: #fff; background: var(--primary); padding: 8px 20px; border-radius: 8px; transition: background var(--transition), transform var(--transition); }
+    .btn-nav-cta { font-size: 0.85rem; font-weight: 600; color: #fff; background: var(--primary); padding: 8px 18px; border-radius: var(--radius-sm); transition: all var(--transition); }
     .btn-nav-cta:hover { background: var(--primary-light); transform: translateY(-1px); }
-    .hamburger { display: none; background: none; border: none; font-size: 1.4rem; color: var(--primary); }
-    .mobile-menu { display: none; flex-direction: column; background: var(--surface); border-bottom: 1px solid var(--border); padding: 12px 24px 20px; gap: 4px; }
+    .hamburger { display: none; background: none; border: none; font-size: 1.25rem; color: var(--primary); }
+    .mobile-menu { display: none; flex-direction: column; background: var(--surface); border-bottom: 1px solid var(--border); padding: 12px 20px; gap: 4px; }
     .mobile-menu.open { display: flex; }
-    .mobile-menu a { font-size: 0.95rem; font-weight: 500; color: var(--text); padding: 10px 4px; border-bottom: 1px solid var(--border-light); }
+    .mobile-menu a { font-size: 0.92rem; font-weight: 500; color: var(--text); padding: 10px 4px; border-bottom: 1px solid var(--border-light); }
     .mobile-menu a:last-child { border: none; }
     .mobile-menu .lang-btn { margin-top: 8px; width: fit-content; }
-
-    .doc-main { padding-top: calc(var(--nav-h) + 48px); padding-bottom: 80px; }
-    .doc-inner { max-width: 840px; margin: 0 auto; }
-    .btn-back { display: inline-flex; align-items: center; gap: 8px; font-size: 0.9rem; font-weight: 600; color: var(--primary); background: var(--surface); border: 1.5px solid var(--border); padding: 10px 20px; border-radius: var(--radius-sm); margin-bottom: 32px; transition: all var(--transition); box-shadow: var(--shadow-sm); }
-    .btn-back:hover { border-color: var(--primary); background: rgba(27,61,111,0.04); }
-    html[dir="rtl"] .btn-back i { transform: scaleX(-1); }
-    .doc-header { margin-bottom: 40px; }
-    .doc-header .doc-badge { display: inline-block; font-size: 0.75rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--accent); background: var(--accent-light); padding: 4px 12px; border-radius: 20px; margin-bottom: 12px; }
-    .doc-header h1 { font-size: clamp(1.8rem, 3vw, 2.4rem); font-weight: 800; color: var(--text); margin-bottom: 12px; line-height: 1.2; }
-    .doc-header .doc-meta { font-size: 0.9rem; color: var(--text-muted); }
-    .doc-content h2 { font-size: 1.35rem; font-weight: 700; color: var(--primary); margin-top: 48px; margin-bottom: 20px; padding-bottom: 8px; border-bottom: 2px solid var(--border-light); }
-    .doc-content h2:first-of-type { margin-top: 0; }
-    .doc-content h3 { font-size: 1.1rem; font-weight: 700; color: var(--text); margin-top: 32px; margin-bottom: 14px; }
-    .doc-content p { font-size: 1rem; color: var(--text-muted); margin-bottom: 16px; line-height: 1.75; }
-    .doc-content ul.doc-list { list-style: disc; padding-left: 24px; margin-bottom: 20px; }
-    html[dir="rtl"] .doc-content ul.doc-list { padding-left: 0; padding-right: 24px; }
-    .doc-content ul.doc-list li { margin-bottom: 8px; color: var(--text-muted); line-height: 1.7; }
-    .doc-content ul.doc-list li strong { color: var(--text); }
-    .doc-table-wrapper { overflow-x: auto; margin: 24px 0; border-radius: var(--radius-sm); border: 1px solid var(--border-light); box-shadow: var(--shadow-sm); }
-    .doc-table { width: 100%; border-collapse: collapse; font-size: 0.95rem; }
-    .doc-table th, .doc-table td { padding: 14px 18px; text-align: left; border-bottom: 1px solid var(--border-light); vertical-align: top; }
-    html[dir="rtl"] .doc-table th, html[dir="rtl"] .doc-table td { text-align: right; }
-    .doc-table th { background: var(--surface-alt); font-weight: 700; color: var(--primary); }
-    .doc-table tr:last-child td { border-bottom: none; }
-    .doc-table tr:hover td { background: rgba(27,61,111,0.02); }
-    .callout { padding: 20px 24px; border-radius: var(--radius-md); margin: 24px 0; border-left: 4px solid; display: flex; gap: 14px; align-items: flex-start; }
-    html[dir="rtl"] .callout { border-left: none; border-right: 4px solid; }
-    .callout i { font-size: 1.2rem; flex-shrink: 0; margin-top: 2px; }
-    .callout-content { flex: 1; }
-    .callout-tip { background: rgba(34, 197, 94, 0.08); border-color: #22c55e; color: #166534; }
-    .callout-tip i { color: #22c55e; }
-
-    footer { background: #111827; color: #9CA3AF; padding: 60px 0 30px; }
-    .footer-grid { display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 40px; margin-bottom: 50px; }
-    .footer-brand .nav-logo { color: #fff; margin-bottom: 14px; }
-    .footer-brand .nav-logo img { height: 40px; width: auto; max-width: 200px; object-fit: contain; filter: brightness(0) invert(1); opacity: 0.9; }
-    .footer-brand p { font-size: 0.88rem; line-height: 1.7; max-width: 260px; color: #9CA3AF; }
-    .footer-brand .social-row { display: flex; gap: 10px; margin-top: 20px; }
-    .footer-social { width: 36px; height: 36px; border-radius: 50%; background: rgba(255,255,255,0.08); color: #D1D5DB; display: flex; align-items: center; justify-content: center; font-size: 0.9rem; transition: background var(--transition), color var(--transition); }
+    .breadcrumbs { padding-top: calc(var(--nav-h) + 24px); padding-bottom: 16px; font-size: 0.88rem; color: var(--text-muted); }
+    .breadcrumbs a:hover { color: var(--primary); }
+    .breadcrumbs span { color: var(--text-light); margin: 0 8px; }
+    .module-hero { padding: 48px 0 80px; }
+    .module-hero .hero-headline { font-size: clamp(1.9rem, 3.5vw, 2.75rem); font-weight: 800; color: var(--text); line-height: 1.2; margin-bottom: 18px; }
+    .module-hero .hero-desc { font-size: 1.05rem; color: var(--text-muted); margin-bottom: 24px; line-height: 1.7; max-width: 540px; }
+    .module-hero .hero-bullets { margin-bottom: 28px; }
+    .module-hero .hero-bullets li { display: flex; align-items: center; gap: 10px; font-size: 0.95rem; color: var(--text); margin-bottom: 10px; }
+    .module-hero .hero-bullets li i, .module-hero .hero-bullets li svg { color: #22c55e; flex-shrink: 0; width: 18px; height: 18px; }
+    .btn-module-cta { display: inline-flex; align-items: center; gap: 8px; padding: 14px 28px; background: var(--primary); color: #fff; font-weight: 700; font-size: 0.95rem; border-radius: var(--radius-sm); transition: all var(--transition); box-shadow: 0 4px 18px rgba(27,61,111,0.22); }
+    .btn-module-cta:hover { background: var(--primary-light); transform: translateY(-2px); box-shadow: 0 8px 24px rgba(27,61,111,0.28); }
+    .cap-card { background: var(--surface); border: 1px solid var(--border-light); border-radius: var(--radius-md); padding: 28px 24px; transition: all var(--transition); }
+    .cap-card:hover { border-color: var(--primary); box-shadow: var(--shadow-md); }
+    .cap-card .cap-icon { width: 44px; height: 44px; border-radius: 10px; background: linear-gradient(135deg, rgba(27,61,111,0.08) 0%, rgba(197,151,74,0.1) 100%); display: flex; align-items: center; justify-content: center; color: var(--primary); margin-bottom: 16px; }
+    .cap-card .cap-icon svg { width: 22px; height: 22px; }
+    .cap-card h3 { font-size: 1.1rem; font-weight: 700; color: var(--text); margin-bottom: 8px; }
+    .cap-card p { font-size: 0.9rem; color: var(--text-muted); line-height: 1.6; }
+    .step-num { width: 36px; height: 36px; border-radius: 50%; background: var(--primary); color: #fff; font-weight: 800; font-size: 1rem; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+    .step-content h4 { font-size: 1rem; font-weight: 700; color: var(--text); margin-bottom: 6px; }
+    .step-content p { font-size: 0.92rem; color: var(--text-muted); line-height: 1.6; }
+    .explore-card { background: var(--surface); border: 1px solid var(--border-light); border-radius: var(--radius-sm); padding: 20px 18px; display: flex; align-items: center; gap: 14px; transition: all var(--transition); }
+    .explore-card:hover { border-color: var(--primary); box-shadow: var(--shadow-sm); color: var(--primary); }
+    .explore-card .explore-icon { width: 40px; height: 40px; border-radius: 8px; background: rgba(27,61,111,0.06); display: flex; align-items: center; justify-content: center; color: var(--primary); flex-shrink: 0; }
+    .explore-card .explore-icon i, .explore-card .explore-icon svg { font-size: 1.1rem; width: 20px; height: 20px; }
+    .cta-strip { background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%); padding: 56px 24px; text-align: center; color: #fff; }
+    .cta-strip h2 { font-size: clamp(1.5rem, 2.5vw, 2rem); font-weight: 800; margin-bottom: 10px; }
+    .cta-strip p { font-size: 1rem; opacity: 0.9; margin-bottom: 24px; max-width: 500px; margin-left: auto; margin-right: auto; }
+    .cta-strip .btn-cta { display: inline-flex; align-items: center; gap: 8px; padding: 14px 32px; background: var(--accent); color: #fff; font-weight: 700; font-size: 1rem; border-radius: var(--radius-sm); transition: all var(--transition); box-shadow: 0 4px 14px rgba(0,0,0,0.2); }
+    .cta-strip .btn-cta:hover { transform: translateY(-2px); box-shadow: 0 8px 20px rgba(0,0,0,0.25); filter: brightness(1.05); }
+    footer { background: #111827; color: #9CA3AF; padding: 56px 0 28px; }
+    .footer-grid { display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 36px; margin-bottom: 40px; }
+    .footer-brand .nav-logo { color: #fff; margin-bottom: 12px; display: flex; align-items: center; gap: 8px; }
+    .footer-brand .nav-logo img { height: 40px; width: auto; filter: brightness(0) invert(1); opacity: 0.9; }
+    .footer-brand p { font-size: 0.85rem; line-height: 1.65; max-width: 260px; color: #9CA3AF; }
+    .footer-brand .social-row { display: flex; gap: 8px; margin-top: 16px; }
+    .footer-social { width: 34px; height: 34px; border-radius: 50%; background: rgba(255,255,255,0.08); color: #D1D5DB; display: flex; align-items: center; justify-content: center; font-size: 0.85rem; transition: all var(--transition); }
     .footer-social:hover { background: var(--accent); color: #fff; }
-    .footer-col h4 { font-size: 0.85rem; font-weight: 700; color: #E5E7EB; text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 18px; }
-    .footer-col ul li { margin-bottom: 10px; }
-    .footer-col ul li a { font-size: 0.88rem; color: #9CA3AF; transition: color var(--transition); }
+    .footer-col h4 { font-size: 0.8rem; font-weight: 700; color: #E5E7EB; text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 16px; }
+    .footer-col ul li { margin-bottom: 8px; }
+    .footer-col ul li a { font-size: 0.85rem; color: #9CA3AF; transition: color var(--transition); }
     .footer-col ul li a:hover { color: #fff; }
-    .footer-col ul li span { font-size: 0.88rem; color: #9CA3AF; font-family: var(--font-en); }
-    .footer-bottom { border-top: 1px solid rgba(255,255,255,0.08); padding-top: 28px; display: flex; align-items: center; justify-content: space-between; gap: 12px; flex-wrap: wrap; }
-    .footer-bottom p { font-size: 0.82rem; }
-    html[dir="rtl"] .footer-grid { direction: rtl; }
-    html[dir="rtl"] .footer-brand p { max-width: 100%; }
-    html[dir="rtl"] .footer-bottom { flex-direction: row-reverse; }
-
-    @media (max-width: 768px) { .nav-links, .btn-nav-cta { display: none; } .hamburger { display: block; } .doc-main { padding-top: calc(var(--nav-h) + 32px); padding-bottom: 48px; } .footer-grid { grid-template-columns: 1fr 1fr; } .footer-brand { grid-column: 1 / -1; } }
-    @media (max-width: 480px) { .container { padding: 0 18px; } .doc-table th, .doc-table td { padding: 10px 14px; font-size: 0.88rem; } .footer-grid { grid-template-columns: 1fr; } }
+    .footer-col ul li span { font-size: 0.85rem; color: #9CA3AF; font-family: var(--font-en); }
+    .footer-bottom { border-top: 1px solid rgba(255,255,255,0.08); padding-top: 24px; display: flex; align-items: center; justify-content: space-between; gap: 12px; flex-wrap: wrap; }
+    .footer-bottom p { font-size: 0.78rem; }
+    .reveal { opacity: 0; transform: translateY(24px); transition: opacity 0.5s ease, transform 0.5s ease; }
+    .reveal.visible { opacity: 1; transform: translateY(0); }
+    @media (max-width: 768px) { .nav-links, .btn-nav-cta { display: none; } .hamburger { display: block; } .footer-grid { grid-template-columns: 1fr 1fr; } .footer-brand { grid-column: 1 / -1; } }
+    @media (max-width: 480px) { .container { padding: 0 18px; } .footer-grid { grid-template-columns: 1fr; } }
   </style>
 </head>
 <body>
@@ -114,380 +107,171 @@
         <a href="index.html" class="nav-logo">
           <img src="assets/logo_splash_light.png" alt="Maly OBS Logo" class="nav-logo-desktop" />
           <img src="assets/logo_icon.png" alt="Maly OBS" class="nav-logo-mobile" />
-          <span>Maly&nbsp;-&nbsp;OBS</span>
         </a>
         <div class="nav-links">
           <a href="index.html#features" data-i18n="nav_features">Features</a>
           <a href="index.html#pricing" data-i18n="nav_pricing">Pricing</a>
+          <a href="index.html#faq" data-i18n="nav_faq">FAQ</a>
           <a href="index.html#privacy" data-i18n="nav_privacy">Privacy</a>
           <a href="index.html#contact" data-i18n="nav_contact">Contact</a>
         </div>
         <div class="nav-right">
-          <button class="lang-btn" id="lang-toggle" onclick="toggleLang()">
-            <i class="fa-solid fa-globe"></i>
-            <span id="lang-label">العربية</span>
-          </button>
+          <button class="lang-btn" id="lang-toggle" onclick="toggleLang()"><i class="fa-solid fa-globe"></i><span id="lang-label">العربية</span></button>
           <a href="https://github.com/AdhamSeliman5/Maly-OBS/releases/download/v1.0/Maly-OBS.V1.0.rar" target="_blank" rel="noopener" class="btn-nav-cta" data-i18n="nav_download">Download Now</a>
-          <button class="hamburger" onclick="toggleMenu()" aria-label="Menu"><i class="fa-solid fa-bars" id="hamburger-icon"></i></button>
+          <button class="hamburger" onclick="document.getElementById('mobile-menu').classList.toggle('open')" aria-label="Menu"><i class="fa-solid fa-bars" id="hamburger-icon"></i></button>
         </div>
       </div>
     </div>
     <div class="mobile-menu" id="mobile-menu">
-      <a href="index.html#features" onclick="closeMenu()" data-i18n="nav_features">Features</a>
-      <a href="index.html#pricing" onclick="closeMenu()" data-i18n="nav_pricing">Pricing</a>
-      <a href="index.html#privacy" onclick="closeMenu()" data-i18n="nav_privacy">Privacy</a>
-      <a href="index.html#contact" onclick="closeMenu()" data-i18n="nav_contact">Contact</a>
-      <a href="https://github.com/AdhamSeliman5/Maly-OBS/releases/download/v1.0/Maly-OBS.V1.0.rar" target="_blank" rel="noopener" onclick="closeMenu()" data-i18n="nav_download">Download Now</a>
-      <button class="lang-btn" onclick="toggleLang(); closeMenu();"><i class="fa-solid fa-globe"></i><span id="lang-label-mobile">العربية</span></button>
+      <a href="index.html#features" onclick="document.getElementById('mobile-menu').classList.remove('open')" data-i18n="nav_features">Features</a>
+      <a href="index.html#pricing" onclick="document.getElementById('mobile-menu').classList.remove('open')" data-i18n="nav_pricing">Pricing</a>
+      <a href="index.html#faq" onclick="document.getElementById('mobile-menu').classList.remove('open')" data-i18n="nav_faq">FAQ</a>
+      <a href="index.html#privacy" onclick="document.getElementById('mobile-menu').classList.remove('open')" data-i18n="nav_privacy">Privacy</a>
+      <a href="index.html#contact" onclick="document.getElementById('mobile-menu').classList.remove('open')" data-i18n="nav_contact">Contact</a>
+      <a href="https://github.com/AdhamSeliman5/Maly-OBS/releases/download/v1.0/Maly-OBS.V1.0.rar" target="_blank" rel="noopener" data-i18n="nav_download">Download Now</a>
+      <button class="lang-btn" onclick="toggleLang(); document.getElementById('mobile-menu').classList.remove('open');"><i class="fa-solid fa-globe"></i><span id="lang-label-mobile">العربية</span></button>
     </div>
   </nav>
 
-  <main class="doc-main">
+  <div class="container breadcrumbs">
+    <a href="index.html" data-i18n="breadcrumb_home">Home</a>
+    <span aria-hidden="true">›</span>
+    <a href="index.html#features" data-i18n="breadcrumb_features">Features</a>
+    <span aria-hidden="true">›</span>
+    <span style="color:var(--text); font-weight:600;" data-i18n="mfg_breadcrumb">Manufacturing</span>
+  </div>
+
+  <section class="module-hero">
     <div class="container">
-      <div class="doc-inner">
-        <a href="index.html" class="btn-back">
-          <i class="fa-solid fa-arrow-left"></i>
-          <span data-i18n="btn_back">Back to Home</span>
-        </a>
-
-        <header class="doc-header">
-          <span class="doc-badge" data-i18n="doc_badge">User Guide</span>
-          <h1 data-i18n="doc_title">Manufacturing / Product Bundles & Kits</h1>
-          <p class="doc-meta">Maly - OBS (Online Business System) · <span data-i18n="doc_version">Version 1.0</span></p>
-        </header>
-
-        <div class="doc-content">
-          <h2 data-i18n="h2_purpose">Module Purpose</h2>
-          <p><span data-i18n="purpose_p1a">The Manufacturing module manages product bundles (kits) made from standard product components. You create bundles by defining a Bill of Materials (BOM), set a selling price, and see virtual stock (how many you can assemble from current component stock). The module shows which component limits each bundle, profit margins, top sellers, low-stock alerts, and component usage across bundles. Bundles have </span><strong data-i18n="purpose_strong">no physical stock</strong><span data-i18n="purpose_p1b">—they are assembled from components when orders are prepared or shipped.</span></p>
-
-          <h2 data-i18n="h2_ui">UI Elements</h2>
-
-          <h3 data-i18n="h3_header">Header Area</h3>
-          <div class="doc-table-wrapper">
-            <table class="doc-table">
-              <thead><tr><th data-i18n="th_element">Element</th><th data-i18n="th_description">Description</th></tr></thead>
-              <tbody>
-                <tr><td><strong data-i18n="h_stats">Header Stats</strong></td><td data-i18n="h_stats_desc">Total Bundles, Active, Low Stock counts</td></tr>
-                <tr><td><strong>Refresh</strong></td><td data-i18n="h_refresh">(via loading bar on data reload)</td></tr>
-              </tbody>
-            </table>
-          </div>
-
-          <h3 data-i18n="h3_tabs">Tabs</h3>
-          <div class="doc-table-wrapper">
-            <table class="doc-table">
-              <thead><tr><th data-i18n="th_tab">Tab</th><th data-i18n="th_content">Content</th></tr></thead>
-              <tbody>
-                <tr><td><strong>Repository</strong></td><td data-i18n="tab_repo">Bundle cards grid, search, filters, New Bundle button</td></tr>
-                <tr><td><strong>Studio</strong></td><td data-i18n="tab_studio">Bundle creation/editing form, BOM builder</td></tr>
-                <tr><td><strong>Analytics</strong></td><td data-i18n="tab_analytics">KPI cards, Top Selling, Low Stock, Most Profitable, Component Usage</td></tr>
-              </tbody>
-            </table>
-          </div>
-
-          <h3 data-i18n="h3_repo">Repository Tab</h3>
-          <div class="doc-table-wrapper">
-            <table class="doc-table">
-              <thead><tr><th data-i18n="th_element">Element</th><th data-i18n="th_description">Description</th></tr></thead>
-              <tbody>
-                <tr><td><strong>Search</strong></td><td data-i18n="r_search">Text field — search by bundle name</td></tr>
-                <tr><td><strong>Filter Chips</strong></td><td data-i18n="r_filter">All, Active, Low Stock, Out of Stock</td></tr>
-                <tr><td><strong>Show Inactive</strong></td><td data-i18n="r_inactive">Checkbox — include inactive bundles</td></tr>
-                <tr><td><strong>New Bundle</strong></td><td data-i18n="r_new">Button — open Studio and create new bundle</td></tr>
-                <tr><td><strong>Bundle Cards</strong></td><td data-i18n="r_cards">Grid of cards — each shows name, item count, stock, cost, price, margin, limiter, ⋮ menu</td></tr>
-                <tr><td><strong>Empty State</strong></td><td data-i18n="r_empty">Shown when no bundles; "Create your first bundle" button</td></tr>
-              </tbody>
-            </table>
-          </div>
-
-          <h3 data-i18n="h3_bundle_menu">Bundle Card (⋮ menu)</h3>
-          <div class="doc-table-wrapper">
-            <table class="doc-table">
-              <thead><tr><th data-i18n="th_option">Option</th><th data-i18n="th_description">Description</th></tr></thead>
-              <tbody>
-                <tr><td><strong>View Details</strong></td><td data-i18n="m_view">Show component list with availability and virtual stock</td></tr>
-                <tr><td><strong>Edit</strong></td><td data-i18n="m_edit">Open Studio to edit (only if no order history)</td></tr>
-                <tr><td><strong>Delete</strong></td><td data-i18n="m_delete">Delete bundle (only if no order history)</td></tr>
-                <tr><td><strong>Duplicate</strong></td><td data-i18n="m_dup">Create a copy with a new name</td></tr>
-                <tr><td><strong>Activate / Deactivate</strong></td><td data-i18n="m_activate">Toggle active status</td></tr>
-              </tbody>
-            </table>
-          </div>
-
-          <h3 data-i18n="h3_studio">Studio Tab (Creator)</h3>
-          <div class="doc-table-wrapper">
-            <table class="doc-table">
-              <thead><tr><th data-i18n="th_element">Element</th><th data-i18n="th_description">Description</th></tr></thead>
-              <tbody>
-                <tr><td><strong>Bundle Name</strong></td><td data-i18n="s_name">Text field — bundle name</td></tr>
-                <tr><td><strong>Selling Price</strong></td><td data-i18n="s_price">Text field — selling price</td></tr>
-                <tr><td><strong>Select Component</strong></td><td data-i18n="s_select">Read-only field — opens component picker when clicked</td></tr>
-                <tr><td><strong>Pick Component</strong></td><td data-i18n="s_pick">Search icon — open component picker</td></tr>
-                <tr><td><strong>Qty</strong></td><td data-i18n="s_qty">Text field — quantity per component (default 1)</td></tr>
-                <tr><td><strong>Add Component</strong></td><td data-i18n="s_add">Green + icon — add selected component to BOM</td></tr>
-                <tr><td><strong>BOM List</strong></td><td data-i18n="s_bom">List of components with cost breakdown; remove (red ×) per item</td></tr>
-                <tr><td><strong>Total Cost</strong></td><td data-i18n="s_cost">Display — sum of component costs</td></tr>
-                <tr><td><strong>Profit Margin</strong></td><td data-i18n="s_margin">Display — calculated from selling price vs total cost</td></tr>
-                <tr><td><strong>Cancel</strong></td><td data-i18n="s_cancel">Reset studio and return to Repository</td></tr>
-                <tr><td><strong>Save</strong></td><td data-i18n="s_save">Save bundle (create or update)</td></tr>
-              </tbody>
-            </table>
-          </div>
-
-          <h3 data-i18n="h3_picker">Component Picker Dialog</h3>
-          <div class="doc-table-wrapper">
-            <table class="doc-table">
-              <thead><tr><th data-i18n="th_element">Element</th><th data-i18n="th_description">Description</th></tr></thead>
-              <tbody>
-                <tr><td><strong>Search</strong></td><td data-i18n="p_search">Text field — filter components by name</td></tr>
-                <tr><td><strong>Results List</strong></td><td data-i18n="p_results">Clickable items — name, availability, cost; click to select</td></tr>
-              </tbody>
-            </table>
-          </div>
-
-          <h3 data-i18n="h3_analytics">Analytics Tab</h3>
-          <div class="doc-table-wrapper">
-            <table class="doc-table">
-              <thead><tr><th data-i18n="th_element">Element</th><th data-i18n="th_description">Description</th></tr></thead>
-              <tbody>
-                <tr><td><strong>KPI Cards</strong></td><td data-i18n="a_kpi">Total Bundles, Active, Low Stock, Avg Margin</td></tr>
-                <tr><td><strong>Top Selling Bundles</strong></td><td data-i18n="a_top">List — bundles by units sold</td></tr>
-                <tr><td><strong>Low Stock Alert</strong></td><td data-i18n="a_low">List — bundles with virtual stock < 5</td></tr>
-                <tr><td><strong>Most Profitable</strong></td><td data-i18n="a_profit">List — bundles by profit margin</td></tr>
-                <tr><td><strong>Component Usage</strong></td><td data-i18n="a_usage">List — components and how many bundles use them</td></tr>
-              </tbody>
-            </table>
-          </div>
-
-          <h2 data-i18n="h2_workflow">Step-by-Step Workflow</h2>
-
-          <h3 data-i18n="w1_title">1. Create a New Bundle</h3>
-          <ul class="doc-list">
-            <li data-i18n="w1_1">Click New Bundle or go to the Studio tab.</li>
-            <li data-i18n="w1_2">Enter Bundle Name.</li>
-            <li data-i18n="w1_3">Enter Selling Price.</li>
-            <li data-i18n="w1_4a">Add components: Click Select Component field or Pick Component icon. Search or scroll in the picker, then click a component. Set Qty (default 1). Click Add Component (green +).</li>
-            <li data-i18n="w1_5">Repeat for all components.</li>
-            <li data-i18n="w1_6">Review Total Cost and Profit Margin.</li>
-            <li data-i18n="w1_7">Click Save.</li>
-            <li data-i18n="w1_8">Success: snackbar confirms; you return to the Repository tab with the new bundle.</li>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-10 md:gap-12 items-center">
+        <div>
+          <h1 class="hero-headline" data-i18n="mfg_hero_headline">Build Bundles from Standard Components</h1>
+          <p class="hero-desc" data-i18n="mfg_hero_desc">The Manufacturing module manages product bundles (kits) built from standard inventory components. Define your Bill of Materials (BOM), set selling prices, and see virtual stock—no physical storage of kits. Bundles are assembled from components when orders are prepared or shipped.</p>
+          <ul class="hero-bullets">
+            <li><svg viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg><span data-i18n="mfg_bullet_1">Repository tab: Bundle cards with Edit, Duplicate, Activate/Deactivate, Delete</span></li>
+            <li><svg viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg><span data-i18n="mfg_bullet_2">Studio: BOM builder with component picker to add products and quantities</span></li>
+            <li><svg viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg><span data-i18n="mfg_bullet_3">Analytics: Top Selling, Low Stock, Most Profitable bundles, Component Usage</span></li>
           </ul>
+          <a href="https://github.com/AdhamSeliman5/Maly-OBS/releases/download/v1.0/Maly-OBS.V1.0.rar" target="_blank" rel="noopener" class="btn-module-cta"><i class="fa-solid fa-download"></i><span data-i18n="mod_download_now">Download Now</span></a>
+        </div>
+        <div class="flex justify-center md:justify-end order-first md:order-2">
+          <img src="assets/images/feat-manufacturing.png" alt="Manufacturing module interface" class="w-full max-w-md rounded-xl shadow-lg border border-gray-200/80 object-cover" />
+        </div>
+      </div>
+    </div>
+  </section>
 
-          <h3 data-i18n="w2_title">2. Edit a Bundle</h3>
-          <ul class="doc-list">
-            <li data-i18n="w2_1">Open the ⋮ menu on a bundle card.</li>
-            <li data-i18n="w2_2">Click Edit.</li>
-            <li data-i18n="w2_3">The Studio tab opens with the current name, price, and BOM.</li>
-            <li data-i18n="w2_4">Change Name, Selling Price, or components (add/remove/adjust qty).</li>
-            <li data-i18n="w2_5">Click Save.</li>
-            <li data-i18n="w2_6">If the bundle has order history: "Cannot edit: Bundle has order history" (Edit is hidden).</li>
-          </ul>
+  <section class="py-16 md:py-20" style="background: var(--surface);">
+    <div class="container">
+      <div class="text-center mb-12">
+        <div class="inline-block text-xs font-bold tracking-widest uppercase text-[var(--accent)] bg-[var(--accent-light)] px-4 py-1.5 rounded-full mb-4" data-i18n="mod_capabilities">Capabilities</div>
+        <h2 class="text-2xl md:text-3xl font-extrabold text-[var(--text)] mb-3" data-i18n="mod_what_you_can_do">What You Can Do</h2>
+        <p class="text-[var(--text-muted)] max-w-xl mx-auto" data-i18n="mod_key_features">Key features at your fingertips.</p>
+      </div>
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+        <div class="cap-card reveal">
+          <div class="cap-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"/></svg></div>
+          <h3 data-i18n="mfg_cap1_title">Bundle Repository</h3>
+          <p data-i18n="mfg_cap1_desc">Create and manage bundles with Edit, Duplicate, Activate, and Deactivate. View all bundle cards in one place with virtual stock computed from components.</p>
+        </div>
+        <div class="cap-card reveal">
+          <div class="cap-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4"/></svg></div>
+          <h3 data-i18n="mfg_cap2_title">BOM Builder</h3>
+          <p data-i18n="mfg_cap2_desc">Use the Studio tab to define your Bill of Materials. Add components via the picker—select products and quantities per bundle. Set selling price per variant.</p>
+        </div>
+        <div class="cap-card reveal">
+          <div class="cap-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/></svg></div>
+          <h3 data-i18n="mfg_cap3_title">Virtual Stock</h3>
+          <p data-i18n="mfg_cap3_desc">No physical kit storage—availability is computed from component inventory. Assembly happens automatically when orders are prepared or shipped.</p>
+        </div>
+        <div class="cap-card reveal">
+          <div class="cap-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/></svg></div>
+          <h3 data-i18n="mfg_cap4_title">Analytics &amp; KPIs</h3>
+          <p data-i18n="mfg_cap4_desc">Top Selling bundles, Low Stock alerts, Most Profitable, Component Usage. Date-filtered KPIs to optimize your kit offerings.</p>
+        </div>
+      </div>
+    </div>
+  </section>
 
-          <h3 data-i18n="w3_title">3. Add Components in Studio</h3>
-          <ul class="doc-list">
-            <li data-i18n="w3_1">Click Select Component or the search icon.</li>
-            <li data-i18n="w3_2">In the picker, type to search or scroll the list.</li>
-            <li data-i18n="w3_3">Click a component to select it.</li>
-            <li data-i18n="w3_4">Enter Qty (e.g. 2).</li>
-            <li data-i18n="w3_5">Click the green Add Component icon.</li>
-            <li data-i18n="w3_6">The component appears in the BOM list. If already in BOM, its quantity is increased.</li>
-            <li data-i18n="w3_7">Total Cost and Profit Margin update automatically.</li>
-          </ul>
-
-          <h3 data-i18n="w4_title">4. Remove a Component from BOM</h3>
-          <ul class="doc-list">
-            <li data-i18n="w4_1">In the BOM list, click the red Remove (×) icon next to the component.</li>
-            <li data-i18n="w4_2">The component is removed and cost/margin recalculate.</li>
-          </ul>
-
-          <h3 data-i18n="w5_title">5. Duplicate a Bundle</h3>
-          <ul class="doc-list">
-            <li data-i18n="w5_1">Open the ⋮ menu on a bundle card.</li>
-            <li data-i18n="w5_2">Click Duplicate.</li>
-            <li data-i18n="w5_3">Enter New Bundle Name in the dialog (default: "[Name] (Copy)").</li>
-            <li data-i18n="w5_4">Click Duplicate.</li>
-            <li data-i18n="w5_5">Success: a new bundle is created with the same BOM and prices.</li>
-          </ul>
-
-          <h3 data-i18n="w6_title">6. Activate or Deactivate a Bundle</h3>
-          <ul class="doc-list">
-            <li data-i18n="w6_1">Open the ⋮ menu on a bundle card.</li>
-            <li data-i18n="w6_2">Click Activate or Deactivate.</li>
-            <li data-i18n="w6_3">Success: snackbar confirms; the bundle's status toggles.</li>
-            <li data-i18n="w6_4">Inactive bundles appear dimmed and can be filtered via Show Inactive.</li>
-          </ul>
-
-          <h3 data-i18n="w7_title">7. Delete a Bundle</h3>
-          <ul class="doc-list">
-            <li data-i18n="w7_1">Open the ⋮ menu on a bundle card.</li>
-            <li data-i18n="w7_2">Click Delete.</li>
-            <li data-i18n="w7_3">Confirm in the dialog.</li>
-            <li data-i18n="w7_4">Success: bundle is removed.</li>
-            <li data-i18n="w7_5">If it has order history: "Cannot delete: Bundle has order history" (Delete is hidden).</li>
-          </ul>
-
-          <h3 data-i18n="w8_title">8. View Bundle Details</h3>
-          <ul class="doc-list">
-            <li data-i18n="w8_1">Open the ⋮ menu on a bundle card.</li>
-            <li data-i18n="w8_2">Click View Details.</li>
-            <li data-i18n="w8_3">A dialog shows each component with availability and which one limits the bundle.</li>
-            <li data-i18n="w8_4">Virtual Stock is shown at the bottom.</li>
-          </ul>
-
-          <h3 data-i18n="w9_title">9. Search and Filter Bundles</h3>
-          <ul class="doc-list">
-            <li data-i18n="w9_1">Search: Type in the search field — filters by name.</li>
-            <li data-i18n="w9_2">Filter chips: Click All, Active, Low Stock, or Out of Stock.</li>
-            <li data-i18n="w9_3">Show Inactive: Check to include inactive bundles.</li>
-          </ul>
-
-          <h2 data-i18n="h2_rules">Business Rules & Validations</h2>
-
-          <h3 data-i18n="r_create">Create / Update Bundle</h3>
-          <div class="doc-table-wrapper">
-            <table class="doc-table">
-              <thead><tr><th data-i18n="th_rule">Rule</th><th data-i18n="th_result">Result</th></tr></thead>
-              <tbody>
-                <tr><td data-i18n="r_name">Bundle name required</td><td data-i18n="r_name_res">"Bundle name is required"</td></tr>
-                <tr><td data-i18n="r_component">At least 1 component</td><td data-i18n="r_component_res">"Bundle must have at least 1 component"</td></tr>
-                <tr><td data-i18n="r_dup">Duplicate name</td><td data-i18n="r_dup_res">"Bundle name already exists"</td></tr>
-                <tr><td data-i18n="r_price">Invalid selling price</td><td data-i18n="r_price_res">"Invalid selling price"</td></tr>
-              </tbody>
-            </table>
+  <section class="py-16 md:py-20">
+    <div class="container">
+      <div class="text-center mb-12">
+        <div class="inline-block text-xs font-bold tracking-widest uppercase text-[var(--accent)] bg-[var(--accent-light)] px-4 py-1.5 rounded-full mb-4" data-i18n="mod_workflow">Workflow</div>
+        <h2 class="text-2xl md:text-3xl font-extrabold text-[var(--text)] mb-3" data-i18n="mfg_workflow_title">How It Works</h2>
+        <p class="text-[var(--text-muted)] max-w-xl mx-auto" data-i18n="mod_get_started">Get started in minutes.</p>
+      </div>
+      <div class="max-w-2xl mx-auto space-y-8">
+        <div class="flex gap-5 items-start reveal">
+          <div class="step-num">1</div>
+          <div class="step-content">
+            <h4 data-i18n="mfg_step1_title">Create a New Bundle</h4>
+            <p data-i18n="mfg_step1_desc">Click New Bundle. Enter Bundle Name and set selling price for each variant. Save to create the bundle in the Repository.</p>
           </div>
-
-          <h3 data-i18n="r_add">Add Component</h3>
-          <div class="doc-table-wrapper">
-            <table class="doc-table">
-              <thead><tr><th data-i18n="th_rule">Rule</th><th data-i18n="th_result">Result</th></tr></thead>
-              <tbody>
-                <tr><td data-i18n="r_add_select">No component selected</td><td data-i18n="r_add_select_res">"Please select a component first" (yellow)</td></tr>
-                <tr><td data-i18n="r_add_qty">Quantity ≤ 0</td><td data-i18n="r_add_qty_res">"Quantity must be greater than 0"</td></tr>
-                <tr><td data-i18n="r_add_exists">Component already in BOM</td><td data-i18n="r_add_exists_res">Quantity is increased (no error)</td></tr>
-              </tbody>
-            </table>
+        </div>
+        <div class="flex gap-5 items-start reveal">
+          <div class="step-num">2</div>
+          <div class="step-content">
+            <h4 data-i18n="mfg_step2_title">Add Components to BOM</h4>
+            <p data-i18n="mfg_step2_desc">Open Studio and use the component picker to add standard products. Select product, variant, and quantity per unit. The BOM defines what goes into each kit.</p>
           </div>
-
-          <h3 data-i18n="r_edit">Edit Bundle</h3>
-          <div class="doc-table-wrapper">
-            <table class="doc-table">
-              <thead><tr><th data-i18n="th_rule">Rule</th><th data-i18n="th_result">Result</th></tr></thead>
-              <tbody>
-                <tr><td data-i18n="r_edit_history">Has order history</td><td data-i18n="r_edit_history_res">Edit and Delete are hidden; if called: "Cannot edit: Bundle has order history"</td></tr>
-              </tbody>
-            </table>
+        </div>
+        <div class="flex gap-5 items-start reveal">
+          <div class="step-num">3</div>
+          <div class="step-content">
+            <h4 data-i18n="mfg_step3_title">Edit, Duplicate, or Manage</h4>
+            <p data-i18n="mfg_step3_desc">Use Edit to change BOM or price. Duplicate to clone a bundle. Activate or Deactivate to control visibility. Delete removes the bundle.</p>
           </div>
-
-          <h3 data-i18n="r_delete">Delete Bundle</h3>
-          <div class="doc-table-wrapper">
-            <table class="doc-table">
-              <thead><tr><th data-i18n="th_rule">Rule</th><th data-i18n="th_result">Result</th></tr></thead>
-              <tbody>
-                <tr><td data-i18n="r_del_history">Has order history</td><td data-i18n="r_del_history_res">Delete hidden; if called: "Cannot delete: Bundle has order history"</td></tr>
-              </tbody>
-            </table>
-          </div>
-
-          <h3 data-i18n="r_dup_bundle">Duplicate Bundle</h3>
-          <div class="doc-table-wrapper">
-            <table class="doc-table">
-              <thead><tr><th data-i18n="th_rule">Rule</th><th data-i18n="th_result">Result</th></tr></thead>
-              <tbody>
-                <tr><td data-i18n="r_dup_name">New name required</td><td data-i18n="r_dup_name_res">"New name is required"</td></tr>
-                <tr><td data-i18n="r_dup_exists">Duplicate name</td><td data-i18n="r_dup_exists_res">"Name already exists"</td></tr>
-              </tbody>
-            </table>
-          </div>
-
-          <h3 data-i18n="r_virtual">Virtual Stock</h3>
-          <ul class="doc-list">
-            <li data-i18n="r_virtual1">Virtual Stock = minimum (component available ÷ BOM quantity) across all components.</li>
-            <li data-i18n="r_virtual2">The Limiter is the component with the lowest ratio.</li>
-            <li data-i18n="r_virtual3">Bundles have no physical stock; stock is held in components.</li>
-          </ul>
-
-          <h3 data-i18n="r_cost">Cost & Margin</h3>
-          <ul class="doc-list">
-            <li data-i18n="r_cost1">Total Cost = sum of (component cost × quantity) for each BOM item.</li>
-            <li data-i18n="r_cost2">Profit Margin = ((Selling Price − Total Cost) ÷ Selling Price) × 100.</li>
-          </ul>
-
-          <h2 data-i18n="h2_messages">Messages & Alerts</h2>
-          <div class="doc-table-wrapper">
-            <table class="doc-table">
-              <thead><tr><th data-i18n="th_situation">Situation</th><th data-i18n="th_message">Message</th></tr></thead>
-              <tbody>
-                <tr><td data-i18n="m_save_ok">Save success</td><td data-i18n="m_save_ok_msg">"Bundle created successfully!" / "Bundle updated successfully!" (green)</td></tr>
-                <tr><td data-i18n="m_save_fail">Save failure</td><td data-i18n="m_save_fail_msg">"Bundle name is required", "Bundle must have at least 1 component", "Bundle name already exists", "Invalid selling price" (red)</td></tr>
-                <tr><td data-i18n="m_add_comp">Add component</td><td data-i18n="m_add_comp_msg">"Component added" / "Quantity updated" (no snackbar; UI updates)</td></tr>
-                <tr><td data-i18n="m_add_fail">Add component failure</td><td data-i18n="m_add_fail_msg">"Please select a component first" (yellow), "Quantity must be greater than 0" (red)</td></tr>
-                <tr><td data-i18n="m_blocked">Edit/Delete blocked</td><td data-i18n="m_blocked_msg">"Cannot edit: Bundle has order history" / "Cannot delete: Bundle has order history" (red)</td></tr>
-                <tr><td data-i18n="m_del_ok">Delete success</td><td data-i18n="m_del_ok_msg">"Bundle deleted successfully!" (green)</td></tr>
-                <tr><td data-i18n="m_dup_ok">Duplicate success</td><td data-i18n="m_dup_ok_msg">"Bundle duplicated successfully!" (green)</td></tr>
-                <tr><td data-i18n="m_dup_fail">Duplicate failure</td><td data-i18n="m_dup_fail_msg">"New name is required", "Name already exists" (red)</td></tr>
-                <tr><td data-i18n="m_toggle">Toggle status success</td><td data-i18n="m_toggle_msg">"Status updated!" (green)</td></tr>
-                <tr><td data-i18n="m_load">Load error</td><td data-i18n="m_load_msg">Error message in snackbar (red)</td></tr>
-              </tbody>
-            </table>
-          </div>
-
-          <h2 data-i18n="h2_tips">Tips</h2>
-          <div class="callout callout-tip">
-            <i class="fa-solid fa-lightbulb"></i>
-            <div class="callout-content">
-              <ul class="doc-list" style="margin-bottom:0;">
-                <li data-i18n="tip1">Virtual Stock: Shows how many bundles you can assemble from current component stock.</li>
-                <li data-i18n="tip2">Limiter: The component with the lowest available ÷ quantity is the bottleneck.</li>
-                <li data-i18n="tip3">Order history: Once a bundle has orders, Edit and Delete are disabled to protect history.</li>
-                <li data-i18n="tip4">Duplicate: Use to create similar bundles without re-entering the BOM.</li>
-                <li data-i18n="tip5">Inactive: Deactivate bundles you no longer sell; they stay in the system but can be excluded from views.</li>
-                <li data-i18n="tip6">Component picker: Standard (non-Bundle) products appear as components; bundles are excluded.</li>
-                <li data-i18n="tip7">Cost recalculation: Bundle costs are recalculated from component costs when data is loaded.</li>
-              </ul>
-            </div>
+        </div>
+        <div class="flex gap-5 items-start reveal">
+          <div class="step-num">4</div>
+          <div class="step-content">
+            <h4 data-i18n="mfg_step4_title">View Details &amp; Analytics</h4>
+            <p data-i18n="mfg_step4_desc">Check bundle details for virtual stock. Visit Analytics tab for Top Selling, Low Stock, Most Profitable bundles, and Component Usage reports.</p>
           </div>
         </div>
       </div>
     </div>
-  </main>
+  </section>
+
+  <section class="py-16 md:py-20" style="background: var(--surface);">
+    <div class="container">
+      <div class="text-center mb-12">
+        <div class="inline-block text-xs font-bold tracking-widest uppercase text-[var(--accent)] bg-[var(--accent-light)] px-4 py-1.5 rounded-full mb-4" data-i18n="mod_explore">Explore</div>
+        <h2 class="text-2xl md:text-3xl font-extrabold text-[var(--text)] mb-3" data-i18n="mod_other_modules">Other Modules</h2>
+        <p class="text-[var(--text-muted)] max-w-xl mx-auto" data-i18n="mod_discover_more">Discover more of what Maly - OBS can do.</p>
+      </div>
+      <div class="grid grid-cols-1 sm:grid-cols-3 gap-5">
+        <a href="inventory.html" class="explore-card"><div class="explore-icon"><i class="fa-solid fa-boxes-stacked"></i></div><span class="font-semibold" data-i18n="explore_inventory">Inventory</span></a>
+        <a href="preparation.html" class="explore-card"><div class="explore-icon"><i class="fa-solid fa-clipboard-check"></i></div><span class="font-semibold" data-i18n="explore_preparation">Preparation</span></a>
+        <a href="expenses.html" class="explore-card"><div class="explore-icon"><i class="fa-solid fa-wallet"></i></div><span class="font-semibold" data-i18n="explore_expenses">Expenses</span></a>
+      </div>
+    </div>
+  </section>
+
+  <section class="cta-strip">
+    <div class="container">
+      <h2 data-i18n="mod_cta_headline">Ready to Own Your Numbers?</h2>
+      <p data-i18n="mfg_cta_sub">Download Maly - OBS now and manage Manufacturing along with 10 more modules. 1 week free trial—no credit card required.</p>
+      <a href="https://github.com/AdhamSeliman5/Maly-OBS/releases/download/v1.0/Maly-OBS.V1.0.rar" target="_blank" rel="noopener" class="btn-cta"><i class="fa-solid fa-download"></i><span data-i18n="mod_download_now">Download Now</span></a>
+    </div>
+  </section>
 
   <footer>
     <div class="container">
       <div class="footer-grid">
         <div class="footer-brand">
-          <div class="nav-logo" style="color:#fff; margin-bottom:14px; display:flex; align-items:center; gap:10px;">
-            <img src="assets/logo_splash_light.png" alt="Maly OBS" />
-            <span>Maly&nbsp;-&nbsp;OBS</span>
-          </div>
+          <a href="index.html" class="nav-logo"><img src="assets/logo_splash_light.png" alt="Maly OBS" /></a>
           <p data-i18n="footer_tagline">The smartest way to run your e-commerce business in Egypt.</p>
           <div class="social-row">
-            <a href="https://www.linkedin.com/company/maly-obs/" target="_blank" rel="noopener" class="footer-social"><i class="fa-brands fa-linkedin-in"></i></a>
-            <a href="https://www.facebook.com/MalyOBS" target="_blank" rel="noopener" class="footer-social"><i class="fa-brands fa-facebook-f"></i></a>
-            <a href="https://www.youtube.com/@Maly-OBS" target="_blank" rel="noopener" class="footer-social"><i class="fa-brands fa-youtube"></i></a>
-            <a href="https://wa.me/201100028752" target="_blank" rel="noopener" class="footer-social"><i class="fa-brands fa-whatsapp"></i></a>
+            <a href="https://www.linkedin.com/company/maly-obs/" target="_blank" rel="noopener" class="footer-social" aria-label="LinkedIn"><i class="fa-brands fa-linkedin-in"></i></a>
+            <a href="https://www.facebook.com/MalyOBS" target="_blank" rel="noopener" class="footer-social" aria-label="Facebook"><i class="fa-brands fa-facebook-f"></i></a>
+            <a href="https://www.youtube.com/@Maly-OBS" target="_blank" rel="noopener" class="footer-social" aria-label="YouTube"><i class="fa-brands fa-youtube"></i></a>
+            <a href="https://wa.me/201100028752" target="_blank" rel="noopener" class="footer-social" aria-label="WhatsApp"><i class="fa-brands fa-whatsapp"></i></a>
           </div>
         </div>
-        <div class="footer-col">
-          <h4 data-i18n="footer_nav">Navigate</h4>
-          <ul>
-            <li><a href="index.html#features" data-i18n="nav_features">Features</a></li>
-            <li><a href="index.html#pricing" data-i18n="nav_pricing">Pricing</a></li>
-            <li><a href="index.html#privacy" data-i18n="nav_privacy">Privacy</a></li>
-            <li><a href="index.html#contact" data-i18n="nav_contact">Contact</a></li>
-          </ul>
-        </div>
-        <div class="footer-col">
-          <h4 data-i18n="footer_contact_hd">Contact</h4>
-          <ul>
-            <li><span>asoliman548@gmail.com</span></li>
-            <li><span>01100028752</span></li>
-            <li><span data-i18n="footer_location">Cairo, Egypt</span></li>
-          </ul>
-        </div>
-        <div class="footer-col">
-          <h4 data-i18n="footer_legal">Legal</h4>
-          <ul><li><a href="index.html#privacy" data-i18n="footer_privacy_link">Privacy Policy</a></li></ul>
-        </div>
+        <div class="footer-col"><h4 data-i18n="footer_nav">Navigate</h4><ul><li><a href="index.html#features" data-i18n="nav_features">Features</a></li><li><a href="index.html#pricing" data-i18n="nav_pricing">Pricing</a></li><li><a href="index.html#faq" data-i18n="nav_faq">FAQ</a></li><li><a href="index.html#privacy" data-i18n="nav_privacy">Privacy</a></li><li><a href="index.html#contact" data-i18n="nav_contact">Contact</a></li></ul></div>
+        <div class="footer-col"><h4 data-i18n="footer_contact">Contact</h4><ul><li><span>asoliman548@gmail.com</span></li><li><span>01100028752</span></li><li><span data-i18n="footer_location">Cairo, Egypt</span></li></ul></div>
+        <div class="footer-col"><h4 data-i18n="footer_legal">Legal</h4><ul><li><a href="index.html#privacy" data-i18n="footer_privacy">Privacy Policy</a></li></ul></div>
       </div>
       <div class="footer-bottom">
         <p data-i18n="footer_copy">© 2026 Maly Systems. All rights reserved.</p>
@@ -496,193 +280,50 @@
     </div>
   </footer>
 
+  <script src="js/i18n-modules.js"></script>
   <script>
-    const T = {
+    MalyI18n.init({
       en: {
-        btn_back: "Back to Home", doc_badge: "User Guide", doc_title: "Manufacturing / Product Bundles & Kits", doc_version: "Version 1.0",
-        nav_features: "Features", nav_pricing: "Pricing", nav_privacy: "Privacy", nav_contact: "Contact", nav_download: "Download Now",
-        footer_tagline: "The smartest way to run your e-commerce business in Egypt.",
-        footer_nav: "Navigate", footer_contact_hd: "Contact", footer_legal: "Legal", footer_privacy_link: "Privacy Policy", footer_location: "Cairo, Egypt", footer_copy: "© 2026 Maly Systems. All rights reserved.",
-        h2_purpose: "Module Purpose", h2_ui: "UI Elements", h2_workflow: "Step-by-Step Workflow", h2_rules: "Business Rules & Validations", h2_messages: "Messages & Alerts", h2_tips: "Tips",
-        th_element: "Element", th_description: "Description", th_tab: "Tab", th_content: "Content", th_option: "Option", th_rule: "Rule", th_result: "Result", th_situation: "Situation", th_message: "Message",
-        purpose_p1a: "The Manufacturing module manages product bundles (kits) made from standard product components. You create bundles by defining a Bill of Materials (BOM), set a selling price, and see virtual stock (how many you can assemble from current component stock). The module shows which component limits each bundle, profit margins, top sellers, low-stock alerts, and component usage across bundles. Bundles have ",
-        purpose_strong: "no physical stock",
-        purpose_p1b: "—they are assembled from components when orders are prepared or shipped.",
-        h3_header: "Header Area", h3_tabs: "Tabs", h3_repo: "Repository Tab", h3_bundle_menu: "Bundle Card (⋮ menu)", h3_studio: "Studio Tab (Creator)", h3_picker: "Component Picker Dialog", h3_analytics: "Analytics Tab",
-        h_stats: "Header Stats", h_stats_desc: "Total Bundles, Active, Low Stock counts", h_refresh: "(via loading bar on data reload)",
-        tab_repo: "Bundle cards grid, search, filters, New Bundle button", tab_studio: "Bundle creation/editing form, BOM builder",
-        tab_analytics: "KPI cards, Top Selling, Low Stock, Most Profitable, Component Usage",
-        r_search: "Text field — search by bundle name", r_filter: "All, Active, Low Stock, Out of Stock",
-        r_inactive: "Checkbox — include inactive bundles", r_new: "Button — open Studio and create new bundle",
-        r_cards: "Grid of cards — each shows name, item count, stock, cost, price, margin, limiter, ⋮ menu",
-        r_empty: "Shown when no bundles; \"Create your first bundle\" button",
-        m_view: "Show component list with availability and virtual stock", m_edit: "Open Studio to edit (only if no order history)",
-        m_delete: "Delete bundle (only if no order history)", m_dup: "Create a copy with a new name", m_activate: "Toggle active status",
-        s_name: "Text field — bundle name", s_price: "Text field — selling price", s_select: "Read-only field — opens component picker when clicked",
-        s_pick: "Search icon — open component picker", s_qty: "Text field — quantity per component (default 1)",
-        s_add: "Green + icon — add selected component to BOM",
-        s_bom: "List of components with cost breakdown; remove (red ×) per item",
-        s_cost: "Display — sum of component costs", s_margin: "Display — calculated from selling price vs total cost",
-        s_cancel: "Reset studio and return to Repository", s_save: "Save bundle (create or update)",
-        p_search: "Text field — filter components by name", p_results: "Clickable items — name, availability, cost; click to select",
-        a_kpi: "Total Bundles, Active, Low Stock, Avg Margin", a_top: "List — bundles by units sold",
-        a_low: "List — bundles with virtual stock < 5", a_profit: "List — bundles by profit margin",
-        a_usage: "List — components and how many bundles use them",
-        w1_title: "1. Create a New Bundle", w1_1: "Click New Bundle or go to the Studio tab.", w1_2: "Enter Bundle Name.", w1_3: "Enter Selling Price.",
-        w1_4a: "Add components: Click Select Component field or Pick Component icon. Search or scroll in the picker, then click a component. Set Qty (default 1). Click Add Component (green +).",
-        w1_5: "Repeat for all components.", w1_6: "Review Total Cost and Profit Margin.", w1_7: "Click Save.", w1_8: "Success: snackbar confirms; you return to the Repository tab with the new bundle.",
-        w2_title: "2. Edit a Bundle", w2_1: "Open the ⋮ menu on a bundle card.", w2_2: "Click Edit.", w2_3: "The Studio tab opens with the current name, price, and BOM.",
-        w2_4: "Change Name, Selling Price, or components (add/remove/adjust qty).", w2_5: "Click Save.", w2_6: "If the bundle has order history: \"Cannot edit: Bundle has order history\" (Edit is hidden).",
-        w3_title: "3. Add Components in Studio", w3_1: "Click Select Component or the search icon.", w3_2: "In the picker, type to search or scroll the list.", w3_3: "Click a component to select it.", w3_4: "Enter Qty (e.g. 2).",
-        w3_5: "Click the green Add Component icon.", w3_6: "The component appears in the BOM list. If already in BOM, its quantity is increased.", w3_7: "Total Cost and Profit Margin update automatically.",
-        w4_title: "4. Remove a Component from BOM", w4_1: "In the BOM list, click the red Remove (×) icon next to the component.", w4_2: "The component is removed and cost/margin recalculate.",
-        w5_title: "5. Duplicate a Bundle", w5_1: "Open the ⋮ menu on a bundle card.", w5_2: "Click Duplicate.", w5_3: "Enter New Bundle Name in the dialog (default: \"[Name] (Copy)\").", w5_4: "Click Duplicate.", w5_5: "Success: a new bundle is created with the same BOM and prices.",
-        w6_title: "6. Activate or Deactivate a Bundle", w6_1: "Open the ⋮ menu on a bundle card.", w6_2: "Click Activate or Deactivate.", w6_3: "Success: snackbar confirms; the bundle's status toggles.", w6_4: "Inactive bundles appear dimmed and can be filtered via Show Inactive.",
-        w7_title: "7. Delete a Bundle", w7_1: "Open the ⋮ menu on a bundle card.", w7_2: "Click Delete.", w7_3: "Confirm in the dialog.", w7_4: "Success: bundle is removed.", w7_5: "If it has order history: \"Cannot delete: Bundle has order history\" (Delete is hidden).",
-        w8_title: "8. View Bundle Details", w8_1: "Open the ⋮ menu on a bundle card.", w8_2: "Click View Details.", w8_3: "A dialog shows each component with availability and which one limits the bundle.", w8_4: "Virtual Stock is shown at the bottom.",
-        w9_title: "9. Search and Filter Bundles", w9_1: "Search: Type in the search field — filters by name.", w9_2: "Filter chips: Click All, Active, Low Stock, or Out of Stock.", w9_3: "Show Inactive: Check to include inactive bundles.",
-        r_create: "Create / Update Bundle", r_name: "Bundle name required", r_name_res: "\"Bundle name is required\"",
-        r_component: "At least 1 component", r_component_res: "\"Bundle must have at least 1 component\"",
-        r_dup: "Duplicate name", r_dup_res: "\"Bundle name already exists\"",
-        r_dup_bundle: "Duplicate Bundle", r_price: "Invalid selling price", r_price_res: "\"Invalid selling price\"",
-        r_add: "Add Component", r_add_select: "No component selected", r_add_select_res: "\"Please select a component first\" (yellow)",
-        r_add_qty: "Quantity ≤ 0", r_add_qty_res: "\"Quantity must be greater than 0\"",
-        r_add_exists: "Component already in BOM", r_add_exists_res: "Quantity is increased (no error)",
-        r_edit: "Edit Bundle", r_edit_history: "Has order history", r_edit_history_res: "Edit and Delete are hidden; if called: \"Cannot edit: Bundle has order history\"",
-        r_delete: "Delete Bundle", r_del_history: "Has order history", r_del_history_res: "Delete hidden; if called: \"Cannot delete: Bundle has order history\"",
-        r_dup_menu: "Duplicate Bundle", r_dup_name: "New name required", r_dup_name_res: "\"New name is required\"",
-        r_dup_exists: "Duplicate name", r_dup_exists_res: "\"Name already exists\"",
-        r_virtual: "Virtual Stock", r_virtual1: "Virtual Stock = minimum (component available ÷ BOM quantity) across all components.",
-        r_virtual2: "The Limiter is the component with the lowest ratio.", r_virtual3: "Bundles have no physical stock; stock is held in components.",
-        r_cost: "Cost & Margin", r_cost1: "Total Cost = sum of (component cost × quantity) for each BOM item.",
-        r_cost2: "Profit Margin = ((Selling Price − Total Cost) ÷ Selling Price) × 100.",
-        m_save_ok: "Save success", m_save_ok_msg: "\"Bundle created successfully!\" / \"Bundle updated successfully!\" (green)",
-        m_save_fail: "Save failure", m_save_fail_msg: "\"Bundle name is required\", \"Bundle must have at least 1 component\", \"Bundle name already exists\", \"Invalid selling price\" (red)",
-        m_add_comp: "Add component", m_add_comp_msg: "\"Component added\" / \"Quantity updated\" (no snackbar; UI updates)",
-        m_add_fail: "Add component failure", m_add_fail_msg: "\"Please select a component first\" (yellow), \"Quantity must be greater than 0\" (red)",
-        m_blocked: "Edit/Delete blocked", m_blocked_msg: "\"Cannot edit: Bundle has order history\" / \"Cannot delete: Bundle has order history\" (red)",
-        m_del_ok: "Delete success", m_del_ok_msg: "\"Bundle deleted successfully!\" (green)",
-        m_dup_ok: "Duplicate success", m_dup_ok_msg: "\"Bundle duplicated successfully!\" (green)",
-        m_dup_fail: "Duplicate failure", m_dup_fail_msg: "\"New name is required\", \"Name already exists\" (red)",
-        m_toggle: "Toggle status success", m_toggle_msg: "\"Status updated!\" (green)", m_load: "Load error", m_load_msg: "Error message in snackbar (red)",
-        tip1: "Virtual Stock: Shows how many bundles you can assemble from current component stock.",
-        tip2: "Limiter: The component with the lowest available ÷ quantity is the bottleneck.",
-        tip3: "Order history: Once a bundle has orders, Edit and Delete are disabled to protect history.",
-        tip4: "Duplicate: Use to create similar bundles without re-entering the BOM.",
-        tip5: "Inactive: Deactivate bundles you no longer sell; they stay in the system but can be excluded from views.",
-        tip6: "Component picker: Standard (non-Bundle) products appear as components; bundles are excluded.",
-        tip7: "Cost recalculation: Bundle costs are recalculated from component costs when data is loaded."
+        mfg_breadcrumb: "Manufacturing",
+        mfg_hero_headline: "Build Bundles from Standard Components",
+        mfg_hero_desc: "The Manufacturing module manages product bundles (kits) built from standard inventory components. Define your Bill of Materials (BOM), set selling prices, and see virtual stock—no physical storage of kits. Bundles are assembled from components when orders are prepared or shipped.",
+        mfg_bullet_1: "Repository tab: Bundle cards with Edit, Duplicate, Activate/Deactivate, Delete",
+        mfg_bullet_2: "Studio: BOM builder with component picker to add products and quantities",
+        mfg_bullet_3: "Analytics: Top Selling, Low Stock, Most Profitable bundles, Component Usage",
+        mfg_cap1_title: "Bundle Repository", mfg_cap1_desc: "Create and manage bundles with Edit, Duplicate, Activate, and Deactivate. View all bundle cards in one place with virtual stock computed from components.",
+        mfg_cap2_title: "BOM Builder", mfg_cap2_desc: "Use the Studio tab to define your Bill of Materials. Add components via the picker—select products and quantities per bundle. Set selling price per variant.",
+        mfg_cap3_title: "Virtual Stock", mfg_cap3_desc: "No physical kit storage—availability is computed from component inventory. Assembly happens automatically when orders are prepared or shipped.",
+        mfg_cap4_title: "Analytics & KPIs", mfg_cap4_desc: "Top Selling bundles, Low Stock alerts, Most Profitable, Component Usage. Date-filtered KPIs to optimize your kit offerings.",
+        mfg_workflow_title: "How It Works",
+        mfg_step1_title: "Create a New Bundle", mfg_step1_desc: "Click New Bundle. Enter Bundle Name and set selling price for each variant. Save to create the bundle in the Repository.",
+        mfg_step2_title: "Add Components to BOM", mfg_step2_desc: "Open Studio and use the component picker to add standard products. Select product, variant, and quantity per unit. The BOM defines what goes into each kit.",
+        mfg_step3_title: "Edit, Duplicate, or Manage", mfg_step3_desc: "Use Edit to change BOM or price. Duplicate to clone a bundle. Activate or Deactivate to control visibility. Delete removes the bundle.",
+        mfg_step4_title: "View Details & Analytics", mfg_step4_desc: "Check bundle details for virtual stock. Visit Analytics tab for Top Selling, Low Stock, Most Profitable bundles, and Component Usage reports.",
+        mfg_cta_sub: "Download Maly - OBS now and manage Manufacturing along with 10 more modules. 1 week free trial—no credit card required.",
       },
       ar: {
-        btn_back: "العودة للرئيسية", doc_badge: "دليل المستخدم", doc_title: "التصنيع / الحزم والمجموعات", doc_version: "الإصدار ١.٠",
-        nav_features: "المميزات", nav_pricing: "الأسعار", nav_privacy: "الخصوصية", nav_contact: "تواصل معنا", nav_download: "تحميل الآن",
-        footer_tagline: "الطريقة الأذكى لإدارة أعمالك في التجارة الإلكترونية.",
-        footer_nav: "التنقل", footer_contact_hd: "تواصل معنا", footer_legal: "قانوني", footer_privacy_link: "سياسة الخصوصية", footer_location: "القاهرة، مصر", footer_copy: "© ٢٠٢٦ مالي سيستمز. جميع الحقوق محفوظة.",
-        h2_purpose: "نبذة عن الموديول", h2_ui: "عناصر الواجهة", h2_workflow: "خطوات العمل", h2_rules: "قواعد العمل والتحقق", h2_messages: "الرسائل والتنبيهات", h2_tips: "نصائح",
-        th_element: "العنصر", th_description: "الوصف", th_tab: "التبويب", th_content: "المحتوى", th_option: "الخيار", th_rule: "القاعدة", th_result: "النتيجة", th_situation: "الموقف", th_message: "الرسالة",
-        purpose_p1a: "وحدة التصنيع تدير حزم المنتجات (المجموعات) المصنوعة من مكونات المنتجات القياسية. تنشئ الحزم بتحديد قائمة المواد (BOM)، تعيين سعر البيع، وعرض المخزون الافتراضي (كم يمكنك تجميع من مخزون المكونات الحالي). الوحدة تعرض المكون المحدّد لكل حزمة، الهوامش الربحية، الأكثر مبيعًا، تنبيهات المخزون المنخفض، واستخدام المكونات عبر الحزم. الحزم ",
-        purpose_strong: "ليس لها مخزون فعلي",
-        purpose_p1b: "—تُجمَّع من المكونات عند تجهيز الطلبات أو شحنها.",
-        h3_header: "منطقة الرأس", h3_tabs: "التبويبات", h3_repo: "تبويب المستودع", h3_bundle_menu: "بطاقة الحزمة (قائمة ⋮)", h3_studio: "تبويب الاستوديو (المنشئ)", h3_picker: "نافذة اختيار المكون", h3_analytics: "تبويب التحليلات",
-        h_stats: "إحصائيات الرأس", h_stats_desc: "إجمالي الحزم، النشطة، المخزون المنخفض", h_refresh: "(عبر شريط التحميل عند إعادة تحميل البيانات)",
-        tab_repo: "شبكة بطاقات الحزم، البحث، الفلاتر، زر حزمة جديدة", tab_studio: "نموذج إنشاء/تعديل الحزمة، منشئ قائمة المواد",
-        tab_analytics: "بطاقات المؤشرات، الأكثر مبيعًا، المخزون المنخفض، الأكثر ربحية، استخدام المكونات",
-        r_search: "حقل نصوص — البحث باسم الحزمة", r_filter: "الكل، النشطة، مخزون منخفض، نفد المخزون",
-        r_inactive: "مربع اختيار — تضمين الحزم غير النشطة", r_new: "زر — فتح الاستوديو وإنشاء حزمة جديدة",
-        r_cards: "شبكة بطاقات — كل بطاقة تعرض الاسم، عدد العناصر، المخزون، التكلفة، السعر، الهامش، المحدّد، قائمة ⋮",
-        r_empty: "تُعرض عند عدم وجود حزم؛ زر «أنشئ حزمتك الأولى»",
-        m_view: "عرض قائمة المكونات مع التوفر والمخزون الافتراضي", m_edit: "فتح الاستوديو للتعديل (فقط إن لم يكن لها تاريخ طلبات)",
-        m_delete: "حذف الحزمة (فقط إن لم يكن لها تاريخ طلبات)", m_dup: "إنشاء نسخة باسم جديد", m_activate: "تبديل الحالة النشطة",
-        s_name: "حقل نصوص — اسم الحزمة", s_price: "حقل نصوص — سعر البيع", s_select: "حقل للقراءة فقط — يفتح منتقي المكونات عند النقر",
-        s_pick: "أيقونة البحث — فتح منتقي المكونات", s_qty: "حقل نصوص — الكمية لكل مكون (افتراضي ١)",
-        s_add: "أيقونة + خضراء — إضافة المكون المختار لقائمة المواد",
-        s_bom: "قائمة المكونات مع تفصيل التكلفة؛ إزالة (× أحمر) لكل عنصر",
-        s_cost: "عرض — مجموع تكاليف المكونات", s_margin: "عرض — محسوب من سعر البيع مقابل التكلفة الإجمالية",
-        s_cancel: "إعادة تعيين الاستوديو والعودة للمستودع", s_save: "حفظ الحزمة (إنشاء أو تحديث)",
-        p_search: "حقل نصوص — تصفية المكونات بالاسم", p_results: "عناصر قابلة للنقر — الاسم، التوفر، التكلفة؛ انقر للاختيار",
-        a_kpi: "إجمالي الحزم، النشطة، مخزون منخفض، متوسط الهامش", a_top: "قائمة — الحزم حسب الوحدات المباعة",
-        a_low: "قائمة — الحزم ذات مخزون افتراضي < ٥", a_profit: "قائمة — الحزم حسب الهامش الربحي",
-        a_usage: "قائمة — المكونات وكم حزمة تستخدمها",
-        w1_title: "١. إنشاء حزمة جديدة", w1_1: "انقر على حزمة جديدة أو انتقل لتبويب الاستوديو.", w1_2: "أدخل اسم الحزمة.", w1_3: "أدخل سعر البيع.",
-        w1_4a: "أضف المكونات: انقر على حقل اختيار المكون أو أيقونة البحث. ابحث أو تصفح في المنتقي، ثم انقر على مكون. حدّد الكمية (افتراضي ١). انقر على إضافة مكون (+ أخضر).",
-        w1_5: "كرر لجميع المكونات.", w1_6: "راجع التكلفة الإجمالية والهامش الربحي.", w1_7: "انقر على حفظ.", w1_8: "نجاح: يؤكد الشريط؛ تعود لتبويب المستودع بالحزمة الجديدة.",
-        w2_title: "٢. تعديل حزمة", w2_1: "افتح قائمة ⋮ على بطاقة الحزمة.", w2_2: "انقر على تعديل.", w2_3: "يفتح تبويب الاستوديو بالاسم والسعر وقائمة المواد الحالية.",
-        w2_4: "غيّر الاسم أو سعر البيع أو المكونات (إضافة/إزالة/ضبط الكمية).", w2_5: "انقر على حفظ.", w2_6: "إن كانت الحزمة لها تاريخ طلبات: «لا يمكن التعديل: الحزمة لها تاريخ طلبات» (التعديل مخفي).",
-        w3_title: "٣. إضافة مكونات في الاستوديو", w3_1: "انقر على اختيار المكون أو أيقونة البحث.", w3_2: "في المنتقي، اكتب للبحث أو تصفّح القائمة.", w3_3: "انقر على مكون لاختياره.", w3_4: "أدخل الكمية (مثل ٢).",
-        w3_5: "انقر على أيقونة إضافة مكون الخضراء.", w3_6: "يظهر المكون في قائمة المواد. إن كان في القائمة، تزيد كميته.", w3_7: "التكلفة الإجمالية والهامش الربحي يتحدّثان تلقائيًا.",
-        w4_title: "٤. إزالة مكون من قائمة المواد", w4_1: "في قائمة المواد، انقر على أيقونة الإزالة (×) الحمراء بجانب المكون.", w4_2: "يُزال المكون ويُعاد حساب التكلفة والهامش.",
-        w5_title: "٥. استنساخ حزمة", w5_1: "افتح قائمة ⋮ على بطاقة الحزمة.", w5_2: "انقر على استنساخ.", w5_3: "أدخل اسم الحزمة الجديد في النافذة (افتراضي: «[الاسم] (نسخة)»).", w5_4: "انقر على استنساخ.", w5_5: "نجاح: تُنشأ حزمة جديدة بنفس قائمة المواد والأسعار.",
-        w6_title: "٦. تفعيل أو إلغاء تفعيل حزمة", w6_1: "افتح قائمة ⋮ على بطاقة الحزمة.", w6_2: "انقر على تفعيل أو إلغاء التفعيل.", w6_3: "نجاح: يؤكد الشريط؛ حالة الحزمة تتبدّل.", w6_4: "الحزم غير النشطة تظهر باهتة ويمكن تصفيتها عبر عرض غير النشطة.",
-        w7_title: "٧. حذف حزمة", w7_1: "افتح قائمة ⋮ على بطاقة الحزمة.", w7_2: "انقر على حذف.", w7_3: "أكّد في النافذة.", w7_4: "نجاح: تُزال الحزمة.", w7_5: "إن كان لها تاريخ طلبات: «لا يمكن الحذف: الحزمة لها تاريخ طلبات» (الحذف مخفي).",
-        w8_title: "٨. عرض تفاصيل الحزمة", w8_1: "افتح قائمة ⋮ على بطاقة الحزمة.", w8_2: "انقر على عرض التفاصيل.", w8_3: "تظهر نافذة لكل مكون مع التوفر وأيها يحدّد الحزمة.", w8_4: "المخزون الافتراضي يظهر في الأسفل.",
-        w9_title: "٩. البحث وتصفية الحزم", w9_1: "البحث: اكتب في حقل البحث — تصفية بالاسم.", w9_2: "فلاتر: انقر الكل، النشطة، مخزون منخفض، أو نفد المخزون.", w9_3: "عرض غير النشطة: حدّد لتضمين الحزم غير النشطة.",
-        r_create: "إنشاء / تحديث الحزمة", r_name: "اسم الحزمة مطلوب", r_name_res: "«اسم الحزمة مطلوب»",
-        r_component: "مكون واحد على الأقل", r_component_res: "«يجب أن تحتوي الحزمة على مكون واحد على الأقل»",
-        r_dup: "اسم مكرر", r_dup_res: "«اسم الحزمة موجود بالفعل»",
-        r_dup_bundle: "استنساخ حزمة", r_price: "سعر بيع غير صالح", r_price_res: "«سعر بيع غير صالح»",
-        r_add: "إضافة مكون", r_add_select: "لم يُختر مكون", r_add_select_res: "«الرجاء اختيار مكون أولاً» (أصفر)",
-        r_add_qty: "الكمية ≤ ٠", r_add_qty_res: "«الكمية يجب أن تكون أكبر من ٠»",
-        r_add_exists: "المكون موجود بالفعل في قائمة المواد", r_add_exists_res: "تزيد الكمية (بدون خطأ)",
-        r_edit: "تعديل الحزمة", r_edit_history: "لها تاريخ طلبات", r_edit_history_res: "التعديل والحذف مخفيان؛ إن استُدعيا: «لا يمكن التعديل: الحزمة لها تاريخ طلبات»",
-        r_delete: "حذف الحزمة", r_del_history: "لها تاريخ طلبات", r_del_history_res: "الحذف مخفي؛ إن استُدعي: «لا يمكن الحذف: الحزمة لها تاريخ طلبات»",
-        r_dup_menu: "استنساخ الحزمة", r_dup_name: "الاسم الجديد مطلوب", r_dup_name_res: "«الاسم الجديد مطلوب»",
-        r_dup_exists: "اسم مكرر", r_dup_exists_res: "«الاسم موجود بالفعل»",
-        r_virtual: "المخزون الافتراضي", r_virtual1: "المخزون الافتراضي = الحد الأدنى (المتاح للمكون ÷ كمية قائمة المواد) عبر كل المكونات.",
-        r_virtual2: "المحدّد هو المكون ذو أقل نسبة.", r_virtual3: "الحزم ليس لها مخزون فعلي؛ المخزون في المكونات.",
-        r_cost: "التكلفة والهامش", r_cost1: "التكلفة الإجمالية = مجموع (تكلفة المكون × الكمية) لكل عنصر في قائمة المواد.",
-        r_cost2: "الهامش الربحي = ((سعر البيع − التكلفة الإجمالية) ÷ سعر البيع) × ١٠٠.",
-        m_save_ok: "نجاح الحفظ", m_save_ok_msg: "«تم إنشاء الحزمة بنجاح!» / «تم تحديث الحزمة بنجاح!» (أخضر)",
-        m_save_fail: "فشل الحفظ", m_save_fail_msg: "«اسم الحزمة مطلوب»، «يجب أن تحتوي الحزمة على مكون واحد على الأقل»، «اسم الحزمة موجود بالفعل»، «سعر بيع غير صالح» (أحمر)",
-        m_add_comp: "إضافة مكون", m_add_comp_msg: "«تم إضافة المكون» / «تم تحديث الكمية» (لا شريط؛ تحديث الواجهة)",
-        m_add_fail: "فشل إضافة مكون", m_add_fail_msg: "«الرجاء اختيار مكون أولاً» (أصفر)، «الكمية يجب أن تكون أكبر من ٠» (أحمر)",
-        m_blocked: "التعديل/الحذف محظور", m_blocked_msg: "«لا يمكن التعديل: الحزمة لها تاريخ طلبات» / «لا يمكن الحذف: الحزمة لها تاريخ طلبات» (أحمر)",
-        m_del_ok: "نجاح الحذف", m_del_ok_msg: "«تم حذف الحزمة بنجاح!» (أخضر)",
-        m_dup_ok: "نجاح الاستنساخ", m_dup_ok_msg: "«تم استنساخ الحزمة بنجاح!» (أخضر)",
-        m_dup_fail: "فشل الاستنساخ", m_dup_fail_msg: "«الاسم الجديد مطلوب»، «الاسم موجود بالفعل» (أحمر)",
-        m_toggle: "نجاح تبديل الحالة", m_toggle_msg: "«تم تحديث الحالة!» (أخضر)", m_load: "خطأ التحميل", m_load_msg: "رسالة خطأ في الشريط (أحمر)",
-        tip1: "المخزون الافتراضي: يعرض كم حزمة يمكنك تجميعها من مخزون المكونات الحالي.",
-        tip2: "المحدّد: المكون ذو أقل نسبة (متاح ÷ كمية) هو الاختناق.",
-        tip3: "تاريخ الطلبات: بمجرد أن يكون للحزمة طلبات، التعديل والحذف يُعطّلان لحماية السجل.",
-        tip4: "الاستنساخ: استخدمه لإنشاء حزم مشابهة دون إعادة إدخال قائمة المواد.",
-        tip5: "غير النشطة: ألغِ تفعيل الحزم التي لا تبيعها؛ تبقى في النظام لكن يمكن استبعادها من العروض.",
-        tip6: "منتقي المكونات: المنتجات القياسية (غير الحزم) تظهر كمكونات؛ الحزم مستبعدة.",
-        tip7: "إعادة حساب التكلفة: تكاليف الحزم تُعاد حسابها من تكاليف المكونات عند تحميل البيانات."
+        mfg_breadcrumb: "التصنيع",
+        mfg_hero_headline: "أنشئ حزمًا من المكونات القياسية",
+        mfg_hero_desc: "تدير وحدة التصنيع حزم المنتجات (المجموعات) المصنوعة من مكونات المخزون القياسية. حدد قائمة المواد (BOM)، حدد أسعار البيع، وشاهد المخزون الافتراضي—بدون تخزين فعلي للحزم. تُجمّع الحزم من المكونات عند تجهيز أو شحن الطلبات.",
+        mfg_bullet_1: "تبويب المستودع: بطاقات حزم مع تحرير، نسخ، تفعيل/إلغاء تفعيل، حذف",
+        mfg_bullet_2: "الأستوديو: منشئ BOM مع منتقي مكونات لإضافة منتجات وكميات",
+        mfg_bullet_3: "التحليلات: الأكثر مبيعًا، مخزون منخفض، الأكثر ربحية، استهلاك المكونات",
+        mfg_cap1_title: "مستودع الحزم", mfg_cap1_desc: "أنشئ وأدر الحزم مع تحرير، نسخ، تفعيل، وإلغاء تفعيل. اعرض جميع البطاقات في مكان واحد مع مخزون افتراضي محسوب من المكونات.",
+        mfg_cap2_title: "منشئ BOM", mfg_cap2_desc: "استخدم تبويب الأستوديو لتعريف قائمة المواد. أضف المكونات عبر المنتقي—اختر المنتجات والكميات لكل حزمة. حدد سعر البيع لكل متغير.",
+        mfg_cap3_title: "مخزون افتراضي", mfg_cap3_desc: "بدون تخزين فعلي للحزم—التوفر محسوب من مخزون المكونات. يتم التجميع تلقائيًا عند تجهيز أو شحن الطلبات.",
+        mfg_cap4_title: "التحليلات وKPIs", mfg_cap4_desc: "حزم الأكثر مبيعًا، تنبيهات مخزون منخفض، الأكثر ربحية، استهلاك المكونات. KPIs بفلاتر تاريخ لتحسين عروض الحزم.",
+        mfg_workflow_title: "كيف يعمل",
+        mfg_step1_title: "إنشاء حزمة جديدة", mfg_step1_desc: "انقر حزمة جديدة. أدخل اسم الحزمة وحدد سعر البيع لكل متغير. احفظ لإنشاء الحزمة في المستودع.",
+        mfg_step2_title: "إضافة مكونات لـ BOM", mfg_step2_desc: "افتح الأستوديو واستخدم منتقي المكونات لإضافة منتجات قياسية. اختر المنتج والمتغير والكمية لكل وحدة. BOM يحدد ما يدخل في كل مجموعة.",
+        mfg_step3_title: "تحرير، نسخ، أو إدارة", mfg_step3_desc: "استخدم تحرير لتغيير BOM أو السعر. نسخ لاستنساخ حزمة. تفعيل أو إلغاء تفعيل للتحكم في الظهور. حذف يزيل الحزمة.",
+        mfg_step4_title: "عرض التفاصيل والتحليلات", mfg_step4_desc: "تحقق من تفاصيل الحزمة للمخزون الافتراضي. زر تبويب التحليلات للأكثر مبيعًا، المخزون المنخفض، الأكثر ربحية، وتقارير استهلاك المكونات.",
+        mfg_cta_sub: "حمّل مالي - OBS الآن وأدر التصنيع مع 10 وحدات إضافية. أسبوع مجاني — لا حاجة لبطاقة ائتمان.",
       }
-    };
-
-    let currentLang = 'en';
-    function applyLang(lang) {
-      currentLang = lang;
-      const html = document.documentElement;
-      html.lang = lang;
-      html.dir = lang === 'ar' ? 'rtl' : 'ltr';
-      const texts = T[lang];
-      document.querySelectorAll('[data-i18n]').forEach(el => {
-        const key = el.getAttribute('data-i18n');
-        if (texts[key] !== undefined) el.textContent = texts[key];
-      });
-      const label = lang === 'en' ? 'العربية' : 'English';
-      document.getElementById('lang-label').textContent = label;
-      document.getElementById('lang-label-mobile').textContent = label;
-      try { localStorage.setItem('maly_lang', lang); } catch(e) {}
-    }
-    function toggleLang() { applyLang(currentLang === 'en' ? 'ar' : 'en'); }
-    function toggleMenu() {
-      const menu = document.getElementById('mobile-menu');
-      const icon = document.getElementById('hamburger-icon');
-      menu.classList.toggle('open');
-      icon.className = menu.classList.contains('open') ? 'fa-solid fa-xmark' : 'fa-solid fa-bars';
-    }
-    function closeMenu() {
-      document.getElementById('mobile-menu').classList.remove('open');
-      document.getElementById('hamburger-icon').className = 'fa-solid fa-bars';
-    }
+    });
     window.addEventListener('scroll', () => { document.getElementById('navbar').classList.toggle('scrolled', window.scrollY > 10); }, { passive: true });
-    (function init() {
-      let saved = 'en';
-      try { saved = localStorage.getItem('maly_lang') || 'en'; } catch(e) {}
-      applyLang(saved);
-    })();
+    document.getElementById('hamburger-icon')?.addEventListener('click', function() { const menu = document.getElementById('mobile-menu'); const isOpen = menu?.classList.toggle('open'); this.className = isOpen ? 'fa-solid fa-xmark' : 'fa-solid fa-bars'; });
+    const revealObserver = new IntersectionObserver((entries) => { entries.forEach(entry => { if (entry.isIntersecting) { entry.target.classList.add('visible'); revealObserver.unobserve(entry.target); } }); }, { threshold: 0.1 });
+    document.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
   </script>
 </body>
 </html>

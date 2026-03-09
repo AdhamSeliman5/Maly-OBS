@@ -3,107 +3,100 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Maly - OBS | Staff Module — User Guide</title>
-  <meta name="description" content="Staff module user guide: employees, payroll, salary, bonuses, deductions, loans in Maly - OBS." />
+  <title>Maly - OBS | Staff &amp; HR / Employees &amp; Payroll</title>
+  <meta name="description" content="Employees, payroll, salary, bonuses, deductions, loans, and HR management in Maly - OBS." />
+
+  <link rel="icon" type="image/png" href="assets/logo_icon.png" />
+  <link rel="shortcut icon" href="assets/icon.ico" />
 
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;800&family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
 
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>tailwind.config = { corePlugins: { preflight: false } }</script>
+
   <style>
-    :root {
-      --primary: #1B3D6F; --primary-light: #2A5498; --accent: #C5974A; --accent-light: #F0DDB8;
-      --bg: #F5F1EB; --surface: #FFFFFF; --surface-alt: #F9F6F0; --text: #1A1A2E; --text-muted: #64748B;
-      --text-light: #94A3B8; --border: #E2D9CC; --border-light: #EDE8E0;
-      --shadow-sm: 0 2px 8px rgba(27,61,111,0.07); --shadow-md: 0 8px 32px rgba(27,61,111,0.10);
-      --radius-sm: 8px; --radius-md: 14px; --nav-h: 76px;
-      --font-en: 'Inter', sans-serif; --font-ar: 'Cairo', sans-serif; --transition: 0.25s ease;
-    }
+    :root { --primary: #1B3D6F; --primary-light: #2A5498; --accent: #C5974A; --accent-light: #F0DDB8; --bg: #F5F1EB; --surface: #FFFFFF; --surface-alt: #F9F6F0; --text: #1A1A2E; --text-muted: #64748B; --text-light: #94A3B8; --border: #E2D9CC; --border-light: #EDE8E0; --shadow-sm: 0 2px 8px rgba(27,61,111,0.07); --shadow-md: 0 8px 32px rgba(27,61,111,0.10); --shadow-lg: 0 20px 60px rgba(27,61,111,0.13); --radius-sm: 8px; --radius-md: 14px; --radius-lg: 20px; --nav-h: 72px; --font-en: 'Inter', sans-serif; --font-ar: 'Cairo', sans-serif; --transition: 0.25s ease; }
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
     html { scroll-behavior: smooth; font-size: 16px; }
-    body { font-family: var(--font-en); background-color: var(--bg); color: var(--text); line-height: 1.65; overflow-x: hidden; }
+    body { font-family: var(--font-en); background: var(--bg); color: var(--text); line-height: 1.65; overflow-x: hidden; }
     html[lang="ar"] body { font-family: var(--font-ar); }
     img { max-width: 100%; display: block; }
     a { color: inherit; text-decoration: none; }
     ul { list-style: none; }
     button { cursor: pointer; font-family: inherit; }
     .container { max-width: 1160px; margin: 0 auto; padding: 0 24px; }
-
-    nav { position: fixed; top: 0; left: 0; right: 0; height: var(--nav-h); background: rgba(245, 241, 235, 0.92); backdrop-filter: blur(14px); border-bottom: 1px solid var(--border-light); z-index: 1000; transition: box-shadow var(--transition); }
+    nav { position: fixed; top: 0; left: 0; right: 0; height: var(--nav-h); background: rgba(245, 241, 235, 0.85); backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px); border-bottom: 1px solid var(--border-light); z-index: 1000; }
     nav.scrolled { box-shadow: var(--shadow-md); }
     .nav-inner { display: flex; align-items: center; justify-content: space-between; height: 100%; }
-    .nav-logo { display: flex; align-items: center; gap: 10px; font-weight: 800; font-size: 1.2rem; color: var(--primary); }
-    .nav-logo img { height: 48px; width: auto; max-width: 220px; object-fit: contain; }
+    .nav-logo { display: flex; align-items: center; gap: 8px; font-weight: 800; font-size: 1.1rem; color: var(--primary); }
+    .nav-logo img { height: 40px; width: auto; max-width: 180px; object-fit: contain; }
     @media (max-width: 768px) { .nav-logo img.nav-logo-desktop { display: none; } .nav-logo img.nav-logo-mobile { display: block !important; } }
     .nav-logo img.nav-logo-mobile { display: none; }
-    .nav-links { display: flex; align-items: center; gap: 8px; }
-    .nav-links a { font-size: 0.9rem; font-weight: 500; color: var(--text-muted); padding: 6px 14px; border-radius: var(--radius-sm); transition: color var(--transition), background var(--transition); }
+    .nav-links { display: flex; align-items: center; gap: 6px; }
+    .nav-links a { font-size: 0.88rem; font-weight: 500; color: var(--text-muted); padding: 6px 12px; border-radius: var(--radius-sm); transition: all var(--transition); }
     .nav-links a:hover { color: var(--primary); background: rgba(27,61,111,0.06); }
     .nav-right { display: flex; align-items: center; gap: 12px; }
     .lang-btn { display: flex; align-items: center; gap: 6px; font-size: 0.82rem; font-weight: 600; color: var(--primary); background: var(--surface); border: 1.5px solid var(--border); padding: 6px 14px; border-radius: 20px; transition: all var(--transition); }
     .lang-btn:hover { border-color: var(--primary); background: rgba(27,61,111,0.04); }
-    .btn-nav-cta { font-size: 0.88rem; font-weight: 600; color: #fff; background: var(--primary); padding: 8px 20px; border-radius: 8px; transition: background var(--transition), transform var(--transition); }
+    .btn-nav-cta { font-size: 0.85rem; font-weight: 600; color: #fff; background: var(--primary); padding: 8px 18px; border-radius: var(--radius-sm); transition: all var(--transition); }
     .btn-nav-cta:hover { background: var(--primary-light); transform: translateY(-1px); }
-    .hamburger { display: none; background: none; border: none; font-size: 1.4rem; color: var(--primary); }
-    .mobile-menu { display: none; flex-direction: column; background: var(--surface); border-bottom: 1px solid var(--border); padding: 12px 24px 20px; gap: 4px; }
+    .hamburger { display: none; background: none; border: none; font-size: 1.25rem; color: var(--primary); }
+    .mobile-menu { display: none; flex-direction: column; background: var(--surface); border-bottom: 1px solid var(--border); padding: 12px 20px; gap: 4px; }
     .mobile-menu.open { display: flex; }
-    .mobile-menu a { font-size: 0.95rem; font-weight: 500; color: var(--text); padding: 10px 4px; border-bottom: 1px solid var(--border-light); }
+    .mobile-menu a { font-size: 0.92rem; font-weight: 500; color: var(--text); padding: 10px 4px; border-bottom: 1px solid var(--border-light); }
     .mobile-menu a:last-child { border: none; }
     .mobile-menu .lang-btn { margin-top: 8px; width: fit-content; }
-
-    .doc-main { padding-top: calc(var(--nav-h) + 48px); padding-bottom: 80px; }
-    .doc-inner { max-width: 840px; margin: 0 auto; }
-    .btn-back { display: inline-flex; align-items: center; gap: 8px; font-size: 0.9rem; font-weight: 600; color: var(--primary); background: var(--surface); border: 1.5px solid var(--border); padding: 10px 20px; border-radius: var(--radius-sm); margin-bottom: 32px; transition: all var(--transition); box-shadow: var(--shadow-sm); }
-    .btn-back:hover { border-color: var(--primary); background: rgba(27,61,111,0.04); }
-    html[dir="rtl"] .btn-back i { transform: scaleX(-1); }
-    .doc-header { margin-bottom: 40px; }
-    .doc-header .doc-badge { display: inline-block; font-size: 0.75rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--accent); background: var(--accent-light); padding: 4px 12px; border-radius: 20px; margin-bottom: 12px; }
-    .doc-header h1 { font-size: clamp(1.8rem, 3vw, 2.4rem); font-weight: 800; color: var(--text); margin-bottom: 12px; line-height: 1.2; }
-    .doc-header .doc-meta { font-size: 0.9rem; color: var(--text-muted); }
-    .doc-content h2 { font-size: 1.35rem; font-weight: 700; color: var(--primary); margin-top: 48px; margin-bottom: 20px; padding-bottom: 8px; border-bottom: 2px solid var(--border-light); }
-    .doc-content h2:first-of-type { margin-top: 0; }
-    .doc-content h3 { font-size: 1.1rem; font-weight: 700; color: var(--text); margin-top: 32px; margin-bottom: 14px; }
-    .doc-content p { font-size: 1rem; color: var(--text-muted); margin-bottom: 16px; line-height: 1.75; }
-    .doc-content ul.doc-list { list-style: disc; padding-left: 24px; margin-bottom: 20px; }
-    html[dir="rtl"] .doc-content ul.doc-list { padding-left: 0; padding-right: 24px; }
-    .doc-content ul.doc-list li { margin-bottom: 8px; color: var(--text-muted); line-height: 1.7; }
-    .doc-content ul.doc-list li strong { color: var(--text); }
-    .doc-table-wrapper { overflow-x: auto; margin: 24px 0; border-radius: var(--radius-sm); border: 1px solid var(--border-light); box-shadow: var(--shadow-sm); }
-    .doc-table { width: 100%; border-collapse: collapse; font-size: 0.95rem; }
-    .doc-table th, .doc-table td { padding: 14px 18px; text-align: left; border-bottom: 1px solid var(--border-light); vertical-align: top; }
-    html[dir="rtl"] .doc-table th, html[dir="rtl"] .doc-table td { text-align: right; }
-    .doc-table th { background: var(--surface-alt); font-weight: 700; color: var(--primary); }
-    .doc-table tr:last-child td { border-bottom: none; }
-    .doc-table tr:hover td { background: rgba(27,61,111,0.02); }
-    .callout { padding: 20px 24px; border-radius: var(--radius-md); margin: 24px 0; border-left: 4px solid; display: flex; gap: 14px; align-items: flex-start; }
-    html[dir="rtl"] .callout { border-left: none; border-right: 4px solid; }
-    .callout i { font-size: 1.2rem; flex-shrink: 0; margin-top: 2px; }
-    .callout-content { flex: 1; }
-    .callout-tip { background: rgba(34, 197, 94, 0.08); border-color: #22c55e; color: #166534; }
-    .callout-tip i { color: #22c55e; }
-
-    footer { background: #111827; color: #9CA3AF; padding: 60px 0 30px; }
-    .footer-grid { display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 40px; margin-bottom: 50px; }
-    .footer-brand .nav-logo { color: #fff; margin-bottom: 14px; }
-    .footer-brand .nav-logo img { height: 40px; width: auto; max-width: 200px; object-fit: contain; filter: brightness(0) invert(1); opacity: 0.9; }
-    .footer-brand p { font-size: 0.88rem; line-height: 1.7; max-width: 260px; color: #9CA3AF; }
-    .footer-brand .social-row { display: flex; gap: 10px; margin-top: 20px; }
-    .footer-social { width: 36px; height: 36px; border-radius: 50%; background: rgba(255,255,255,0.08); color: #D1D5DB; display: flex; align-items: center; justify-content: center; font-size: 0.9rem; transition: background var(--transition), color var(--transition); }
+    .breadcrumbs { padding-top: calc(var(--nav-h) + 24px); padding-bottom: 16px; font-size: 0.88rem; color: var(--text-muted); }
+    .breadcrumbs a:hover { color: var(--primary); }
+    .breadcrumbs span { color: var(--text-light); margin: 0 8px; }
+    .module-hero { padding: 48px 0 80px; }
+    .module-hero .hero-headline { font-size: clamp(1.9rem, 3.5vw, 2.75rem); font-weight: 800; color: var(--text); line-height: 1.2; margin-bottom: 18px; }
+    .module-hero .hero-desc { font-size: 1.05rem; color: var(--text-muted); margin-bottom: 24px; line-height: 1.7; max-width: 540px; }
+    .module-hero .hero-bullets { margin-bottom: 28px; }
+    .module-hero .hero-bullets li { display: flex; align-items: center; gap: 10px; font-size: 0.95rem; color: var(--text); margin-bottom: 10px; }
+    .module-hero .hero-bullets li i, .module-hero .hero-bullets li svg { color: #22c55e; flex-shrink: 0; width: 18px; height: 18px; }
+    .btn-module-cta { display: inline-flex; align-items: center; gap: 8px; padding: 14px 28px; background: var(--primary); color: #fff; font-weight: 700; font-size: 0.95rem; border-radius: var(--radius-sm); transition: all var(--transition); box-shadow: 0 4px 18px rgba(27,61,111,0.22); }
+    .btn-module-cta:hover { background: var(--primary-light); transform: translateY(-2px); box-shadow: 0 8px 24px rgba(27,61,111,0.28); }
+    .cap-card { background: var(--surface); border: 1px solid var(--border-light); border-radius: var(--radius-md); padding: 28px 24px; transition: all var(--transition); }
+    .cap-card:hover { border-color: var(--primary); box-shadow: var(--shadow-md); }
+    .cap-card .cap-icon { width: 44px; height: 44px; border-radius: 10px; background: linear-gradient(135deg, rgba(27,61,111,0.08) 0%, rgba(197,151,74,0.1) 100%); display: flex; align-items: center; justify-content: center; color: var(--primary); margin-bottom: 16px; }
+    .cap-card .cap-icon svg { width: 22px; height: 22px; }
+    .cap-card h3 { font-size: 1.1rem; font-weight: 700; color: var(--text); margin-bottom: 8px; }
+    .cap-card p { font-size: 0.9rem; color: var(--text-muted); line-height: 1.6; }
+    .step-num { width: 36px; height: 36px; border-radius: 50%; background: var(--primary); color: #fff; font-weight: 800; font-size: 1rem; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+    .step-content h4 { font-size: 1rem; font-weight: 700; color: var(--text); margin-bottom: 6px; }
+    .step-content p { font-size: 0.92rem; color: var(--text-muted); line-height: 1.6; }
+    .explore-card { background: var(--surface); border: 1px solid var(--border-light); border-radius: var(--radius-sm); padding: 20px 18px; display: flex; align-items: center; gap: 14px; transition: all var(--transition); }
+    .explore-card:hover { border-color: var(--primary); box-shadow: var(--shadow-sm); color: var(--primary); }
+    .explore-card .explore-icon { width: 40px; height: 40px; border-radius: 8px; background: rgba(27,61,111,0.06); display: flex; align-items: center; justify-content: center; color: var(--primary); flex-shrink: 0; }
+    .explore-card .explore-icon i, .explore-card .explore-icon svg { font-size: 1.1rem; width: 20px; height: 20px; }
+    .cta-strip { background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%); padding: 56px 24px; text-align: center; color: #fff; }
+    .cta-strip h2 { font-size: clamp(1.5rem, 2.5vw, 2rem); font-weight: 800; margin-bottom: 10px; }
+    .cta-strip p { font-size: 1rem; opacity: 0.9; margin-bottom: 24px; max-width: 500px; margin-left: auto; margin-right: auto; }
+    .cta-strip .btn-cta { display: inline-flex; align-items: center; gap: 8px; padding: 14px 32px; background: var(--accent); color: #fff; font-weight: 700; font-size: 1rem; border-radius: var(--radius-sm); transition: all var(--transition); box-shadow: 0 4px 14px rgba(0,0,0,0.2); }
+    .cta-strip .btn-cta:hover { transform: translateY(-2px); box-shadow: 0 8px 20px rgba(0,0,0,0.25); filter: brightness(1.05); }
+    footer { background: #111827; color: #9CA3AF; padding: 56px 0 28px; }
+    .footer-grid { display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 36px; margin-bottom: 40px; }
+    .footer-brand .nav-logo { color: #fff; margin-bottom: 12px; display: flex; align-items: center; gap: 8px; }
+    .footer-brand .nav-logo img { height: 40px; width: auto; filter: brightness(0) invert(1); opacity: 0.9; }
+    .footer-brand p { font-size: 0.85rem; line-height: 1.65; max-width: 260px; color: #9CA3AF; }
+    .footer-brand .social-row { display: flex; gap: 8px; margin-top: 16px; }
+    .footer-social { width: 34px; height: 34px; border-radius: 50%; background: rgba(255,255,255,0.08); color: #D1D5DB; display: flex; align-items: center; justify-content: center; font-size: 0.85rem; transition: all var(--transition); }
     .footer-social:hover { background: var(--accent); color: #fff; }
-    .footer-col h4 { font-size: 0.85rem; font-weight: 700; color: #E5E7EB; text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 18px; }
-    .footer-col ul li { margin-bottom: 10px; }
-    .footer-col ul li a { font-size: 0.88rem; color: #9CA3AF; transition: color var(--transition); }
+    .footer-col h4 { font-size: 0.8rem; font-weight: 700; color: #E5E7EB; text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 16px; }
+    .footer-col ul li { margin-bottom: 8px; }
+    .footer-col ul li a { font-size: 0.85rem; color: #9CA3AF; transition: color var(--transition); }
     .footer-col ul li a:hover { color: #fff; }
-    .footer-col ul li span { font-size: 0.88rem; color: #9CA3AF; font-family: var(--font-en); }
-    .footer-bottom { border-top: 1px solid rgba(255,255,255,0.08); padding-top: 28px; display: flex; align-items: center; justify-content: space-between; gap: 12px; flex-wrap: wrap; }
-    .footer-bottom p { font-size: 0.82rem; }
-    html[dir="rtl"] .footer-grid { direction: rtl; }
-    html[dir="rtl"] .footer-brand p { max-width: 100%; }
-    html[dir="rtl"] .footer-bottom { flex-direction: row-reverse; }
-
-    @media (max-width: 768px) { .nav-links, .btn-nav-cta { display: none; } .hamburger { display: block; } .doc-main { padding-top: calc(var(--nav-h) + 32px); padding-bottom: 48px; } .footer-grid { grid-template-columns: 1fr 1fr; } .footer-brand { grid-column: 1 / -1; } }
-    @media (max-width: 480px) { .container { padding: 0 18px; } .doc-table th, .doc-table td { padding: 10px 14px; font-size: 0.88rem; } .footer-grid { grid-template-columns: 1fr; } }
+    .footer-col ul li span { font-size: 0.85rem; color: #9CA3AF; font-family: var(--font-en); }
+    .footer-bottom { border-top: 1px solid rgba(255,255,255,0.08); padding-top: 24px; display: flex; align-items: center; justify-content: space-between; gap: 12px; flex-wrap: wrap; }
+    .footer-bottom p { font-size: 0.78rem; }
+    .reveal { opacity: 0; transform: translateY(24px); transition: opacity 0.5s ease, transform 0.5s ease; }
+    .reveal.visible { opacity: 1; transform: translateY(0); }
+    @media (max-width: 768px) { .nav-links, .btn-nav-cta { display: none; } .hamburger { display: block; } .footer-grid { grid-template-columns: 1fr 1fr; } .footer-brand { grid-column: 1 / -1; } }
+    @media (max-width: 480px) { .container { padding: 0 18px; } .footer-grid { grid-template-columns: 1fr; } }
   </style>
 </head>
 <body>
@@ -114,454 +107,171 @@
         <a href="index.html" class="nav-logo">
           <img src="assets/logo_splash_light.png" alt="Maly OBS Logo" class="nav-logo-desktop" />
           <img src="assets/logo_icon.png" alt="Maly OBS" class="nav-logo-mobile" />
-          <span>Maly&nbsp;-&nbsp;OBS</span>
         </a>
         <div class="nav-links">
           <a href="index.html#features" data-i18n="nav_features">Features</a>
           <a href="index.html#pricing" data-i18n="nav_pricing">Pricing</a>
+          <a href="index.html#faq" data-i18n="nav_faq">FAQ</a>
           <a href="index.html#privacy" data-i18n="nav_privacy">Privacy</a>
           <a href="index.html#contact" data-i18n="nav_contact">Contact</a>
         </div>
         <div class="nav-right">
-          <button class="lang-btn" id="lang-toggle" onclick="toggleLang()">
-            <i class="fa-solid fa-globe"></i>
-            <span id="lang-label">العربية</span>
-          </button>
+          <button class="lang-btn" id="lang-toggle" onclick="toggleLang()"><i class="fa-solid fa-globe"></i><span id="lang-label">العربية</span></button>
           <a href="https://github.com/AdhamSeliman5/Maly-OBS/releases/download/v1.0/Maly-OBS.V1.0.rar" target="_blank" rel="noopener" class="btn-nav-cta" data-i18n="nav_download">Download Now</a>
-          <button class="hamburger" onclick="toggleMenu()" aria-label="Menu"><i class="fa-solid fa-bars" id="hamburger-icon"></i></button>
+          <button class="hamburger" onclick="document.getElementById('mobile-menu').classList.toggle('open')" aria-label="Menu"><i class="fa-solid fa-bars" id="hamburger-icon"></i></button>
         </div>
       </div>
     </div>
     <div class="mobile-menu" id="mobile-menu">
-      <a href="index.html#features" onclick="closeMenu()" data-i18n="nav_features">Features</a>
-      <a href="index.html#pricing" onclick="closeMenu()" data-i18n="nav_pricing">Pricing</a>
-      <a href="index.html#privacy" onclick="closeMenu()" data-i18n="nav_privacy">Privacy</a>
-      <a href="index.html#contact" onclick="closeMenu()" data-i18n="nav_contact">Contact</a>
-      <a href="https://github.com/AdhamSeliman5/Maly-OBS/releases/download/v1.0/Maly-OBS.V1.0.rar" target="_blank" rel="noopener" onclick="closeMenu()" data-i18n="nav_download">Download Now</a>
-      <button class="lang-btn" onclick="toggleLang(); closeMenu();"><i class="fa-solid fa-globe"></i><span id="lang-label-mobile">العربية</span></button>
+      <a href="index.html#features" onclick="document.getElementById('mobile-menu').classList.remove('open')" data-i18n="nav_features">Features</a>
+      <a href="index.html#pricing" onclick="document.getElementById('mobile-menu').classList.remove('open')" data-i18n="nav_pricing">Pricing</a>
+      <a href="index.html#faq" onclick="document.getElementById('mobile-menu').classList.remove('open')" data-i18n="nav_faq">FAQ</a>
+      <a href="index.html#privacy" onclick="document.getElementById('mobile-menu').classList.remove('open')" data-i18n="nav_privacy">Privacy</a>
+      <a href="index.html#contact" onclick="document.getElementById('mobile-menu').classList.remove('open')" data-i18n="nav_contact">Contact</a>
+      <a href="https://github.com/AdhamSeliman5/Maly-OBS/releases/download/v1.0/Maly-OBS.V1.0.rar" target="_blank" rel="noopener" data-i18n="nav_download">Download Now</a>
+      <button class="lang-btn" onclick="toggleLang(); document.getElementById('mobile-menu').classList.remove('open');"><i class="fa-solid fa-globe"></i><span id="lang-label-mobile">العربية</span></button>
     </div>
   </nav>
 
-  <main class="doc-main">
+  <div class="container breadcrumbs">
+    <a href="index.html" data-i18n="breadcrumb_home">Home</a>
+    <span aria-hidden="true">›</span>
+    <a href="index.html#features" data-i18n="breadcrumb_features">Features</a>
+    <span aria-hidden="true">›</span>
+    <span style="color:var(--text); font-weight:600;" data-i18n="staff_breadcrumb">Staff</span>
+  </div>
+
+  <section class="module-hero">
     <div class="container">
-      <div class="doc-inner">
-        <a href="index.html" class="btn-back">
-          <i class="fa-solid fa-arrow-left"></i>
-          <span data-i18n="btn_back">Back to Home</span>
-        </a>
-
-        <header class="doc-header">
-          <span class="doc-badge" data-i18n="doc_badge">User Guide</span>
-          <h1 data-i18n="doc_title">Staff & HR / Employees & Payroll</h1>
-          <p class="doc-meta">Maly - OBS (Online Business System) · <span data-i18n="doc_version">Version 1.0</span></p>
-        </header>
-
-        <div class="doc-content">
-          <h2 data-i18n="h2_purpose">Module Purpose</h2>
-          <p><span data-i18n="purpose_p1a">The Staff module manages employees, payroll, and salary-related actions. You add employees with roles (Manager, Moderator, Staff, Accountant, Marketer), set salary methods (Fixed, Commission-based, Per Order, Per Item, or Percentage of ad spend), and calculate payroll from accrued salary, commissions, bonuses, deductions, and loans. You can process payments (with optional Google Sheet update), add bonuses, deductions, or loans, and view transaction history. </span><strong data-i18n="purpose_strong">Deleting an employee</strong><span data-i18n="purpose_p1b"> with an outstanding balance lets you settle first or move the balance to the Debts module.</span></p>
-
-          <h2 data-i18n="h2_ui">UI Elements</h2>
-
-          <h3 data-i18n="h3_header">Header Area</h3>
-          <div class="doc-table-wrapper">
-            <table class="doc-table">
-              <thead><tr><th data-i18n="th_element">Element</th><th data-i18n="th_description">Description</th></tr></thead>
-              <tbody>
-                <tr><td><strong data-i18n="h_title">Title</strong></td><td data-i18n="h_title_desc">"Staff" / "Employees & Payroll" subtitle</td></tr>
-                <tr><td><strong>Refresh</strong></td><td data-i18n="h_refresh">Icon button — reload all data</td></tr>
-                <tr><td><strong data-i18n="h_add">Add Employee</strong></td><td data-i18n="h_add_desc">Button — open add employee dialog</td></tr>
-              </tbody>
-            </table>
-          </div>
-
-          <h3 data-i18n="h3_kpi">KPI Cards (in Header)</h3>
-          <div class="doc-table-wrapper">
-            <table class="doc-table">
-              <thead><tr><th data-i18n="th_card">Card</th><th data-i18n="th_description">Description</th></tr></thead>
-              <tbody>
-                <tr><td><strong data-i18n="kpi_total">Total Staff</strong></td><td data-i18n="kpi_total_desc">Count of active employees</td></tr>
-                <tr><td><strong data-i18n="kpi_due">Due Today</strong></td><td data-i18n="kpi_due_desc">Sum of salaries due up to today</td></tr>
-                <tr><td><strong data-i18n="kpi_month">Month Paid</strong></td><td data-i18n="kpi_month_desc">Total paid this month</td></tr>
-                <tr><td><strong data-i18n="kpi_lifetime">Lifetime Paid</strong></td><td data-i18n="kpi_lifetime_desc">Total ever paid</td></tr>
-                <tr><td><strong data-i18n="kpi_carried">Carried Over</strong></td><td data-i18n="kpi_carried_desc">Pending balance carried from previous periods</td></tr>
-              </tbody>
-            </table>
-          </div>
-
-          <h3 data-i18n="h3_tabs">Tab Bar</h3>
-          <div class="doc-table-wrapper">
-            <table class="doc-table">
-              <thead><tr><th data-i18n="th_tab">Tab</th><th data-i18n="th_content">Content</th></tr></thead>
-              <tbody>
-                <tr><td><strong data-i18n="tab_team">Team Directory</strong></td><td data-i18n="tab_team_desc">Employee table with filters and actions</td></tr>
-                <tr><td><strong data-i18n="tab_payroll">Payroll & Actions</strong></td><td data-i18n="tab_payroll_desc">Payroll calculator, bonuses, deductions, loans, payment processing</td></tr>
-                <tr><td><strong data-i18n="tab_history">History & Logs</strong></td><td data-i18n="tab_history_desc">Transaction history with filters</td></tr>
-              </tbody>
-            </table>
-          </div>
-
-          <h3 data-i18n="h3_team">Team Tab</h3>
-          <div class="doc-table-wrapper">
-            <table class="doc-table">
-              <thead><tr><th data-i18n="th_element">Element</th><th data-i18n="th_description">Description</th></tr></thead>
-              <tbody>
-                <tr><td><strong data-i18n="team_table">Employee Table</strong></td><td data-i18n="team_table_desc">Columns: Name, Role, Salary Method, Base, Commission, Due Today, Last Paid, Actions</td></tr>
-                <tr><td><strong>Actions per row</strong></td><td data-i18n="team_actions">Edit (✎), Delete (🗑)</td></tr>
-                <tr><td><strong data-i18n="kpi_due">Due Today</strong></td><td data-i18n="team_due">Highlighted in amber if > 0</td></tr>
-              </tbody>
-            </table>
-          </div>
-
-          <h3 data-i18n="h3_employee_dialog">Add/Edit Employee Dialog</h3>
-          <div class="doc-table-wrapper">
-            <table class="doc-table">
-              <thead><tr><th data-i18n="th_element">Element</th><th data-i18n="th_description">Description</th></tr></thead>
-              <tbody>
-                <tr><td><strong>Name</strong></td><td data-i18n="emp_name">Text field — employee name</td></tr>
-                <tr><td><strong>Role</strong></td><td data-i18n="emp_role">Dropdown — Manager, Moderator, Staff, Accountant, Marketer</td></tr>
-                <tr><td><strong data-i18n="emp_method">Salary Method</strong></td><td data-i18n="emp_method_desc">Dropdown — Fixed, Fixed+Commission%, Fixed+PerOrder, Fixed+PerItem, Percentage</td></tr>
-                <tr><td><strong>Base</strong></td><td data-i18n="emp_base">Text field — base salary amount</td></tr>
-                <tr><td><strong>Commission</strong></td><td data-i18n="emp_commission">Text field — % or fixed amount depending on method</td></tr>
-                <tr><td><strong data-i18n="emp_hire">Hire Date</strong></td><td data-i18n="emp_hire_desc">Read-only date (new only; date picker for add)</td></tr>
-                <tr><td><strong data-i18n="emp_last">Last Paid</strong></td><td data-i18n="emp_last_desc">Read-only date (new only; date picker for add)</td></tr>
-                <tr><td><strong>Manager</strong></td><td data-i18n="emp_manager">Dropdown — shown only for Moderator</td></tr>
-                <tr><td><strong data-i18n="emp_adspend">Ad Spend</strong></td><td data-i18n="emp_adspend_desc">Text field — shown only for Marketer</td></tr>
-                <tr><td><strong data-i18n="emp_scope">Commission Scope</strong></td><td data-i18n="emp_scope_desc">Dropdown — "Delivered Only" or "All Orders" (Moderator/Manager with commission)</td></tr>
-                <tr><td><strong>Save / Cancel</strong></td><td data-i18n="emp_buttons">Buttons</td></tr>
-              </tbody>
-            </table>
-          </div>
-
-          <h3 data-i18n="h3_payroll_left">Payroll Tab — Left Panel</h3>
-          <div class="doc-table-wrapper">
-            <table class="doc-table">
-              <thead><tr><th data-i18n="th_element">Element</th><th data-i18n="th_description">Description</th></tr></thead>
-              <tbody>
-                <tr><td><strong data-i18n="pay_select">Select Employee</strong></td><td data-i18n="pay_select_desc">Dropdown — pick employee</td></tr>
-                <tr><td><strong data-i18n="pay_period_from">Period From</strong></td><td data-i18n="pay_period_from_desc">Read-only — last paid date or 1st of month</td></tr>
-                <tr><td><strong data-i18n="pay_period_to">Period To</strong></td><td data-i18n="pay_period_to_desc">Date field — end of payroll period (date picker)</td></tr>
-                <tr><td><strong data-i18n="pay_overlap">Overlap Hint</strong></td><td data-i18n="pay_overlap_desc">Note about base salary in overlapping cycles</td></tr>
-                <tr><td><strong data-i18n="emp_adspend">Ad Spend</strong></td><td data-i18n="pay_adspend">Text field — shown for Marketer; updates commission</td></tr>
-                <tr><td><strong data-i18n="pay_calc">Calculate Payroll</strong></td><td data-i18n="pay_calc_desc">Button — run payroll calculation</td></tr>
-                <tr><td><strong>Bonus</strong></td><td data-i18n="pay_bonus">Button — add bonus (after employee selected)</td></tr>
-                <tr><td><strong>Deduction</strong></td><td data-i18n="pay_deduction">Button — add deduction (after employee selected)</td></tr>
-                <tr><td><strong data-i18n="pay_loan">Loan/Advance</strong></td><td data-i18n="pay_loan_desc">Button — add loan (after employee selected)</td></tr>
-                <tr><td><strong data-i18n="pay_amount">Pay Amount</strong></td><td data-i18n="pay_amount_desc">Text field — amount to pay (default: net due)</td></tr>
-                <tr><td><strong data-i18n="pay_sheet">Update Google Sheet</strong></td><td data-i18n="pay_sheet_desc">Checkbox — mark orders as paid in sheet (Moderator/Manager with orders)</td></tr>
-                <tr><td><strong data-i18n="pay_process">Process Payment</strong></td><td data-i18n="pay_process_desc">Button — confirm and pay</td></tr>
-              </tbody>
-            </table>
-          </div>
-
-          <h3 data-i18n="h3_payroll_result">Payroll Result Card (Right Panel)</h3>
-          <div class="doc-table-wrapper">
-            <table class="doc-table">
-              <thead><tr><th data-i18n="th_section">Section</th><th data-i18n="th_content">Content</th></tr></thead>
-              <tbody>
-                <tr><td><strong>Header</strong></td><td data-i18n="result_header">Employee name, role, salary method</td></tr>
-                <tr><td><strong>Period</strong></td><td data-i18n="result_period">Period From → Period To</td></tr>
-                <tr><td><strong>Earnings</strong></td><td data-i18n="result_earnings">Carried Over, Base (Accrued), Commission, Bonus, Previous Balance, Gross</td></tr>
-                <tr><td><strong>Deductions</strong></td><td data-i18n="result_deductions">Deductions, Loans; Total Deductions</td></tr>
-                <tr><td><strong data-i18n="result_net">Net Due</strong></td><td data-i18n="result_net_desc">Prominent total (green if positive, red if negative)</td></tr>
-              </tbody>
-            </table>
-          </div>
-
-          <h3 data-i18n="h3_bonus">Bonus Dialog</h3>
-          <div class="doc-table-wrapper">
-            <table class="doc-table">
-              <thead><tr><th data-i18n="th_element">Element</th><th data-i18n="th_description">Description</th></tr></thead>
-              <tbody>
-                <tr><td><strong>Amount</strong></td><td data-i18n="bonus_amount">Text field — bonus amount</td></tr>
-                <tr><td><strong>Notes</strong></td><td data-i18n="bonus_notes">Text field — optional reason</td></tr>
-                <tr><td><strong>Add / Cancel</strong></td><td data-i18n="bonus_buttons">Buttons</td></tr>
-              </tbody>
-            </table>
-          </div>
-
-          <h3 data-i18n="h3_deduction">Deduction Dialog</h3>
-          <div class="doc-table-wrapper">
-            <table class="doc-table">
-              <thead><tr><th data-i18n="th_element">Element</th><th data-i18n="th_description">Description</th></tr></thead>
-              <tbody>
-                <tr><td><strong>Amount</strong></td><td data-i18n="ded_amount">Text field — deduction amount</td></tr>
-                <tr><td><strong>Notes</strong></td><td data-i18n="ded_notes">Text field — optional reason</td></tr>
-                <tr><td><strong>Add / Cancel</strong></td><td data-i18n="ded_buttons">Buttons</td></tr>
-              </tbody>
-            </table>
-          </div>
-
-          <h3 data-i18n="h3_loan">Loan Dialog</h3>
-          <div class="doc-table-wrapper">
-            <table class="doc-table">
-              <thead><tr><th data-i18n="th_element">Element</th><th data-i18n="th_description">Description</th></tr></thead>
-              <tbody>
-                <tr><td><strong>Notice</strong></td><td data-i18n="loan_notice">"This will be paid now and deducted from future salary"</td></tr>
-                <tr><td><strong>Amount</strong></td><td data-i18n="loan_amount">Text field — loan amount</td></tr>
-                <tr><td><strong>Notes</strong></td><td data-i18n="loan_notes">Text field — optional note</td></tr>
-                <tr><td><strong>Confirm / Cancel</strong></td><td data-i18n="loan_buttons">Buttons</td></tr>
-              </tbody>
-            </table>
-          </div>
-
-          <h3 data-i18n="h3_delete">Delete Employee Dialog</h3>
-          <div class="doc-table-wrapper">
-            <table class="doc-table">
-              <thead><tr><th data-i18n="th_scenario">Scenario</th><th data-i18n="th_content">Content</th></tr></thead>
-              <tbody>
-                <tr><td><strong data-i18n="del_no_balance">No balance</strong></td><td data-i18n="del_no_balance_desc">Simple confirm: "Are you sure you want to delete this employee?"</td></tr>
-                <tr><td><strong data-i18n="del_has_balance">Has balance</strong></td><td data-i18n="del_has_balance_desc">"{name} has an outstanding balance of {amount}. Settle first or move to Debts?" — Options: Settle First, Move to Debts, Cancel</td></tr>
-              </tbody>
-            </table>
-          </div>
-
-          <h3 data-i18n="h3_history_tab">History Tab</h3>
-          <div class="doc-table-wrapper">
-            <table class="doc-table">
-              <thead><tr><th data-i18n="th_element">Element</th><th data-i18n="th_description">Description</th></tr></thead>
-              <tbody>
-                <tr><td><strong>Role</strong></td><td data-i18n="hist_role">Dropdown — filter by role (All, Manager, Moderator, etc.)</td></tr>
-                <tr><td><strong>Name</strong></td><td data-i18n="hist_name">Dropdown — filter by employee (All or specific)</td></tr>
-                <tr><td><strong>Refresh</strong></td><td data-i18n="hist_refresh">Icon button — reload history</td></tr>
-                <tr><td><strong data-i18n="hist_table">History Table</strong></td><td data-i18n="hist_table_desc">Columns: Date, Name, Role, Type, Amount, Notes</td></tr>
-              </tbody>
-            </table>
-          </div>
-
-          <h2 data-i18n="h2_workflow">Step-by-Step Workflow</h2>
-
-          <h3 data-i18n="w1_title">1. Add an Employee</h3>
-          <ul class="doc-list">
-            <li data-i18n="w1_1">Click Add Employee.</li>
-            <li data-i18n="w1_2">Enter Name, Role, Salary Method, Base, Commission (if applicable).</li>
-            <li data-i18n="w1_3">Set Hire Date and Last Paid (Hire Date must be ≤ Last Paid Date).</li>
-            <li data-i18n="w1_4">For Moderator: select Manager. For Marketer: enter Ad Spend if salary method is Percentage.</li>
-            <li data-i18n="w1_5">For Moderator/Manager with commission: choose Commission Scope (Delivered Only or All Orders).</li>
-            <li data-i18n="w1_6">Click Save. Success: green snackbar; table refreshes.</li>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-10 md:gap-12 items-center">
+        <div>
+          <h1 class="hero-headline" data-i18n="staff_hero_headline">Employees &amp; Payroll Made Simple</h1>
+          <p class="hero-desc" data-i18n="staff_hero_desc">The Staff module manages employees, payroll, and salary-related actions. Add employees with roles (Manager, Moderator, Staff, Accountant, Marketer), set salary methods (Fixed, Commission, Per Order, Per Item, or Percentage of ad spend), and calculate payroll from accrued salary, commissions, bonuses, deductions, and loans. Process payments with optional Google Sheet update.</p>
+          <ul class="hero-bullets">
+            <li><svg viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg><span data-i18n="staff_bullet_1">Team Directory: Name, Role, Salary Method, Base, Commission, Due Today, Last Paid</span></li>
+            <li><svg viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg><span data-i18n="staff_bullet_2">Payroll &amp; Actions: Calculate payroll, add Bonus/Deduction/Loan, Process Payment</span></li>
+            <li><svg viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg><span data-i18n="staff_bullet_3">History &amp; Logs: Transaction history with filters; payslip PDF on payment</span></li>
           </ul>
+          <a href="https://github.com/AdhamSeliman5/Maly-OBS/releases/download/v1.0/Maly-OBS.V1.0.rar" target="_blank" rel="noopener" class="btn-module-cta"><i class="fa-solid fa-download"></i><span data-i18n="mod_download_now">Download Now</span></a>
+        </div>
+        <div class="flex justify-center md:justify-end order-first md:order-2">
+          <img src="assets/images/feat-staff.png" alt="Staff module interface" class="w-full max-w-md rounded-xl shadow-lg border border-gray-200/80 object-cover" />
+        </div>
+      </div>
+    </div>
+  </section>
 
-          <h3 data-i18n="w2_title">2. Edit an Employee</h3>
-          <ul class="doc-list">
-            <li data-i18n="w2_1">In the Team table, click Edit (✎) on the row.</li>
-            <li data-i18n="w2_2">Update any fields (Name, Role, Salary Method, Base, Commission, Manager, Ad Spend, Commission Scope).</li>
-            <li data-i18n="w2_3">Hire Date and Last Paid cannot be changed when editing.</li>
-            <li data-i18n="w2_4">Click Save. Success: green snackbar; table refreshes.</li>
-          </ul>
+  <section class="py-16 md:py-20" style="background: var(--surface);">
+    <div class="container">
+      <div class="text-center mb-12">
+        <div class="inline-block text-xs font-bold tracking-widest uppercase text-[var(--accent)] bg-[var(--accent-light)] px-4 py-1.5 rounded-full mb-4" data-i18n="mod_capabilities">Capabilities</div>
+        <h2 class="text-2xl md:text-3xl font-extrabold text-[var(--text)] mb-3" data-i18n="mod_what_you_can_do">What You Can Do</h2>
+        <p class="text-[var(--text-muted)] max-w-xl mx-auto" data-i18n="mod_key_features">Key features at your fingertips.</p>
+      </div>
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+        <div class="cap-card reveal">
+          <div class="cap-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75"/></svg></div>
+          <h3 data-i18n="staff_cap1_title">Team Directory</h3>
+          <p data-i18n="staff_cap1_desc">Add employees with roles: Manager, Moderator, Staff, Accountant, Marketer. Set Salary Method (Fixed, Commission, Per Order, Per Item, Percentage). Edit or Delete via row actions.</p>
+        </div>
+        <div class="cap-card reveal">
+          <div class="cap-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg></div>
+          <h3 data-i18n="staff_cap2_title">Payroll Calculator</h3>
+          <p data-i18n="staff_cap2_desc">Select employee, set period (From last paid to Period To). For Marketer: enter Ad Spend. Calculate to see Carried Over, Base, Commission, Bonus, Deductions, Loans, Net Due.</p>
+        </div>
+        <div class="cap-card reveal">
+          <div class="cap-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/></svg></div>
+          <h3 data-i18n="staff_cap3_title">Bonus, Deduction &amp; Loan</h3>
+          <p data-i18n="staff_cap3_desc">Add bonus or deduction with amount and optional notes. Loan/Advance pays from treasury now and deducts from future salary. Recalculate payroll to see in breakdown.</p>
+        </div>
+        <div class="cap-card reveal">
+          <div class="cap-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01"/></svg></div>
+          <h3 data-i18n="staff_cap4_title">Process Payment &amp; History</h3>
+          <p data-i18n="staff_cap4_desc">Enter Pay Amount (default: net due). Optional: Update Google Sheet for Moderator/Manager commission orders. Process Payment—payslip PDF opens. View History &amp; Logs with filters.</p>
+        </div>
+      </div>
+    </div>
+  </section>
 
-          <h3 data-i18n="w3_title">3. Delete an Employee</h3>
-          <ul class="doc-list">
-            <li data-i18n="w3_1">In the Team table, click Delete (🗑).</li>
-            <li data-i18n="w3_2">If no outstanding balance: Confirm in the dialog. Employee is removed.</li>
-            <li data-i18n="w3_3">If outstanding balance: Choose Settle First (opens Payroll tab) or Move to Debts (moves balance to Debts module and deletes employee).</li>
-            <li data-i18n="w3_4">Success: green snackbar (or message about balance moved to Debts).</li>
-          </ul>
-
-          <h3 data-i18n="w4_title">4. Calculate Payroll</h3>
-          <ul class="doc-list">
-            <li data-i18n="w4_1">Open Payroll & Actions tab.</li>
-            <li data-i18n="w4_2">Select Employee from the dropdown.</li>
-            <li data-i18n="w4_3">Period From shows automatically (last paid date or 1st of month). Adjust Period To if needed.</li>
-            <li data-i18n="w4_4">For Marketer: enter Ad Spend if not already set.</li>
-            <li data-i18n="w4_5">Click Calculate Payroll. The right panel shows earnings, deductions, and Net Due.</li>
-          </ul>
-
-          <h3 data-i18n="w5_title">5. Add Bonus</h3>
-          <ul class="doc-list">
-            <li data-i18n="w5_1">In Payroll tab, select an employee and click Calculate Payroll (optional).</li>
-            <li data-i18n="w5_2">Click Bonus. Enter Amount and optionally Notes.</li>
-            <li data-i18n="w5_3">Click Add. Success: green snackbar. Recalculate payroll to see the bonus in the breakdown.</li>
-          </ul>
-
-          <h3 data-i18n="w6_title">6. Add Deduction</h3>
-          <ul class="doc-list">
-            <li data-i18n="w6_1">In Payroll tab, select an employee and click Calculate Payroll (optional).</li>
-            <li data-i18n="w6_2">Click Deduction. Enter Amount and optionally Notes.</li>
-            <li data-i18n="w6_3">Click Add. Success: green snackbar. Recalculate to see the deduction in the breakdown.</li>
-          </ul>
-
-          <h3 data-i18n="w7_title">7. Add Loan/Advance</h3>
-          <ul class="doc-list">
-            <li data-i18n="w7_1">In Payroll tab, select an employee and click Calculate Payroll (optional).</li>
-            <li data-i18n="w7_2">Click Loan/Advance. Enter Amount and optionally Notes.</li>
-            <li data-i18n="w7_3">Click Confirm. The amount is paid from treasury immediately and deducted from future salary.</li>
-            <li data-i18n="w7_4">Success: green snackbar; treasury must be sufficient. Recalculate to see the loan in deductions.</li>
-          </ul>
-
-          <h3 data-i18n="w8_title">8. Process Payment</h3>
-          <ul class="doc-list">
-            <li data-i18n="w8_1">Calculate payroll for the employee. Review Net Due in the result card.</li>
-            <li data-i18n="w8_2">Enter Pay Amount (default: full net due; can pay partial — remainder is carried over).</li>
-            <li data-i18n="w8_3">For Moderator/Manager with commission orders: check Update Google Sheet to mark orders as paid (if configured).</li>
-            <li data-i18n="w8_4">Click Process Payment. Success: green snackbar; payslip PDF opens (saved to Desktop/Payslib/employee_name/).</li>
-            <li data-i18n="w8_5">If treasury is insufficient: error snackbar.</li>
-          </ul>
-
-          <h3 data-i18n="w9_title">9. View History</h3>
-          <ul class="doc-list">
-            <li data-i18n="w9_1">Open History & Logs tab.</li>
-            <li data-i18n="w9_2">Filter by Role and Employee. Click Refresh if needed.</li>
-            <li data-i18n="w9_3">Table shows Date, Name, Role, Type (e.g., Salary Payment, Loan), Amount, Notes.</li>
-          </ul>
-
-          <h2 data-i18n="h2_rules">Business Rules & Validations</h2>
-
-          <h3 data-i18n="r_add_employee">Add/Edit Employee</h3>
-          <div class="doc-table-wrapper">
-            <table class="doc-table">
-              <thead><tr><th data-i18n="th_rule">Rule</th><th data-i18n="th_result">Result</th></tr></thead>
-              <tbody>
-                <tr><td data-i18n="r_name_req">Name required</td><td data-i18n="r_name_req_res">"Employee name is required!"</td></tr>
-                <tr><td data-i18n="r_role_req">Role required</td><td data-i18n="r_role_req_res">"Role is required!"</td></tr>
-                <tr><td data-i18n="r_base">Base salary ≥ 0</td><td data-i18n="r_base_res">"Base salary cannot be negative!"</td></tr>
-                <tr><td data-i18n="r_commission">Commission value ≥ 0</td><td data-i18n="r_commission_res">"Commission value cannot be negative!"</td></tr>
-                <tr><td data-i18n="r_mod_manager">Moderator must have Manager</td><td data-i18n="r_mod_manager_res">"Moderator must have a Manager assigned!"</td></tr>
-                <tr><td data-i18n="r_duplicate">Duplicate name + role</td><td data-i18n="r_duplicate_res">"Employee '{name}' already exists with role '{role}'!"</td></tr>
-                <tr><td data-i18n="r_hire_date">Hire Date ≤ Last Paid (new only)</td><td data-i18n="r_hire_date_res">"Hire Date must be less than or equal to Last Paid Date!"</td></tr>
-              </tbody>
-            </table>
+  <section class="py-16 md:py-20">
+    <div class="container">
+      <div class="text-center mb-12">
+        <div class="inline-block text-xs font-bold tracking-widest uppercase text-[var(--accent)] bg-[var(--accent-light)] px-4 py-1.5 rounded-full mb-4" data-i18n="mod_workflow">Workflow</div>
+        <h2 class="text-2xl md:text-3xl font-extrabold text-[var(--text)] mb-3" data-i18n="staff_workflow_title">How It Works</h2>
+        <p class="text-[var(--text-muted)] max-w-xl mx-auto" data-i18n="mod_get_started">Get started in minutes.</p>
+      </div>
+      <div class="max-w-2xl mx-auto space-y-8">
+        <div class="flex gap-5 items-start reveal">
+          <div class="step-num">1</div>
+          <div class="step-content">
+            <h4 data-i18n="staff_step1_title">Add an Employee</h4>
+            <p data-i18n="staff_step1_desc">Click Add Employee. Enter Name, Role, Salary Method, Base, Commission (if applicable). Set Hire Date and Last Paid (Hire Date ≤ Last Paid). For Moderator: select Manager. For Marketer: enter Ad Spend if Percentage method. Save.</p>
           </div>
-
-          <h3 data-i18n="r_delete_employee">Delete Employee</h3>
-          <div class="doc-table-wrapper">
-            <table class="doc-table">
-              <thead><tr><th data-i18n="th_rule">Rule</th><th data-i18n="th_result">Result</th></tr></thead>
-              <tbody>
-                <tr><td data-i18n="r_emp_not_found">Employee not found</td><td data-i18n="r_emp_not_found_res">"Employee not found!"</td></tr>
-                <tr><td data-i18n="r_outstanding">Outstanding balance</td><td data-i18n="r_outstanding_res">Dialog offers Settle First or Move to Debts</td></tr>
-                <tr><td data-i18n="r_move_fail">Move to Debts fails</td><td data-i18n="r_move_fail_res">"Cannot delete! Outstanding balance exists and could not be moved to Debts"</td></tr>
-              </tbody>
-            </table>
+        </div>
+        <div class="flex gap-5 items-start reveal">
+          <div class="step-num">2</div>
+          <div class="step-content">
+            <h4 data-i18n="staff_step2_title">Calculate Payroll</h4>
+            <p data-i18n="staff_step2_desc">Open Payroll &amp; Actions. Select Employee. Period From shows automatically. Adjust Period To. For Marketer: enter Ad Spend if needed. Click Calculate Payroll. Right panel shows earnings, deductions, Net Due.</p>
           </div>
-
-          <h3 data-i18n="r_payroll">Payroll</h3>
-          <div class="doc-table-wrapper">
-            <table class="doc-table">
-              <thead><tr><th data-i18n="th_rule">Rule</th><th data-i18n="th_description">Description</th></tr></thead>
-              <tbody>
-                <tr><td data-i18n="r_period">Period</td><td data-i18n="r_period_desc">From last_paid_date+1 to Period To</td></tr>
-                <tr><td data-i18n="r_scope">Commission scope</td><td data-i18n="r_scope_desc">Delivered Only or All Orders (Moderator/Manager)</td></tr>
-                <tr><td data-i18n="r_overlap">Overlapping cycles</td><td data-i18n="r_overlap_desc">Base salary prorated by days in start month</td></tr>
-                <tr><td data-i18n="r_carried">Carried over</td><td data-i18n="r_carried_desc">Positive remainder from previous underpayment</td></tr>
-                <tr><td data-i18n="r_loans">Loans</td><td data-i18n="r_loans_desc">Negative balance; deducted from gross</td></tr>
-              </tbody>
-            </table>
+        </div>
+        <div class="flex gap-5 items-start reveal">
+          <div class="step-num">3</div>
+          <div class="step-content">
+            <h4 data-i18n="staff_step3_title">Add Bonus, Deduction, or Loan</h4>
+            <p data-i18n="staff_step3_desc">With employee selected, click Bonus, Deduction, or Loan/Advance. Enter amount and optional notes. Add or Confirm. Loan pays from treasury immediately. Recalculate to see in breakdown.</p>
           </div>
-
-          <h3 data-i18n="r_payment">Payment</h3>
-          <div class="doc-table-wrapper">
-            <table class="doc-table">
-              <thead><tr><th data-i18n="th_rule">Rule</th><th data-i18n="th_result">Result</th></tr></thead>
-              <tbody>
-                <tr><td data-i18n="r_pay_amt">Pay amount > 0</td><td data-i18n="r_pay_amt_res">Required to process</td></tr>
-                <tr><td data-i18n="r_treasury">Treasury sufficient</td><td data-i18n="r_treasury_res">"Insufficient treasury balance. (Current: X.XX)" if not enough</td></tr>
-                <tr><td data-i18n="r_partial">Partial payment</td><td data-i18n="r_partial_res">Remainder carried over to next period</td></tr>
-                <tr><td data-i18n="r_overpayment">Overpayment</td><td data-i18n="r_overpayment_res">Negative balance (advance)</td></tr>
-                <tr><td data-i18n="r_sheet">Google Sheet</td><td data-i18n="r_sheet_res">Optional; marks orders as paid if Moderator/Manager and orders exist</td></tr>
-              </tbody>
-            </table>
-          </div>
-
-          <h3 data-i18n="r_loan">Loan</h3>
-          <div class="doc-table-wrapper">
-            <table class="doc-table">
-              <thead><tr><th data-i18n="th_rule">Rule</th><th data-i18n="th_result">Result</th></tr></thead>
-              <tbody>
-                <tr><td data-i18n="r_loan_treasury">Treasury sufficient</td><td data-i18n="r_loan_treasury_res">"Insufficient treasury balance" if not enough</td></tr>
-                <tr><td data-i18n="r_loan_amt">Amount > 0</td><td data-i18n="r_loan_amt_res">Required</td></tr>
-              </tbody>
-            </table>
-          </div>
-
-          <h3 data-i18n="r_bonus_ded">Bonus/Deduction</h3>
-          <div class="doc-table-wrapper">
-            <table class="doc-table">
-              <thead><tr><th data-i18n="th_rule">Rule</th><th data-i18n="th_description">Description</th></tr></thead>
-              <tbody>
-                <tr><td data-i18n="r_amt_req">Amount</td><td data-i18n="r_amt_req_desc">Required (dialog stays open if empty)</td></tr>
-                <tr><td data-i18n="r_applied">Applied</td><td data-i18n="r_applied_desc">Marked applied when payment is processed</td></tr>
-              </tbody>
-            </table>
-          </div>
-
-          <h2 data-i18n="h2_messages">Messages & Alerts</h2>
-          <div class="doc-table-wrapper">
-            <table class="doc-table">
-              <thead><tr><th data-i18n="th_situation">Situation</th><th data-i18n="th_message">Message</th></tr></thead>
-              <tbody>
-                <tr><td data-i18n="m_save">Save employee success</td><td data-i18n="m_save_msg">"Saved Successfully" (green)</td></tr>
-                <tr><td data-i18n="m_del_no">Delete success (no balance)</td><td data-i18n="m_del_no_msg">"Deleted Successfully" (green)</td></tr>
-                <tr><td data-i18n="m_del_balance">Delete success (with balance)</td><td data-i18n="m_del_balance_msg">"Deleted. Outstanding balance moved to Debts: X" (green)</td></tr>
-                <tr><td data-i18n="m_payment">Payment success</td><td data-i18n="m_payment_msg">"Payment Processed Successfully" (green)</td></tr>
-                <tr><td data-i18n="m_bonus">Bonus added</td><td data-i18n="m_bonus_msg">"Added Successfully" (green)</td></tr>
-                <tr><td data-i18n="m_deduction">Deduction added</td><td data-i18n="m_deduction_msg">"Added Successfully" (green)</td></tr>
-                <tr><td data-i18n="m_loan">Loan recorded</td><td data-i18n="m_loan_msg">"Loan Recorded" (green)</td></tr>
-                <tr><td data-i18n="m_no_payroll">No payroll calculated</td><td data-i18n="m_no_payroll_msg">"No payroll calculated!" (red)</td></tr>
-                <tr><td data-i18n="m_emp_not_found">Employee not found</td><td data-i18n="m_emp_not_found_msg">"Employee not found" (red)</td></tr>
-                <tr><td data-i18n="m_treasury">Treasury insufficient</td><td data-i18n="m_treasury_msg">"Insufficient treasury balance. (Current: X.XX)" (red)</td></tr>
-                <tr><td data-i18n="m_validation">Validation errors</td><td data-i18n="m_validation_msg">As in Business Rules table (red)</td></tr>
-              </tbody>
-            </table>
-          </div>
-
-          <h2 data-i18n="h2_tips">Tips</h2>
-          <div class="callout callout-tip">
-            <i class="fa-solid fa-lightbulb"></i>
-            <div class="callout-content">
-              <ul class="doc-list" style="margin-bottom:0;">
-                <li data-i18n="tip1">Due Today in the Team table shows what is owed up to today (accrued salary, commission, bonus minus deduction, plus carried over).</li>
-                <li data-i18n="tip2">Commission Scope affects whether commission is calculated on delivered orders only or all orders.</li>
-                <li data-i18n="tip3">Moderator commission is based on orders where moderator_name matches; Manager commission is from moderators' orders (those under the manager).</li>
-                <li data-i18n="tip4">Marketer with Percentage method: commission = Ad Spend × (Commission % / 100).</li>
-                <li data-i18n="tip5">Carried Over = positive remainder when you pay less than net due; it appears in next payroll.</li>
-                <li data-i18n="tip6">Loan is paid from treasury immediately; it reduces employee balance (negative) and is shown in deductions.</li>
-                <li data-i18n="tip7">Update Google Sheet syncs moderator settlement status when payment includes commission orders.</li>
-                <li data-i18n="tip8">Payslip PDF is saved to Desktop/Payslib/[Employee Name]/ and opens after a successful payment.</li>
-                <li data-i18n="tip9">Soft delete: Employees with transaction history are marked inactive; others are hard-deleted.</li>
-              </ul>
-            </div>
+        </div>
+        <div class="flex gap-5 items-start reveal">
+          <div class="step-num">4</div>
+          <div class="step-content">
+            <h4 data-i18n="staff_step4_title">Process Payment</h4>
+            <p data-i18n="staff_step4_desc">Review Net Due. Enter Pay Amount (can pay partial—remainder carried over). For Moderator/Manager: check Update Google Sheet if configured. Click Process Payment. Treasury must be sufficient. Payslip PDF opens.</p>
           </div>
         </div>
       </div>
     </div>
-  </main>
+  </section>
+
+  <section class="py-16 md:py-20" style="background: var(--surface);">
+    <div class="container">
+      <div class="text-center mb-12">
+        <div class="inline-block text-xs font-bold tracking-widest uppercase text-[var(--accent)] bg-[var(--accent-light)] px-4 py-1.5 rounded-full mb-4" data-i18n="mod_explore">Explore</div>
+        <h2 class="text-2xl md:text-3xl font-extrabold text-[var(--text)] mb-3" data-i18n="mod_other_modules">Other Modules</h2>
+        <p class="text-[var(--text-muted)] max-w-xl mx-auto" data-i18n="mod_discover_more">Discover more of what Maly - OBS can do.</p>
+      </div>
+      <div class="grid grid-cols-1 sm:grid-cols-3 gap-5">
+        <a href="debts.html" class="explore-card"><div class="explore-icon"><i class="fa-solid fa-scale-balanced"></i></div><span class="font-semibold" data-i18n="explore_debts">Debts</span></a>
+        <a href="expenses.html" class="explore-card"><div class="explore-icon"><i class="fa-solid fa-wallet"></i></div><span class="font-semibold" data-i18n="explore_expenses">Expenses</span></a>
+        <a href="preparation.html" class="explore-card"><div class="explore-icon"><i class="fa-solid fa-clipboard-check"></i></div><span class="font-semibold" data-i18n="explore_preparation">Preparation</span></a>
+      </div>
+    </div>
+  </section>
+
+  <section class="cta-strip">
+    <div class="container">
+      <h2 data-i18n="mod_cta_headline">Ready to Own Your Numbers?</h2>
+      <p data-i18n="staff_cta_sub">Download Maly - OBS now and manage Staff along with 10 more modules. 1 week free trial—no credit card required.</p>
+      <a href="https://github.com/AdhamSeliman5/Maly-OBS/releases/download/v1.0/Maly-OBS.V1.0.rar" target="_blank" rel="noopener" class="btn-cta"><i class="fa-solid fa-download"></i><span data-i18n="mod_download_now">Download Now</span></a>
+    </div>
+  </section>
 
   <footer>
     <div class="container">
       <div class="footer-grid">
         <div class="footer-brand">
-          <div class="nav-logo" style="color:#fff; margin-bottom:14px; display:flex; align-items:center; gap:10px;">
-            <img src="assets/logo_splash_light.png" alt="Maly OBS" />
-            <span>Maly&nbsp;-&nbsp;OBS</span>
-          </div>
+          <a href="index.html" class="nav-logo"><img src="assets/logo_splash_light.png" alt="Maly OBS" /></a>
           <p data-i18n="footer_tagline">The smartest way to run your e-commerce business in Egypt.</p>
           <div class="social-row">
-            <a href="https://www.linkedin.com/company/maly-obs/" target="_blank" rel="noopener" class="footer-social"><i class="fa-brands fa-linkedin-in"></i></a>
-            <a href="https://www.facebook.com/MalyOBS" target="_blank" rel="noopener" class="footer-social"><i class="fa-brands fa-facebook-f"></i></a>
-            <a href="https://www.youtube.com/@Maly-OBS" target="_blank" rel="noopener" class="footer-social"><i class="fa-brands fa-youtube"></i></a>
-            <a href="https://wa.me/201100028752" target="_blank" rel="noopener" class="footer-social"><i class="fa-brands fa-whatsapp"></i></a>
+            <a href="https://www.linkedin.com/company/maly-obs/" target="_blank" rel="noopener" class="footer-social" aria-label="LinkedIn"><i class="fa-brands fa-linkedin-in"></i></a>
+            <a href="https://www.facebook.com/MalyOBS" target="_blank" rel="noopener" class="footer-social" aria-label="Facebook"><i class="fa-brands fa-facebook-f"></i></a>
+            <a href="https://www.youtube.com/@Maly-OBS" target="_blank" rel="noopener" class="footer-social" aria-label="YouTube"><i class="fa-brands fa-youtube"></i></a>
+            <a href="https://wa.me/201100028752" target="_blank" rel="noopener" class="footer-social" aria-label="WhatsApp"><i class="fa-brands fa-whatsapp"></i></a>
           </div>
         </div>
-        <div class="footer-col">
-          <h4 data-i18n="footer_nav">Navigate</h4>
-          <ul>
-            <li><a href="index.html#features" data-i18n="nav_features">Features</a></li>
-            <li><a href="index.html#pricing" data-i18n="nav_pricing">Pricing</a></li>
-            <li><a href="index.html#privacy" data-i18n="nav_privacy">Privacy</a></li>
-            <li><a href="index.html#contact" data-i18n="nav_contact">Contact</a></li>
-          </ul>
-        </div>
-        <div class="footer-col">
-          <h4 data-i18n="footer_contact_hd">Contact</h4>
-          <ul>
-            <li><span>asoliman548@gmail.com</span></li>
-            <li><span>01100028752</span></li>
-            <li><span data-i18n="footer_location">Cairo, Egypt</span></li>
-          </ul>
-        </div>
-        <div class="footer-col">
-          <h4 data-i18n="footer_legal">Legal</h4>
-          <ul><li><a href="index.html#privacy" data-i18n="footer_privacy_link">Privacy Policy</a></li></ul>
-        </div>
+        <div class="footer-col"><h4 data-i18n="footer_nav">Navigate</h4><ul><li><a href="index.html#features" data-i18n="nav_features">Features</a></li><li><a href="index.html#pricing" data-i18n="nav_pricing">Pricing</a></li><li><a href="index.html#faq" data-i18n="nav_faq">FAQ</a></li><li><a href="index.html#privacy" data-i18n="nav_privacy">Privacy</a></li><li><a href="index.html#contact" data-i18n="nav_contact">Contact</a></li></ul></div>
+        <div class="footer-col"><h4 data-i18n="footer_contact">Contact</h4><ul><li><span>asoliman548@gmail.com</span></li><li><span>01100028752</span></li><li><span data-i18n="footer_location">Cairo, Egypt</span></li></ul></div>
+        <div class="footer-col"><h4 data-i18n="footer_legal">Legal</h4><ul><li><a href="index.html#privacy" data-i18n="footer_privacy">Privacy Policy</a></li></ul></div>
       </div>
       <div class="footer-bottom">
         <p data-i18n="footer_copy">© 2026 Maly Systems. All rights reserved.</p>
@@ -570,320 +280,50 @@
     </div>
   </footer>
 
+  <script src="js/i18n-modules.js"></script>
   <script>
-    const T = {
+    MalyI18n.init({
       en: {
-        btn_back: "Back to Home", doc_badge: "User Guide", doc_title: "Staff & HR / Employees & Payroll", doc_version: "Version 1.0",
-        nav_features: "Features", nav_pricing: "Pricing", nav_privacy: "Privacy", nav_contact: "Contact", nav_download: "Download Now",
-        footer_tagline: "The smartest way to run your e-commerce business in Egypt.",
-        footer_nav: "Navigate", footer_contact_hd: "Contact", footer_legal: "Legal", footer_privacy_link: "Privacy Policy", footer_location: "Cairo, Egypt", footer_copy: "© 2026 Maly Systems. All rights reserved.",
-        h2_purpose: "Module Purpose", h2_ui: "UI Elements", h2_workflow: "Step-by-Step Workflow", h2_rules: "Business Rules & Validations", h2_messages: "Messages & Alerts", h2_tips: "Tips",
-        th_element: "Element", th_description: "Description", th_card: "Card", th_tab: "Tab", th_content: "Content", th_rule: "Rule", th_result: "Result", th_situation: "Situation", th_message: "Message",
-        purpose_p1a: "The Staff module manages employees, payroll, and salary-related actions. You add employees with roles (Manager, Moderator, Staff, Accountant, Marketer), set salary methods (Fixed, Commission-based, Per Order, Per Item, or Percentage of ad spend), and calculate payroll from accrued salary, commissions, bonuses, deductions, and loans. You can process payments (with optional Google Sheet update), add bonuses, deductions, or loans, and view transaction history. ",
-        purpose_strong: "Deleting an employee",
-        purpose_p1b: " with an outstanding balance lets you settle first or move the balance to the Debts module.",
-        h3_header: "Header Area", h3_kpi: "KPI Cards (in Header)", h3_tabs: "Tab Bar",
-        h3_team: "Team Tab", h3_employee_dialog: "Add/Edit Employee Dialog",
-        h3_payroll_left: "Payroll Tab — Left Panel", h3_payroll_result: "Payroll Result Card (Right Panel)",
-        h3_bonus: "Bonus Dialog", h3_deduction: "Deduction Dialog", h3_loan: "Loan Dialog",
-        h3_delete: "Delete Employee Dialog", h3_history_tab: "History Tab",
-        h_title: "Title", h_title_desc: "\"Staff\" / \"Employees & Payroll\" subtitle",
-        h_refresh: "Icon button — reload all data", h_add: "Add Employee", h_add_desc: "Button — open add employee dialog",
-        kpi_total: "Total Staff", kpi_total_desc: "Count of active employees",
-        kpi_due: "Due Today", kpi_due_desc: "Sum of salaries due up to today",
-        kpi_month: "Month Paid", kpi_month_desc: "Total paid this month",
-        kpi_lifetime: "Lifetime Paid", kpi_lifetime_desc: "Total ever paid",
-        kpi_carried: "Carried Over", kpi_carried_desc: "Pending balance carried from previous periods",
-        tab_team: "Team Directory", tab_team_desc: "Employee table with filters and actions",
-        tab_payroll: "Payroll & Actions", tab_payroll_desc: "Payroll calculator, bonuses, deductions, loans, payment processing",
-        tab_history: "History & Logs", tab_history_desc: "Transaction history with filters",
-        team_table: "Employee Table", team_table_desc: "Columns: Name, Role, Salary Method, Base, Commission, Due Today, Last Paid, Actions",
-        team_actions: "Edit (✎), Delete (🗑)", team_due: "Highlighted in amber if > 0",
-        emp_name: "Text field — employee name", emp_role: "Dropdown — Manager, Moderator, Staff, Accountant, Marketer",
-        emp_method: "Salary Method", emp_method_desc: "Dropdown — Fixed, Fixed+Commission%, Fixed+PerOrder, Fixed+PerItem, Percentage",
-        emp_base: "Text field — base salary amount", emp_commission: "Text field — % or fixed amount depending on method",
-        emp_hire: "Hire Date", emp_hire_desc: "Read-only date (new only; date picker for add)",
-        emp_last: "Last Paid", emp_last_desc: "Read-only date (new only; date picker for add)",
-        emp_manager: "Dropdown — shown only for Moderator",
-        emp_adspend: "Ad Spend", emp_adspend_desc: "Text field — shown only for Marketer",
-        emp_scope: "Commission Scope", emp_scope_desc: "Dropdown — \"Delivered Only\" or \"All Orders\" (Moderator/Manager with commission)",
-        emp_buttons: "Buttons",
-        pay_select: "Select Employee", pay_select_desc: "Dropdown — pick employee",
-        pay_period_from: "Period From", pay_period_from_desc: "Read-only — last paid date or 1st of month",
-        pay_period_to: "Period To", pay_period_to_desc: "Date field — end of payroll period (date picker)",
-        pay_overlap: "Overlap Hint", pay_overlap_desc: "Note about base salary in overlapping cycles",
-        pay_adspend: "Text field — shown for Marketer; updates commission",
-        pay_calc: "Calculate Payroll", pay_calc_desc: "Button — run payroll calculation",
-        pay_bonus: "Button — add bonus (after employee selected)",
-        pay_deduction: "Button — add deduction (after employee selected)",
-        pay_loan: "Loan/Advance", pay_loan_desc: "Button — add loan (after employee selected)",
-        pay_amount: "Pay Amount", pay_amount_desc: "Text field — amount to pay (default: net due)",
-        pay_sheet: "Update Google Sheet", pay_sheet_desc: "Checkbox — mark orders as paid in sheet (Moderator/Manager with orders)",
-        pay_process: "Process Payment", pay_process_desc: "Button — confirm and pay",
-        result_header: "Employee name, role, salary method", result_period: "Period From → Period To",
-        result_earnings: "Carried Over, Base (Accrued), Commission, Bonus, Previous Balance, Gross",
-        result_deductions: "Deductions, Loans; Total Deductions", result_net: "Net Due",
-        result_net_desc: "Prominent total (green if positive, red if negative)",
-        bonus_amount: "Text field — bonus amount", bonus_notes: "Text field — optional reason", bonus_buttons: "Buttons",
-        ded_amount: "Text field — deduction amount", ded_notes: "Text field — optional reason", ded_buttons: "Buttons",
-        loan_notice: "\"This will be paid now and deducted from future salary\"",
-        loan_amount: "Text field — loan amount", loan_notes: "Text field — optional note", loan_buttons: "Buttons",
-        del_no_balance: "No balance", del_no_balance_desc: "Simple confirm: \"Are you sure you want to delete this employee?\"",
-        del_has_balance: "Has balance", del_has_balance_desc: "\"{name} has an outstanding balance of {amount}. Settle first or move to Debts?\" — Options: Settle First, Move to Debts, Cancel",
-        hist_role: "Dropdown — filter by role (All, Manager, Moderator, etc.)",
-        hist_name: "Dropdown — filter by employee (All or specific)", hist_refresh: "Icon button — reload history",
-        hist_table: "History Table", hist_table_desc: "Columns: Date, Name, Role, Type, Amount, Notes",
-        th_section: "Section", th_scenario: "Scenario",
-        th_column: "Column",
-        w1_title: "1. Add an Employee", w1_1: "Click Add Employee.",
-        w1_2: "Enter Name, Role, Salary Method, Base, Commission (if applicable).",
-        w1_3: "Set Hire Date and Last Paid (Hire Date must be ≤ Last Paid Date).",
-        w1_4: "For Moderator: select Manager. For Marketer: enter Ad Spend if salary method is Percentage.",
-        w1_5: "For Moderator/Manager with commission: choose Commission Scope (Delivered Only or All Orders).",
-        w1_6: "Click Save. Success: green snackbar; table refreshes.",
-        w2_title: "2. Edit an Employee", w2_1: "In the Team table, click Edit (✎) on the row.",
-        w2_2: "Update any fields (Name, Role, Salary Method, Base, Commission, Manager, Ad Spend, Commission Scope).",
-        w2_3: "Hire Date and Last Paid cannot be changed when editing.", w2_4: "Click Save. Success: green snackbar; table refreshes.",
-        w3_title: "3. Delete an Employee", w3_1: "In the Team table, click Delete (🗑).",
-        w3_2: "If no outstanding balance: Confirm in the dialog. Employee is removed.",
-        w3_3: "If outstanding balance: Choose Settle First (opens Payroll tab) or Move to Debts (moves balance to Debts module and deletes employee).",
-        w3_4: "Success: green snackbar (or message about balance moved to Debts).",
-        w4_title: "4. Calculate Payroll", w4_1: "Open Payroll & Actions tab.", w4_2: "Select Employee from the dropdown.",
-        w4_3: "Period From shows automatically (last paid date or 1st of month). Adjust Period To if needed.",
-        w4_4: "For Marketer: enter Ad Spend if not already set.", w4_5: "Click Calculate Payroll. The right panel shows earnings, deductions, and Net Due.",
-        w5_title: "5. Add Bonus", w5_1: "In Payroll tab, select an employee and click Calculate Payroll (optional).",
-        w5_2: "Click Bonus. Enter Amount and optionally Notes.", w5_3: "Click Add. Success: green snackbar. Recalculate payroll to see the bonus in the breakdown.",
-        w6_title: "6. Add Deduction", w6_1: "In Payroll tab, select an employee and click Calculate Payroll (optional).",
-        w6_2: "Click Deduction. Enter Amount and optionally Notes.", w6_3: "Click Add. Success: green snackbar. Recalculate to see the deduction in the breakdown.",
-        w7_title: "7. Add Loan/Advance", w7_1: "In Payroll tab, select an employee and click Calculate Payroll (optional).",
-        w7_2: "Click Loan/Advance. Enter Amount and optionally Notes.", w7_3: "Click Confirm. The amount is paid from treasury immediately and deducted from future salary.",
-        w7_4: "Success: green snackbar; treasury must be sufficient. Recalculate to see the loan in deductions.",
-        w8_title: "8. Process Payment", w8_1: "Calculate payroll for the employee. Review Net Due in the result card.",
-        w8_2: "Enter Pay Amount (default: full net due; can pay partial — remainder is carried over).",
-        w8_3: "For Moderator/Manager with commission orders: check Update Google Sheet to mark orders as paid (if configured).",
-        w8_4: "Click Process Payment. Success: green snackbar; payslip PDF opens (saved to Desktop/Payslib/employee_name/).",
-        w8_5: "If treasury is insufficient: error snackbar.",
-        w9_title: "9. View History", w9_1: "Open History & Logs tab.", w9_2: "Filter by Role and Employee. Click Refresh if needed.",
-        w9_3: "Table shows Date, Name, Role, Type (e.g., Salary Payment, Loan), Amount, Notes.",
-        r_add_employee: "Add/Edit Employee", r_name_req: "Name required", r_name_req_res: "\"Employee name is required!\"",
-        r_role_req: "Role required", r_role_req_res: "\"Role is required!\"",
-        r_base: "Base salary ≥ 0", r_base_res: "\"Base salary cannot be negative!\"",
-        r_commission: "Commission value ≥ 0", r_commission_res: "\"Commission value cannot be negative!\"",
-        r_mod_manager: "Moderator must have Manager", r_mod_manager_res: "\"Moderator must have a Manager assigned!\"",
-        r_duplicate: "Duplicate name + role", r_duplicate_res: "\"Employee '{name}' already exists with role '{role}'!\"",
-        r_hire_date: "Hire Date ≤ Last Paid (new only)", r_hire_date_res: "\"Hire Date must be less than or equal to Last Paid Date!\"",
-        r_delete_employee: "Delete Employee", r_emp_not_found: "Employee not found", r_emp_not_found_res: "\"Employee not found!\"",
-        r_outstanding: "Outstanding balance", r_outstanding_res: "Dialog offers Settle First or Move to Debts",
-        r_move_fail: "Move to Debts fails", r_move_fail_res: "\"Cannot delete! Outstanding balance exists and could not be moved to Debts\"",
-        r_payroll: "Payroll", r_period: "Period", r_period_desc: "From last_paid_date+1 to Period To",
-        r_scope: "Commission scope", r_scope_desc: "Delivered Only or All Orders (Moderator/Manager)",
-        r_overlap: "Overlapping cycles", r_overlap_desc: "Base salary prorated by days in start month",
-        r_carried: "Carried over", r_carried_desc: "Positive remainder from previous underpayment",
-        r_loans: "Loans", r_loans_desc: "Negative balance; deducted from gross",
-        r_payment: "Payment", r_pay_amt: "Pay amount > 0", r_pay_amt_res: "Required to process",
-        r_treasury: "Treasury sufficient", r_treasury_res: "\"Insufficient treasury balance. (Current: X.XX)\" if not enough",
-        r_partial: "Partial payment", r_partial_res: "Remainder carried over to next period",
-        r_overpayment: "Overpayment", r_overpayment_res: "Negative balance (advance)",
-        r_sheet: "Google Sheet", r_sheet_res: "Optional; marks orders as paid if Moderator/Manager and orders exist",
-        r_loan: "Loan", r_loan_treasury: "Treasury sufficient", r_loan_treasury_res: "\"Insufficient treasury balance\" if not enough",
-        r_loan_amt: "Amount > 0", r_loan_amt_res: "Required",
-        r_bonus_ded: "Bonus/Deduction", r_amt_req: "Amount", r_amt_req_desc: "Required (dialog stays open if empty)",
-        r_applied: "Applied", r_applied_desc: "Marked applied when payment is processed",
-        m_save: "Save employee success", m_save_msg: "\"Saved Successfully\" (green)",
-        m_del_no: "Delete success (no balance)", m_del_no_msg: "\"Deleted Successfully\" (green)",
-        m_del_balance: "Delete success (with balance)", m_del_balance_msg: "\"Deleted. Outstanding balance moved to Debts: X\" (green)",
-        m_payment: "Payment success", m_payment_msg: "\"Payment Processed Successfully\" (green)",
-        m_bonus: "Bonus added", m_bonus_msg: "\"Added Successfully\" (green)",
-        m_deduction: "Deduction added", m_deduction_msg: "\"Added Successfully\" (green)",
-        m_loan: "Loan recorded", m_loan_msg: "\"Loan Recorded\" (green)",
-        m_no_payroll: "No payroll calculated", m_no_payroll_msg: "\"No payroll calculated!\" (red)",
-        m_emp_not_found: "Employee not found", m_emp_not_found_msg: "\"Employee not found\" (red)",
-        m_treasury: "Treasury insufficient", m_treasury_msg: "\"Insufficient treasury balance. (Current: X.XX)\" (red)",
-        m_validation: "Validation errors", m_validation_msg: "As in Business Rules table (red)",
-        tip1: "Due Today in the Team table shows what is owed up to today (accrued salary, commission, bonus minus deduction, plus carried over).",
-        tip2: "Commission Scope affects whether commission is calculated on delivered orders only or all orders.",
-        tip3: "Moderator commission is based on orders where moderator_name matches; Manager commission is from moderators' orders (those under the manager).",
-        tip4: "Marketer with Percentage method: commission = Ad Spend × (Commission % / 100).",
-        tip5: "Carried Over = positive remainder when you pay less than net due; it appears in next payroll.",
-        tip6: "Loan is paid from treasury immediately; it reduces employee balance (negative) and is shown in deductions.",
-        tip7: "Update Google Sheet syncs moderator settlement status when payment includes commission orders.",
-        tip8: "Payslip PDF is saved to Desktop/Payslib/[Employee Name]/ and opens after a successful payment.",
-        tip9: "Soft delete: Employees with transaction history are marked inactive; others are hard-deleted."
+        staff_breadcrumb: "Staff",
+        staff_hero_headline: "Employees & Payroll Made Simple",
+        staff_hero_desc: "The Staff module manages employees, payroll, and salary-related actions. Add employees with roles (Manager, Moderator, Staff, Accountant, Marketer), set salary methods (Fixed, Commission, Per Order, Per Item, or Percentage of ad spend), and calculate payroll from accrued salary, commissions, bonuses, deductions, and loans. Process payments with optional Google Sheet update.",
+        staff_bullet_1: "Team Directory: Name, Role, Salary Method, Base, Commission, Due Today, Last Paid",
+        staff_bullet_2: "Payroll & Actions: Calculate payroll, add Bonus/Deduction/Loan, Process Payment",
+        staff_bullet_3: "History & Logs: Transaction history with filters; payslip PDF on payment",
+        staff_cap1_title: "Team Directory", staff_cap1_desc: "Add employees with roles: Manager, Moderator, Staff, Accountant, Marketer. Set Salary Method (Fixed, Commission, Per Order, Per Item, Percentage). Edit or Delete via row actions.",
+        staff_cap2_title: "Payroll Calculator", staff_cap2_desc: "Select employee, set period (From last paid to Period To). For Marketer: enter Ad Spend. Calculate to see Carried Over, Base, Commission, Bonus, Deductions, Loans, Net Due.",
+        staff_cap3_title: "Bonus, Deduction & Loan", staff_cap3_desc: "Add bonus or deduction with amount and optional notes. Loan/Advance pays from treasury now and deducts from future salary. Recalculate payroll to see in breakdown.",
+        staff_cap4_title: "Process Payment & History", staff_cap4_desc: "Enter Pay Amount (default: net due). Optional: Update Google Sheet for Moderator/Manager commission orders. Process Payment—payslip PDF opens. View History & Logs with filters.",
+        staff_workflow_title: "How It Works",
+        staff_step1_title: "Add an Employee", staff_step1_desc: "Click Add Employee. Enter Name, Role, Salary Method, Base, Commission (if applicable). Set Hire Date and Last Paid (Hire Date ≤ Last Paid). For Moderator: select Manager. For Marketer: enter Ad Spend if Percentage method. Save.",
+        staff_step2_title: "Calculate Payroll", staff_step2_desc: "Open Payroll & Actions. Select Employee. Period From shows automatically. Adjust Period To. For Marketer: enter Ad Spend if needed. Click Calculate Payroll. Right panel shows earnings, deductions, Net Due.",
+        staff_step3_title: "Add Bonus, Deduction, or Loan", staff_step3_desc: "With employee selected, click Bonus, Deduction, or Loan/Advance. Enter amount and optional notes. Add or Confirm. Loan pays from treasury immediately. Recalculate to see in breakdown.",
+        staff_step4_title: "Process Payment", staff_step4_desc: "Review Net Due. Enter Pay Amount (can pay partial—remainder carried over). For Moderator/Manager: check Update Google Sheet if configured. Click Process Payment. Treasury must be sufficient. Payslip PDF opens.",
+        staff_cta_sub: "Download Maly - OBS now and manage Staff along with 10 more modules. 1 week free trial—no credit card required.",
       },
       ar: {
-        btn_back: "العودة للرئيسية", doc_badge: "دليل المستخدم", doc_title: "الموظفون و HR / الموظفون والرواتب", doc_version: "الإصدار ١.٠",
-        nav_features: "المميزات", nav_pricing: "الأسعار", nav_privacy: "الخصوصية", nav_contact: "تواصل معنا", nav_download: "تحميل الآن",
-        footer_tagline: "الطريقة الأذكى لإدارة أعمالك في التجارة الإلكترونية.",
-        footer_nav: "التنقل", footer_contact_hd: "تواصل معنا", footer_legal: "قانوني", footer_privacy_link: "سياسة الخصوصية", footer_location: "القاهرة، مصر", footer_copy: "© ٢٠٢٦ مالي سيستمز. جميع الحقوق محفوظة.",
-        h2_purpose: "نبذة عن الموديول", h2_ui: "عناصر الواجهة", h2_workflow: "خطوات العمل", h2_rules: "قواعد العمل والتحقق", h2_messages: "الرسائل والتنبيهات", h2_tips: "نصائح",
-        th_element: "العنصر", th_description: "الوصف", th_card: "البطاقة", th_tab: "التبويب", th_content: "المحتوى", th_rule: "القاعدة", th_result: "النتيجة", th_situation: "الموقف", th_message: "الرسالة",
-        purpose_p1a: "وحدة الموظفين تدير الموظفين والرواتب والإجراءات المتعلقة بالرواتب. تضيف موظفين بأدوار (مدير، موديرتور، موظف، محاسب، مسوّق)، تحدد طرق الرواتب (ثابت، عمولة، لكل طلب، لكل عنصر، أو نسبة من إنفاق الإعلانات)، وتحسب الرواتب من الراتب المستحق والعمولات والمكافآت والخصومات والقروض. يمكنك معالجة المدفوعات (مع تحديث اختياري لجدول جوجل)، إضافة مكافآت أو خصومات أو قروض، وعرض سجل المعاملات. ",
-        purpose_strong: "حذف موظف",
-        purpose_p1b: " له رصيد مستحق يتيح لك التسوية أولاً أو نقل الرصيد لوحدة الديون.",
-        h3_header: "منطقة الرأس", h3_kpi: "بطاقات المؤشرات (في الرأس)", h3_tabs: "شريط التبويبات",
-        h3_team: "تبويب الفريق", h3_employee_dialog: "نافذة إضافة/تعديل موظف",
-        h3_payroll_left: "تبويب الرواتب — اللوحة اليسرى", h3_payroll_result: "بطاقة نتيجة الرواتب (اللوحة اليمنى)",
-        h3_bonus: "نافذة المكافأة", h3_deduction: "نافذة الخصم", h3_loan: "نافذة القرض",
-        h3_delete: "نافذة حذف موظف", h3_history_tab: "تبويب السجل",
-        h_title: "العنوان", h_title_desc: "«الموظفون» / «الموظفون والرواتب» فرعي",
-        h_refresh: "أيقونة — إعادة تحميل كل البيانات", h_add: "إضافة موظف", h_add_desc: "زر — فتح نافذة إضافة موظف",
-        kpi_total: "إجمالي الموظفين", kpi_total_desc: "عدد الموظفين النشطين",
-        kpi_due: "المستحق اليوم", kpi_due_desc: "مجموع الرواتب المستحقة حتى اليوم",
-        kpi_month: "المدفوع هذا الشهر", kpi_month_desc: "إجمالي المدفوع هذا الشهر",
-        kpi_lifetime: "المدفوع إجمالاً", kpi_lifetime_desc: "إجمالي ما تم دفعه",
-        kpi_carried: "المُنقل", kpi_carried_desc: "الرصيد المعلق المُنقل من فترات سابقة",
-        tab_team: "دليل الفريق", tab_team_desc: "جدول الموظفين مع الفلاتر والإجراءات",
-        tab_payroll: "الرواتب والإجراءات", tab_payroll_desc: "حاسبة الرواتب، المكافآت، الخصومات، القروض، معالجة المدفوعات",
-        tab_history: "السجل والسجلات", tab_history_desc: "سجل المعاملات مع الفلاتر",
-        team_table: "جدول الموظفين", team_table_desc: "أعمدة: الاسم، الدور، طريقة الراتب، الأساس، العمولة، المستحق اليوم، آخر دفع، الإجراءات",
-        team_actions: "تعديل (✎)، حذف (🗑)", team_due: "يُبرز بالأصفر إن > ٠",
-        emp_name: "حقل نصوص — اسم الموظف", emp_role: "قائمة — مدير، موديرتور، موظف، محاسب، مسوّق",
-        emp_method: "طريقة الراتب", emp_method_desc: "قائمة — ثابت، ثابت+عمولة%، ثابت+لكل طلب، ثابت+لكل عنصر، نسبة",
-        emp_base: "حقل نصوص — مبلغ الراتب الأساسي", emp_commission: "حقل نصوص — % أو مبلغ ثابت حسب الطريقة",
-        emp_hire: "تاريخ التعيين", emp_hire_desc: "تاريخ للقراءة فقط (جديد فقط؛ منتقي التاريخ للإضافة)",
-        emp_last: "آخر دفع", emp_last_desc: "تاريخ للقراءة فقط (جديد فقط؛ منتقي التاريخ للإضافة)",
-        emp_manager: "قائمة — تظهر فقط للموديرتور",
-        emp_adspend: "إنفاق الإعلانات", emp_adspend_desc: "حقل نصوص — يظهر فقط للمسوّق",
-        emp_scope: "نطاق العمولة", emp_scope_desc: "قائمة — «المسلّمة فقط» أو «كل الطلبات» (موديرتور/مدير مع عمولة)",
-        emp_buttons: "أزرار",
-        pay_select: "اختيار موظف", pay_select_desc: "قائمة — اختيار الموظف",
-        pay_period_from: "الفترة من", pay_period_from_desc: "للقراءة فقط — تاريخ آخر دفع أو ١ من الشهر",
-        pay_period_to: "الفترة إلى", pay_period_to_desc: "حقل تاريخ — نهاية فترة الرواتب (منتقي التاريخ)",
-        pay_overlap: "تلميح التداخل", pay_overlap_desc: "ملاحظة عن الراتب الأساسي في الدورات المتداخلة",
-        pay_adspend: "حقل نصوص — يظهر للمسوّق؛ يحدّث العمولة",
-        pay_calc: "حساب الرواتب", pay_calc_desc: "زر — تشغيل حساب الرواتب",
-        pay_bonus: "زر — إضافة مكافأة (بعد اختيار الموظف)",
-        pay_deduction: "زر — إضافة خصم (بعد اختيار الموظف)",
-        pay_loan: "قرض/سلفة", pay_loan_desc: "زر — إضافة قرض (بعد اختيار الموظف)",
-        pay_amount: "مبلغ الدفع", pay_amount_desc: "حقل نصوص — المبلغ للدفع (افتراضي: الصافي المستحق)",
-        pay_sheet: "تحديث جدول جوجل", pay_sheet_desc: "مربع اختيار — تحديد الطلبات كمدفوعة في الجدول (موديرتور/مدير مع طلبات)",
-        pay_process: "معالجة الدفع", pay_process_desc: "زر — تأكيد والدفع",
-        result_header: "اسم الموظف، الدور، طريقة الراتب", result_period: "الفترة من → الفترة إلى",
-        result_earnings: "المُنقل، الأساس (المستحق)، العمولة، المكافأة، الرصيد السابق، الإجمالي",
-        result_deductions: "الخصومات، القروض؛ إجمالي الخصومات", result_net: "الصافي المستحق",
-        result_net_desc: "الإجمالي البارز (أخضر إن موجب، أحمر إن سالب)",
-        bonus_amount: "حقل نصوص — مبلغ المكافأة", bonus_notes: "حقل نصوص — سبب اختياري", bonus_buttons: "أزرار",
-        ded_amount: "حقل نصوص — مبلغ الخصم", ded_notes: "حقل نصوص — سبب اختياري", ded_buttons: "أزرار",
-        loan_notice: "«سيُدفع الآن ويُخصم من الراتب المستقبلي»",
-        loan_amount: "حقل نصوص — مبلغ القرض", loan_notes: "حقل نصوص — ملاحظة اختيارية", loan_buttons: "أزرار",
-        del_no_balance: "لا رصيد", del_no_balance_desc: "تأكيد بسيط: «هل أنت متأكد أنك تريد حذف هذا الموظف؟»",
-        del_has_balance: "له رصيد", del_has_balance_desc: "«{name} له رصيد مستحق {amount}. تسوية أولاً أم نقل للديون؟» — خيارات: تسوية أولاً، نقل للديون، إلغاء",
-        hist_role: "قائمة — تصفية بالدور (الكل، مدير، موديرتور، إلخ)",
-        hist_name: "قائمة — تصفية بالموظف (الكل أو محدد)", hist_refresh: "أيقونة — إعادة تحميل السجل",
-        hist_table: "جدول السجل", hist_table_desc: "أعمدة: التاريخ، الاسم، الدور، النوع، المبلغ، الملاحظات",
-        th_section: "القسم", th_scenario: "السيناريو",
-        th_column: "العمود",
-        w1_title: "١. إضافة موظف", w1_1: "انقر على إضافة موظف.",
-        w1_2: "أدخل الاسم، الدور، طريقة الراتب، الأساس، العمولة (إن وجدت).",
-        w1_3: "حدّد تاريخ التعيين وآخر دفع (تاريخ التعيين يجب أن يكون ≤ تاريخ آخر دفع).",
-        w1_4: "للموديرتور: اختر المدير. للمسوّق: أدخل إنفاق الإعلانات إن كانت طريقة الراتب نسبة.",
-        w1_5: "للموديرتور/المدير مع عمولة: اختر نطاق العمولة (المسلّمة فقط أو كل الطلبات).",
-        w1_6: "انقر على حفظ. نجاح: شريط أخضر؛ الجدول يتحدّث.",
-        w2_title: "٢. تعديل موظف", w2_1: "في جدول الفريق، انقر على تعديل (✎) على الصف.",
-        w2_2: "حدّث أي حقول (الاسم، الدور، طريقة الراتب، الأساس، العمولة، المدير، إنفاق الإعلانات، نطاق العمولة).",
-        w2_3: "تاريخ التعيين وآخر دفع لا يمكن تغييرهما عند التعديل.", w2_4: "انقر على حفظ. نجاح: شريط أخضر؛ الجدول يتحدّث.",
-        w3_title: "٣. حذف موظف", w3_1: "في جدول الفريق، انقر على حذف (🗑).",
-        w3_2: "إن لم يكن رصيد مستحق: أكّد في النافذة. يُزال الموظف.",
-        w3_3: "إن كان رصيد مستحق: اختر تسوية أولاً (يفتح تبويب الرواتب) أو نقل للديون (ينقل الرصيد لوحدة الديون ويحذف الموظف).",
-        w3_4: "نجاح: شريط أخضر (أو رسالة عن نقل الرصيد للديون).",
-        w4_title: "٤. حساب الرواتب", w4_1: "افتح تبويب الرواتب والإجراءات.", w4_2: "اختر الموظف من القائمة.",
-        w4_3: "الفترة من تظهر تلقائيًا (تاريخ آخر دفع أو ١ من الشهر). عدّل الفترة إلى إن لزم.",
-        w4_4: "للمسوّق: أدخل إنفاق الإعلانات إن لم يكن محددًا.", w4_5: "انقر على حساب الرواتب. اللوحة اليمنى تعرض الأرباح والخصومات والصافي المستحق.",
-        w5_title: "٥. إضافة مكافأة", w5_1: "في تبويب الرواتب، اختر موظفًا وانقر على حساب الرواتب (اختياري).",
-        w5_2: "انقر على مكافأة. أدخل المبلغ والملاحظات اختياريًا.", w5_3: "انقر على إضافة. نجاح: شريط أخضر. أعد الحساب لرؤية المكافأة في التفصيل.",
-        w6_title: "٦. إضافة خصم", w6_1: "في تبويب الرواتب، اختر موظفًا وانقر على حساب الرواتب (اختياري).",
-        w6_2: "انقر على خصم. أدخل المبلغ والملاحظات اختياريًا.", w6_3: "انقر على إضافة. نجاح: شريط أخضر. أعد الحساب لرؤية الخصم في التفصيل.",
-        w7_title: "٧. إضافة قرض/سلفة", w7_1: "في تبويب الرواتب، اختر موظفًا وانقر على حساب الرواتب (اختياري).",
-        w7_2: "انقر على قرض/سلفة. أدخل المبلغ والملاحظات اختياريًا.", w7_3: "انقر على تأكيد. المبلغ يُدفع من الخزينة فورًا ويُخصم من الراتب المستقبلي.",
-        w7_4: "نجاح: شريط أخضر؛ الخزينة يجب أن تكون كافية. أعد الحساب لرؤية القرض في الخصومات.",
-        w8_title: "٨. معالجة الدفع", w8_1: "احسب الرواتب للموظف. راجع الصافي المستحق في بطاقة النتيجة.",
-        w8_2: "أدخل مبلغ الدفع (افتراضي: الصافي المستحق الكامل؛ يمكن الدفع الجزئي — الباقي يُنقل).",
-        w8_3: "للموديرتور/المدير مع طلبات عمولة: حدّد تحديث جدول جوجل لتحديد الطلبات كمدفوعة (إن مُعدّ).",
-        w8_4: "انقر على معالجة الدفع. نجاح: شريط أخضر؛ يفتح PDF قسيمة الراتب (محفوظ في Desktop/Payslib/اسم الموظف/).",
-        w8_5: "إن كانت الخزينة غير كافية: شريط خطأ.",
-        w9_title: "٩. عرض السجل", w9_1: "افتح تبويب السجل والسجلات.", w9_2: "صّف حسب الدور والموظف. انقر على تحديث إن لزم.",
-        w9_3: "الجدول يعرض التاريخ، الاسم، الدور، النوع (مثل دفع الراتب، قرض)، المبلغ، الملاحظات.",
-        r_add_employee: "إضافة/تعديل موظف", r_name_req: "الاسم مطلوب", r_name_req_res: "«اسم الموظف مطلوب!»",
-        r_role_req: "الدور مطلوب", r_role_req_res: "«الدور مطلوب!»",
-        r_base: "الراتب الأساسي ≥ ٠", r_base_res: "«الراتب الأساسي لا يمكن أن يكون سالبًا!»",
-        r_commission: "قيمة العمولة ≥ ٠", r_commission_res: "«قيمة العمولة لا يمكن أن تكون سالبة!»",
-        r_mod_manager: "الموديرتور يجب أن يكون له مدير", r_mod_manager_res: "«يجب تعيين مدير للموديرتور!»",
-        r_duplicate: "اسم ودور مكرران", r_duplicate_res: "«الموظف '{name}' موجود بالفعل بالدور '{role}'!»",
-        r_hire_date: "تاريخ التعيين ≤ آخر دفع (جديد فقط)", r_hire_date_res: "«يجب أن يكون تاريخ التعيين أقل من أو يساوي تاريخ آخر دفع!»",
-        r_delete_employee: "حذف موظف", r_emp_not_found: "الموظف غير موجود",
-        r_emp_not_found_res: "«الموظف غير موجود!»",
-        r_outstanding: "رصيد مستحق", r_outstanding_res: "النافذة تعرض تسوية أولاً أو نقل للديون",
-        r_move_fail: "نقل للديون فشل", r_move_fail_res: "«لا يمكن الحذف! الرصيد المستحق موجود ولم يتمكن نقله للديون»",
-        r_payroll: "الرواتب", r_period: "الفترة", r_period_desc: "من last_paid_date+1 إلى الفترة إلى",
-        r_scope: "نطاق العمولة", r_scope_desc: "المسلّمة فقط أو كل الطلبات (موديرتور/مدير)",
-        r_overlap: "دورات متداخلة", r_overlap_desc: "الراتب الأساسي مُوزّع حسب الأيام في شهر البداية",
-        r_carried: "المُنقل", r_carried_desc: "الباقي الموجب من الدفع الناقص السابق",
-        r_loans: "القروض", r_loans_desc: "رصيد سالب؛ يُخصم من الإجمالي",
-        r_payment: "الدفع", r_pay_amt: "مبلغ الدفع > ٠", r_pay_amt_res: "مطلوب للمعالجة",
-        r_treasury: "الخزينة كافية", r_treasury_res: "«رصيد الخزينة غير كافٍ. (الحالي: X.XX)» إن لم تكن كافية",
-        r_partial: "دفع جزئي", r_partial_res: "الباقي يُنقل للفترة التالية",
-        r_overpayment: "دفع زائد", r_overpayment_res: "رصيد سالب (سلفة)",
-        r_sheet: "جدول جوجل", r_sheet_res: "اختياري؛ يحدّد الطلبات كمدفوعة إن كان موديرتور/مدير وطلبات موجودة",
-        r_loan: "القرض", r_loan_treasury: "الخزينة كافية", r_loan_treasury_res: "«رصيد الخزينة غير كافٍ» إن لم تكن كافية",
-        r_loan_amt: "المبلغ > ٠", r_loan_amt_res: "مطلوب",
-        r_bonus_ded: "المكافأة/الخصم", r_amt_req: "المبلغ", r_amt_req_desc: "مطلوب (النافذة تبقى مفتوحة إن كان فارغًا)",
-        r_applied: "مُطبّق", r_applied_desc: "يُحدّد مُطبّقًا عند معالجة الدفع",
-        m_save: "نجاح حفظ الموظف", m_save_msg: "«تم الحفظ بنجاح» (أخضر)",
-        m_del_no: "نجاح الحذف (لا رصيد)", m_del_no_msg: "«تم الحذف بنجاح» (أخضر)",
-        m_del_balance: "نجاح الحذف (مع رصيد)", m_del_balance_msg: "«تم الحذف. الرصيد المستحق نُقل للديون: X» (أخضر)",
-        m_payment: "نجاح الدفع", m_payment_msg: "«تم معالجة الدفع بنجاح» (أخضر)",
-        m_bonus: "تمت إضافة مكافأة", m_bonus_msg: "«تمت الإضافة بنجاح» (أخضر)",
-        m_deduction: "تمت إضافة خصم", m_deduction_msg: "«تمت الإضافة بنجاح» (أخضر)",
-        m_loan: "تم تسجيل قرض", m_loan_msg: "«تم تسجيل القرض» (أخضر)",
-        m_no_payroll: "لا راتب محسوب", m_no_payroll_msg: "«لا راتب محسوب!» (أحمر)",
-        m_emp_not_found: "الموظف غير موجود", m_emp_not_found_msg: "«الموظف غير موجود» (أحمر)",
-        m_treasury: "الخزينة غير كافية", m_treasury_msg: "«رصيد الخزينة غير كافٍ. (الحالي: X.XX)» (أحمر)",
-        m_validation: "أخطاء التحقق", m_validation_msg: "كما في جدول قواعد العمل (أحمر)",
-        tip1: "المستحق اليوم في جدول الفريق يعرض ما هو مستحق حتى اليوم (الراتب المستحق، العمولة، المكافأة ناقص الخصم، زائد المُنقل).",
-        tip2: "نطاق العمولة يؤثر على ما إذا كانت العمولة تُحسب على الطلبات المسلّمة فقط أم كل الطلبات.",
-        tip3: "عمولة الموديرتور مبنية على الطلبات التي يطابق فيها moderator_name؛ عمولة المدير من طلبات الموديرتورات (تحت المدير).",
-        tip4: "المسوّق بطريقة النسبة: العمولة = إنفاق الإعلانات × (نسبة العمولة ÷ ١٠٠).",
-        tip5: "المُنقل = الباقي الموجب عند الدفع بأقل من الصافي المستحق؛ يظهر في الراتب التالي.",
-        tip6: "القرض يُدفع من الخزينة فورًا؛ يقلّل رصيد الموظف (سالب) ويُعرض في الخصومات.",
-        tip7: "تحديث جدول جوجل يزامن حالة تسوية الموديرتور عندما يشمل الدفع طلبات عمولة.",
-        tip8: "PDF قسيمة الراتب يُحفظ في Desktop/Payslib/[اسم الموظف]/ ويُفتح بعد دفع ناجح.",
-        tip9: "حذف ناعم: الموظفون ذوو سجل المعاملات يُحددون غير نشطين؛ الباقون يُحذفون نهائيًا."
+        staff_breadcrumb: "الموظفون",
+        staff_hero_headline: "الموظفون وكشوف المرتبات ببساطة",
+        staff_hero_desc: "تدرّ وحدة الموظفين الموظفين وكشوف المرتبات والإجراءات المتعلقة بالراتب. أضف موظفين بأدوار (مدير، مشرف، موظف، محاسب، مسوق)، حدد طرق الراتب (ثابت، عمولة، لكل طلب، لكل صنف، نسبة من مصروف الإعلانات)، واحسب كشف المرتبات من الراتب المتراكم والعمولات والمكافآت والخصومات والقروض. ادفع مع تحديث اختياري لجدول جوجل.",
+        staff_bullet_1: "دليل الفريق: الاسم، الدور، طريقة الراتب، الأساس، العمولة، المستحق اليوم، آخر دفعة",
+        staff_bullet_2: "كشف المرتبات والإجراءات: احسب كشف المرتبات، أضف مكافأة/خصم/قرض، ادفع",
+        staff_bullet_3: "السجل: سجل المعاملات بالفلاتر؛ PDF كشف راتب عند الدفع",
+        staff_cap1_title: "دليل الفريق", staff_cap1_desc: "أضف موظفين بأدوار: مدير، مشرف، موظف، محاسب، مسوق. حدد طريقة الراتب (ثابت، عمولة، لكل طلب، لكل صنف، نسبة). عدّل أو احذف عبر إجراءات الصف.",
+        staff_cap2_title: "حاسبة كشف المرتبات", staff_cap2_desc: "اختر الموظف، حدد الفترة (من آخر دفعة إلى نهاية الفترة). للمسوق: أدخل مصروف الإعلانات. احسب لعرض المحمول والأساس والعمولة والمكافأة والخصومات والقروض والمستحق صافيًا.",
+        staff_cap3_title: "مكافأة وخصم وقرض", staff_cap3_desc: "أضف مكافأة أو خصمًا بالمبلغ وملاحظات اختيارية. القرض/السلفة يُدفع من الخزينة الآن ويُخصم من الراتب المستقبلي. أعد الحساب لعرضه في التفصيل.",
+        staff_cap4_title: "تنفيذ الدفع والسجل", staff_cap4_desc: "أدخل مبلغ الدفع (افتراضي: المستحق صافيًا). اختياري: حدّث جدول جوجل لأوامر عمولة المشرف/المدير. نفّذ الدفع—يفتح PDF كشف الراتب. اعرض السجل بالفلاتر.",
+        staff_workflow_title: "كيف يعمل",
+        staff_step1_title: "إضافة موظف", staff_step1_desc: "انقر إضافة موظف. أدخل الاسم، الدور، طريقة الراتب، الأساس، العمولة (إن وجدت). حدد تاريخ التوظيف وآخر دفعة (تاريخ التوظيف ≤ آخر دفعة). للمشرف: اختر المدير. للمسوق: أدخل مصروف الإعلانات إن كانت الطريقة نسبة. احفظ.",
+        staff_step2_title: "حساب كشف المرتبات", staff_step2_desc: "افتح كشف المرتبات والإجراءات. اختر الموظف. تظهر الفترة من تلقائيًا. اضبط نهاية الفترة. للمسوق: أدخل مصروف الإعلانات إن لزم. انقر احسب كشف المرتبات. تظهر اللوحة اليمنى الأرباح والخصومات والمستحق صافيًا.",
+        staff_step3_title: "إضافة مكافأة أو خصم أو قرض", staff_step3_desc: "مع اختيار الموظف، انقر مكافأة أو خصم أو قرض/سلفة. أدخل المبلغ وملاحظات اختيارية. أضف أو أكّد. القرض يُدفع من الخزينة فورًا. أعد الحساب لعرضه في التفصيل.",
+        staff_step4_title: "تنفيذ الدفع", staff_step4_desc: "راجع المستحق صافيًا. أدخل مبلغ الدفع (يمكن الدفع جزئيًا—الباقي يُحمل). للمشرف/المدير: فعّل تحديث جدول جوجل إن مُكوّن. انقر تنفيذ الدفع. يجب أن تكون الخزينة كافية. يفتح PDF كشف الراتب.",
+        staff_cta_sub: "حمّل مالي - OBS الآن وأدر الموظفين مع 10 وحدات إضافية. أسبوع مجاني — لا حاجة لبطاقة ائتمان.",
       }
-    };
-
-    let currentLang = 'en';
-    function applyLang(lang) {
-      currentLang = lang;
-      const html = document.documentElement;
-      html.lang = lang;
-      html.dir = lang === 'ar' ? 'rtl' : 'ltr';
-      const texts = T[lang];
-      document.querySelectorAll('[data-i18n]').forEach(el => {
-        const key = el.getAttribute('data-i18n');
-        if (texts[key] !== undefined) el.textContent = texts[key];
-      });
-      const label = lang === 'en' ? 'العربية' : 'English';
-      document.getElementById('lang-label').textContent = label;
-      document.getElementById('lang-label-mobile').textContent = label;
-      try { localStorage.setItem('maly_lang', lang); } catch(e) {}
-    }
-    function toggleLang() { applyLang(currentLang === 'en' ? 'ar' : 'en'); }
-    function toggleMenu() {
-      const menu = document.getElementById('mobile-menu');
-      const icon = document.getElementById('hamburger-icon');
-      menu.classList.toggle('open');
-      icon.className = menu.classList.contains('open') ? 'fa-solid fa-xmark' : 'fa-solid fa-bars';
-    }
-    function closeMenu() {
-      document.getElementById('mobile-menu').classList.remove('open');
-      document.getElementById('hamburger-icon').className = 'fa-solid fa-bars';
-    }
+    });
     window.addEventListener('scroll', () => { document.getElementById('navbar').classList.toggle('scrolled', window.scrollY > 10); }, { passive: true });
-    (function init() {
-      let saved = 'en';
-      try { saved = localStorage.getItem('maly_lang') || 'en'; } catch(e) {}
-      applyLang(saved);
-    })();
+    document.getElementById('hamburger-icon')?.addEventListener('click', function() { const menu = document.getElementById('mobile-menu'); const isOpen = menu?.classList.toggle('open'); this.className = isOpen ? 'fa-solid fa-xmark' : 'fa-solid fa-bars'; });
+    const revealObserver = new IntersectionObserver((entries) => { entries.forEach(entry => { if (entry.isIntersecting) { entry.target.classList.add('visible'); revealObserver.unobserve(entry.target); } }); }, { threshold: 0.1 });
+    document.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
   </script>
 </body>
 </html>

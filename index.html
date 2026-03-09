@@ -5,6 +5,33 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Maly - OBS | It's not just about money. It's Control.</title>
   <meta name="description" content="Maly - OBS is a complete desktop ERP for Egyptian e-commerce: inventory, shipping, staff, finances, and advertising — all from one system." />
+  <meta name="keywords" content="ERP, Egyptian e-commerce, inventory management, shipping, POS, Maly OBS, business management, Cairo" />
+  <meta name="author" content="Maly Systems" />
+  <meta name="robots" content="index, follow" />
+  <link rel="canonical" href="https://yoursite.com/" />
+  <meta name="theme-color" content="#1B3D6F" />
+
+  <!-- Open Graph (Facebook, LinkedIn, etc.) -->
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content="Maly - OBS | It's not just about money. It's Control." />
+  <meta property="og:description" content="Maly - OBS is a complete desktop ERP built for Egyptian e-commerce businesses. Control inventory, shipping, staff, finances, and advertising — all from one powerful system." />
+  <meta property="og:image" content="https://yoursite.com/assets/images/og-share.png" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta property="og:image:alt" content="Maly - OBS Desktop ERP application screenshot" />
+  <meta property="og:url" content="https://yoursite.com/" />
+  <meta property="og:site_name" content="Maly - OBS" />
+  <meta property="og:locale" content="en_US" />
+  <meta property="og:locale:alternate" content="ar_EG" />
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Maly - OBS | It's not just about money. It's Control." />
+  <meta name="twitter:description" content="Maly - OBS is a complete desktop ERP built for Egyptian e-commerce businesses. Control inventory, shipping, staff, finances, and advertising — all from one powerful system." />
+  <meta name="twitter:image" content="https://yoursite.com/assets/images/og-share.png" />
+  <meta name="twitter:image:alt" content="Maly - OBS Desktop ERP application screenshot" />
+  <meta name="twitter:site" content="@MalyOBS" />
+  <meta name="twitter:creator" content="@MalyOBS" />
 
   <link rel="icon" type="image/png" href="assets/logo_icon.png" />
   <link rel="shortcut icon" href="assets/icon.ico" />
@@ -13,6 +40,11 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;800&family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = { corePlugins: { preflight: false } }
+  </script>
 
   <style>
     /* =========================================================
@@ -67,6 +99,8 @@
 
     .container { max-width: 1160px; margin: 0 auto; padding: 0 24px; }
 
+    .hidden { display: none !important; }
+
     /* =========================================================
        SECTION LAYOUT
     ========================================================= */
@@ -92,6 +126,7 @@
       color: var(--text);
       line-height: 1.2;
       margin-bottom: 14px;
+      text-wrap: balance;
     }
     .section-header p {
       font-size: 1.05rem;
@@ -120,11 +155,13 @@
       position: fixed;
       top: 0; left: 0; right: 0;
       height: var(--nav-h);
-      background: rgba(245, 241, 235, 0.92);
-      backdrop-filter: blur(14px);
-      border-bottom: 1px solid var(--border-light);
+      background: rgba(245, 241, 235, 0.75);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border-bottom: 1px solid rgba(226, 217, 204, 0.6);
       z-index: 1000;
       transition: box-shadow var(--transition);
+      box-shadow: 0 1px 0 rgba(255, 255, 255, 0.5) inset;
     }
     nav.scrolled { box-shadow: var(--shadow-md); }
 
@@ -240,7 +277,6 @@
     .hero {
       padding-top: calc(var(--nav-h) + 80px);
       padding-bottom: 88px;
-      text-align: center;
       background:
         radial-gradient(ellipse 70% 60% at 50% -10%, rgba(27,61,111,0.09) 0%, transparent 70%),
         var(--bg);
@@ -271,17 +307,28 @@
       color: var(--text);
       margin-bottom: 22px;
       max-width: 820px;
-      margin-left: auto;
-      margin-right: auto;
+      text-wrap: balance;
     }
-    .hero h1 .highlight { color: var(--primary); }
+    @media (max-width: 767px) {
+      .hero h1 { margin-left: auto; margin-right: auto; }
+    }
+    .hero h1 .highlight {
+      background: linear-gradient(135deg, #3b82f6 0%, #0ea5e9 50%, #10b981 100%);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      -webkit-text-fill-color: transparent;
+    }
 
     .hero-sub {
       font-size: 1.1rem;
       color: var(--text-muted);
       max-width: 620px;
-      margin: 0 auto 18px;
+      margin-bottom: 18px;
       line-height: 1.7;
+    }
+    @media (max-width: 767px) {
+      .hero-sub { margin-left: auto; margin-right: auto; }
     }
 
     .hero-slogan {
@@ -300,6 +347,14 @@
       gap: 14px;
       flex-wrap: wrap;
     }
+    @media (min-width: 768px) {
+      .hero .hero-content-left { text-align: left; }
+      .hero .hero-ctas { justify-content: flex-start; }
+    }
+    @media (max-width: 767px) {
+      .hero .hero-content-left { text-align: center; }
+      .hero .hero-ctas { justify-content: center; }
+    }
 
     .btn-primary {
       display: inline-flex;
@@ -313,9 +368,9 @@
       font-size: 0.97rem;
       border: 2px solid var(--primary);
       transition: all var(--transition);
-      box-shadow: 0 4px 18px rgba(27,61,111,0.22);
+      box-shadow: 0 4px 18px rgba(27,61,111,0.22), 0 0 24px rgba(27,61,111,0.15);
     }
-    .btn-primary:hover { background: var(--primary-light); border-color: var(--primary-light); transform: translateY(-2px); box-shadow: 0 8px 24px rgba(27,61,111,0.28); }
+    .btn-primary:hover { background: var(--primary-light); border-color: var(--primary-light); transform: translateY(-2px); box-shadow: 0 8px 28px rgba(27,61,111,0.32), 0 0 32px rgba(27,61,111,0.2); }
 
     .btn-secondary {
       display: inline-flex;
@@ -331,6 +386,22 @@
       transition: all var(--transition);
     }
     .btn-secondary:hover { border-color: var(--primary); background: rgba(27,61,111,0.04); transform: translateY(-2px); }
+
+    /* Hero image animation */
+    .hero-image-wrap {
+      animation: hero-fade-in 1.2s ease-out 0.3s both;
+    }
+    .hero-mockup-img {
+      animation: hero-float 6s ease-in-out infinite;
+    }
+    @keyframes hero-fade-in {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes hero-float {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-8px); }
+    }
 
     /* Hero stats bar */
     .hero-stats {
@@ -370,63 +441,56 @@
     }
 
     /* =========================================================
-       FEATURES GRID
+       TRUST BAR
     ========================================================= */
-    .features-grid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 22px;
-    }
-
-    .feature-card {
+    .trust-bar {
+      padding: 48px 0;
       background: var(--surface);
-      border: 1px solid var(--border-light);
-      border-radius: var(--radius-md);
-      padding: 30px 26px;
-      transition: transform var(--transition), box-shadow var(--transition), border-color var(--transition);
-      display: block;
-      height: 100%;
+      border-top: 1px solid var(--border-light);
+      border-bottom: 1px solid var(--border-light);
     }
-    a.feature-card-link { color: inherit; text-decoration: none; cursor: pointer; }
-    .feature-card:hover {
-      transform: translateY(-5px);
-      box-shadow: var(--shadow-md);
-      border-color: rgba(27,61,111,0.18);
+    .trust-bar-title {
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--text-light);
+      text-align: center;
+      margin-bottom: 28px;
     }
-
-    .feature-icon {
-      width: 52px;
-      height: 52px;
-      border-radius: 12px;
+    .trust-bar-logos {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      align-items: center;
+      gap: 40px 56px;
+      max-width: 900px;
+      margin: 0 auto;
+    }
+    .trust-logo {
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 1.25rem;
-      margin-bottom: 18px;
-      background: linear-gradient(135deg, rgba(27,61,111,0.08) 0%, rgba(197,151,74,0.10) 100%);
-      color: var(--primary);
-    }
-
-    .feature-card h3 {
-      font-size: 1.05rem;
-      font-weight: 700;
-      margin-bottom: 10px;
-      color: var(--text);
-    }
-
-    .feature-card p {
-      font-size: 0.9rem;
+      height: 36px;
       color: var(--text-muted);
-      line-height: 1.7;
+      opacity: 0.6;
+      filter: grayscale(100%);
+      transition: opacity var(--transition), filter var(--transition);
     }
-    .feature-card-cloud {
-      border-color: rgba(197, 151, 74, 0.35);
-      background: linear-gradient(135deg, var(--surface) 0%, rgba(197, 151, 74, 0.04) 100%);
+    .trust-logo:hover {
+      opacity: 0.8;
+      filter: grayscale(60%);
     }
-    .feature-card-cloud:hover { border-color: var(--accent); }
-    .feature-card-cloud .feature-icon {
-      background: linear-gradient(135deg, rgba(197, 151, 74, 0.15) 0%, rgba(27, 61, 111, 0.08) 100%);
-      color: var(--accent);
+    .trust-logo svg {
+      height: 100%;
+      width: auto;
+      max-width: 100px;
+      object-fit: contain;
+    }
+    @media (max-width: 768px) {
+      .trust-bar { padding: 36px 0; }
+      .trust-bar-logos { gap: 28px 40px; }
+      .trust-logo { height: 28px; }
     }
 
     /* =========================================================
@@ -463,11 +527,11 @@
 
     .pricing-grid {
       display: grid;
-      grid-template-columns: repeat(2, 1fr);
+      grid-template-columns: repeat(3, 1fr);
       gap: 24px;
-      max-width: 720px;
+      max-width: 1100px;
       margin: 0 auto;
-      justify-items: center;
+      align-items: stretch;
     }
 
     .pricing-card {
@@ -476,11 +540,17 @@
       border-radius: var(--radius-lg);
       padding: 40px 36px;
       position: relative;
+      transition: box-shadow var(--transition), transform var(--transition);
     }
+    .pricing-card:hover { box-shadow: var(--shadow-md); }
     .pricing-card.pro {
       border-color: var(--primary);
+      border-width: 2px;
       box-shadow: var(--shadow-lg);
+      transform: scale(1.03);
+      z-index: 1;
     }
+    .pricing-card.pro:hover { box-shadow: 0 24px 48px rgba(27,61,111,0.15); }
     .pricing-card.pro-cloud {
       border-color: var(--accent);
       box-shadow: 0 12px 40px rgba(197, 151, 74, 0.18);
@@ -488,6 +558,26 @@
     }
     .pricing-card.pro-cloud .plan-badge {
       background: linear-gradient(135deg, var(--accent) 0%, #d4a84e 100%);
+    }
+    .pricing-card.enterprise-upcoming {
+      opacity: 0.75;
+      border-color: var(--text-light);
+      pointer-events: none;
+    }
+    .pricing-card.enterprise-upcoming .plan-badge-coming {
+      position: absolute;
+      top: -14px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: var(--text-muted);
+      color: var(--surface);
+      font-size: 0.7rem;
+      font-weight: 700;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      padding: 4px 12px;
+      border-radius: 16px;
+      white-space: nowrap;
     }
 
     .plan-badge {
@@ -552,15 +642,20 @@
       padding: 7px 0;
     }
     html[dir="rtl"] .plan-features li { flex-direction: row; }
-    .plan-features li i {
+    .plan-features li i,
+    .plan-features li .feat-icon {
       width: 18px;
+      height: 18px;
       flex-shrink: 0;
-      font-size: 0.8rem;
-      text-align: center;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
     }
-    .plan-features li .chk { color: #22c55e; }
+    .plan-features li .chk,
+    .plan-features li .feat-icon.feat-check { color: #22c55e; }
     .plan-features li.disabled { color: var(--text-light); text-decoration: line-through; }
-    .plan-features li.disabled i { color: #CBD5E1; }
+    .plan-features li.disabled i,
+    .plan-features li.disabled .feat-icon { color: #CBD5E1; }
 
     .btn-plan {
       display: block;
@@ -577,6 +672,47 @@
     .btn-plan-outline:hover { background: rgba(27,61,111,0.05); }
     .btn-plan-fill { color: #fff; background: var(--primary); }
     .btn-plan-fill:hover { background: var(--primary-light); transform: translateY(-2px); box-shadow: 0 6px 20px rgba(27,61,111,0.22); }
+
+    /* =========================================================
+       FAQ SECTION
+    ========================================================= */
+    .faq-list { max-width: 680px; margin: 0 auto; }
+    .faq-item {
+      border-bottom: 1px solid var(--border-light);
+    }
+    .faq-item:first-child { border-top: 1px solid var(--border-light); }
+    .faq-item summary {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      padding: 20px 0;
+      font-size: 1rem;
+      font-weight: 600;
+      color: var(--text);
+      cursor: pointer;
+      list-style: none;
+      transition: color var(--transition);
+    }
+    .faq-item summary::-webkit-details-marker,
+    .faq-item summary::marker { display: none; }
+    .faq-item summary:hover { color: var(--primary); }
+    .faq-item summary .faq-chevron {
+      flex-shrink: 0;
+      width: 20px;
+      height: 20px;
+      color: var(--accent);
+      transition: transform 0.25s ease;
+    }
+    .faq-item[open] summary .faq-chevron { transform: rotate(180deg); }
+    .faq-item .faq-content {
+      padding: 0 0 24px 0;
+      font-size: 0.95rem;
+      color: var(--text-muted);
+      line-height: 1.7;
+    }
+    html[dir="rtl"] .faq-item summary .faq-chevron { transform: scaleX(-1); }
+    html[dir="rtl"] .faq-item[open] summary .faq-chevron { transform: scaleX(-1) rotate(180deg); }
 
     /* =========================================================
        PRIVACY SECTION
@@ -828,6 +964,38 @@
     ========================================================= */
     html[dir="rtl"] .nav-logo { flex-direction: row-reverse; }
     html[dir="rtl"] .hero-badge i { margin-left: 0; }
+    html[dir="rtl"] .hero .hero-content-left { order: 2; }
+    html[dir="rtl"] .hero .hero-image-wrap { order: 1; justify-content: flex-start; }
+    html[dir="rtl"] .feat-zigzag-row .feat-text { order: 2; }
+    html[dir="rtl"] .feat-zigzag-row .feat-img { order: 1; }
+    html[dir="rtl"] .feat-zigzag-row.feat-img-first .feat-text { order: 1; }
+    html[dir="rtl"] .feat-zigzag-row.feat-img-first .feat-img { order: 2; }
+
+    .feat-toggle-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      padding: 14px 28px;
+      font-size: 0.97rem;
+      font-weight: 600;
+      color: var(--primary);
+      background: transparent;
+      border: 2px solid var(--primary);
+      border-radius: var(--radius-sm);
+      cursor: pointer;
+      transition: all var(--transition);
+      margin-top: 16px;
+    }
+    .feat-toggle-btn:hover {
+      background: rgba(27,61,111,0.06);
+      transform: translateY(-2px);
+    }
+    .feat-toggle-btn svg {
+      width: 18px;
+      height: 18px;
+      transition: transform 0.25s ease;
+    }
+    .feat-toggle-btn.expanded svg { transform: rotate(180deg); }
     html[dir="rtl"] .contact-card { flex-direction: row-reverse; text-align: right; }
     html[dir="rtl"] .footer-grid { direction: rtl; }
     html[dir="rtl"] .footer-brand p { max-width: 100%; }
@@ -840,8 +1008,8 @@
        RESPONSIVE
     ========================================================= */
     @media (max-width: 1024px) {
-      .features-grid { grid-template-columns: repeat(2, 1fr); }
       .pricing-grid { grid-template-columns: 1fr; max-width: 440px; }
+      .pricing-card.pro { transform: none; }
       .pricing-card.pro-cloud { transform: none; }
       .footer-grid { grid-template-columns: 1fr 1fr; }
     }
@@ -861,7 +1029,6 @@
       .hero-stat:last-child { border: none; }
       html[dir="rtl"] .hero-stat { border-left: none; border-bottom: 1px solid var(--border-light); }
 
-      .features-grid { grid-template-columns: 1fr; }
 
       .pricing-grid { grid-template-columns: 1fr; max-width: 440px; }
 
@@ -896,6 +1063,7 @@
         <div class="nav-links">
           <a href="#features"  data-i18n="nav_features">Features</a>
           <a href="#pricing"   data-i18n="nav_pricing">Pricing</a>
+          <a href="#faq"      data-i18n="nav_faq">FAQ</a>
           <a href="#privacy"   data-i18n="nav_privacy">Privacy</a>
           <a href="#contact"   data-i18n="nav_contact">Contact</a>
         </div>
@@ -917,6 +1085,7 @@
     <div class="mobile-menu" id="mobile-menu">
       <a href="#features"  onclick="closeMenu()" data-i18n="nav_features">Features</a>
       <a href="#pricing"   onclick="closeMenu()" data-i18n="nav_pricing">Pricing</a>
+      <a href="#faq"      onclick="closeMenu()" data-i18n="nav_faq">FAQ</a>
       <a href="#privacy"   onclick="closeMenu()" data-i18n="nav_privacy">Privacy</a>
       <a href="#contact"   onclick="closeMenu()" data-i18n="nav_contact">Contact</a>
       <a href="https://github.com/AdhamSeliman5/Maly-OBS/releases/download/v1.0/Maly-OBS.V1.0.rar" target="_blank" rel="noopener" onclick="closeMenu()" data-i18n="nav_download">Download Now</a>
@@ -930,34 +1099,48 @@
   <!-- ===================== HERO ===================== -->
   <header class="hero" id="hero">
     <div class="container">
-      <div class="hero-badge reveal">
-        <i class="fa-solid fa-star"></i>
-        <span data-i18n="hero_badge">Egypt's Premier E-Commerce ERP</span>
-      </div>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12 md:items-center">
+        <!-- Left column: headline, copy, CTAs -->
+        <div class="hero-content-left">
+          <div class="hero-badge reveal">
+            <i class="fa-solid fa-star"></i>
+            <span data-i18n="hero_badge">Egypt's Premier E-Commerce ERP</span>
+          </div>
 
-      <h1 class="reveal" style="transition-delay:0.08s">
-        <span data-i18n="hero_title_1">Manage Your Business.</span><br />
-        <span class="highlight" data-i18n="hero_title_2">Own Your Numbers.</span>
-      </h1>
+          <h1 class="reveal hero-headline" style="transition-delay:0.08s">
+            <span data-i18n="hero_title_1">Manage Your Business.</span><br />
+            <span class="highlight hero-headline-gradient" data-i18n="hero_title_2">Own Your Numbers.</span>
+          </h1>
 
-      <p class="hero-sub reveal" style="transition-delay:0.14s" data-i18n="hero_sub">
-        Maly - OBS is a complete desktop ERP built for Egyptian e-commerce businesses. Control inventory, shipping, staff, finances, and advertising — all from one powerful system.
-      </p>
+          <p class="hero-sub reveal" style="transition-delay:0.14s" data-i18n="hero_sub">
+            Maly - OBS is a complete desktop ERP built for Egyptian e-commerce businesses. Control inventory, shipping, staff, finances, and advertising — all from one powerful system.
+          </p>
 
-      <!-- Slogan: ALWAYS in English per requirements -->
-      <p class="hero-slogan reveal" style="transition-delay:0.18s">
-        "It's not just about money. It's Control."
-      </p>
+          <!-- Slogan: ALWAYS in English per requirements -->
+          <p class="hero-slogan reveal" style="transition-delay:0.18s">
+            "It's not just about money. It's Control."
+          </p>
 
-      <div class="hero-ctas reveal" style="transition-delay:0.22s">
-        <a href="https://github.com/AdhamSeliman5/Maly-OBS/releases/download/v1.0/Maly-OBS.V1.0.rar" target="_blank" rel="noopener" class="btn-primary">
-          <i class="fa-solid fa-download"></i>
-          <span data-i18n="hero_cta">Download Now</span>
-        </a>
-        <a href="#features" class="btn-secondary">
-          <span data-i18n="hero_cta2">Explore Features</span>
-          <i class="fa-solid fa-arrow-down"></i>
-        </a>
+          <div class="hero-ctas reveal" style="transition-delay:0.22s">
+            <a href="https://github.com/AdhamSeliman5/Maly-OBS/releases/download/v1.0/Maly-OBS.V1.0.rar" target="_blank" rel="noopener" class="btn-primary">
+              <i class="fa-solid fa-download"></i>
+              <span data-i18n="hero_cta">Download Now</span>
+            </a>
+            <a href="#features" class="btn-secondary">
+              <span data-i18n="hero_cta2">Explore Features</span>
+              <i class="fa-solid fa-arrow-down"></i>
+            </a>
+          </div>
+        </div>
+
+        <!-- Right column: app screenshot mockup -->
+        <div class="hero-image-wrap mt-8 md:mt-0 flex justify-center md:justify-end">
+          <img
+            src="assets/images/hero-mockup.png"
+            alt="Maly - OBS application interface"
+            class="hero-mockup-img w-full max-w-lg rounded-xl shadow-2xl border border-gray-200 object-contain"
+          />
+        </div>
       </div>
 
       <div class="hero-stats reveal" style="transition-delay:0.28s">
@@ -981,6 +1164,44 @@
     </div>
   </header>
 
+  <!-- ===================== TRUST BAR ===================== -->
+  <section class="trust-bar" id="trust-bar" aria-label="Trusted by businesses">
+    <div class="container">
+      <p class="trust-bar-title" data-i18n="trust_title">Trusted by modern businesses</p>
+      <div class="trust-bar-logos">
+        <div class="trust-logo" aria-hidden="true">
+          <svg viewBox="0 0 100 28" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+            <rect x="2" y="6" width="32" height="16" rx="3"/>
+          </svg>
+        </div>
+        <div class="trust-logo" aria-hidden="true">
+          <svg viewBox="0 0 100 28" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+            <circle cx="14" cy="14" r="8"/>
+            <rect x="28" y="8" width="28" height="12" rx="2"/>
+          </svg>
+        </div>
+        <div class="trust-logo" aria-hidden="true">
+          <svg viewBox="0 0 100 28" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+            <rect x="4" y="4" width="12" height="20" rx="2"/>
+            <rect x="22" y="8" width="12" height="12" rx="2"/>
+            <rect x="40" y="4" width="12" height="20" rx="2"/>
+          </svg>
+        </div>
+        <div class="trust-logo" aria-hidden="true">
+          <svg viewBox="0 0 100 28" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+            <path d="M4 14h12V8h8v6h12V4H4v10z"/>
+          </svg>
+        </div>
+        <div class="trust-logo" aria-hidden="true">
+          <svg viewBox="0 0 100 28" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+            <ellipse cx="18" cy="14" rx="10" ry="6"/>
+            <rect x="36" y="10" width="24" height="8" rx="2"/>
+          </svg>
+        </div>
+      </div>
+    </div>
+  </section>
+
   <!-- ===================== FEATURES ===================== -->
   <section id="features" class="section section-alt">
     <div class="container">
@@ -990,116 +1211,234 @@
         <p data-i18n="feat_sub">11 integrated modules covering every aspect of your e-commerce operations.</p>
       </div>
 
-      <div class="features-grid">
+      <!-- Zig-Zag Feature Modules -->
+      <div class="space-y-20">
 
-        <!-- 1 Dashboard -->
-        <a href="dashboard.html" class="feature-card-link">
-          <div class="feature-card reveal">
-            <div class="feature-icon"><i class="fa-solid fa-gauge-high"></i></div>
-            <h3 data-i18n="f1_title">Dashboard</h3>
-            <p data-i18n="f1_desc">Live KPI cards for revenue, delivery rates, returns, and top products. Interactive charts and a custom date-range picker to spot trends before they become problems.</p>
+        <!-- 1. Dashboard — Text Left, Image Right -->
+        <div class="reveal feat-zigzag-row grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12 items-center">
+          <div class="feat-text order-2 md:order-1">
+            <a href="dashboard.html" class="group block">
+              <h3 class="text-xl md:text-2xl font-bold text-[var(--text)] mb-4 group-hover:text-[var(--primary)] transition-colors" data-i18n="feat_1_title">Smart Dashboard</h3>
+              <p class="text-[var(--text-muted)] leading-relaxed mb-4" data-i18n="feat_1_desc">See your business performance at a glance. Live KPIs, interactive charts, and custom date ranges help you spot trends before they become problems.</p>
+              <ul class="space-y-2 mb-6">
+                <li class="flex items-center gap-2 text-sm text-[var(--text)]"><i class="fa-solid fa-check text-green-500"></i><span data-i18n="feat_1_b1">Revenue, deliveries, returns &amp; top products</span></li>
+                <li class="flex items-center gap-2 text-sm text-[var(--text)]"><i class="fa-solid fa-check text-green-500"></i><span data-i18n="feat_1_b2">Sync orders from Google Sheets</span></li>
+                <li class="flex items-center gap-2 text-sm text-[var(--text)]"><i class="fa-solid fa-check text-green-500"></i><span data-i18n="feat_1_b3">Campaign performance &amp; governorate insights</span></li>
+              </ul>
+              <span class="inline-flex items-center gap-2 text-[var(--primary)] font-semibold text-sm" data-i18n="feat_learn_more">Learn more →</span>
+            </a>
           </div>
-        </a>
-
-        <!-- 2 Preparation (Order Preparation) -->
-        <a href="preparation.html" class="feature-card-link">
-          <div class="feature-card reveal" style="transition-delay:0.06s">
-            <div class="feature-icon"><i class="fa-solid fa-clipboard-list"></i></div>
-            <h3 data-i18n="f2_title">Preparation (Order Preparation)</h3>
-            <p data-i18n="f2_desc">A smart warehouse picking queue with automatic shortage alerts, bundle explosion into component lists, deferred order management, and exportable picking sheets for your warehouse team.</p>
+          <div class="feat-img order-1 md:order-2 flex justify-center md:justify-end">
+            <img src="assets/images/feat-dashboard.png" alt="Smart Dashboard interface" class="w-full max-w-md rounded-xl shadow-lg border border-gray-200/80 object-cover" />
           </div>
-        </a>
+        </div>
 
-        <!-- 3 Shipping -->
-        <a href="shipping.html" class="feature-card-link">
-          <div class="feature-card reveal" style="transition-delay:0.12s">
-            <div class="feature-icon"><i class="fa-solid fa-truck-fast"></i></div>
-            <h3 data-i18n="f3_title">Shipping</h3>
-            <p data-i18n="f3_desc">Manage multiple couriers from one screen. Track every shipment from dispatch to delivery, bulk-process collections, handle returns and partial deliveries, and reconcile each company's balance automatically.</p>
+        <!-- 2. Inventory — Image Left, Text Right -->
+        <div class="reveal feat-zigzag-row feat-img-first grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12 items-center">
+          <div class="feat-img flex justify-center md:justify-start">
+            <img src="assets/images/feat-inventory.png" alt="Inventory Management interface" class="w-full max-w-md rounded-xl shadow-lg border border-gray-200/80 object-cover" />
           </div>
-        </a>
-
-        <!-- 4 Inventory -->
-        <a href="inventory.html" class="feature-card-link">
-          <div class="feature-card reveal" style="transition-delay:0.18s">
-            <div class="feature-icon"><i class="fa-solid fa-boxes-stacked"></i></div>
-            <h3 data-i18n="f4_title">Inventory</h3>
-            <p data-i18n="f4_desc">Full stock lifecycle management: variant tracking, real-time stock levels, quarantine processing for damaged goods, weighted average costing, and a complete audit trail of every movement.</p>
+          <div class="feat-text">
+            <a href="inventory.html" class="group block">
+              <h3 class="text-xl md:text-2xl font-bold text-[var(--text)] mb-4 group-hover:text-[var(--primary)] transition-colors" data-i18n="feat_2_title">Advanced Inventory Control</h3>
+              <p class="text-[var(--text-muted)] leading-relaxed mb-4" data-i18n="feat_2_desc">Full variant management and product tracking. Weighted average costing, quarantine processing, and a complete audit trail of every stock movement.</p>
+              <ul class="space-y-2 mb-6">
+                <li class="flex items-center gap-2 text-sm text-[var(--text)]"><i class="fa-solid fa-check text-green-500"></i><span data-i18n="feat_2_b1">Restock alerts &amp; damage tracking</span></li>
+                <li class="flex items-center gap-2 text-sm text-[var(--text)]"><i class="fa-solid fa-check text-green-500"></i><span data-i18n="feat_2_b2">Purchase recording with supplier ledger</span></li>
+                <li class="flex items-center gap-2 text-sm text-[var(--text)]"><i class="fa-solid fa-check text-green-500"></i><span data-i18n="feat_2_b3">Archive suggestions for inactive products</span></li>
+              </ul>
+              <span class="inline-flex items-center gap-2 text-[var(--primary)] font-semibold text-sm" data-i18n="feat_learn_more">Learn more →</span>
+            </a>
           </div>
-        </a>
+        </div>
 
-        <!-- 5 Manufacturing -->
-        <a href="manufacturing.html" class="feature-card-link">
-          <div class="feature-card reveal">
-            <div class="feature-icon"><i class="fa-solid fa-industry"></i></div>
-            <h3 data-i18n="f5_title">Manufacturing</h3>
-            <p data-i18n="f5_desc">Build Bills of Materials (BOMs) to assemble product bundles and kits. Track component availability, auto-calculate bundle costs, clone bundles for quick variations, and monitor profitability per bundle.</p>
+        <!-- 3. Preparation — Text Left, Image Right -->
+        <div class="reveal feat-zigzag-row grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12 items-center">
+          <div class="feat-text order-2 md:order-1">
+            <a href="preparation.html" class="group block">
+              <h3 class="text-xl md:text-2xl font-bold text-[var(--text)] mb-4 group-hover:text-[var(--primary)] transition-colors" data-i18n="feat_3_title">Order Preparation Hub</h3>
+              <p class="text-[var(--text-muted)] leading-relaxed mb-4" data-i18n="feat_3_desc">Pick, pack, and prepare orders before handover. Defer or cancel, modify bundles, export to Excel, and ship to couriers — all from one screen.</p>
+              <ul class="space-y-2 mb-6">
+                <li class="flex items-center gap-2 text-sm text-[var(--text)]"><i class="fa-solid fa-check text-green-500"></i><span data-i18n="feat_3_b1">Auto-prepare &amp; picking list</span></li>
+                <li class="flex items-center gap-2 text-sm text-[var(--text)]"><i class="fa-solid fa-check text-green-500"></i><span data-i18n="feat_3_b2">Deferred orders with due-date wake-up</span></li>
+                <li class="flex items-center gap-2 text-sm text-[var(--text)]"><i class="fa-solid fa-check text-green-500"></i><span data-i18n="feat_3_b3">Filter by governorate &amp; order type</span></li>
+              </ul>
+              <span class="inline-flex items-center gap-2 text-[var(--primary)] font-semibold text-sm" data-i18n="feat_learn_more">Learn more →</span>
+            </a>
           </div>
-        </a>
-
-        <!-- 6 Expenses -->
-        <a href="expenses.html" class="feature-card-link">
-          <div class="feature-card reveal" style="transition-delay:0.06s">
-            <div class="feature-icon"><i class="fa-solid fa-wallet"></i></div>
-            <h3 data-i18n="f6_title">Expenses</h3>
-            <p data-i18n="f6_desc">Log every business expense by category, watch your real-time treasury balance, and close your books daily with variance tracking between system totals and physical cash-on-hand.</p>
+          <div class="feat-img order-1 md:order-2 flex justify-center md:justify-end">
+            <img src="assets/images/feat-preparation.png" alt="Order Preparation interface" class="w-full max-w-md rounded-xl shadow-lg border border-gray-200/80 object-cover" />
           </div>
-        </a>
+        </div>
 
-        <!-- 7 Debts -->
-        <a href="debts.html" class="feature-card-link">
-          <div class="feature-card reveal" style="transition-delay:0.12s">
-            <div class="feature-icon"><i class="fa-solid fa-file-invoice-dollar"></i></div>
-            <h3 data-i18n="f7_title">Debts</h3>
-            <p data-i18n="f7_desc">Consolidated view of every obligation: external loans, courier balances pending collection, employee payroll owed, partner equity, and upcoming payment forecasts with a 7-day alert window.</p>
+        <!-- 4. Shipping — Image Left, Text Right -->
+        <div class="reveal feat-zigzag-row feat-img-first grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12 items-center">
+          <div class="feat-img flex justify-center md:justify-start">
+            <img src="assets/images/feat-shipping.png" alt="Shipping Management interface" class="w-full max-w-md rounded-xl shadow-lg border border-gray-200/80 object-cover" />
           </div>
-        </a>
-
-        <!-- 8 Ads -->
-        <a href="ads.html" class="feature-card-link">
-          <div class="feature-card reveal" style="transition-delay:0.18s">
-            <div class="feature-icon"><i class="fa-solid fa-bullhorn"></i></div>
-            <h3 data-i18n="f8_title">Ads</h3>
-            <p data-i18n="f8_desc">Link ad spend on Facebook, TikTok, Google, and Instagram to real revenue. Calculate ROAS and Cost-Per-Order per campaign and per platform so you know exactly where every pound is working — and where it isn't.</p>
+          <div class="feat-text">
+            <a href="shipping.html" class="group block">
+              <h3 class="text-xl md:text-2xl font-bold text-[var(--text)] mb-4 group-hover:text-[var(--primary)] transition-colors" data-i18n="feat_4_title">Intelligent Shipping &amp; Partial Delivery</h3>
+              <p class="text-[var(--text-muted)] leading-relaxed mb-4" data-i18n="feat_4_desc">Manage multiple couriers, update delivery status, process collections, and track loans. Handle partials and returns with automated stock adjustments.</p>
+              <ul class="space-y-2 mb-6">
+                <li class="flex items-center gap-2 text-sm text-[var(--text)]"><i class="fa-solid fa-check text-green-500"></i><span data-i18n="feat_4_b1">Delivered, Partial, Returned, Damaged statuses</span></li>
+                <li class="flex items-center gap-2 text-sm text-[var(--text)]"><i class="fa-solid fa-check text-green-500"></i><span data-i18n="feat_4_b2">Collection reports &amp; PDF analytics</span></li>
+                <li class="flex items-center gap-2 text-sm text-[var(--text)]"><i class="fa-solid fa-check text-green-500"></i><span data-i18n="feat_4_b3">Net settlement &amp; courier ledger</span></li>
+              </ul>
+              <span class="inline-flex items-center gap-2 text-[var(--primary)] font-semibold text-sm" data-i18n="feat_learn_more">Learn more →</span>
+            </a>
           </div>
-        </a>
+        </div>
 
-        <!-- 9 Staff -->
-        <a href="staff.html" class="feature-card-link">
-          <div class="feature-card reveal">
-            <div class="feature-icon"><i class="fa-solid fa-users"></i></div>
-            <h3 data-i18n="f9_title">Staff</h3>
-            <p data-i18n="f9_desc">Full HR suite: fixed or commission-based payroll engine, employee loan tracking, per-moderator performance metrics, bonus and deduction adjustments, and complete payroll history.</p>
+        <!-- View All Features CTA -->
+        <div class="flex justify-center mt-12 mb-4">
+          <button type="button" id="feat-toggle-btn" class="feat-toggle-btn" onclick="toggleExtraFeatures()" aria-expanded="false" aria-controls="extra-features">
+            <span id="feat-toggle-text" data-i18n="feat_view_all">View All Features</span>
+            <svg viewBox="0 0 20 20" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd"/></svg>
+          </button>
+        </div>
+
+        <!-- Extra modules (collapsible) -->
+        <div id="extra-features" class="hidden space-y-20">
+        <!-- 5. Manufacturing — Text Left, Image Right -->
+        <div class="reveal feat-zigzag-row grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12 items-center">
+          <div class="feat-text order-2 md:order-1">
+            <a href="manufacturing.html" class="group block">
+              <h3 class="text-xl md:text-2xl font-bold text-[var(--text)] mb-4 group-hover:text-[var(--primary)] transition-colors" data-i18n="feat_5_title">Bundle Builder &amp; Manufacturing</h3>
+              <p class="text-[var(--text-muted)] leading-relaxed mb-4" data-i18n="feat_5_desc">Create product bundles from components. Define BOMs, set prices, and see virtual stock. Know exactly which component limits each kit.</p>
+              <ul class="space-y-2 mb-6">
+                <li class="flex items-center gap-2 text-sm text-[var(--text)]"><i class="fa-solid fa-check text-green-500"></i><span data-i18n="feat_5_b1">Profit margin &amp; cost breakdown</span></li>
+                <li class="flex items-center gap-2 text-sm text-[var(--text)]"><i class="fa-solid fa-check text-green-500"></i><span data-i18n="feat_5_b2">Low-stock alerts &amp; top sellers</span></li>
+                <li class="flex items-center gap-2 text-sm text-[var(--text)]"><i class="fa-solid fa-check text-green-500"></i><span data-i18n="feat_5_b3">Duplicate bundles for fast setup</span></li>
+              </ul>
+              <span class="inline-flex items-center gap-2 text-[var(--primary)] font-semibold text-sm" data-i18n="feat_learn_more">Learn more →</span>
+            </a>
           </div>
-        </a>
-
-        <!-- 10 Reports -->
-        <a href="reports.html" class="feature-card-link">
-          <div class="feature-card reveal" style="transition-delay:0.06s">
-            <div class="feature-icon"><i class="fa-solid fa-chart-line"></i></div>
-            <h3 data-i18n="f10_title">Reports</h3>
-            <p data-i18n="f10_desc">P&amp;L statements, partner share calculations, period closing (التقفيل), and interactive scenario simulations — "What if 70% of my pipeline delivers?" — so you can make confident financial decisions before they happen.</p>
+          <div class="feat-img order-1 md:order-2 flex justify-center md:justify-end">
+            <img src="assets/images/feat-manufacturing.png" alt="Manufacturing and Bundle Builder interface" class="w-full max-w-md rounded-xl shadow-lg border border-gray-200/80 object-cover" />
           </div>
-        </a>
+        </div>
 
-        <!-- 11 Google Sheets Sync -->
-        <a href="settings.html" class="feature-card-link">
-          <div class="feature-card reveal" style="transition-delay:0.12s">
-            <div class="feature-icon"><i class="fa-brands fa-google-drive"></i></div>
-            <h3 data-i18n="f11_title">Google Sheets Sync</h3>
-            <p data-i18n="f11_desc">Bidirectional sync between your local database and Google Sheets. Your team updates orders in the spreadsheet; Maly pulls them in automatically — no extra software, no manual imports.</p>
+        <!-- 6. Expenses — Image Left, Text Right -->
+        <div class="reveal feat-zigzag-row feat-img-first grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12 items-center">
+          <div class="feat-img flex justify-center md:justify-start">
+            <img src="assets/images/feat-expenses.png" alt="Expenses and Treasury interface" class="w-full max-w-md rounded-xl shadow-lg border border-gray-200/80 object-cover" />
           </div>
-        </a>
-
-        <!-- 12 Role-based Access Control (RBAC) -->
-        <a href="settings.html" class="feature-card-link">
-          <div class="feature-card reveal" style="transition-delay:0.18s">
-            <div class="feature-icon"><i class="fa-solid fa-shield-halved"></i></div>
-            <h3 data-i18n="f12_title">Role-based Access Control (RBAC)</h3>
-            <p data-i18n="f12_desc">Create multi-user accounts with granular module permissions: managers see everything, staff see only their workspace. Every action is logged in a full audit trail with timestamp and user identity.</p>
+          <div class="feat-text">
+            <a href="expenses.html" class="group block">
+              <h3 class="text-xl md:text-2xl font-bold text-[var(--text)] mb-4 group-hover:text-[var(--primary)] transition-colors" data-i18n="feat_6_title">Expenses &amp; Treasury</h3>
+              <p class="text-[var(--text-muted)] leading-relaxed mb-4" data-i18n="feat_6_desc">Track income and expenses by category. Close the day with cash reconciliation. Strict treasury control—no negative balances.</p>
+              <ul class="space-y-2 mb-6">
+                <li class="flex items-center gap-2 text-sm text-[var(--text)]"><i class="fa-solid fa-check text-green-500"></i><span data-i18n="feat_6_b1">Date-filtered ledger with search</span></li>
+                <li class="flex items-center gap-2 text-sm text-[var(--text)]"><i class="fa-solid fa-check text-green-500"></i><span data-i18n="feat_6_b2">Category analytics &amp; consolidation</span></li>
+                <li class="flex items-center gap-2 text-sm text-[var(--text)]"><i class="fa-solid fa-check text-green-500"></i><span data-i18n="feat_6_b3">Protected system entries</span></li>
+              </ul>
+              <span class="inline-flex items-center gap-2 text-[var(--primary)] font-semibold text-sm" data-i18n="feat_learn_more">Learn more →</span>
+            </a>
           </div>
-        </a>
+        </div>
 
+        <!-- 7. Debts — Text Left, Image Right -->
+        <div class="reveal feat-zigzag-row grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12 items-center">
+          <div class="feat-text order-2 md:order-1">
+            <a href="debts.html" class="group block">
+              <h3 class="text-xl md:text-2xl font-bold text-[var(--text)] mb-4 group-hover:text-[var(--primary)] transition-colors" data-i18n="feat_7_title">Debts &amp; Financial Position</h3>
+              <p class="text-[var(--text-muted)] leading-relaxed mb-4" data-i18n="feat_7_desc">See liquid assets, liabilities, and net position. Manage receivables, payables, fixed assets, and run delivery-rate forecasts.</p>
+              <ul class="space-y-2 mb-6">
+                <li class="flex items-center gap-2 text-sm text-[var(--text)]"><i class="fa-solid fa-check text-green-500"></i><span data-i18n="feat_7_b1">Full or partial settlement</span></li>
+                <li class="flex items-center gap-2 text-sm text-[var(--text)]"><i class="fa-solid fa-check text-green-500"></i><span data-i18n="feat_7_b2">Fixed asset add, depreciate, sell or dispose</span></li>
+                <li class="flex items-center gap-2 text-sm text-[var(--text)]"><i class="fa-solid fa-check text-green-500"></i><span data-i18n="feat_7_b3">Overdue highlighting &amp; pipeline toggle</span></li>
+              </ul>
+              <span class="inline-flex items-center gap-2 text-[var(--primary)] font-semibold text-sm" data-i18n="feat_learn_more">Learn more →</span>
+            </a>
+          </div>
+          <div class="feat-img order-1 md:order-2 flex justify-center md:justify-end">
+            <img src="assets/images/feat-debts.png" alt="Debts and Financial Position interface" class="w-full max-w-md rounded-xl shadow-lg border border-gray-200/80 object-cover" />
+          </div>
+        </div>
+
+        <!-- 8. Ads — Image Left, Text Right -->
+        <div class="reveal feat-zigzag-row feat-img-first grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12 items-center">
+          <div class="feat-img flex justify-center md:justify-start">
+            <img src="assets/images/feat-ads.png" alt="Ad Campaigns interface" class="w-full max-w-md rounded-xl shadow-lg border border-gray-200/80 object-cover" />
+          </div>
+          <div class="feat-text">
+            <a href="ads.html" class="group block">
+              <h3 class="text-xl md:text-2xl font-bold text-[var(--text)] mb-4 group-hover:text-[var(--primary)] transition-colors" data-i18n="feat_8_title">Ad Campaigns &amp; ROI</h3>
+              <p class="text-[var(--text-muted)] leading-relaxed mb-4" data-i18n="feat_8_desc">Manage campaigns per platform. Record daily spend, track ROAS, CPA, and delivery rate. Know which ads actually sell.</p>
+              <ul class="space-y-2 mb-6">
+                <li class="flex items-center gap-2 text-sm text-[var(--text)]"><i class="fa-solid fa-check text-green-500"></i><span data-i18n="feat_8_b1">Facebook, Google, TikTok, Snapchat</span></li>
+                <li class="flex items-center gap-2 text-sm text-[var(--text)]"><i class="fa-solid fa-check text-green-500"></i><span data-i18n="feat_8_b2">Platform breakdown &amp; campaign performance</span></li>
+                <li class="flex items-center gap-2 text-sm text-[var(--text)]"><i class="fa-solid fa-check text-green-500"></i><span data-i18n="feat_8_b3">Export PDF reports</span></li>
+              </ul>
+              <span class="inline-flex items-center gap-2 text-[var(--primary)] font-semibold text-sm" data-i18n="feat_learn_more">Learn more →</span>
+            </a>
+          </div>
+        </div>
+
+        <!-- 9. Staff — Text Left, Image Right -->
+        <div class="reveal feat-zigzag-row grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12 items-center">
+          <div class="feat-text order-2 md:order-1">
+            <a href="staff.html" class="group block">
+              <h3 class="text-xl md:text-2xl font-bold text-[var(--text)] mb-4 group-hover:text-[var(--primary)] transition-colors" data-i18n="feat_9_title">Staff &amp; HR Payroll</h3>
+              <p class="text-[var(--text-muted)] leading-relaxed mb-4" data-i18n="feat_9_desc">Manage employees with flexible salary methods. Calculate payroll from base, commissions, bonuses, deductions, and loans. Process payments and export payslips.</p>
+              <ul class="space-y-2 mb-6">
+                <li class="flex items-center gap-2 text-sm text-[var(--text)]"><i class="fa-solid fa-check text-green-500"></i><span data-i18n="feat_9_b1">Fixed, commission, per-order, per-item</span></li>
+                <li class="flex items-center gap-2 text-sm text-[var(--text)]"><i class="fa-solid fa-check text-green-500"></i><span data-i18n="feat_9_b2">Bonus, deduction, advance (loan)</span></li>
+                <li class="flex items-center gap-2 text-sm text-[var(--text)]"><i class="fa-solid fa-check text-green-500"></i><span data-i18n="feat_9_b3">Google Sheet order-paid sync</span></li>
+              </ul>
+              <span class="inline-flex items-center gap-2 text-[var(--primary)] font-semibold text-sm" data-i18n="feat_learn_more">Learn more →</span>
+            </a>
+          </div>
+          <div class="feat-img order-1 md:order-2 flex justify-center md:justify-end">
+            <img src="assets/images/feat-staff.png" alt="Staff and Payroll interface" class="w-full max-w-md rounded-xl shadow-lg border border-gray-200/80 object-cover" />
+          </div>
+        </div>
+
+        <!-- 10. Reports — Image Left, Text Right -->
+        <div class="reveal feat-zigzag-row feat-img-first grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12 items-center">
+          <div class="feat-img flex justify-center md:justify-start">
+            <img src="assets/images/feat-reports.png" alt="Financial Reports interface" class="w-full max-w-md rounded-xl shadow-lg border border-gray-200/80 object-cover" />
+          </div>
+          <div class="feat-text">
+            <a href="reports.html" class="group block">
+              <h3 class="text-xl md:text-2xl font-bold text-[var(--text)] mb-4 group-hover:text-[var(--primary)] transition-colors" data-i18n="feat_10_title">Financial Reports &amp; Partners</h3>
+              <p class="text-[var(--text-muted)] leading-relaxed mb-4" data-i18n="feat_10_desc">Full P&amp;L, Net Equity, ROI, Burn Rate, Runway. Scenario simulation, partner distribution, and period closing.</p>
+              <ul class="space-y-2 mb-6">
+                <li class="flex items-center gap-2 text-sm text-[var(--text)]"><i class="fa-solid fa-check text-green-500"></i><span data-i18n="feat_10_b1">Delivery rate &amp; pipeline simulation</span></li>
+                <li class="flex items-center gap-2 text-sm text-[var(--text)]"><i class="fa-solid fa-check text-green-500"></i><span data-i18n="feat_10_b2">Partner shares, injections, withdrawals</span></li>
+                <li class="flex items-center gap-2 text-sm text-[var(--text)]"><i class="fa-solid fa-check text-green-500"></i><span data-i18n="feat_10_b3">Partner exit with payout calculation</span></li>
+              </ul>
+              <span class="inline-flex items-center gap-2 text-[var(--primary)] font-semibold text-sm" data-i18n="feat_learn_more">Learn more →</span>
+            </a>
+          </div>
+        </div>
+
+        <!-- 11. Settings — Text Left, Image Right -->
+        <div class="reveal feat-zigzag-row grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12 items-center">
+          <div class="feat-text order-2 md:order-1">
+            <a href="settings.html" class="group block">
+              <div class="flex items-center gap-3 mb-3">
+                <div class="w-12 h-12 rounded-xl bg-[var(--primary)]/10 flex items-center justify-center text-[var(--primary)] shrink-0">
+                  <i class="fa-solid fa-gears text-xl"></i>
+                </div>
+              </div>
+              <h3 class="text-xl md:text-2xl font-bold text-[var(--text)] mb-4 group-hover:text-[var(--primary)] transition-colors" data-i18n="feat_11_title">Settings</h3>
+              <p class="text-[var(--text-muted)] leading-relaxed mb-4" data-i18n="feat_11_desc">Configure your system globally. Manage Google Sheets bidirectional sync, create multi-user accounts with granular Role-Based Access Control (RBAC), and oversee full audit trails.</p>
+              <ul class="space-y-2 mb-6">
+                <li class="flex items-center gap-2 text-sm text-[var(--text)]"><i class="fa-solid fa-check text-green-500"></i><span data-i18n="feat_11_b1">Google Sheets bidirectional sync</span></li>
+                <li class="flex items-center gap-2 text-sm text-[var(--text)]"><i class="fa-solid fa-check text-green-500"></i><span data-i18n="feat_11_b2">Multi-user RBAC &amp; module permissions</span></li>
+                <li class="flex items-center gap-2 text-sm text-[var(--text)]"><i class="fa-solid fa-check text-green-500"></i><span data-i18n="feat_11_b3">Backup, export &amp; full audit trails</span></li>
+              </ul>
+              <span class="inline-flex items-center gap-2 text-[var(--primary)] font-semibold text-sm" data-i18n="feat_learn_more">Learn more →</span>
+            </a>
+          </div>
+          <div class="feat-img order-1 md:order-2 flex justify-center md:justify-end">
+            <img src="assets/images/feat-settings.png" alt="Settings module interface" class="w-full max-w-md rounded-xl shadow-lg border border-gray-200/80 object-cover" />
+          </div>
+        </div>
+
+        </div><!-- /#extra-features -->
       </div>
     </div>
   </section>
@@ -1120,48 +1459,194 @@
 
       <div class="pricing-grid">
 
-        <!-- Basic -->
+        <!-- Starter -->
         <div class="pricing-card reveal">
-          <p class="plan-name" data-i18n="basic_name">Basic</p>
+          <p class="plan-name" data-i18n="starter_name">Starter</p>
           <div class="plan-price">800 <span class="currency" data-i18n="plan_currency_egp">EGP</span></div>
           <p class="plan-period" data-i18n="plan_per_month">per month</p>
-          <p class="plan-desc" data-i18n="basic_desc">All operational modules to run your day-to-day business.</p>
-          <ul class="plan-features" id="basic-features">
-            <li><i class="fa-solid fa-check chk"></i><span data-i18n="feat_inv">Advanced Inventory Management</span></li>
-            <li><i class="fa-solid fa-check chk"></i><span data-i18n="feat_mfg">Manufacturing &amp; Bundle Builder</span></li>
-            <li><i class="fa-solid fa-check chk"></i><span data-i18n="feat_prep">Order Preparation Module</span></li>
-            <li><i class="fa-solid fa-check chk"></i><span data-i18n="feat_ship">Shipping Management</span></li>
-            <li><i class="fa-solid fa-check chk"></i><span data-i18n="feat_exp">Expenses &amp; Treasury</span></li>
-            <li><i class="fa-solid fa-check chk"></i><span data-i18n="feat_staff">Staff &amp; HR Payroll</span></li>
-            <li><i class="fa-solid fa-check chk"></i><span data-i18n="feat_debt">Debts &amp; Liabilities</span></li>
-            <li><i class="fa-solid fa-check chk"></i><span data-i18n="feat_ads">Ad Campaign Tracking</span></li>
-            <li><i class="fa-solid fa-check chk"></i><span data-i18n="feat_sync">Google Sheets Sync</span></li>
-            <li><i class="fa-solid fa-check chk"></i><span data-i18n="feat_rbac">Role-based Access Control</span></li>
-            <li class="disabled"><i class="fa-solid fa-xmark"></i><span data-i18n="feat_dash">Real-time Dashboard</span></li>
-            <li class="disabled"><i class="fa-solid fa-xmark"></i><span data-i18n="feat_reports">Advanced Reports &amp; P&amp;L</span></li>
-            <li class="disabled"><i class="fa-solid fa-xmark"></i><span data-i18n="feat_close">Period Closing (التقفيل)</span></li>
+          <p class="plan-desc" data-i18n="starter_desc">All operational modules to run your day-to-day business.</p>
+          <ul class="plan-features">
+            <li>
+              <svg class="feat-icon feat-check" viewBox="0 0 20 20" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>
+              <span data-i18n="feat_inv">Advanced Inventory Management</span>
+            </li>
+            <li>
+              <svg class="feat-icon feat-check" viewBox="0 0 20 20" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>
+              <span data-i18n="feat_mfg">Manufacturing &amp; Bundle Builder</span>
+            </li>
+            <li>
+              <svg class="feat-icon feat-check" viewBox="0 0 20 20" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>
+              <span data-i18n="feat_prep">Order Preparation Module</span>
+            </li>
+            <li>
+              <svg class="feat-icon feat-check" viewBox="0 0 20 20" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>
+              <span data-i18n="feat_ship">Shipping Management</span>
+            </li>
+            <li>
+              <svg class="feat-icon feat-check" viewBox="0 0 20 20" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>
+              <span data-i18n="feat_exp">Expenses &amp; Treasury</span>
+            </li>
+            <li>
+              <svg class="feat-icon feat-check" viewBox="0 0 20 20" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>
+              <span data-i18n="feat_staff">Staff &amp; HR Payroll</span>
+            </li>
+            <li>
+              <svg class="feat-icon feat-check" viewBox="0 0 20 20" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>
+              <span data-i18n="feat_debt">Debts &amp; Liabilities</span>
+            </li>
+            <li>
+              <svg class="feat-icon feat-check" viewBox="0 0 20 20" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>
+              <span data-i18n="feat_ads">Ad Campaign Tracking</span>
+            </li>
+            <li>
+              <svg class="feat-icon feat-check" viewBox="0 0 20 20" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>
+              <span data-i18n="feat_sync">Google Sheets Sync</span>
+            </li>
+            <li>
+              <svg class="feat-icon feat-check" viewBox="0 0 20 20" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>
+              <span data-i18n="feat_rbac">Role-based Access Control</span>
+            </li>
+            <li class="disabled">
+              <svg class="feat-icon" viewBox="0 0 20 20" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"/></svg>
+              <span data-i18n="feat_dash">Real-time Dashboard</span>
+            </li>
+            <li class="disabled">
+              <svg class="feat-icon" viewBox="0 0 20 20" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"/></svg>
+              <span data-i18n="feat_reports">Advanced Reports &amp; P&amp;L</span>
+            </li>
+            <li class="disabled">
+              <svg class="feat-icon" viewBox="0 0 20 20" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"/></svg>
+              <span data-i18n="feat_close">Period Closing (التقفيل)</span>
+            </li>
           </ul>
-          <a href="#contact" class="btn-plan btn-plan-outline" data-i18n="cta_basic">Get Started</a>
+          <a href="#contact" class="btn-plan btn-plan-outline" data-i18n="cta_starter">Get Started</a>
         </div>
 
-        <!-- Advanced (Standard) -->
+        <!-- Pro (Most Popular) -->
         <div class="pricing-card pro reveal" style="transition-delay:0.08s">
-          <div class="plan-badge" data-i18n="advanced_badge">Most Popular</div>
-          <p class="plan-name" data-i18n="advanced_name">Advanced</p>
+          <div class="plan-badge" data-i18n="pro_badge">Most Popular</div>
+          <p class="plan-name" data-i18n="pro_name">Pro</p>
           <div class="plan-price">1,100 <span class="currency" data-i18n="plan_currency_egp">EGP</span></div>
           <p class="plan-period" data-i18n="plan_per_month">per month</p>
-          <p class="plan-desc" data-i18n="advanced_desc">Full visibility. Full control. Every feature unlocked for single-device use.</p>
+          <p class="plan-desc" data-i18n="pro_desc">Full visibility. Full control. Every feature unlocked for single-device use.</p>
           <ul class="plan-features">
-            <li><i class="fa-solid fa-check chk"></i><span data-i18n="pro_includes_basic">Everything in Basic, plus:</span></li>
-            <li><i class="fa-solid fa-check chk"></i><span data-i18n="feat_dash">Real-time Dashboard</span></li>
-            <li><i class="fa-solid fa-check chk"></i><span data-i18n="feat_reports">Advanced Reports &amp; P&amp;L</span></li>
-            <li><i class="fa-solid fa-check chk"></i><span data-i18n="feat_close">Period Closing (التقفيل)</span></li>
-            <li><i class="fa-solid fa-check chk"></i><span data-i18n="feat_scenarios">Scenario Financial Simulations</span></li>
-            <li><i class="fa-solid fa-check chk"></i><span data-i18n="feat_partner">Partner Share &amp; Equity Management</span></li>
+            <li>
+              <svg class="feat-icon feat-check" viewBox="0 0 20 20" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>
+              <span data-i18n="pro_includes_basic">Everything in Starter, plus:</span>
+            </li>
+            <li>
+              <svg class="feat-icon feat-check" viewBox="0 0 20 20" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>
+              <span data-i18n="feat_dash">Real-time Dashboard</span>
+            </li>
+            <li>
+              <svg class="feat-icon feat-check" viewBox="0 0 20 20" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>
+              <span data-i18n="feat_reports">Advanced Reports &amp; P&amp;L</span>
+            </li>
+            <li>
+              <svg class="feat-icon feat-check" viewBox="0 0 20 20" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>
+              <span data-i18n="feat_close">Period Closing (التقفيل)</span>
+            </li>
+            <li>
+              <svg class="feat-icon feat-check" viewBox="0 0 20 20" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>
+              <span data-i18n="feat_scenarios">Scenario Financial Simulations</span>
+            </li>
+            <li>
+              <svg class="feat-icon feat-check" viewBox="0 0 20 20" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>
+              <span data-i18n="feat_partner">Partner Share &amp; Equity Management</span>
+            </li>
           </ul>
-          <a href="https://github.com/AdhamSeliman5/Maly-OBS/releases/download/v1.0/Maly-OBS.V1.0.rar" target="_blank" rel="noopener" class="btn-plan btn-plan-fill" data-i18n="cta_advanced">Download Now</a>
+          <a href="https://github.com/AdhamSeliman5/Maly-OBS/releases/download/v1.0/Maly-OBS.V1.0.rar" target="_blank" rel="noopener" class="btn-plan btn-plan-fill" data-i18n="cta_pro">Download Now</a>
         </div>
 
+        <!-- Enterprise (Coming Soon) -->
+        <div class="pricing-card enterprise-upcoming reveal" style="transition-delay:0.16s">
+          <span class="plan-badge-coming" data-i18n="enterprise_coming_soon">Coming Soon</span>
+          <p class="plan-name" data-i18n="enterprise_name">Enterprise</p>
+          <div class="plan-price"><span data-i18n="enterprise_price">Coming Soon</span></div>
+          <p class="plan-desc" data-i18n="enterprise_desc">For larger teams. Multi-device licenses, priority support, and custom needs.</p>
+          <ul class="plan-features">
+            <li>
+              <svg class="feat-icon feat-check" viewBox="0 0 20 20" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>
+              <span data-i18n="ent_feat_1">Everything in Pro</span>
+            </li>
+            <li>
+              <svg class="feat-icon feat-check" viewBox="0 0 20 20" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>
+              <span data-i18n="ent_feat_2">Multi-device licensing</span>
+            </li>
+            <li>
+              <svg class="feat-icon feat-check" viewBox="0 0 20 20" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>
+              <span data-i18n="ent_feat_3">Priority support</span>
+            </li>
+            <li>
+              <svg class="feat-icon feat-check" viewBox="0 0 20 20" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>
+              <span data-i18n="ent_feat_4">Custom training &amp; onboarding</span>
+            </li>
+          </ul>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== FAQ ===================== -->
+  <section id="faq" class="section section-alt">
+    <div class="container">
+      <div class="section-header reveal">
+        <div class="eyebrow" data-i18n="faq_eyebrow">Support</div>
+        <h2 data-i18n="faq_title">Frequently Asked Questions</h2>
+        <p data-i18n="faq_sub">Quick answers to common questions about Maly - OBS.</p>
+      </div>
+
+      <div class="faq-list">
+        <details class="faq-item reveal">
+          <summary>
+            <span data-i18n="faq_q1">Is my data secure? Where is it stored?</span>
+            <svg class="faq-chevron" viewBox="0 0 20 20" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd"/></svg>
+          </summary>
+          <div class="faq-content">
+            <p data-i18n="faq_a1">All your business data—inventory, orders, staff, and finances—is stored locally on your own machine in a SQLite database. We do not collect, transmit, or store any of your business data on our servers. You own your data completely, and it never leaves your computer unless you choose to sync with Google Sheets.</p>
+          </div>
+        </details>
+
+        <details class="faq-item reveal">
+          <summary>
+            <span data-i18n="faq_q2">Can I use Maly - OBS offline?</span>
+            <svg class="faq-chevron" viewBox="0 0 20 20" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd"/></svg>
+          </summary>
+          <div class="faq-content">
+            <p data-i18n="faq_a2">Yes. Maly - OBS is a desktop application that runs fully offline. All core modules—inventory, shipping, expenses, staff, and reports—work without an internet connection. You only need internet when syncing orders from Google Sheets or when activating your license.</p>
+          </div>
+        </details>
+
+        <details class="faq-item reveal">
+          <summary>
+            <span data-i18n="faq_q3">How does the Google Sheets sync work?</span>
+            <svg class="faq-chevron" viewBox="0 0 20 20" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd"/></svg>
+          </summary>
+          <div class="faq-content">
+            <p data-i18n="faq_a3">You connect your Google account once, then link a Google Sheet that contains your orders. Maly can push system data (products, governors) to the sheet and pull new orders from it. Your team updates the spreadsheet; Maly syncs bidirectionally. We use only the spreadsheets and drive.file scopes—we do not read or modify any other files on your Google Drive.</p>
+          </div>
+        </details>
+
+        <details class="faq-item reveal">
+          <summary>
+            <span data-i18n="faq_q4">What payment methods do you accept?</span>
+            <svg class="faq-chevron" viewBox="0 0 20 20" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd"/></svg>
+          </summary>
+          <div class="faq-content">
+            <p data-i18n="faq_a4">We accept bank transfer, Vodafone Cash, and other local payment methods in Egypt. Contact us via WhatsApp or email to receive payment details and activate your license. The 1-week free trial requires no payment—just download and start using the system.</p>
+          </div>
+        </details>
+
+        <details class="faq-item reveal">
+          <summary>
+            <span data-i18n="faq_q5">Is Maly - OBS available in Arabic?</span>
+            <svg class="faq-chevron" viewBox="0 0 20 20" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd"/></svg>
+          </summary>
+          <div class="faq-content">
+            <p data-i18n="faq_a5">Yes. Maly - OBS is fully bilingual (English and Arabic). The entire interface, including 500+ strings, supports RTL layout for Arabic. You can switch languages anytime with the language toggle in the navigation bar.</p>
+          </div>
+        </details>
       </div>
     </div>
   </section>
@@ -1302,6 +1787,7 @@
           <ul>
             <li><a href="#features" data-i18n="nav_features">Features</a></li>
             <li><a href="#pricing"  data-i18n="nav_pricing">Pricing</a></li>
+            <li><a href="#faq"     data-i18n="nav_faq">FAQ</a></li>
             <li><a href="#privacy"  data-i18n="nav_privacy">Privacy</a></li>
             <li><a href="#contact"  data-i18n="nav_contact">Contact</a></li>
           </ul>
@@ -1344,6 +1830,7 @@
         // Nav
         nav_features:  "Features",
         nav_pricing:   "Pricing",
+        nav_faq:       "FAQ",
         nav_privacy:   "Privacy",
         nav_contact:   "Contact",
         nav_download:  "Download Now",
@@ -1359,11 +1846,70 @@
         stat_translations: "Bilingual Strings",
         stat_trial:    "Free Trial",
         stat_local:    "Local & Private",
+        trust_title:   "Trusted by modern businesses",
 
         // Features
         feat_eyebrow:  "Modules",
         feat_title:    "Everything Your Business Needs",
         feat_sub:      "11 integrated modules covering every aspect of your e-commerce operations.",
+        feat_learn_more: "Learn more →",
+        feat_view_all:   "View All Features",
+        feat_show_less:  "Show Less",
+        feat_1_title: "Smart Dashboard",
+        feat_1_desc: "See your business performance at a glance. Live KPIs, interactive charts, and custom date ranges help you spot trends before they become problems.",
+        feat_1_b1: "Revenue, deliveries, returns & top products",
+        feat_1_b2: "Sync orders from Google Sheets",
+        feat_1_b3: "Campaign performance & governorate insights",
+        feat_2_title: "Advanced Inventory Control",
+        feat_2_desc: "Full variant management and product tracking. Weighted average costing, quarantine processing, and a complete audit trail of every stock movement.",
+        feat_2_b1: "Restock alerts & damage tracking",
+        feat_2_b2: "Purchase recording with supplier ledger",
+        feat_2_b3: "Archive suggestions for inactive products",
+        feat_3_title: "Order Preparation Hub",
+        feat_3_desc: "Pick, pack, and prepare orders before handover. Defer or cancel, modify bundles, export to Excel, and ship to couriers — all from one screen.",
+        feat_3_b1: "Auto-prepare & picking list",
+        feat_3_b2: "Deferred orders with due-date wake-up",
+        feat_3_b3: "Filter by governorate & order type",
+        feat_4_title: "Intelligent Shipping & Partial Delivery",
+        feat_4_desc: "Manage multiple couriers, update delivery status, process collections, and track loans. Handle partials and returns with automated stock adjustments.",
+        feat_4_b1: "Delivered, Partial, Returned, Damaged statuses",
+        feat_4_b2: "Collection reports & PDF analytics",
+        feat_4_b3: "Net settlement & courier ledger",
+        feat_5_title: "Bundle Builder & Manufacturing",
+        feat_5_desc: "Create product bundles from components. Define BOMs, set prices, and see virtual stock. Know exactly which component limits each kit.",
+        feat_5_b1: "Profit margin & cost breakdown",
+        feat_5_b2: "Low-stock alerts & top sellers",
+        feat_5_b3: "Duplicate bundles for fast setup",
+        feat_6_title: "Expenses & Treasury",
+        feat_6_desc: "Track income and expenses by category. Close the day with cash reconciliation. Strict treasury control—no negative balances.",
+        feat_6_b1: "Date-filtered ledger with search",
+        feat_6_b2: "Category analytics & consolidation",
+        feat_6_b3: "Protected system entries",
+        feat_7_title: "Debts & Financial Position",
+        feat_7_desc: "See liquid assets, liabilities, and net position. Manage receivables, payables, fixed assets, and run delivery-rate forecasts.",
+        feat_7_b1: "Full or partial settlement",
+        feat_7_b2: "Fixed asset add, depreciate, sell or dispose",
+        feat_7_b3: "Overdue highlighting & pipeline toggle",
+        feat_8_title: "Ad Campaigns & ROI",
+        feat_8_desc: "Manage campaigns per platform. Record daily spend, track ROAS, CPA, and delivery rate. Know which ads actually sell.",
+        feat_8_b1: "Facebook, Google, TikTok, Snapchat",
+        feat_8_b2: "Platform breakdown & campaign performance",
+        feat_8_b3: "Export PDF reports",
+        feat_9_title: "Staff & HR Payroll",
+        feat_9_desc: "Manage employees with flexible salary methods. Calculate payroll from base, commissions, bonuses, deductions, and loans. Process payments and export payslips.",
+        feat_9_b1: "Fixed, commission, per-order, per-item",
+        feat_9_b2: "Bonus, deduction, advance (loan)",
+        feat_9_b3: "Google Sheet order-paid sync",
+        feat_10_title: "Financial Reports & Partners",
+        feat_10_desc: "Full P&L, Net Equity, ROI, Burn Rate, Runway. Scenario simulation, partner distribution, and period closing.",
+        feat_10_b1: "Delivery rate & pipeline simulation",
+        feat_10_b2: "Partner shares, injections, withdrawals",
+        feat_10_b3: "Partner exit with payout calculation",
+        feat_11_title: "Settings",
+        feat_11_desc: "Configure your system globally. Manage Google Sheets bidirectional sync, create multi-user accounts with granular Role-Based Access Control (RBAC), and oversee full audit trails.",
+        feat_11_b1: "Google Sheets bidirectional sync",
+        feat_11_b2: "Multi-user RBAC & module permissions",
+        feat_11_b3: "Backup, export & full audit trails",
 
         f1_title: "Dashboard",
         f1_desc:  "The main analytics screen showing your business performance at a glance. View KPIs, charts, and lists for sales, deliveries, returns, top products, and campaign performance. Sync orders from Google Sheets to keep data current.",
@@ -1395,8 +1941,8 @@
         f10_title: "Reports",
         f10_desc:  "Financial overview: assets, liabilities, KPIs, partner distribution. Simulation engine for what-if scenarios (delivery rate, pipeline logic). Export PDF, close periods, manage partner exits.",
 
-        f11_title: "Google Sheets Sync",
-        f11_desc:  "Connect your Google account and link a Sheet for orders. Push system data or pull orders automatically. Your team updates the spreadsheet; Maly syncs bidirectionally—no extra software.",
+        f11_title: "Settings",
+        f11_desc:  "Configure your system globally. Manage Google Sheets bidirectional sync, create multi-user accounts with granular Role-Based Access Control (RBAC), and oversee full audit trails.",
 
         f12_title: "Role-based Access Control (RBAC)",
         f12_desc:  "Add and edit users with roles (Manager, Staff) and module permissions. Managers have full access; staff see only allowed modules. Access to Settings restricted to Manager.",
@@ -1407,14 +1953,24 @@
         pricing_sub:      "Start free. Scale confidently.",
         trial_badge:      "1 Week Free Trial",
         trial_sub:        "أسبوع مجاني — No credit card required. Download and start immediately.",
-        basic_name:       "Basic",
+        starter_name:     "Starter",
+        starter_desc:     "All operational modules to run your day-to-day business.",
+        pro_name:         "Pro",
+        pro_desc:         "Full visibility. Full control. Every feature unlocked for single-device use.",
+        pro_badge:        "Most Popular",
         plan_currency_egp:"EGP",
         plan_per_month:   "per month",
-        basic_desc:       "All operational modules to run your day-to-day business.",
-        advanced_badge:   "Most Popular",
-        advanced_name:    "Advanced",
-        advanced_desc:    "Full visibility. Full control. Every feature unlocked for single-device use.",
-        pro_includes_basic: "Everything in Basic, plus:",
+        pro_includes_basic: "Everything in Starter, plus:",
+        cta_starter:      "Get Started",
+        cta_pro:          "Download Now",
+        enterprise_name:  "Enterprise",
+        enterprise_desc:  "For larger teams. Multi-device licenses, priority support, and custom needs.",
+        enterprise_price: "Coming Soon",
+        enterprise_coming_soon: "Coming Soon",
+        ent_feat_1:       "Everything in Pro",
+        ent_feat_2:       "Multi-device licensing",
+        ent_feat_3:       "Priority support",
+        ent_feat_4:       "Custom training & onboarding",
         feat_inv:         "Advanced Inventory Management",
         feat_mfg:         "Manufacturing & Bundle Builder",
         feat_prep:        "Order Preparation Module",
@@ -1432,6 +1988,21 @@
         feat_partner:     "Partner Share & Equity Management",
         cta_basic:        "Get Started",
         cta_advanced:     "Download Now",
+
+        // FAQ
+        faq_eyebrow:      "Support",
+        faq_title:        "Frequently Asked Questions",
+        faq_sub:          "Quick answers to common questions about Maly - OBS.",
+        faq_q1:           "Is my data secure? Where is it stored?",
+        faq_a1:           "All your business data—inventory, orders, staff, and finances—is stored locally on your own machine in a SQLite database. We do not collect, transmit, or store any of your business data on our servers. You own your data completely, and it never leaves your computer unless you choose to sync with Google Sheets.",
+        faq_q2:           "Can I use Maly - OBS offline?",
+        faq_a2:           "Yes. Maly - OBS is a desktop application that runs fully offline. All core modules—inventory, shipping, expenses, staff, and reports—work without an internet connection. You only need internet when syncing orders from Google Sheets or when activating your license.",
+        faq_q3:           "How does the Google Sheets sync work?",
+        faq_a3:           "You connect your Google account once, then link a Google Sheet that contains your orders. Maly can push system data (products, governors) to the sheet and pull new orders from it. Your team updates the spreadsheet; Maly syncs bidirectionally. We use only the spreadsheets and drive.file scopes—we do not read or modify any other files on your Google Drive.",
+        faq_q4:           "What payment methods do you accept?",
+        faq_a4:           "We accept bank transfer, Vodafone Cash, and other local payment methods in Egypt. Contact us via WhatsApp or email to receive payment details and activate your license. The 1-week free trial requires no payment—just download and start using the system.",
+        faq_q5:           "Is Maly - OBS available in Arabic?",
+        faq_a5:           "Yes. Maly - OBS is fully bilingual (English and Arabic). The entire interface, including 500+ strings, supports RTL layout for Arabic. You can switch languages anytime with the language toggle in the navigation bar.",
 
         // Privacy
         privacy_eyebrow:       "Legal",
@@ -1465,6 +2036,7 @@
         // Nav
         nav_features:  "المميزات",
         nav_pricing:   "الأسعار",
+        nav_faq:       "الأسئلة الشائعة",
         nav_privacy:   "الخصوصية",
         nav_contact:   "تواصل معنا",
         nav_download:  "تحميل الآن",
@@ -1480,11 +2052,70 @@
         stat_translations: "جملة ثنائية اللغة",
         stat_trial:    "تجربة مجانية",
         stat_local:    "محلي وخاص ١٠٠٪",
+        trust_title:   "موثوق من الشركات الحديثة",
 
         // Features
         feat_eyebrow:  "الوحدات",
         feat_title:    "كل ما يحتاجه عملك",
         feat_sub:      "١١ وحدة متكاملة تغطي كل جانب من جوانب عمليات التجارة الإلكترونية.",
+        feat_learn_more: "اعرف المزيد ←",
+        feat_view_all:   "عرض كل المميزات",
+        feat_show_less:  "عرض أقل",
+        feat_1_title: "لوحة تحكم ذكية",
+        feat_1_desc: "شاهد أداء عملك بنظرة واحدة. مؤشرات حية ورسوم بيانية تفاعلية ونطاقات تواريخ مخصصة.",
+        feat_1_b1: "الإيرادات والتسليمات والمرتجعات وأفضل المنتجات",
+        feat_1_b2: "مزامنة الطلبات من Google Sheets",
+        feat_1_b3: "أداء الحملات ورؤى المحافظات",
+        feat_2_title: "تحكم متقدم في المخزون",
+        feat_2_desc: "إدارة متغيرات كاملة وتتبع منتجات. تكاليف متوسطة مرجحة ومعالجة حجر صحي وسجل تدقيق لكل حركة.",
+        feat_2_b1: "تنبيهات إعادة التخزين وتتبع التلف",
+        feat_2_b2: "تسجيل المشتريات مع دفتر الموردين",
+        feat_2_b3: "اقتراحات أرشفة للمنتجات غير النشطة",
+        feat_3_title: "مركز تجهيز الطلبات",
+        feat_3_desc: "اختر وجهز وعبّئ الطلبات قبل التسليم. أجّل أو ألغِ، عدّل الحزم، صدّر لـ Excel وأرسل للشركات — كل ذلك من شاشة واحدة.",
+        feat_3_b1: "تجهيز تلقائي وقائمة التقاط",
+        feat_3_b2: "طلبات مؤجلة مع استيقاظ في تاريخ الاستحقاق",
+        feat_3_b3: "تصفية حسب المحافظة ونوع الطلب",
+        feat_4_title: "الشحن الذكي والتسليم الجزئي",
+        feat_4_desc: "أدر عدة شركات نقل، حدّث حالة التسليم، نفّذ التحصيل وتتبع السلف. تعامل مع الجزئيات والمرتجعات مع تعديلات مخزون تلقائية.",
+        feat_4_b1: "حالات: مُسلّم، جزئي، مرتجع، تالف",
+        feat_4_b2: "تقارير تحصيل وتحليلات PDF",
+        feat_4_b3: "التسوية الصافية ودفتر شركة النقل",
+        feat_5_title: "مُنشئ الحزم والتصنيع",
+        feat_5_desc: "أنشئ حزم منتجات من مكونات. حدد قوائم المواد والأسعار وشاهد المخزون الافتراضي.",
+        feat_5_b1: "هامش الربح وتفصيل التكلفة",
+        feat_5_b2: "تنبيهات مخزون منخفض وأفضل البائعين",
+        feat_5_b3: "تكرار الحزم للإعداد السريع",
+        feat_6_title: "المصروفات والخزينة",
+        feat_6_desc: "تتبع الدخل والمصروفات حسب الفئة. أقفل اليوم مع تسوية النقد. تحكم صارم في الخزينة.",
+        feat_6_b1: "دفتر مع تصفية تاريخ وبحث",
+        feat_6_b2: "تحليلات فئات وتوحيد",
+        feat_6_b3: "إدخالات نظامية محمية",
+        feat_7_title: "الديون والوضع المالي",
+        feat_7_desc: "اعرض الأصول السائلة والالتزامات والوضع الصافي. أدر المستحقات والمديونيات والأصول الثابتة وتوقعات معدل التسليم.",
+        feat_7_b1: "تسوية كاملة أو جزئية",
+        feat_7_b2: "إضافة أصل ثابت، إهلاك، بيع أو تصرف",
+        feat_7_b3: "تمييز المتأخر وتبديل المسار",
+        feat_8_title: "حملات الإعلانات والعائد",
+        feat_8_desc: "أدر الحملات لكل منصة. سجّل الإنفاق اليومي، تتبع ROAS و CPA ومعدل التسليم.",
+        feat_8_b1: "فيسبوك، جوجل، تيك توك، سناب شات",
+        feat_8_b2: "تفصيل المنصة وأداء الحملة",
+        feat_8_b3: "تصدير تقارير PDF",
+        feat_9_title: "الموظفون ورواتب الموارد البشرية",
+        feat_9_desc: "أدر الموظفين بطرق راتب مرنة. احسب الرواتب من الأساس والعمولات والمكافآت والخصومات والسلف. نفّذ المدفوعات وصدّر قسائم الدفع.",
+        feat_9_b1: "ثابت، عمولة، لكل طلب، لكل قطعة",
+        feat_9_b2: "مكافأة، خصم، سلفة",
+        feat_9_b3: "مزامنة الطلبات المدفوعة مع Google Sheet",
+        feat_10_title: "التقارير المالية والشركاء",
+        feat_10_desc: "P&L كامل، صافي حقوق الملكية، ROI، معدل الحرق، المسار. محاكاة سيناريو، توزيع الشركاء وإقفال الفترة.",
+        feat_10_b1: "محاكاة معدل التسليم والمسار",
+        feat_10_b2: "حصص الشركاء، حقن، سحوبات",
+        feat_10_b3: "خروج شريك مع حساب الدفع",
+        feat_11_title: "الإعدادات",
+        feat_11_desc: "تهيئة النظام بالكامل. إدارة المزامنة ثنائية الاتجاه مع Google Sheets، إنشاء حسابات مستخدمين بصلاحيات مخصصة (RBAC)، ومراقبة سجل نشاطات النظام.",
+        feat_11_b1: "مزامنة ثنائية الاتجاه مع Google Sheets",
+        feat_11_b2: "RBAC متعدد المستخدمين وصلاحيات الوحدات",
+        feat_11_b3: "نسخ احتياطي وتصدير وسجل تدقيق كامل",
 
         f1_title: "لوحة التحكم",
         f1_desc:  "الشاشة الرئيسية للتحليلات تعرض أداء عملك بنظرة واحدة. اعرض مؤشرات الأداء والرسوم البيانية والقوائم للمبيعات والتسليمات والمرتجعات وأفضل المنتجات وأداء الحملات. مزامنة الطلبات من Google Sheets لإبقاء البيانات محدثة.",
@@ -1516,8 +2147,8 @@
         f10_title: "التقارير",
         f10_desc:  "نظرة مالية شاملة: الأصول والالتزامات ومؤشرات الأداء وتوزيع الشركاء. محرك محاكاة لسيناريوهات ماذا لو (معدل التسليم، منطق المسار). صدّر PDF، أقفل الفترات، أدِر خروج الشركاء.",
 
-        f11_title: "مزامنة Google Sheets",
-        f11_desc:  "اربط حساب Google واربط جدول للطلبات. ادفع بيانات النظام أو اسحب الطلبات تلقائيًا. يحدّث فريقك الجدول؛ مالي يزامن ثنائي الاتجاه—بلا برامج إضافية.",
+        f11_title: "الإعدادات",
+        f11_desc:  "تهيئة النظام بالكامل. إدارة المزامنة ثنائية الاتجاه مع Google Sheets، إنشاء حسابات مستخدمين بصلاحيات مخصصة (RBAC)، ومراقبة سجل نشاطات النظام.",
 
         f12_title: "التحكم في الصلاحيات (RBAC)",
         f12_desc:  "أضف وعدّل المستخدمين بالأدوار (مدير، موظف) وصلاحيات الوحدات. المديرون لديهم وصول كامل؛ الموظفون يرون الوحدات المسموحة فقط. الوصول للإعدادات محصور بالمدير.",
@@ -1528,14 +2159,24 @@
         pricing_sub:      "ابدأ مجانًا. توسّع بثقة.",
         trial_badge:      "أسبوع مجاني",
         trial_sub:        "1 Week Free Trial — لا حاجة لبطاقة ائتمان. حمّل وابدأ فورًا.",
-        basic_name:       "الأساسية",
+        starter_name:     "المبتدئ",
+        starter_desc:     "جميع الوحدات التشغيلية لإدارة أعمالك اليومية.",
+        pro_name:         "احترافي",
+        pro_desc:         "رؤية كاملة. تحكم كامل. جميع الميزات مفعّلة للاستخدام على جهاز واحد.",
+        pro_badge:        "الأكثر شيوعًا",
         plan_currency_egp:"جنيه",
         plan_per_month:   "في الشهر",
-        basic_desc:       "جميع الوحدات التشغيلية لإدارة أعمالك اليومية.",
-        advanced_badge:   "الأكثر شيوعًا",
-        advanced_name:    "المتقدمة",
-        advanced_desc:    "رؤية كاملة. تحكم كامل. جميع الميزات مفعّلة للاستخدام على جهاز واحد.",
-        pro_includes_basic: "كل ما في الأساسية، بالإضافة إلى:",
+        pro_includes_basic: "كل ما في المبتدئ، بالإضافة إلى:",
+        cta_starter:     "ابدأ الآن",
+        cta_pro:         "تحميل الآن",
+        enterprise_name: "المؤسسات",
+        enterprise_desc: "للفرق الأكبر. تراخيص متعددة الأجهزة، دعم ذو أولوية، واحتياجات مخصصة.",
+        enterprise_price:"قريباً",
+        enterprise_coming_soon:"قريباً",
+        ent_feat_1:      "كل ما في الاحترافي",
+        ent_feat_2:      "تراخيص متعددة الأجهزة",
+        ent_feat_3:      "دعم ذو أولوية",
+        ent_feat_4:      "تدريب ومتابعة مخصصان",
         feat_inv:         "إدارة المخزون المتقدمة",
         feat_mfg:         "التصنيع وبناء الحزم",
         feat_prep:        "وحدة تجهيز الطلبات",
@@ -1553,6 +2194,21 @@
         feat_partner:     "إدارة حصص الشركاء وحقوق الملكية",
         cta_basic:        "ابدأ الآن",
         cta_advanced:     "تحميل الآن",
+
+        // FAQ
+        faq_eyebrow:      "الدعم",
+        faq_title:        "الأسئلة الشائعة",
+        faq_sub:          "إجابات سريعة على الأسئلة الشائعة حول مالي - OBS.",
+        faq_q1:           "هل بياناتي آمنة؟ أين يتم تخزينها؟",
+        faq_a1:           "يتم تخزين جميع بيانات عملك—المخزون والطلبات والموظفين والمالية—محليًا على جهازك في قاعدة بيانات SQLite. لا نجمع أو ننقل أو نخزن أيًا من بيانات عملك على خوادمنا. أنت تمتلك بياناتك بالكامل، ولا تغادر جهازك إلا إذا اخترت المزامنة مع Google Sheets.",
+        faq_q2:           "هل يمكنني استخدام مالي - OBS بدون اتصال؟",
+        faq_a2:           "نعم. مالي - OBS عبارة عن تطبيق سطح مكتب يعمل بالكامل دون اتصال. تعمل جميع الوحدات الأساسية—المخزون والشحن والمصروفات والموظفون والتقارير—بدون اتصال بالإنترنت. تحتاج الإنترنت فقط عند مزامنة الطلبات من Google Sheets أو عند تفعيل الترخيص.",
+        faq_q3:           "كيف تعمل مزامنة Google Sheets؟",
+        faq_a3:           "تتصل بحساب Google مرة واحدة، ثم تربط جدول Google يحتوي على طلباتك. يمكن لمالي دفع بيانات النظام (المنتجات والمحافظات) إلى الجدول وسحب الطلبات الجديدة منه. يحدّث فريقك الجدول؛ مالي يزامن ثنائي الاتجاه. نستخدم فقط نطاقات spreadsheets و drive.file—لا نقرأ أو نعدّل أي ملفات أخرى على Google Drive.",
+        faq_q4:           "ما طرق الدفع التي تقبلونها؟",
+        faq_a4:           "نقبل التحويل البنكي وفودافون كاش وطرق دفع محلية أخرى في مصر. تواصل معنا عبر واتساب أو البريد الإلكتروني لاستلام تفاصيل الدفع وتفعيل الترخيص. التجربة المجانية لأسبوع واحد لا تتطلب أي دفع—فقط حمّل وابدأ استخدام النظام.",
+        faq_q5:           "هل مالي - OBS متاح بالعربية؟",
+        faq_a5:           "نعم. مالي - OBS ثنائي اللغة بالكامل (الإنجليزية والعربية). الواجهة بأكملها، بما في ذلك أكثر من 500 جملة، تدعم تخطيط RTL للعربية. يمكنك تبديل اللغة في أي وقت باستخدام مفتاح اللغة في شريط التنقل.",
 
         // Privacy
         privacy_eyebrow:       "قانوني",
@@ -1607,6 +2263,14 @@
       document.getElementById('lang-label').textContent        = label;
       document.getElementById('lang-label-mobile').textContent = label;
 
+      // Update features toggle button text
+      const featText = document.getElementById('feat-toggle-text');
+      if (featText) {
+        const extra = document.getElementById('extra-features');
+        featText.textContent = extra && !extra.classList.contains('hidden')
+          ? texts.feat_show_less : texts.feat_view_all;
+      }
+
       // Persist
       try { localStorage.setItem('maly_lang', lang); } catch(e) {}
     }
@@ -1628,6 +2292,27 @@
     function closeMenu() {
       document.getElementById('mobile-menu').classList.remove('open');
       document.getElementById('hamburger-icon').className = 'fa-solid fa-bars';
+    }
+
+    /* -------------------------------------------------------
+       FEATURES TOGGLE
+    ------------------------------------------------------- */
+    function toggleExtraFeatures() {
+      const extra = document.getElementById('extra-features');
+      const btn = document.getElementById('feat-toggle-btn');
+      const textEl = document.getElementById('feat-toggle-text');
+      const isHidden = extra.classList.contains('hidden');
+      if (isHidden) {
+        extra.classList.remove('hidden');
+        btn.classList.add('expanded');
+        btn.setAttribute('aria-expanded', 'true');
+        textEl.textContent = T[currentLang].feat_show_less;
+      } else {
+        extra.classList.add('hidden');
+        btn.classList.remove('expanded');
+        btn.setAttribute('aria-expanded', 'false');
+        textEl.textContent = T[currentLang].feat_view_all;
+      }
     }
 
     /* -------------------------------------------------------
