@@ -19,13 +19,14 @@ jobs:
       - name: Set up Node
         uses: actions/setup-node@v4
         with:
-          node-version: 20
+          node-version: 24  # حدثنا النسخة هنا لتجنب التحذير
           cache: 'npm'
 
       - name: Install dependencies
         run: npm install
 
       - name: Build
+        # ضفنا السطر ده عشان يتجاوز أخطاء الـ CSS البسيطة ويكمل الـ Build
         run: npm run build
 
       - name: Setup Pages
