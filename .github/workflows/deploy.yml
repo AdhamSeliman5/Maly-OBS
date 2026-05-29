@@ -2,7 +2,7 @@ name: Deploy Landing Page
 
 on:
   push:
-    branches: [ main ]
+    branches: [ master ] # تم التعديل هنا لـ master
 
 permissions:
   contents: read

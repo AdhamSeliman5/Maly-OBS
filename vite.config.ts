@@ -11,7 +11,7 @@ import react from '@vitejs/plugin-react'
  */
 export default defineConfig({
   plugins: [react()],
-  base: './',
+  base: '/Maly-OBS/',
   server: {
     port: 3000, // البورت الجديد للويب سايت
     strictPort: true, // عشان لو البورت ده مشغول بالصدفة، ميروحش يفتح على بورت تاني عشوائي
