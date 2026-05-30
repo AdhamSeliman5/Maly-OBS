@@ -1,5 +1,8 @@
 import { Link, useParams } from 'react-router-dom'
+import { Helmet } from 'react-helmet-async'
+import { scrollToSectionState } from '../navigation/homeScroll'
 import { motion } from 'framer-motion'
+import { DEFAULT_DESCRIPTION, getOgImageUrl, SITE_NAME } from '../utils/seo'
 import {
   Package, Users, Box, BarChart2, ShieldCheck, Truck,
   ChevronRight, ArrowLeft, CheckCircle2, type LucideIcon,
@@ -279,7 +282,7 @@ function CapabilityCard({
       <CheckCircle2
         size={18}
         strokeWidth={2}
-        style={{ color: accentColor.replace('rgba(', 'rgb(').replace(',', ',') }}
+        style={{ color: `${accentColor}1)` }}
         className="shrink-0"
       />
 
@@ -288,6 +291,35 @@ function CapabilityCard({
         <p className="text-slate-400 text-xs leading-relaxed">{capability.desc}</p>
       </div>
     </motion.div>
+  )
+}
+
+function ModuleDetailHelmet({
+  title,
+  description,
+  noindex = false,
+}: {
+  title: string
+  description: string
+  noindex?: boolean
+}) {
+  const documentTitle = `${title} | ${SITE_NAME}`
+  const ogImage = getOgImageUrl()
+
+  return (
+    <Helmet>
+      <title>{documentTitle}</title>
+      <meta name="description" content={description} />
+      {noindex && <meta name="robots" content="noindex" />}
+      <meta property="og:type" content="website" />
+      <meta property="og:title" content={documentTitle} />
+      <meta property="og:description" content={description} />
+      <meta property="og:image" content={ogImage} />
+      <meta name="twitter:card" content="summary_large_image" />
+      <meta name="twitter:title" content={documentTitle} />
+      <meta name="twitter:description" content={description} />
+      <meta name="twitter:image" content={ogImage} />
+    </Helmet>
   )
 }
 
@@ -301,6 +333,11 @@ export default function ModuleDetail() {
   if (!module) {
     return (
       <div className="min-h-screen flex flex-col items-center justify-center gap-8 px-4 bg-ocean-950 text-center">
+        <ModuleDetailHelmet
+          title="الوحدة غير موجودة"
+          description={DEFAULT_DESCRIPTION}
+          noindex
+        />
         <div className="flex flex-col items-center gap-4">
           <div className="w-20 h-20 rounded-3xl bg-red-500/10 border border-red-500/20 flex items-center justify-center">
             <span className="text-3xl">🔍</span>
@@ -333,6 +370,7 @@ export default function ModuleDetail() {
 
   return (
     <div className="min-h-screen bg-ocean-950">
+      <ModuleDetailHelmet title={module.title} description={module.description} />
 
       {/* ── Dot-grid texture ─────────────────────────────────────────────── */}
       <div className="fixed inset-0 bg-dot-grid opacity-20 pointer-events-none" />
@@ -406,8 +444,9 @@ export default function ModuleDetail() {
 
           {/* Hero CTA */}
           <div className="flex flex-wrap gap-3 mt-2">
-            <a
-              href="/#contact"
+            <Link
+              to="/"
+              state={scrollToSectionState('contact')}
               className="
                 group inline-flex items-center gap-2 px-6 py-3 rounded-2xl
                 bg-gradient-to-l from-brand-teal to-brand-teal-dark
@@ -421,9 +460,10 @@ export default function ModuleDetail() {
               <svg className="w-3.5 h-3.5 shrink-0 group-hover:-translate-x-1 transition-transform duration-200" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M15 19l-7-7 7-7" />
               </svg>
-            </a>
+            </Link>
             <Link
               to="/"
+              state={scrollToSectionState('features')}
               className="
                 inline-flex items-center gap-2 px-6 py-3 rounded-2xl
                 border border-slate-700 text-slate-300 font-bold text-sm
@@ -517,8 +557,9 @@ export default function ModuleDetail() {
               تواصل معنا وسنُعدّ نسختك خلال 24 ساعة.
             </p>
           </div>
-          <a
-            href="/#contact"
+          <Link
+            to="/"
+            state={scrollToSectionState('contact')}
             className="
               relative z-10 whitespace-nowrap
               inline-flex items-center gap-2.5 px-7 py-3.5 rounded-2xl
@@ -533,7 +574,7 @@ export default function ModuleDetail() {
             <svg className="w-3.5 h-3.5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M15 19l-7-7 7-7" />
             </svg>
-          </a>
+          </Link>
         </motion.div>
 
       </div>

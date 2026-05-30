@@ -1,4 +1,6 @@
 import { motion } from 'framer-motion'
+import { Link } from 'react-router-dom'
+import { scrollToSectionState } from '../navigation/homeScroll'
 import {
   CheckCircle,
   Crown,
@@ -51,7 +53,6 @@ interface Plan {
   orderLimit: string
   features: string[]
   cta: string
-  ctaHref: string
   highlighted: boolean
 }
 
@@ -72,7 +73,6 @@ const PLANS: Plan[] = [
       'واجهة سهلة وسريعة من غير تعقيد ولا إعدادات كتير.',
     ],
     cta: 'ابدأ بستارتر',
-    ctaHref: '#contact',
     highlighted: false,
   },
   {
@@ -91,7 +91,6 @@ const PLANS: Plan[] = [
       'يوسع شغلك من غير ما تحتاج تنقل على نظام تاني بعد فترة قصيرة.',
     ],
     cta: 'اختار برو',
-    ctaHref: '#contact',
     highlighted: false,
   },
   {
@@ -111,7 +110,6 @@ const PLANS: Plan[] = [
       'أفضل قيمة لو عايز النظام كله مفتوح على آخره من أول يوم.',
     ],
     cta: 'كلمنا على إنتربرايز',
-    ctaHref: '#contact',
     highlighted: true,
   },
 ]
@@ -369,8 +367,9 @@ function CardInner({ plan }: { plan: Plan }) {
       </ul>
 
       {/* CTA button */}
-      <a
-        href={plan.ctaHref}
+      <Link
+        to="/"
+        state={scrollToSectionState('contact')}
         className={[
           'group relative mt-auto flex items-center justify-center gap-2.5',
           'px-6 py-3.5 rounded-2xl font-bold text-sm',
@@ -404,7 +403,7 @@ function CardInner({ plan }: { plan: Plan }) {
         >
           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M15 19l-7-7 7-7" />
         </svg>
-      </a>
+      </Link>
     </div>
   )
 }

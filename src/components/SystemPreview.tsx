@@ -43,6 +43,10 @@ const SLIDES = [
 
 const INTERVAL_MS = 4500
 
+function setProgressBarScale(el: HTMLDivElement | null, scale: number) {
+  if (el) el.style.transform = `scaleX(${scale})`
+}
+
 // ─── Animation variants ────────────────────────────────────────────────────────
 
 const slideVariants = {
@@ -71,10 +75,10 @@ export default function SystemPreview() {
   const [index, setIndex] = useState(0)
   const [dir, setDir] = useState(1)
   const [paused, setPaused] = useState(false)
-  const [progress, setProgress] = useState(0)
 
+  const progressBarRef = useRef<HTMLDivElement>(null)
   const progressRef = useRef(0)
-  const lastTickRef = useRef(Date.now())
+  const lastTickRef = useRef(0)
   const rafRef = useRef<number | null>(null)
 
   const goTo = useCallback(
@@ -82,30 +86,32 @@ export default function SystemPreview() {
       const d = direction ?? (next > index ? 1 : -1)
       setDir(d)
       setIndex(next)
-      setProgress(0)
       progressRef.current = 0
       lastTickRef.current = Date.now()
+      setProgressBarScale(progressBarRef.current, 0)
     },
     [index],
   )
 
-  // RAF-based progress ticker — smoother than setInterval for UI animations
+  // RAF progress ticker — updates DOM only (no React state per frame)
   useEffect(() => {
     if (paused) {
       if (rafRef.current) cancelAnimationFrame(rafRef.current)
       return
     }
 
+    lastTickRef.current = Date.now()
+
     const tick = () => {
       const elapsed = Date.now() - lastTickRef.current
       const p = Math.min(elapsed / INTERVAL_MS, 1)
       progressRef.current = p
-      setProgress(p)
+      setProgressBarScale(progressBarRef.current, p)
 
       if (p >= 1) {
         lastTickRef.current = Date.now()
         progressRef.current = 0
-        setProgress(0)
+        setProgressBarScale(progressBarRef.current, 0)
         setDir(1)
         setIndex(prev => (prev + 1) % SLIDES.length)
       }
@@ -123,6 +129,7 @@ export default function SystemPreview() {
   useEffect(() => {
     lastTickRef.current = Date.now()
     progressRef.current = 0
+    setProgressBarScale(progressBarRef.current, 0)
   }, [index])
 
   const current = SLIDES[index]
@@ -236,10 +243,11 @@ export default function SystemPreview() {
               {/* Spacer to balance traffic lights */}
               <div className="w-[54px] shrink-0" />
 
-              {/* Progress bar along bottom of chrome */}
-              <motion.div
-                className="absolute inset-x-0 bottom-0 h-[1.5px] origin-left bg-gradient-to-r from-brand-teal to-brand-green"
-                style={{ scaleX: progress }}
+              {/* Progress bar — DOM-driven (no per-frame React re-renders) */}
+              <div
+                ref={progressBarRef}
+                className="absolute inset-x-0 bottom-0 h-[1.5px] origin-left bg-gradient-to-r from-brand-teal to-brand-green will-change-transform"
+                style={{ transform: 'scaleX(0)' }}
               />
             </div>
 

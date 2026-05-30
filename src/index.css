@@ -31,6 +31,45 @@
   ::-webkit-scrollbar-thumb:hover { background: #14b8a6; }
 }
 
+@layer components {
+  .skip-link {
+    position: fixed;
+    top: 0.75rem;
+    right: 0.75rem;
+    z-index: 100;
+    padding: 0.625rem 1rem;
+    border-radius: 0.75rem;
+    background: #14b8a6;
+    color: #040d1a;
+    font-size: 0.875rem;
+    font-weight: 700;
+    text-decoration: none;
+    transform: translateY(-200%);
+    opacity: 0;
+    transition:
+      transform 0.2s ease,
+      opacity 0.2s ease;
+  }
+
+  .skip-link:focus {
+    transform: translateY(0);
+    opacity: 1;
+    outline: 2px solid #fff;
+    outline-offset: 2px;
+  }
+
+  .skip-link:focus:not(:focus-visible) {
+    outline: none;
+  }
+
+  .skip-link:focus-visible {
+    transform: translateY(0);
+    opacity: 1;
+    outline: 2px solid #fff;
+    outline-offset: 2px;
+  }
+}
+
 @layer utilities {
   /*
    * Dot-grid overlay — used as a subtle texture in Hero.

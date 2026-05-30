@@ -1,4 +1,6 @@
 import { motion } from 'framer-motion'
+import { Link } from 'react-router-dom'
+import { scrollToSectionState } from '../navigation/homeScroll'
 
 // ─── Animation variants ───────────────────────────────────────────────────────
 
@@ -185,8 +187,9 @@ export default function Hero() {
               className="flex flex-wrap items-center gap-4 mt-1"
             >
               {/* Primary — manual-onboarding CTA as specified */}
-              <a
-                href="#contact"
+              <Link
+                to="/"
+                state={scrollToSectionState('contact')}
                 className="
                   group relative inline-flex items-center gap-2
                   px-7 py-3.5 rounded-full overflow-hidden
@@ -213,11 +216,12 @@ export default function Hero() {
                 >
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M15 19l-7-7 7-7" />
                 </svg>
-              </a>
+              </Link>
 
               {/* Secondary */}
-              <a
-                href="#features"
+              <Link
+                to="/"
+                state={scrollToSectionState('features')}
                 className="
                   inline-flex items-center gap-2
                   px-7 py-3.5 rounded-full
@@ -227,7 +231,7 @@ export default function Hero() {
                 "
               >
                 استكشف المميزات
-              </a>
+              </Link>
             </motion.div>
 
             {/* Trust micro-stats */}

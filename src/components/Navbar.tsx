@@ -1,14 +1,16 @@
 import { useState, useEffect } from 'react'
+import { Link } from 'react-router-dom'
 import { motion, AnimatePresence } from 'framer-motion'
+import { scrollToSectionState, type HomeScrollTarget } from '../navigation/homeScroll'
 
 // ─── Data ─────────────────────────────────────────────────────────────────────
 
-const NAV_LINKS = [
-  { label: 'الرئيسية',   href: '#home'     },
-  { label: 'المميزات',   href: '#features' },
-  { label: 'الأسعار',    href: '#pricing'  },
-  { label: 'تواصل معنا', href: '#contact'  },
-] as const
+const NAV_LINKS: { label: string; scrollTo: HomeScrollTarget }[] = [
+  { label: 'الرئيسية',   scrollTo: 'home'     },
+  { label: 'المميزات',   scrollTo: 'features' },
+  { label: 'الأسعار',    scrollTo: 'pricing'  },
+  { label: 'تواصل معنا', scrollTo: 'contact'  },
+]
 
 // ─── HamburgerIcon ───────────────────────────────────────────────────────────
 // Three animated bars that morph into an ✕ when the menu is open.
@@ -76,13 +78,18 @@ export default function Navbar() {
         <div className="flex items-center justify-between h-16">
 
           {/* ── Logo  (RTL: the "start" side = physically right) ──────── */}
-          <a href="#home" className="shrink-0 flex items-center">
+          <Link
+            to="/"
+            state={scrollToSectionState('home')}
+            className="shrink-0 flex items-center"
+            aria-label="الرئيسية"
+          >
             <img
               src="./assets/logo_splash_light.png"
               alt="Maly OBS"
               className="h-9 w-auto object-contain"
             />
-          </a>
+          </Link>
 
           {/* ── Desktop nav links ──────────────────────────────────────── */}
           <nav
@@ -90,9 +97,10 @@ export default function Navbar() {
             aria-label="القائمة الرئيسية"
           >
             {NAV_LINKS.map((link) => (
-              <a
-                key={link.href}
-                href={link.href}
+              <Link
+                key={link.scrollTo}
+                to="/"
+                state={scrollToSectionState(link.scrollTo)}
                 className="relative px-4 py-2 text-sm font-semibold text-slate-300 hover:text-white transition-colors duration-200 group"
               >
                 {link.label}
@@ -111,13 +119,14 @@ export default function Navbar() {
                   "
                   style={{ width: 'calc(100% - 2rem)' }}
                 />
-              </a>
+              </Link>
             ))}
           </nav>
 
           {/* ── Desktop CTA ────────────────────────────────────────────── */}
-          <a
-            href="#contact"
+          <Link
+            to="/"
+            state={scrollToSectionState('contact')}
             className="
               hidden md:inline-flex items-center gap-2
               px-5 py-2 rounded-full
@@ -129,7 +138,7 @@ export default function Navbar() {
             "
           >
             ابدأ الآن
-          </a>
+          </Link>
 
           {/* ── Mobile hamburger ───────────────────────────────────────── */}
           <button
@@ -164,39 +173,47 @@ export default function Navbar() {
               aria-label="القائمة الجوالة"
             >
               {NAV_LINKS.map((link, i) => (
-                <motion.a
-                  key={link.href}
-                  href={link.href}
-                  onClick={() => setMenuOpen(false)}
+                <motion.div
+                  key={link.scrollTo}
                   initial={{ opacity: 0, x: 14 }}
                   animate={{ opacity: 1, x: 0  }}
                   transition={{ delay: i * 0.06, duration: 0.2 }}
-                  className="
-                    flex items-center px-4 py-3
-                    text-sm font-semibold text-slate-300
-                    hover:text-white hover:bg-white/5
-                    rounded-xl transition-colors duration-150
-                  "
                 >
-                  {link.label}
-                </motion.a>
+                  <Link
+                    to="/"
+                    state={scrollToSectionState(link.scrollTo)}
+                    onClick={() => setMenuOpen(false)}
+                    className="
+                      flex items-center px-4 py-3
+                      text-sm font-semibold text-slate-300
+                      hover:text-white hover:bg-white/5
+                      rounded-xl transition-colors duration-150
+                    "
+                  >
+                    {link.label}
+                  </Link>
+                </motion.div>
               ))}
 
               {/* Mobile CTA */}
-              <motion.a
-                href="#contact"
-                onClick={() => setMenuOpen(false)}
+              <motion.div
                 initial={{ opacity: 0, y: 8 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: NAV_LINKS.length * 0.06 + 0.05, duration: 0.2 }}
-                className="
-                  mt-3 px-5 py-3 text-center rounded-full
-                  bg-gradient-to-l from-brand-teal to-brand-teal-dark
-                  text-ocean-950 font-bold text-sm
-                "
               >
-                ابدأ الآن
-              </motion.a>
+                <Link
+                  to="/"
+                  state={scrollToSectionState('contact')}
+                  onClick={() => setMenuOpen(false)}
+                  className="
+                    mt-3 block px-5 py-3 text-center rounded-full
+                    bg-gradient-to-l from-brand-teal to-brand-teal-dark
+                    text-ocean-950 font-bold text-sm
+                  "
+                >
+                  ابدأ الآن
+                </Link>
+              </motion.div>
             </nav>
           </motion.div>
         )}

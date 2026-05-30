@@ -1,13 +1,15 @@
 import { motion } from 'framer-motion'
+import { Link } from 'react-router-dom'
 import { MessageCircle, Mail, Youtube, Facebook, Linkedin } from 'lucide-react'
+import { scrollToSectionState, type HomeScrollTarget } from '../navigation/homeScroll'
 
 // ─── Data ─────────────────────────────────────────────────────────────────────
 
-const QUICK_LINKS = [
-  { label: 'الرئيسية', href: '/#/'          },
-  { label: 'المميزات', href: '/#/#features' },
-  { label: 'الأسعار',  href: '/#/#pricing'  },
-] as const
+const QUICK_LINKS: { label: string; scrollTo?: HomeScrollTarget }[] = [
+  { label: 'الرئيسية', scrollTo: 'home'     },
+  { label: 'المميزات', scrollTo: 'features' },
+  { label: 'الأسعار',  scrollTo: 'pricing'  },
+]
 
 const YEAR = new Date().getFullYear()
 
@@ -150,13 +152,18 @@ export default function Footer() {
 
           {/* ── Col 1: الشركة ─────────────────────────────────────────────── */}
           <div className="flex flex-col gap-5 lg:col-span-1">
-            <a href="/#/" aria-label="الرئيسية" className="inline-block w-fit">
+            <Link
+              to="/"
+              state={scrollToSectionState('home')}
+              aria-label="الرئيسية"
+              className="inline-block w-fit"
+            >
               <img
                 src="./assets/logo_splash_light.png"
                 alt="Maly OBS"
                 className="h-9 w-auto object-contain"
               />
-            </a>
+            </Link>
 
             <p className="text-slate-400 text-sm leading-relaxed max-w-[260px]">
               نظام ERP وPOS متكامل مُصمَّم للمتاجر المصرية.
@@ -174,9 +181,10 @@ export default function Footer() {
             </p>
             <nav className="flex flex-col gap-2.5" aria-label="روابط سريعة">
               {QUICK_LINKS.map((link) => (
-                <a
-                  key={link.href}
-                  href={link.href}
+                <Link
+                  key={link.label}
+                  to="/"
+                  state={link.scrollTo ? scrollToSectionState(link.scrollTo) : undefined}
                   className="
                     group inline-flex items-center gap-2
                     text-sm text-slate-400 hover:text-white
@@ -193,7 +201,7 @@ export default function Footer() {
                     "
                   />
                   {link.label}
-                </a>
+                </Link>
               ))}
             </nav>
           </div>
