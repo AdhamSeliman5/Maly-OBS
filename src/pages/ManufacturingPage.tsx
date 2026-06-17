@@ -768,37 +768,37 @@ function FaqSection() {
 
 const RELATED = [
   {
-    href: '/#/features/inventory',
+    href: '/features/inventory',
     icon: <Boxes size={20} />,
     title: 'إدارة المخزون',
     body: 'الوحدة الأم للخامات — كل خصم إنتاج يظهر كحركة مخزون فورية مع تكاملها في التكلفة والأرصدة.',
   },
   {
-    href: '/#/features/preparation',
+    href: '/features/preparation',
     icon: <PackageOpen size={20} />,
     title: 'التحضير والتجهيز',
     body: 'بعد الإنتاج، وحدة التحضير تجمِّع التجميعات في طلبات وتُرسلها — حلقة إنتاج مكتملة.',
   },
   {
-    href: '/#/features/orders',
+    href: '/features/orders',
     icon: <ShoppingCart size={20} />,
     title: 'الطلبات',
     body: 'الطلبات الحاوية على تجميعات تؤثر على المخزون الافتراضي وتُغلق باب التعديل على الوصفة.',
   },
   {
-    href: '/#/features/reports',
+    href: '/features/reports',
     icon: <BarChart2 size={20} />,
     title: 'التقارير',
     body: 'تقارير هامش الربح وحركات Manufacture_Out وManufacture_In مُدمجة في التحليلات الشاملة.',
   },
   {
-    href: '/#/features/expenses',
+    href: '/features/expenses',
     icon: <TrendingUp size={20} />,
     title: 'المصروفات',
     body: 'تكاليف الإنتاج والخامات تُغذِّي وحدة المصروفات لتتبع التكلفة الكاملة للمنتج.',
   },
   {
-    href: '/#/features/shipping',
+    href: '/features/shipping',
     icon: <Truck size={20} />,
     title: 'الشحن',
     body: 'الطلبات المنتجة تنتقل للشحن — وحدة الشحن تعمل مع المنتجات المُصنَّعة بنفس الكفاءة.',

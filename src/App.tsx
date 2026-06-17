@@ -1,4 +1,5 @@
-import { HashRouter, Routes, Route } from 'react-router-dom'
+import { useEffect } from 'react'
+import { HashRouter, Routes, Route, useLocation } from 'react-router-dom'
 import Navbar from './components/Navbar'
 import Footer from './components/Footer'
 import Home from './pages/Home'
@@ -15,6 +16,17 @@ import AdsPage from './pages/AdsPage'
 import StaffPage from './pages/StaffPage'
 import SettingsPage from './pages/SettingsPage'
 import OrderEntryPage from './pages/OrderEntryPage'
+import POSPage from './pages/POSPage'
+
+function ScrollToTop() {
+  const { pathname } = useLocation()
+
+  useEffect(() => {
+    window.scrollTo({ top: 0, left: 0, behavior: 'smooth' })
+  }, [pathname])
+
+  return null
+}
 
 /**
  * App — root with HashRouter for GitHub Pages compatibility.
@@ -33,49 +45,28 @@ export default function App() {
       <div className="font-cairo min-h-screen bg-ocean-900" dir="rtl">
         <Navbar />
         <main>
+          <ScrollToTop />
           <Routes>
             {/* ── Home / Landing page ── */}
             <Route path="/" element={<Home />} />
 
-            {/* ── Module detail pages ── */}
-            {/* e.g. /#/features/orders  /#/features/hr  etc. */}
-            <Route path="/features/:moduleId" element={<ModuleDetail />} />
-
-            {/* ── Dedicated preparation page ── */}
+            {/* ── Dedicated module pages (must be registered before the generic fallback) ── */}
             <Route path="/features/preparation" element={<PreparationPage />} />
-
-            {/* ── Dedicated inventory page ── */}
             <Route path="/features/inventory" element={<InventoryPage />} />
-
-            {/* ── Dedicated manufacturing page ── */}
             <Route path="/features/manufacturing" element={<ManufacturingPage />} />
-
-            {/* ── Dedicated shipping page ── */}
             <Route path="/features/shipping" element={<ShippingPage />} />
-
-            {/* ── Dedicated expenses page ── */}
             <Route path="/features/expenses" element={<ExpensesPage />} />
-
-            {/* ── Dedicated debts page ── */}
             <Route path="/features/debts" element={<DebtsPage />} />
-
-            {/* ── Dedicated dashboard page ── */}
             <Route path="/features/dashboard" element={<DashboardPage />} />
-
-            {/* ── Dedicated reports page ── */}
             <Route path="/features/reports" element={<ReportsPage />} />
-
-            {/* ── Dedicated ads page ── */}
             <Route path="/features/ads" element={<AdsPage />} />
-
-            {/* ── Dedicated staff page ── */}
             <Route path="/features/staff" element={<StaffPage />} />
-
-            {/* ── Dedicated settings page ── */}
             <Route path="/features/settings" element={<SettingsPage />} />
-
-            {/* ── Dedicated order entry page ── */}
             <Route path="/features/order-entry" element={<OrderEntryPage />} />
+            <Route path="/features/pos" element={<POSPage />} />
+
+            {/* ── Generic module detail fallback ── */}
+            <Route path="/features/:moduleId" element={<ModuleDetail />} />
 
             {/* ── Fallback: redirect anything unknown back to Home ── */}
             <Route path="*" element={<Home />} />

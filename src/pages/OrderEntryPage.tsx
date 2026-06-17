@@ -626,37 +626,37 @@ function FaqSection() {
 
 const RELATED = [
   {
-    href: '/#/features/preparation',
+    href: '/features/preparation',
     icon: <PackagePlus size={20} />,
     title: 'التحضير',
     body: 'حالة To prepare/Shortage الخارجة من Order Entry هي نقطة البداية المباشرة لفريق التحضير. كلما كان الإدخال أنظف، كان التنفيذ أسرع وأقل ارتجاع.',
   },
   {
-    href: '/#/features/shipping',
+    href: '/features/shipping',
     icon: <Truck size={20} />,
     title: 'الشحن',
     body: 'Bulk assign courier + بيانات عنوان/محافظة دقيقة من البداية تقلل أخطاء التسليم. أي خطأ في الإدخال ينعكس فوراً على تكلفة الشحن ونسبة التسليم.',
   },
   {
-    href: '/#/features/inventory',
+    href: '/features/inventory',
     icon: <Boxes size={20} />,
     title: 'المخزون',
     body: 'الربط المباشر مع variants والمخزون وقت الإنشاء يحدد shortage تلقائياً. هذا يمنع بيع وهمي ويعطي الفريق رؤية صحيحة قبل الالتزام مع العميل.',
   },
   {
-    href: '/#/features/ads',
+    href: '/features/ads',
     icon: <Megaphone size={20} />,
     title: 'الحملات الإعلانية',
     body: 'اختيار Campaign أثناء الإدخال يجعل كل أوردر قابل للإسناد التسويقي لاحقاً. هذا هو الأساس الحقيقي لحساب ROAS وCPA من بيانات تشغيلية دقيقة.',
   },
   {
-    href: '/#/features/staff',
+    href: '/features/staff',
     icon: <Users size={20} />,
     title: 'فريق العمل',
     body: 'اسم الموديريتور المرتبط بكل أوردر يدخل في قياس الأداء والعمولات. كلما كان الإسناد أدق في Order Entry، كانت رواتب العمولة أعدل وأسهل في المراجعة.',
   },
   {
-    href: '/#/features/reports',
+    href: '/features/reports',
     icon: <BarChart3 size={20} />,
     title: 'التقارير',
     body: 'Excel export + البيانات المنظمة في order list تغذي تقارير الأداء اليومية بسرعة. من دون جهد إضافي تحصل على رؤية واضحة لحجم المبيعات وحالات التشغيل.',

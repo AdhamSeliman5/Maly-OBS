@@ -14,6 +14,7 @@ import {
   Megaphone,
   PieChart,
   Settings,
+  Store,
 } from 'lucide-react'
 import type { LucideIcon } from 'lucide-react'
 
@@ -192,6 +193,36 @@ function ReportsDecorator() {
 }
 
 /**
+ * POSDecorator
+ * Live-ish checkout KPI chips for the in-store terminal card.
+ */
+function POSDecorator() {
+  const kpis = [
+    { label: 'مبيعات اليوم',   value: '٣٢',      color: 'text-cyan-400'   },
+    { label: 'قيمة السلة',     value: '٤٨٠ ج.م', color: 'text-brand-green' },
+    { label: 'الكاشير النشط',  value: 'أحمد',    color: 'text-amber-400'  },
+  ] as const
+
+  return (
+    <div className="flex flex-col gap-2 w-full md:max-w-[210px] shrink-0">
+      {kpis.map((k, i) => (
+        <motion.div
+          key={k.label}
+          initial={{ opacity: 0, x: 14 }}
+          whileInView={{ opacity: 1, x: 0 }}
+          viewport={{ once: true }}
+          transition={{ delay: 0.3 + i * 0.09, duration: 0.35 }}
+          className="flex items-center justify-between gap-3 px-3 py-2.5 rounded-xl bg-white/[0.04] border border-white/[0.07]"
+        >
+          <span className="text-[10px] text-slate-500 leading-tight">{k.label}</span>
+          <span className={`text-sm font-black tabular-nums ${k.color}`}>{k.value}</span>
+        </motion.div>
+      ))}
+    </div>
+  )
+}
+
+/**
  * PermissionsDecorator
  * Three role chips in a horizontal row with staggered scale-in.
  */
@@ -267,11 +298,12 @@ const COL_SPAN_CLASS: Record<FeatureItem['colSpan'], string> = {
 /**
  * Z-Pattern Bento layout (3-column grid):
  *   Row 1: [dashboard:2]   [order-entry:1]              — wide → narrow
- *   Row 2: [preparation:1] [inventory:2]                — narrow → wide  (Z-flip)
- *   Row 3: [manufacturing:1] [shipping:1] [expenses:1]  — symmetry-break row
- *   Row 4: [debts:2]       [staff:1]                    — wide → narrow
- *   Row 5: [ads:1]         [reports:2]                  — narrow → wide  (Z-flip)
- *   Row 6: [settings:3]                                 — full-width closer
+ *   Row 2: [pos:2]          [preparation:1]              — wide → narrow
+ *   Row 3: [inventory:2]   [manufacturing:1]            — wide → narrow  (Z-flip)
+ *   Row 4: [shipping:1]    [expenses:1] [staff:1]      — symmetry-break row
+ *   Row 5: [debts:2]       [ads:1]                      — wide → narrow
+ *   Row 6: [reports:2]                                   — wide
+ *   Row 7: [settings:3]                                 — full-width closer
  */
 const FEATURES: FeatureItem[] = [
   // ── Row 1 ────────────────────────────────────────────────────────────────
@@ -296,6 +328,16 @@ const FEATURES: FeatureItem[] = [
   },
   // ── Row 2 ─────────────────────────────────────────────────────────────────
   {
+    id: 'pos', colSpan: 'two',
+    Icon: Store,
+    title: 'نقطة البيع (POS)',
+    desc: 'بيع سريع في المحل — سلة، دفع، وإيصال حراري متصل بالمخزون والخزنة.',
+    iconBg: 'bg-cyan-400/15', iconText: 'text-cyan-400',
+    topLineMid: 'via-cyan-400/55',
+    glowShadow: '0 0 0 1px rgba(34,211,238,0.38), 0 20px 60px rgba(34,211,238,0.10), 0 4px 16px rgba(0,0,0,0.3)',
+    Decorator: POSDecorator,
+  },
+  {
     id: 'preparation', colSpan: 'one',
     Icon: PackageOpen,
     title: 'التحضير والتجهيز',
@@ -304,6 +346,7 @@ const FEATURES: FeatureItem[] = [
     topLineMid: 'via-amber-400/55',
     glowShadow: '0 0 0 1px rgba(251,191,36,0.38), 0 20px 60px rgba(251,191,36,0.10), 0 4px 16px rgba(0,0,0,0.3)',
   },
+  // ── Row 3 ─────────────────────────────────────────────────────────────────
   {
     id: 'inventory', colSpan: 'two',
     Icon: Boxes,
@@ -314,7 +357,6 @@ const FEATURES: FeatureItem[] = [
     glowShadow: '0 0 0 1px rgba(56,189,248,0.38), 0 20px 60px rgba(56,189,248,0.10), 0 4px 16px rgba(0,0,0,0.3)',
     Decorator: InventoryDecorator,
   },
-  // ── Row 3 ─────────────────────────────────────────────────────────────────
   {
     id: 'manufacturing', colSpan: 'one',
     Icon: Factory,
@@ -324,6 +366,7 @@ const FEATURES: FeatureItem[] = [
     topLineMid: 'via-violet-400/55',
     glowShadow: '0 0 0 1px rgba(167,139,250,0.38), 0 20px 60px rgba(167,139,250,0.10), 0 4px 16px rgba(0,0,0,0.3)',
   },
+  // ── Row 4 ─────────────────────────────────────────────────────────────────
   {
     id: 'shipping', colSpan: 'one',
     Icon: Truck,
@@ -342,17 +385,6 @@ const FEATURES: FeatureItem[] = [
     topLineMid: 'via-rose-400/55',
     glowShadow: '0 0 0 1px rgba(251,113,133,0.38), 0 20px 60px rgba(251,113,133,0.10), 0 4px 16px rgba(0,0,0,0.3)',
   },
-  // ── Row 4 ─────────────────────────────────────────────────────────────────
-  {
-    id: 'debts', colSpan: 'two',
-    Icon: HandCoins,
-    title: 'المديونيات',
-    desc: 'متابعة شاملة لمديونيات العملاء ومستحقات الموردين.',
-    iconBg: 'bg-orange-400/15', iconText: 'text-orange-400',
-    topLineMid: 'via-orange-400/55',
-    glowShadow: '0 0 0 1px rgba(251,146,60,0.38), 0 20px 60px rgba(251,146,60,0.10), 0 4px 16px rgba(0,0,0,0.3)',
-    Decorator: DebtsDecorator,
-  },
   {
     id: 'staff', colSpan: 'one',
     Icon: Users,
@@ -364,6 +396,16 @@ const FEATURES: FeatureItem[] = [
   },
   // ── Row 5 ─────────────────────────────────────────────────────────────────
   {
+    id: 'debts', colSpan: 'two',
+    Icon: HandCoins,
+    title: 'المديونيات',
+    desc: 'متابعة شاملة لمديونيات العملاء ومستحقات الموردين.',
+    iconBg: 'bg-orange-400/15', iconText: 'text-orange-400',
+    topLineMid: 'via-orange-400/55',
+    glowShadow: '0 0 0 1px rgba(251,146,60,0.38), 0 20px 60px rgba(251,146,60,0.10), 0 4px 16px rgba(0,0,0,0.3)',
+    Decorator: DebtsDecorator,
+  },
+  {
     id: 'ads', colSpan: 'one',
     Icon: Megaphone,
     title: 'الحملات الإعلانية',
@@ -372,6 +414,7 @@ const FEATURES: FeatureItem[] = [
     topLineMid: 'via-pink-400/55',
     glowShadow: '0 0 0 1px rgba(244,114,182,0.38), 0 20px 60px rgba(244,114,182,0.10), 0 4px 16px rgba(0,0,0,0.3)',
   },
+  // ── Row 6 ─────────────────────────────────────────────────────────────────
   {
     id: 'reports', colSpan: 'two',
     Icon: PieChart,
@@ -382,7 +425,7 @@ const FEATURES: FeatureItem[] = [
     glowShadow: '0 0 0 1px rgba(192,132,252,0.38), 0 20px 60px rgba(192,132,252,0.10), 0 4px 16px rgba(0,0,0,0.3)',
     Decorator: ReportsDecorator,
   },
-  // ── Row 6 ─────────────────────────────────────────────────────────────────
+  // ── Row 7 ─────────────────────────────────────────────────────────────────
   {
     id: 'settings', colSpan: 'three',
     Icon: Settings,

@@ -760,37 +760,37 @@ function FaqSection() {
 
 const RELATED = [
   {
-    href: '/#/features/reports',
+    href: '/features/reports',
     icon: <BarChart2 size={20} />,
     title: 'التقارير',
     body: 'بيانات اللوحة تُغذِّي تقارير مفصَّلة قابلة للتصدير — تعمُّق في أي رقم تراه على اللوحة.',
   },
   {
-    href: '/#/features/expenses',
+    href: '/features/expenses',
     icon: <Wallet size={20} />,
     title: 'المصروفات والخزينة',
     body: 'رصيد الخزينة في Sidebar يُجلَب مباشرةً من وحدة المصروفات — النبض المالي اللحظي.',
   },
   {
-    href: '/#/features/inventory',
+    href: '/features/inventory',
     icon: <Boxes size={20} />,
     title: 'إدارة المخزون',
     body: 'تنبيهات نفاد المخزون تظهر في Sidebar. CostAtSale في مخطط الربح يأتي من سجل تكاليف البضاعة.',
   },
   {
-    href: '/#/features/shipping',
+    href: '/features/shipping',
     icon: <Truck size={20} />,
     title: 'الشحن والتوصيل',
     body: 'Courier Performance وCOD Aging مشتقَّان من بيانات الشحن — رادار مخاطر التحصيل.',
   },
   {
-    href: '/#/features/debts',
+    href: '/features/debts',
     icon: <Landmark size={20} />,
     title: 'المديونيات',
     body: 'الديون المتأخرة تظهر مباشرةً في Sidebar KPIs — وصول سريع لأداة التسوية.',
   },
   {
-    href: '/#/features/preparation',
+    href: '/features/preparation',
     icon: <Package size={20} />,
     title: 'التحضير',
     body: 'KPI card "To Prepare" يربطك مباشرةً بوحدة التحضير بنقرة — من الرقم للتنفيذ فوراً.',

@@ -655,37 +655,37 @@ function FaqSection() {
 
 const RELATED = [
   {
-    href: '/#/features/staff',
+    href: '/features/staff',
     icon: <Users size={20} />,
     title: 'فريق العمل والموارد البشرية',
     body: 'AppUser يمكن ربطه اختيارياً بـ EmployeeId. هذا يضمن أن هوية المستخدم وصلاحياته منفصلة عن بيانات الرواتب، مع رابط مرجعي دقيق بين الأمن والـ HR.',
   },
   {
-    href: '/#/features/reports',
+    href: '/features/reports',
     icon: <BarChart3 size={20} />,
     title: 'التقارير',
     body: 'تفضيلات التقارير الافتراضية (scenario/delivery-rate/liquidation) تُدار من Settings. التقارير تستخدم هذه القيم تلقائياً لضمان اتساق القراءة المالية بين الفرق.',
   },
   {
-    href: '/#/features/expenses',
+    href: '/features/expenses',
     icon: <Database size={20} />,
     title: 'المصروفات والخزينة',
     body: 'Danger Zone وعمليات reset تؤثر على جداول المعاملات المالية. وجود صلاحيات دقيقة على Settings يحميك من مسح مصروفات أو قيود خزينة عن طريق الخطأ.',
   },
   {
-    href: '/#/features/dashboard',
+    href: '/features/dashboard',
     icon: <Search size={20} />,
     title: 'لوحة القيادة',
     body: 'التحكم الدقيق في view/create/edit يحدد من يستطيع رؤية مؤشرات الأداء العامة في الـ Dashboard. الموظف يرى فقط ما يحتاجه لعمله — لا أكثر.',
   },
   {
-    href: '/#/features/ads',
+    href: '/features/ads',
     icon: <Bell size={20} />,
     title: 'الإعلانات',
     body: 'صلاحيات Ads (مثل settle أو edit) تُدار من نفس محرك RBAC في Settings. يمكنك السماح للماركيتر بقراءة الأداء فقط دون تعديل الحملات أو المصروفات.',
   },
   {
-    href: '/#/features/debts',
+    href: '/features/debts',
     icon: <AlertTriangle size={20} />,
     title: 'الديون والمستحقات',
     body: 'بيانات الديون شديدة الحساسية. بفضل permissions الدقيقة، يمكن للمحاسبة الوصول الكامل بينما فريق التشغيل يمتلك view فقط أو لا يمتلك وصولاً أصلاً.',

@@ -778,37 +778,37 @@ function FaqSection() {
 
 const RELATED = [
   {
-    href: '/#/features/dashboard',
+    href: '/features/dashboard',
     icon: <LayoutDashboard size={20} />,
     title: 'لوحة القيادة',
     body: 'التقارير تُغذِّي بيانات لوحة القيادة — المؤشرات اليومية تستمد أعدادها من نفس بنية الحسابات.',
   },
   {
-    href: '/#/features/expenses',
+    href: '/features/expenses',
     icon: <Wallet size={20} />,
     title: 'المصروفات والخزينة',
     body: 'Cash في الميزانية = SUM(Income) - SUM(Expenses) من وحدة المصروفات. Burn Rate مستمد مباشرةً من تصنيفات المصروفات.',
   },
   {
-    href: '/#/features/inventory',
+    href: '/features/inventory',
     icon: <Boxes size={20} />,
     title: 'إدارة المخزون',
     body: 'Inventory Value = CurrentStock × CostPrice للمتغيرات. Restock Cost = (ReservedStock - CurrentStock) × CostPrice. كلاهما خط أصول مباشر في الميزانية.',
   },
   {
-    href: '/#/features/debts',
+    href: '/features/debts',
     icon: <Landmark size={20} />,
     title: 'المديونيات',
     body: 'Manual Receivables وPayables تأتي من ExternalDebts. عند إغلاق الفترة، مستحقات الشركاء تنتقل هنا كـ Debts رسمية.',
   },
   {
-    href: '/#/features/shipping',
+    href: '/features/shipping',
     icon: <Truck size={20} />,
     title: 'الشحن',
     body: 'In-Shipping value في الميزانية = قيمة الطلبات المشحونة النشطة. تقرير Shipping Performance Excel يُعطي أداء كل شركة خلال الفترة.',
   },
   {
-    href: '/#/features/manufacturing',
+    href: '/features/manufacturing',
     icon: <Settings size={20} />,
     title: 'التصنيع',
     body: 'FixedAssets من التصنيع تظهر مباشرةً في قسم الأصول في الميزانية وتؤثر على Net Equity وWorking Capital.',

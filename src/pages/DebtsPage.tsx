@@ -758,37 +758,37 @@ function FaqSection() {
 
 const RELATED = [
   {
-    href: '/#/features/expenses',
+    href: '/features/expenses',
     icon: <Wallet size={20} />,
     title: 'المصروفات والخزينة',
     body: 'كل تسوية دين وكل دين نقدي يُسجَّل تلقائياً في دفتر المصروفات — الخزينة تتحقق قبل كل معاملة.',
   },
   {
-    href: '/#/features/reports',
+    href: '/features/reports',
     icon: <BarChart2 size={20} />,
     title: 'التقارير',
     body: 'بيانات المديونيات وتقرير العمر والمركز المالي تُغذِّي تقارير الربحية والسيولة الشاملة.',
   },
   {
-    href: '/#/features/shipping',
+    href: '/features/shipping',
     icon: <Truck size={20} />,
     title: 'الشحن والتوصيل',
     body: 'رصيد شركات الشحن (Ledger) يظهر مباشرةً في لوحة المديونيات — سواء كأصل أو التزام حسب الرصيد.',
   },
   {
-    href: '/#/features/inventory',
+    href: '/features/inventory',
     icon: <Boxes size={20} />,
     title: 'إدارة المخزون',
     body: 'الطلبات Pipeline وIn Shipping تُدمج في توقعات الأصول السائلة مع إمكانية تطبيق Delivery Rate.',
   },
   {
-    href: '/#/features/manufacturing',
+    href: '/features/manufacturing',
     icon: <Factory size={20} />,
     title: 'التصنيع',
     body: 'تكاليف الإنتاج المؤجَّلة يمكن تسجيلها كمديونيات للموردين وتسويتها عند الدفع الفعلي.',
   },
   {
-    href: '/#/features/staff',
+    href: '/features/staff',
     icon: <Users size={20} />,
     title: 'الموظفون',
     body: 'قروض الموظفين (CurrentBalance < 0) وأجور اليوم (StaffDueToday) تظهر مباشرةً في لوحة المركز المالي.',

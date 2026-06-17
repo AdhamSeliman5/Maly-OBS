@@ -762,37 +762,37 @@ function FaqSection() {
 
 const RELATED = [
   {
-    href: '/#/features/orders',
+    href: '/features/orders',
     icon: <ShoppingCart size={20} />,
     title: 'الطلبات',
     body: 'الطلبات هي المدخل — بعد التجهيز تُسنَد لشركة شحن وتنتقل لهذه الوحدة لإتمام دورة حياتها.',
   },
   {
-    href: '/#/features/inventory',
+    href: '/features/inventory',
     icon: <Boxes size={20} />,
     title: 'إدارة المخزون',
     body: 'المرتجعات تذهب للحجر الصحي، التوالف تُسجَّل خسارة — كل ذلك ينعكس فورياً في أرصدة المخزون.',
   },
   {
-    href: '/#/features/preparation',
+    href: '/features/preparation',
     icon: <PackageOpen size={20} />,
     title: 'التحضير والتجهيز',
     body: 'التحضير هو الخطوة السابقة للشحن — الطلبات المُحضَّرة تنتقل مباشرةً للإسناد لشركة الشحن.',
   },
   {
-    href: '/#/features/reports',
+    href: '/features/reports',
     icon: <BarChart2 size={20} />,
     title: 'التقارير',
     body: 'معدلات التوصيل وأداء الشركات والإيرادات المُحصَّلة تظهر في تقارير المبيعات والأداء الشامل.',
   },
   {
-    href: '/#/features/expenses',
+    href: '/features/expenses',
     icon: <TrendingDown size={20} />,
     title: 'المصروفات',
     body: 'رسوم الشحن ومدفوعات التحصيل تُسجَّل تلقائياً كإيرادات أو مصروفات تبعاً لاتجاه المعاملة.',
   },
   {
-    href: '/#/features/manufacturing',
+    href: '/features/manufacturing',
     icon: <Factory size={20} />,
     title: 'التصنيع',
     body: 'البنادل في الطلبات المرتجعة تُفكَّك إلى مكوناتها عند الإرجاع الجزئي — تكامل تلقائي مع وصفات BOM.',

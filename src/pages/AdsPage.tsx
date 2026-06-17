@@ -774,37 +774,37 @@ function FaqSection() {
 
 const RELATED = [
   {
-    href: '/#/features/reports',
+    href: '/features/reports',
     icon: <FileText size={20} />,
     title: 'التقارير المالية',
     body: 'Ad Charges تظهر في Burn Rate وTotal Expenses في التقارير. Campaign ROAS وCPO يُكمِّلان تقرير الـ Financial Settlement.',
   },
   {
-    href: '/#/features/dashboard',
+    href: '/features/dashboard',
     icon: <LayoutDashboard size={20} />,
     title: 'لوحة القيادة',
     body: 'Campaign Performance مخطط في لوحة القيادة يسحب نفس بيانات ROAS وCPO مباشرةً — رؤية سريعة بدون الدخول للوحدة.',
   },
   {
-    href: '/#/features/expenses',
+    href: '/features/expenses',
     icon: <Wallet size={20} />,
     title: 'المصروفات والخزينة',
     body: 'Ad Charges المسجَّلة كـ New Charge تظهر في المصروفات تلقائياً بتصنيف Ads is_auto=1. تؤثر على الخزينة ورصيدها مباشرةً.',
   },
   {
-    href: '/#/features/shipping',
+    href: '/features/shipping',
     icon: <Truck size={20} />,
     title: 'الشحن',
     body: 'Campaign Delivery Rate مشتق من حالات الشحن (Delivered + PartiallyDelivered). تحسين معدل التسليم يُحسِّن هذا المقياس مباشرةً.',
   },
   {
-    href: '/#/features/inventory',
+    href: '/features/inventory',
     icon: <Boxes size={20} />,
     title: 'المخزون',
     body: 'CPI (تكلفة القطعة الإعلانية) مرتبط بعدد OrderItems. ربط تكلفة المنتج بتكلفة اكتسابه من الإعلانات يكشف الهامش الحقيقي.',
   },
   {
-    href: '/#/features/preparation',
+    href: '/features/preparation',
     icon: <Package size={20} />,
     title: 'التحضير',
     body: 'الطلبات القادمة من حملات ذات ROAS عالٍ لها أولوية في التحضير — التكامل بين الإعلانات والتوزيع يُعظِّم سرعة التسليم.',

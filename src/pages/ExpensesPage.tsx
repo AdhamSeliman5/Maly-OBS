@@ -757,37 +757,37 @@ function FaqSection() {
 
 const RELATED = [
   {
-    href: '/#/features/reports',
+    href: '/features/reports',
     icon: <BarChart2 size={20} />,
     title: 'التقارير',
     body: 'بيانات الخزينة والمصروفات تُغذِّي تقارير الربحية والتكلفة الشاملة — رؤية 360° للأداء المالي.',
   },
   {
-    href: '/#/features/inventory',
+    href: '/features/inventory',
     icon: <Boxes size={20} />,
     title: 'إدارة المخزون',
     body: 'كل عملية شراء تُنشئ قيداً تلقائياً في المصروفات — تتبع تكلفة المخزون دون إدخال مزدوج.',
   },
   {
-    href: '/#/features/shipping',
+    href: '/features/shipping',
     icon: <Truck size={20} />,
     title: 'الشحن والتوصيل',
     body: 'التحصيل من شركات الشحن يُدمج تلقائياً كإيراد في المصروفات، ومدفوعات العمولات كمصروف.',
   },
   {
-    href: '/#/features/manufacturing',
+    href: '/features/manufacturing',
     icon: <Factory size={20} />,
     title: 'التصنيع',
     body: 'تكاليف الإنتاج وشراء الخامات تُسجَّل تلقائياً في دفتر المصروفات لحساب التكلفة الفعلية.',
   },
   {
-    href: '/#/features/orders',
+    href: '/features/orders',
     icon: <ShoppingCart size={20} />,
     title: 'الطلبات',
     body: 'إيرادات البيع من الصفحات المختلفة ترتبط بالـ PageId في كل قيد — تتبع إيرادات كل قناة.',
   },
   {
-    href: '/#/features/staff',
+    href: '/features/staff',
     icon: <Users size={20} />,
     title: 'الموظفون والرواتب',
     body: 'معالجة كل راتب تُنشئ قيد مصروف مرتبطاً بـ EmployeeTransactionId — تكامل مباشر لا يدوي.',

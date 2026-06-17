@@ -773,37 +773,37 @@ function FaqSection() {
 
 const RELATED = [
   {
-    href: '/#/features/expenses',
+    href: '/features/expenses',
     icon: <Wallet size={20} />,
     title: 'المصروفات والخزينة',
     body: 'كل دفعة راتب وكل سُلفة تُنشئ تلقائياً مصروفاً (Salaries / Staff Loans) في المصروفات. تؤثر فوراً على رصيد الخزينة وBurn Rate في التقارير المالية.',
   },
   {
-    href: '/#/features/debts',
+    href: '/features/debts',
     icon: <ArrowRightLeft size={20} />,
     title: 'الديون والمستحقات',
     body: 'عند حذف موظف برصيد: يُنشأ دين تلقائياً في وحدة الديون. الموظف المدين للشركة → Receivable. الشركة المدينة للموظف → Payable. لا رصيد يختفي بلا سجل.',
   },
   {
-    href: '/#/features/reports',
+    href: '/features/reports',
     icon: <FileText size={20} />,
     title: 'التقارير المالية',
     body: 'مصروفات الرواتب والسلف تظهر في تقارير الـ Expense Breakdown. LifetimePaid وMonthPaid يُغذِّيان مؤشرات الكشف المالي الشهري للمقارنة بالإيرادات.',
   },
   {
-    href: '/#/features/dashboard',
+    href: '/features/dashboard',
     icon: <LayoutDashboard size={20} />,
     title: 'لوحة القيادة',
     body: 'DueToday (مستحق الرواتب اليوم) يظهر في لوحة القيادة كمؤشر مالي فوري. أي ارتفاع مفاجئ في الرواتب المستحقة يُعلَم مباشرةً في الـ Dashboard.',
   },
   {
-    href: '/#/features/ads',
+    href: '/features/ads',
     icon: <Megaphone size={20} />,
     title: 'الإعلانات',
     body: 'الماركيتر المدفوع بـ Percentage: راتبه = AdSpend × CommissionValue%. تحديث AdSpendInput في HR + تجديد حساب الراتب يعطي تكلفة التسويق الحقيقية شاملةً الموظفين.',
   },
   {
-    href: '/#/features/settings',
+    href: '/features/settings',
     icon: <Settings size={20} />,
     title: 'الإعدادات والصلاحيات',
     body: 'موظف HR ≠ مستخدم النظام. صلاحيات الوصول للوحدات والـ RBAC تُدار حصراً من وحدة الإعدادات على AppUser — بدون تداخل مع بيانات الرواتب.',
