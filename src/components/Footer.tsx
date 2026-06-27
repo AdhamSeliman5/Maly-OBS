@@ -4,9 +4,9 @@ import { MessageCircle, Mail, Youtube, Facebook, Linkedin } from 'lucide-react'
 // ─── Data ─────────────────────────────────────────────────────────────────────
 
 const QUICK_LINKS = [
-  { label: 'الرئيسية', href: '/#/'          },
-  { label: 'المميزات', href: '/#/#features' },
-  { label: 'الأسعار',  href: '/#/#pricing'  },
+  { label: 'الرئيسية', href: '#home'     },
+  { label: 'المميزات', href: '#features' },
+  { label: 'الأسعار',  href: '#pricing'  },
 ] as const
 
 const YEAR = new Date().getFullYear()
@@ -150,7 +150,7 @@ export default function Footer() {
 
           {/* ── Col 1: الشركة ─────────────────────────────────────────────── */}
           <div className="flex flex-col gap-5 lg:col-span-1">
-            <a href="/#/" aria-label="الرئيسية" className="inline-block w-fit">
+            <a href="#home" aria-label="الرئيسية" className="inline-block w-fit">
               <img
                 src="./assets/logo_splash_light.png"
                 alt="Maly OBS"

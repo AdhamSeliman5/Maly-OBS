@@ -1,4 +1,5 @@
 import { motion } from 'framer-motion'
+import { WHATSAPP_CTA_URL } from '../constants'
 
 // ─── Animation variants ───────────────────────────────────────────────────────
 
@@ -184,9 +185,11 @@ export default function Hero() {
               variants={textItemVariants}
               className="flex flex-wrap items-center gap-4 mt-1"
             >
-              {/* Primary — manual-onboarding CTA as specified */}
+              {/* Primary — WhatsApp onboarding CTA */}
               <a
-                href="#contact"
+                href={WHATSAPP_CTA_URL}
+                target="_blank"
+                rel="noopener noreferrer"
                 className="
                   group relative inline-flex items-center gap-2
                   px-7 py-3.5 rounded-full overflow-hidden

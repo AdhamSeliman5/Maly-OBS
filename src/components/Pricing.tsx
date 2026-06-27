@@ -1,4 +1,5 @@
 import { motion } from 'framer-motion'
+import { WHATSAPP_CTA_URL } from '../constants'
 import {
   CheckCircle,
   Crown,
@@ -72,7 +73,7 @@ const PLANS: Plan[] = [
       'واجهة سهلة وسريعة من غير تعقيد ولا إعدادات كتير.',
     ],
     cta: 'ابدأ بستارتر',
-    ctaHref: '#contact',
+    ctaHref: WHATSAPP_CTA_URL,
     highlighted: false,
   },
   {
@@ -91,7 +92,7 @@ const PLANS: Plan[] = [
       'يوسع شغلك من غير ما تحتاج تنقل على نظام تاني بعد فترة قصيرة.',
     ],
     cta: 'اختار برو',
-    ctaHref: '#contact',
+    ctaHref: WHATSAPP_CTA_URL,
     highlighted: false,
   },
   {
@@ -111,7 +112,7 @@ const PLANS: Plan[] = [
       'أفضل قيمة لو عايز النظام كله مفتوح على آخره من أول يوم.',
     ],
     cta: 'كلمنا على إنتربرايز',
-    ctaHref: '#contact',
+    ctaHref: WHATSAPP_CTA_URL,
     highlighted: true,
   },
 ]
@@ -371,6 +372,8 @@ function CardInner({ plan }: { plan: Plan }) {
       {/* CTA button */}
       <a
         href={plan.ctaHref}
+        target="_blank"
+        rel="noopener noreferrer"
         className={[
           'group relative mt-auto flex items-center justify-center gap-2.5',
           'px-6 py-3.5 rounded-2xl font-bold text-sm',

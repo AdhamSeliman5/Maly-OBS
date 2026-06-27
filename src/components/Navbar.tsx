@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
+import { WHATSAPP_CTA_URL } from '../constants'
 
 // ─── Data ─────────────────────────────────────────────────────────────────────
 
@@ -117,7 +118,9 @@ export default function Navbar() {
 
           {/* ── Desktop CTA ────────────────────────────────────────────── */}
           <a
-            href="#contact"
+            href={WHATSAPP_CTA_URL}
+            target="_blank"
+            rel="noopener noreferrer"
             className="
               hidden md:inline-flex items-center gap-2
               px-5 py-2 rounded-full
@@ -184,7 +187,9 @@ export default function Navbar() {
 
               {/* Mobile CTA */}
               <motion.a
-                href="#contact"
+                href={WHATSAPP_CTA_URL}
+                target="_blank"
+                rel="noopener noreferrer"
                 onClick={() => setMenuOpen(false)}
                 initial={{ opacity: 0, y: 8 }}
                 animate={{ opacity: 1, y: 0 }}
