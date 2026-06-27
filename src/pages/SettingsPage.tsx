@@ -1,4 +1,4 @@
-/**
+﻿/**
  * SettingsPage.tsx — Dedicated marketing page for Settings (الإعدادات والصلاحيات) module.
  *
  * Sections:
@@ -15,7 +15,10 @@
 
 import { useState } from 'react'
 import { Link } from 'react-router-dom'
+import { WHATSAPP_CTA_URL } from '../constants'
 import { motion, AnimatePresence } from 'framer-motion'
+import { fadeUp, stagger } from '../utils/animations'
+import SectionLabel from '../components/SectionLabel'
 import {
   ArrowLeft,
   ChevronDown,
@@ -51,34 +54,10 @@ const ACCENT_DIM  = 'rgba(14,165,233,0.12)'
 const ACCENT_DARK = '#0284c7'
 const ACCENT_GLOW = '0 0 28px rgba(14,165,233,0.40)'
 
-// ─── Animation helpers ────────────────────────────────────────────────────────
-
-const fadeUp = (delay = 0) => ({
-  hidden:  { opacity: 0, y: 28 },
-  visible: {
-    opacity: 1,
-    y: 0,
-    transition: { duration: 0.6, delay, ease: [0.25, 0.46, 0.45, 0.94] as [number,number,number,number] },
-  },
-})
-
-const stagger = {
-  hidden:  {},
-  visible: { transition: { staggerChildren: 0.09, delayChildren: 0.05 } },
-}
-
-function SectionLabel({ children }: { children: string }) {
-  return (
-    <span className="text-xs font-bold uppercase tracking-widest" style={{ color: ACCENT + '0.9)' }}>
-      {children}
-    </span>
-  )
-}
-
 function BackStrip() {
   return (
     <div className="mx-auto max-w-6xl px-4 sm:px-8 pb-2 pt-4">
-      <Link to="/#features" className="inline-flex items-center gap-2 text-sm text-ocean-400 hover:text-sky-400 transition-colors">
+      <Link to="/" className="inline-flex items-center gap-2 text-sm text-ocean-400 hover:text-sky-400 transition-colors">
         <ArrowLeft size={15} />
         العودة إلى جميع الوحدات
       </Link>
@@ -149,14 +128,16 @@ function Hero() {
             </motion.div>
 
             <motion.div variants={fadeUp(0.2)} className="flex flex-wrap gap-3 pt-2">
-              <Link
-                to="/#contact"
+              <a
+                href={WHATSAPP_CTA_URL}
+                target="_blank"
+                rel="noopener noreferrer"
                 className="inline-flex items-center gap-2 rounded-xl px-6 py-3 text-base font-bold text-white shadow-lg transition-all duration-200 hover:-translate-y-0.5"
                 style={{ background: `linear-gradient(135deg, ${ACCENT_HEX}, ${ACCENT_DARK})`, boxShadow: ACCENT_GLOW }}
               >
-                ابدأ الآن مجاناً
+                ابدأ الآن
                 <ChevronRight size={18} />
-              </Link>
+              </a>
               <Link
                 to="/#features"
                 className="inline-flex items-center gap-2 rounded-xl px-6 py-3 text-base font-semibold text-ocean-300 border border-ocean-700 hover:border-sky-500/40 hover:text-sky-400 transition-all duration-200"
@@ -170,7 +151,7 @@ function Hero() {
             initial={{ opacity: 0, x: 40 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.8, delay: 0.15, ease: [0.25, 0.46, 0.45, 0.94] }}
-            className="relative hidden lg:block"
+            className="relative w-full mt-8 lg:mt-0"
           >
             <div
               className="relative rounded-2xl overflow-hidden border border-ocean-700/60 shadow-2xl"
@@ -335,7 +316,7 @@ function ValueProposition() {
       <div className="mx-auto max-w-6xl px-4 sm:px-8">
         <motion.div variants={stagger} initial="hidden" whileInView="visible" viewport={{ once: true }} className="text-center mb-14">
           <motion.div variants={fadeUp()} className="flex justify-center mb-3">
-            <SectionLabel>لماذا الإعدادات عندنا مختلفة؟</SectionLabel>
+            <SectionLabel color="#2dd4bf">لماذا الإعدادات عندنا مختلفة؟</SectionLabel>
           </motion.div>
           <motion.h2 variants={fadeUp(0.05)} className="text-3xl sm:text-4xl font-black text-white mb-4">
             لأن الأمان ليس "زر" —
@@ -493,7 +474,7 @@ function WalkthroughSection() {
       <div className="mx-auto max-w-6xl px-4 sm:px-8">
         <motion.div variants={stagger} initial="hidden" whileInView="visible" viewport={{ once: true }} className="text-center mb-14">
           <motion.div variants={fadeUp()} className="flex justify-center mb-3">
-            <SectionLabel>كيف تعمل المنظومة؟</SectionLabel>
+            <SectionLabel color="#2dd4bf">كيف تعمل المنظومة؟</SectionLabel>
           </motion.div>
           <motion.h2 variants={fadeUp(0.05)} className="text-3xl sm:text-4xl font-black text-white">
             من إنشاء الحساب إلى
@@ -614,7 +595,7 @@ function FaqSection() {
       <div className="mx-auto max-w-3xl px-4 sm:px-8">
         <motion.div variants={stagger} initial="hidden" whileInView="visible" viewport={{ once: true }} className="text-center mb-14">
           <motion.div variants={fadeUp()} className="flex justify-center mb-3">
-            <SectionLabel>أسئلة شائعة</SectionLabel>
+            <SectionLabel color="#2dd4bf">أسئلة شائعة</SectionLabel>
           </motion.div>
           <motion.h2 variants={fadeUp(0.05)} className="text-3xl sm:text-4xl font-black text-white">
             أمان قابل للتدقيق —
@@ -698,7 +679,7 @@ function RelatedModules() {
       <div className="mx-auto max-w-6xl px-4 sm:px-8">
         <motion.div variants={stagger} initial="hidden" whileInView="visible" viewport={{ once: true }} className="text-center mb-12">
           <motion.div variants={fadeUp()} className="flex justify-center mb-3">
-            <SectionLabel>الوحدات المرتبطة</SectionLabel>
+            <SectionLabel color="#2dd4bf">الوحدات المرتبطة</SectionLabel>
           </motion.div>
           <motion.h2 variants={fadeUp(0.05)} className="text-3xl font-black text-white">
             الإعدادات تحكم المنظومة كلها —
@@ -748,7 +729,7 @@ function CtaSection() {
           />
 
           <motion.div variants={fadeUp()}>
-            <SectionLabel>ابدأ الآن</SectionLabel>
+            <SectionLabel color="#2dd4bf">ابدأ الآن</SectionLabel>
           </motion.div>
 
           <motion.h2 variants={fadeUp(0.05)} className="text-3xl sm:text-4xl font-black text-white leading-tight">
@@ -763,14 +744,16 @@ function CtaSection() {
           </motion.p>
 
           <motion.div variants={fadeUp(0.15)} className="flex flex-wrap justify-center gap-4 pt-2">
-            <Link
-              to="/#contact"
+            <a
+              href={WHATSAPP_CTA_URL}
+              target="_blank"
+              rel="noopener noreferrer"
               className="inline-flex items-center gap-2 rounded-xl px-8 py-3.5 text-base font-bold text-white shadow-lg transition-all duration-200 hover:-translate-y-0.5"
               style={{ background: `linear-gradient(135deg, ${ACCENT_HEX}, ${ACCENT_DARK})`, boxShadow: ACCENT_GLOW }}
             >
-              ابدأ الآن مجاناً
+              ابدأ الآن
               <ChevronRight size={18} />
-            </Link>
+            </a>
             <Link
               to="/#features"
               className="inline-flex items-center gap-2 rounded-xl px-6 py-3.5 text-base font-semibold text-ocean-300 border border-ocean-700 hover:border-sky-500/40 hover:text-sky-400 transition-all duration-200"

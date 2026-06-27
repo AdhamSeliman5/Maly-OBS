@@ -1,4 +1,4 @@
-/**
+﻿/**
  * ManufacturingPage.tsx — Dedicated marketing page for the Manufacturing
  * (التصنيع وإدارة الإنتاج) module.
  *
@@ -16,7 +16,10 @@
 
 import { useState } from 'react'
 import { Link } from 'react-router-dom'
+import { WHATSAPP_CTA_URL } from '../constants'
 import { motion, AnimatePresence } from 'framer-motion'
+import { fadeUp, stagger } from '../utils/animations'
+import SectionLabel from '../components/SectionLabel'
 import {
   Factory,
   Layers,
@@ -52,35 +55,6 @@ const ACCENT_HEX  = '#f97316'
 const ACCENT_DIM  = 'rgba(249,115,22,0.12)'
 const ACCENT_DARK = '#ea580c'
 const ACCENT_GLOW = '0 0 28px rgba(249,115,22,0.42)'
-
-// ─── Animation helpers ────────────────────────────────────────────────────────
-
-const fadeUp = (delay = 0) => ({
-  hidden:  { opacity: 0, y: 28 },
-  visible: {
-    opacity: 1,
-    y: 0,
-    transition: { duration: 0.6, delay, ease: [0.25, 0.46, 0.45, 0.94] as [number,number,number,number] },
-  },
-})
-
-const stagger = {
-  hidden:  {},
-  visible: { transition: { staggerChildren: 0.09, delayChildren: 0.05 } },
-}
-
-// ─── Section label ────────────────────────────────────────────────────────────
-
-function SectionLabel({ children }: { children: string }) {
-  return (
-    <span
-      className="text-xs font-bold uppercase tracking-widest"
-      style={{ color: ACCENT + '0.85)' }}
-    >
-      {children}
-    </span>
-  )
-}
 
 // ─── 1. HERO ──────────────────────────────────────────────────────────────────
 
@@ -157,14 +131,16 @@ function Hero() {
 
             {/* CTAs */}
             <motion.div variants={fadeUp(0.2)} className="flex flex-wrap gap-3 pt-2">
-              <Link
-                to="/#contact"
+              <a
+                href={WHATSAPP_CTA_URL}
+                target="_blank"
+                rel="noopener noreferrer"
                 className="inline-flex items-center gap-2 rounded-xl px-6 py-3 text-base font-bold text-white shadow-lg transition-all duration-200 hover:-translate-y-0.5"
                 style={{ background: `linear-gradient(135deg, ${ACCENT_HEX}, ${ACCENT_DARK})`, boxShadow: ACCENT_GLOW }}
               >
-                ابدأ الآن مجاناً
+                ابدأ الآن
                 <ChevronRight size={18} />
-              </Link>
+              </a>
               <Link
                 to="/#features"
                 className="inline-flex items-center gap-2 rounded-xl px-6 py-3 text-base font-semibold text-ocean-300 border border-ocean-700 hover:border-orange-500/40 hover:text-orange-400 transition-all duration-200"
@@ -179,7 +155,7 @@ function Hero() {
             initial={{ opacity: 0, x: 40 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.8, delay: 0.15, ease: [0.25, 0.46, 0.45, 0.94] }}
-            className="relative hidden lg:block"
+            className="relative w-full mt-8 lg:mt-0"
           >
             <div
               className="relative rounded-2xl overflow-hidden border border-ocean-700/60 shadow-2xl"
@@ -230,7 +206,7 @@ function BackStrip() {
   return (
     <div className="mx-auto max-w-6xl px-4 sm:px-8 pb-2 pt-4">
       <Link
-        to="/#features"
+        to="/"
         className="inline-flex items-center gap-2 text-sm text-ocean-400 hover:text-orange-400 transition-colors"
       >
         <ArrowLeft size={15} />
@@ -379,7 +355,7 @@ function ValueProposition() {
           className="text-center mb-14"
         >
           <motion.div variants={fadeUp()} className="flex justify-center mb-3">
-            <SectionLabel>لماذا وحدة التصنيع؟</SectionLabel>
+            <SectionLabel color="#2dd4bf">لماذا وحدة التصنيع؟</SectionLabel>
           </motion.div>
           <motion.h2 variants={fadeUp(0.05)} className="text-3xl sm:text-4xl font-black text-white mb-4">
             من الوصفة إلى المنتج المنتهي —{' '}
@@ -554,7 +530,7 @@ function WalkthroughSection() {
           className="text-center mb-14"
         >
           <motion.div variants={fadeUp()} className="flex justify-center mb-3">
-            <SectionLabel>كيف يعمل؟</SectionLabel>
+            <SectionLabel color="#2dd4bf">كيف يعمل؟</SectionLabel>
           </motion.div>
           <motion.h2 variants={fadeUp(0.05)} className="text-3xl sm:text-4xl font-black text-white">
             جولة في كل مرحلة من{' '}
@@ -709,7 +685,7 @@ function FaqSection() {
           className="text-center mb-14"
         >
           <motion.div variants={fadeUp()} className="flex justify-center mb-3">
-            <SectionLabel>أسئلة شائعة</SectionLabel>
+            <SectionLabel color="#2dd4bf">أسئلة شائعة</SectionLabel>
           </motion.div>
           <motion.h2 variants={fadeUp(0.05)} className="text-3xl sm:text-4xl font-black text-white">
             إجابات تقنية وعملية{' '}
@@ -817,7 +793,7 @@ function RelatedModules() {
           className="text-center mb-12"
         >
           <motion.div variants={fadeUp()} className="flex justify-center mb-3">
-            <SectionLabel>الوحدات المرتبطة</SectionLabel>
+            <SectionLabel color="#2dd4bf">الوحدات المرتبطة</SectionLabel>
           </motion.div>
           <motion.h2 variants={fadeUp(0.05)} className="text-3xl font-black text-white">
             التصنيع جزء من{' '}
@@ -885,7 +861,7 @@ function CtaSection() {
           />
 
           <motion.div variants={fadeUp()}>
-            <SectionLabel>ابدأ الآن</SectionLabel>
+            <SectionLabel color="#2dd4bf">ابدأ الآن</SectionLabel>
           </motion.div>
 
           <motion.h2 variants={fadeUp(0.05)} className="text-3xl sm:text-4xl font-black text-white leading-tight">
@@ -899,14 +875,16 @@ function CtaSection() {
           </motion.p>
 
           <motion.div variants={fadeUp(0.15)} className="flex flex-wrap justify-center gap-4 pt-2">
-            <Link
-              to="/#contact"
+            <a
+              href={WHATSAPP_CTA_URL}
+              target="_blank"
+              rel="noopener noreferrer"
               className="inline-flex items-center gap-2 rounded-xl px-8 py-3.5 text-base font-bold text-white shadow-lg transition-all duration-200 hover:-translate-y-0.5"
               style={{ background: `linear-gradient(135deg, ${ACCENT_HEX}, ${ACCENT_DARK})`, boxShadow: ACCENT_GLOW }}
             >
-              ابدأ الآن مجاناً
+              ابدأ الآن
               <ChevronRight size={18} />
-            </Link>
+            </a>
             <Link
               to="/#features"
               className="inline-flex items-center gap-2 rounded-xl px-6 py-3.5 text-base font-semibold text-ocean-300 border border-ocean-700 hover:border-orange-500/40 hover:text-orange-400 transition-all duration-200"

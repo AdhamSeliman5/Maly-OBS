@@ -1,15 +1,19 @@
 import { useState, useEffect } from 'react'
+import { Link } from 'react-router-dom'
 import { motion, AnimatePresence } from 'framer-motion'
 import { WHATSAPP_CTA_URL } from '../constants'
 
 // ─── Data ─────────────────────────────────────────────────────────────────────
 
 const NAV_LINKS = [
-  { label: 'الرئيسية',   href: '#home'     },
-  { label: 'المميزات',   href: '#features' },
-  { label: 'الأسعار',    href: '#pricing'  },
-  { label: 'تواصل معنا', href: '#contact'  },
+  { label: 'الرئيسية',   to: '/' },
+  { label: 'المميزات',   to: '/' },
+  { label: 'الأسعار',    to: '/' },
+  { label: 'تواصل معنا', to: '/' },
 ] as const
+
+// motion-enhanced Link for the animated mobile menu items
+const MotionLink = motion(Link)
 
 // ─── HamburgerIcon ───────────────────────────────────────────────────────────
 // Three animated bars that morph into an ✕ when the menu is open.
@@ -77,13 +81,13 @@ export default function Navbar() {
         <div className="flex items-center justify-between h-16">
 
           {/* ── Logo  (RTL: the "start" side = physically right) ──────── */}
-          <a href="#home" className="shrink-0 flex items-center">
+          <Link to="/" className="shrink-0 flex items-center">
             <img
               src="./assets/logo_splash_light.png"
               alt="Maly OBS"
               className="h-9 w-auto object-contain"
             />
-          </a>
+          </Link>
 
           {/* ── Desktop nav links ──────────────────────────────────────── */}
           <nav
@@ -91,9 +95,9 @@ export default function Navbar() {
             aria-label="القائمة الرئيسية"
           >
             {NAV_LINKS.map((link) => (
-              <a
-                key={link.href}
-                href={link.href}
+              <Link
+                key={link.to + link.label}
+                to={link.to}
                 className="relative px-4 py-2 text-sm font-semibold text-slate-300 hover:text-white transition-colors duration-200 group"
               >
                 {link.label}
@@ -112,7 +116,7 @@ export default function Navbar() {
                   "
                   style={{ width: 'calc(100% - 2rem)' }}
                 />
-              </a>
+              </Link>
             ))}
           </nav>
 
@@ -167,9 +171,9 @@ export default function Navbar() {
               aria-label="القائمة الجوالة"
             >
               {NAV_LINKS.map((link, i) => (
-                <motion.a
-                  key={link.href}
-                  href={link.href}
+                <MotionLink
+                  key={link.to + link.label}
+                  to={link.to}
                   onClick={() => setMenuOpen(false)}
                   initial={{ opacity: 0, x: 14 }}
                   animate={{ opacity: 1, x: 0  }}
@@ -182,7 +186,7 @@ export default function Navbar() {
                   "
                 >
                   {link.label}
-                </motion.a>
+                </MotionLink>
               ))}
 
               {/* Mobile CTA */}

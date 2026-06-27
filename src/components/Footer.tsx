@@ -1,12 +1,14 @@
+import { Link } from 'react-router-dom'
 import { motion } from 'framer-motion'
 import { MessageCircle, Mail, Youtube, Facebook, Linkedin } from 'lucide-react'
+import { WHATSAPP_CTA_URL } from '../constants'
 
 // ─── Data ─────────────────────────────────────────────────────────────────────
 
 const QUICK_LINKS = [
-  { label: 'الرئيسية', href: '#home'     },
-  { label: 'المميزات', href: '#features' },
-  { label: 'الأسعار',  href: '#pricing'  },
+  { label: 'الرئيسية', to: '/' },
+  { label: 'المميزات', to: '/' },
+  { label: 'الأسعار',  to: '/' },
 ] as const
 
 const YEAR = new Date().getFullYear()
@@ -87,12 +89,12 @@ export default function Footer() {
 
               {/* ── Primary: WhatsApp ── */}
               <a
-                href="https://wa.me/201100028752"
+                href={WHATSAPP_CTA_URL}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="
                   group relative inline-flex items-center justify-center gap-2.5
-                  px-7 py-3.5 rounded-2xl overflow-hidden
+                  px-7 py-3.5 rounded-full overflow-hidden
                   bg-gradient-to-l from-brand-teal to-brand-teal-dark
                   text-ocean-950 font-extrabold text-sm
                   hover:shadow-[0_0_36px_rgba(20,184,166,0.55)]
@@ -117,7 +119,7 @@ export default function Footer() {
                 href="mailto:asoliman548@gmail.com"
                 className="
                   inline-flex items-center justify-center gap-2.5
-                  px-7 py-3.5 rounded-2xl
+                  px-7 py-3.5 rounded-full
                   border border-slate-600/50 text-slate-300
                   hover:border-brand-teal/50 hover:text-brand-teal hover:bg-brand-teal/5
                   hover:scale-[1.04] active:scale-100
@@ -150,19 +152,19 @@ export default function Footer() {
 
           {/* ── Col 1: الشركة ─────────────────────────────────────────────── */}
           <div className="flex flex-col gap-5 lg:col-span-1">
-            <a href="#home" aria-label="الرئيسية" className="inline-block w-fit">
+            <Link to="/" aria-label="الرئيسية" className="inline-block w-fit">
               <img
                 src="./assets/logo_splash_light.png"
                 alt="Maly OBS"
                 className="h-9 w-auto object-contain"
               />
-            </a>
+            </Link>
 
             <p className="text-slate-400 text-sm leading-relaxed max-w-[260px]">
               نظام ERP وPOS متكامل مُصمَّم للمتاجر المصرية.
             </p>
 
-            <p className="text-slate-600 text-xs">
+            <p className="text-slate-500 text-xs">
               © {YEAR} Maly-OBS. جميع الحقوق محفوظة.
             </p>
           </div>
@@ -174,9 +176,9 @@ export default function Footer() {
             </p>
             <nav className="flex flex-col gap-2.5" aria-label="روابط سريعة">
               {QUICK_LINKS.map((link) => (
-                <a
-                  key={link.href}
-                  href={link.href}
+                <Link
+                  key={link.to + link.label}
+                  to={link.to}
                   className="
                     group inline-flex items-center gap-2
                     text-sm text-slate-400 hover:text-white
@@ -193,7 +195,7 @@ export default function Footer() {
                     "
                   />
                   {link.label}
-                </a>
+                </Link>
               ))}
             </nav>
           </div>
@@ -318,7 +320,7 @@ export default function Footer() {
             It&apos;s not just about money, It&apos;s{' '}
             <span className="text-brand-teal font-bold">CONTROL.</span>
           </p>
-          <p className="text-xs text-slate-700 text-center">
+          <p className="text-xs text-slate-500 text-center">
             Crafted with <span className="text-brand-teal">♥</span> for Egyptian e-commerce
           </p>
         </div>

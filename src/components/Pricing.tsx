@@ -376,8 +376,8 @@ function CardInner({ plan }: { plan: Plan }) {
         rel="noopener noreferrer"
         className={[
           'group relative mt-auto flex items-center justify-center gap-2.5',
-          'px-6 py-3.5 rounded-2xl font-bold text-sm',
-          'transition-all duration-250',
+          'px-6 py-3.5 rounded-full font-bold text-sm',
+          'transition-all duration-200',
           plan.highlighted
             ? [
                 'bg-gradient-to-l from-brand-teal to-brand-teal-dark text-ocean-950',

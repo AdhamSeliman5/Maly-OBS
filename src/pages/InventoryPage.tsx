@@ -1,4 +1,4 @@
-/**
+﻿/**
  * InventoryPage.tsx — Dedicated marketing page for the Inventory (إدارة المخزون) module.
  *
  * Sections:
@@ -13,7 +13,10 @@
 
 import { useState } from 'react'
 import { Link } from 'react-router-dom'
+import { WHATSAPP_CTA_URL } from '../constants'
 import { motion, AnimatePresence } from 'framer-motion'
+import { fadeUp, stagger } from '../utils/animations'
+import SectionLabel from '../components/SectionLabel'
 import {
   Boxes,
   TrendingUp,
@@ -45,35 +48,6 @@ const ACCENT_HEX   = '#22c55e'
 const ACCENT_DIM   = 'rgba(34,197,94,0.12)'
 const ACCENT_DARK  = '#16a34a'
 const ACCENT_GLOW  = '0 0 28px rgba(34,197,94,0.42)'
-
-// ─── Animation helpers ────────────────────────────────────────────────────────
-
-const fadeUp = (delay = 0) => ({
-  hidden:  { opacity: 0, y: 28 },
-  visible: {
-    opacity: 1,
-    y: 0,
-    transition: { duration: 0.6, delay, ease: [0.25, 0.46, 0.45, 0.94] as [number,number,number,number] },
-  },
-})
-
-const stagger = {
-  hidden:  {},
-  visible: { transition: { staggerChildren: 0.09, delayChildren: 0.05 } },
-}
-
-// ─── Section label ────────────────────────────────────────────────────────────
-
-function SectionLabel({ children }: { children: string }) {
-  return (
-    <span
-      className="text-xs font-bold uppercase tracking-widest"
-      style={{ color: ACCENT + '0.85)' }}
-    >
-      {children}
-    </span>
-  )
-}
 
 // ─── 1. HERO ──────────────────────────────────────────────────────────────────
 
@@ -148,7 +122,7 @@ function Hero() {
             {/* CTAs */}
             <motion.div variants={fadeUp(0.18)} className="flex flex-wrap gap-3 pt-2">
               <a
-                href="/#contact"
+                href={WHATSAPP_CTA_URL}
                 className="group inline-flex items-center gap-2 px-6 py-3 rounded-2xl text-ocean-950 font-bold text-sm hover:scale-[1.04] active:scale-100 transition-all duration-200"
                 style={{ background: `linear-gradient(135deg, ${ACCENT_HEX}, ${ACCENT_DARK})`, boxShadow: ACCENT_GLOW }}
               >
@@ -365,7 +339,7 @@ function ValueProposition() {
           viewport={{ once: true }}
           className="flex flex-col gap-3 mb-14 text-center"
         >
-          <motion.div variants={fadeUp(0)}><SectionLabel>ليه وحدة المخزون؟</SectionLabel></motion.div>
+          <motion.div variants={fadeUp(0)}><SectionLabel color="#2dd4bf">ليه وحدة المخزون؟</SectionLabel></motion.div>
           <motion.h2 variants={fadeUp(0.04)} className="text-3xl sm:text-4xl font-black text-white leading-tight">
             المشاكل اللي حلّيناها — مش بس وصفناها
           </motion.h2>
@@ -550,7 +524,7 @@ function WalkthroughSection() {
           variants={stagger}
           className="flex flex-col gap-3 mb-14 text-center"
         >
-          <motion.div variants={fadeUp(0)}><SectionLabel>كيف تشتغل؟</SectionLabel></motion.div>
+          <motion.div variants={fadeUp(0)}><SectionLabel color="#2dd4bf">كيف تشتغل؟</SectionLabel></motion.div>
           <motion.h2 variants={fadeUp(0.04)} className="text-3xl sm:text-4xl font-black text-white leading-tight">
             جولة تفاعلية داخل وحدة المخزون
           </motion.h2>
@@ -748,7 +722,7 @@ function FaqSection() {
           variants={stagger}
           className="flex flex-col gap-3 mb-14 text-center"
         >
-          <motion.div variants={fadeUp(0)}><SectionLabel>أسئلة شائعة</SectionLabel></motion.div>
+          <motion.div variants={fadeUp(0)}><SectionLabel color="#2dd4bf">أسئلة شائعة</SectionLabel></motion.div>
           <motion.h2 variants={fadeUp(0.04)} className="text-3xl sm:text-4xl font-black text-white leading-tight">
             كل سؤال في دماغك — هنا إجابته
           </motion.h2>
@@ -828,7 +802,7 @@ function RelatedModules() {
           variants={stagger}
           className="flex flex-col gap-3 mb-14 text-center"
         >
-          <motion.div variants={fadeUp(0)}><SectionLabel>وحدات مرتبطة</SectionLabel></motion.div>
+          <motion.div variants={fadeUp(0)}><SectionLabel color="#2dd4bf">وحدات مرتبطة</SectionLabel></motion.div>
           <motion.h2 variants={fadeUp(0.04)} className="text-3xl sm:text-4xl font-black text-white">
             المخزون مش بيشتغل في عزلة
           </motion.h2>
@@ -910,7 +884,7 @@ function CtaSection() {
             </div>
             <div className="flex flex-wrap justify-center gap-3 pt-2">
               <a
-                href="/#contact"
+                href={WHATSAPP_CTA_URL}
                 className="inline-flex items-center gap-2.5 px-8 py-4 rounded-2xl text-ocean-950 font-extrabold text-sm hover:scale-[1.04] active:scale-100 transition-all duration-200"
                 style={{ background: `linear-gradient(135deg, ${ACCENT_HEX}, ${ACCENT_DARK})`, boxShadow: ACCENT_GLOW }}
               >

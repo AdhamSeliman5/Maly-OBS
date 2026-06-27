@@ -74,7 +74,7 @@ export default function SystemPreview() {
   const [progress, setProgress] = useState(0)
 
   const progressRef = useRef(0)
-  const lastTickRef = useRef(Date.now())
+  const lastTickRef = useRef(0)
   const rafRef = useRef<number | null>(null)
 
   const goTo = useCallback(
@@ -95,6 +95,8 @@ export default function SystemPreview() {
       if (rafRef.current) cancelAnimationFrame(rafRef.current)
       return
     }
+
+    lastTickRef.current = Date.now()
 
     const tick = () => {
       const elapsed = Date.now() - lastTickRef.current
@@ -177,6 +179,8 @@ export default function SystemPreview() {
           className="relative"
           onMouseEnter={() => setPaused(true)}
           onMouseLeave={() => setPaused(false)}
+          onTouchStart={() => setPaused(true)}
+          onTouchEnd={() => setPaused(false)}
         >
           {/* Outer ambient glow ring */}
           <div
@@ -248,6 +252,15 @@ export default function SystemPreview() {
               className="relative overflow-hidden bg-ocean-950"
               style={{ aspectRatio: '16/9' }}
             >
+              {/*
+               * Fallback label — sits beneath the img in paint order (earlier in DOM).
+               * Becomes visible only when the img asset is missing and onError
+               * collapses the <motion.img> to opacity 0.
+               */}
+              <div className="absolute inset-0 flex items-center justify-center text-slate-600 text-sm pointer-events-none">
+                {current.label}
+              </div>
+
               <AnimatePresence initial={false} custom={dir} mode="popLayout">
                 <motion.img
                   key={current.key}
@@ -258,6 +271,7 @@ export default function SystemPreview() {
                   initial="enter"
                   animate="center"
                   exit="exit"
+                  onError={(e) => { (e.target as HTMLImageElement).style.opacity = '0' }}
                   className="absolute inset-0 w-full h-full object-cover object-top select-none"
                   draggable={false}
                 />
@@ -312,13 +326,17 @@ export default function SystemPreview() {
                 key={i}
                 onClick={() => goTo(i, i > index ? 1 : -1)}
                 aria-label={`الشريحة ${i + 1}`}
-                className={[
-                  'rounded-full transition-all duration-300 outline-none focus-visible:ring-2 focus-visible:ring-brand-teal/60',
-                  i === index
-                    ? 'w-6 h-[6px] bg-brand-teal'
-                    : 'w-[6px] h-[6px] bg-slate-600 hover:bg-slate-400',
-                ].join(' ')}
-              />
+                className="p-3 -m-3 rounded-full outline-none focus-visible:ring-2 focus-visible:ring-brand-teal/60"
+              >
+                <span
+                  className={[
+                    'block rounded-full transition-all duration-300',
+                    i === index
+                      ? 'w-6 h-[6px] bg-brand-teal'
+                      : 'w-[6px] h-[6px] bg-slate-600 hover:bg-slate-400',
+                  ].join(' ')}
+                />
+              </button>
             ))}
           </div>
 

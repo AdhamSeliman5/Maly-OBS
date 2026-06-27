@@ -12,6 +12,8 @@ const config: Config = {
           700: '#0a1f38',
           600: '#0d2a4d',
           500: '#1a3f6b',
+          400: '#2a5d9f',
+          300: '#4a7ec7',
         },
         brand: {
           teal:          '#14b8a6',

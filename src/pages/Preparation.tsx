@@ -1,4 +1,4 @@
-/**
+﻿/**
  * Preparation.tsx — Dedicated marketing page for the Preparation (التحضير والتجهيز) module.
  *
  * Sections:
@@ -13,6 +13,7 @@
 
 import { useState } from 'react'
 import { Link } from 'react-router-dom'
+import { WHATSAPP_CTA_URL } from '../constants'
 import { motion, AnimatePresence } from 'framer-motion'
 import {
   PackageOpen,
@@ -149,7 +150,7 @@ function Hero() {
             {/* CTAs */}
             <motion.div variants={fadeUp(0.18)} className="flex flex-wrap gap-3 pt-2">
               <a
-                href="/#contact"
+                href={WHATSAPP_CTA_URL}
                 className="group inline-flex items-center gap-2 px-6 py-3 rounded-2xl bg-gradient-to-l from-brand-teal to-brand-teal-dark text-ocean-950 font-bold text-sm hover:scale-[1.04] active:scale-100 transition-all duration-200"
                 style={{ boxShadow: '0 0 0 0 transparent' }}
                 onMouseEnter={(e) => (e.currentTarget.style.boxShadow = ACCENT_GLOW)}
@@ -906,7 +907,7 @@ function CtaSection() {
             </div>
             <div className="flex flex-wrap justify-center gap-3 pt-2">
               <a
-                href="/#contact"
+                href={WHATSAPP_CTA_URL}
                 className="inline-flex items-center gap-2.5 px-8 py-4 rounded-2xl text-ocean-950 font-extrabold text-sm hover:scale-[1.04] active:scale-100 transition-all duration-200"
                 style={{
                   background: `linear-gradient(135deg, ${ACCENT_HEX}, #0d9488)`,

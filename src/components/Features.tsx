@@ -633,7 +633,7 @@ export default function Features() {
                   <div
                     className={[
                       isWide ? 'w-full md:w-auto md:shrink-0' : 'mt-4',
-                      'opacity-60 group-hover:opacity-100',
+                      'opacity-90 md:opacity-60 md:group-hover:opacity-100',
                       'transition-opacity duration-300',
                     ].join(' ')}
                   >

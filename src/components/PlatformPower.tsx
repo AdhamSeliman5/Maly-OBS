@@ -177,14 +177,13 @@ export default function PlatformPower() {
                       backdrop-blur-md
                       bg-ocean-800/40
                       transition-all duration-300
-                      hover:border-opacity-50
                       hover:shadow-[0_8px_40px_rgba(0,0,0,0.3)]
                     `}
                   >
                     {/* Icon badge */}
                     <div
                       className={`
-                        w-12 h-12 rounded-xl flex items-center justify-center shrink-0
+                        w-12 h-12 rounded-2xl flex items-center justify-center shrink-0
                         border border-white/10 ${pillar.iconBg} ${pillar.iconColor}
                         group-hover:scale-110 transition-transform duration-300
                       `}
