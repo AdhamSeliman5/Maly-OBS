@@ -1,16 +1,23 @@
 import { useState, useEffect } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate, useLocation } from 'react-router-dom'
 import { motion, AnimatePresence } from 'framer-motion'
 import { WHATSAPP_CTA_URL } from '../constants'
+import { scrollToSection } from '../utils/scrollToSection'
 
 // ─── Data ─────────────────────────────────────────────────────────────────────
 
-const NAV_LINKS = [
+type NavLink = {
+  label: string
+  to: string
+  sectionId?: string
+}
+
+const NAV_LINKS: NavLink[] = [
   { label: 'الرئيسية',   to: '/' },
-  { label: 'المميزات',   to: '/' },
-  { label: 'الأسعار',    to: '/' },
-  { label: 'تواصل معنا', to: '/' },
-] as const
+  { label: 'المميزات',   to: '/', sectionId: 'features' },
+  { label: 'الأسعار',    to: '/', sectionId: 'pricing' },
+  { label: 'تواصل معنا', to: '/', sectionId: 'contact' },
+]
 
 // motion-enhanced Link for the animated mobile menu items
 const MotionLink = motion(Link)
@@ -48,6 +55,27 @@ function HamburgerIcon({ open }: { open: boolean }) {
 export default function Navbar() {
   const [scrolled,  setScrolled]  = useState(false)
   const [menuOpen,  setMenuOpen]  = useState(false)
+  const navigate = useNavigate()
+  const location = useLocation()
+
+  const handleNavClick = (e: React.MouseEvent, link: NavLink) => {
+    setMenuOpen(false)
+
+    if (link.sectionId) {
+      e.preventDefault()
+      if (location.pathname === '/') {
+        scrollToSection(link.sectionId)
+      } else {
+        navigate('/', { state: { scrollTo: link.sectionId } })
+      }
+      return
+    }
+
+    if (location.pathname === '/') {
+      e.preventDefault()
+      window.scrollTo({ top: 0, behavior: 'smooth' })
+    }
+  }
 
   // Detect scroll to strengthen glass effect
   useEffect(() => {
@@ -98,6 +126,7 @@ export default function Navbar() {
               <Link
                 key={link.to + link.label}
                 to={link.to}
+                onClick={(e) => handleNavClick(e, link)}
                 className="relative px-4 py-2 text-sm font-semibold text-slate-300 hover:text-white transition-colors duration-200 group"
               >
                 {link.label}
@@ -174,7 +203,7 @@ export default function Navbar() {
                 <MotionLink
                   key={link.to + link.label}
                   to={link.to}
-                  onClick={() => setMenuOpen(false)}
+                  onClick={(e) => handleNavClick(e, link)}
                   initial={{ opacity: 0, x: 14 }}
                   animate={{ opacity: 1, x: 0  }}
                   transition={{ delay: i * 0.06, duration: 0.2 }}

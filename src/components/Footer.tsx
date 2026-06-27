@@ -19,7 +19,7 @@ export default function Footer() {
   return (
     <footer
       id="contact"
-      className="relative bg-ocean-950 overflow-hidden"
+      className="relative bg-ocean-950 overflow-hidden scroll-mt-20"
     >
       {/* ── Dot-grid texture ─────────────────────────────────────────────── */}
       <div className="absolute inset-0 bg-dot-grid opacity-15 pointer-events-none" />

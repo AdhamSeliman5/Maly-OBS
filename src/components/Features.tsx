@@ -444,7 +444,7 @@ export default function Features() {
   return (
     <section
       id="features"
-      className="relative py-28 overflow-hidden bg-ocean-900"
+      className="relative py-28 overflow-hidden bg-ocean-900 scroll-mt-20"
     >
       {/* ── Dot-grid texture ──────────────────────────────────────────────── */}
       <div className="absolute inset-0 bg-dot-grid opacity-35 pointer-events-none" />

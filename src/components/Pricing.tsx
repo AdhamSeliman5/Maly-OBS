@@ -146,7 +146,7 @@ export default function Pricing() {
   return (
     <section
       id="pricing"
-      className="relative py-28 overflow-hidden bg-ocean-950"
+      className="relative py-28 overflow-hidden bg-ocean-950 scroll-mt-20"
     >
       {/* ── Dot-grid texture ─────────────────────────────────────────────── */}
       <div className="absolute inset-0 bg-dot-grid opacity-25 pointer-events-none" />

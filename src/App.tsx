@@ -1,5 +1,6 @@
 import { useEffect } from 'react'
 import { HashRouter, Routes, Route, useLocation } from 'react-router-dom'
+import { scrollToSection } from './utils/scrollToSection'
 import Navbar from './components/Navbar'
 import Footer from './components/Footer'
 import Home from './pages/Home'
@@ -19,11 +20,18 @@ import OrderEntryPage from './pages/OrderEntryPage'
 import POSPage from './pages/POSPage'
 
 function ScrollToTop() {
-  const { pathname } = useLocation()
+  const { pathname, state } = useLocation()
 
   useEffect(() => {
+    const scrollTo = (state as { scrollTo?: string } | null)?.scrollTo
+    if (scrollTo) {
+      requestAnimationFrame(() => {
+        setTimeout(() => scrollToSection(scrollTo), 50)
+      })
+      return
+    }
     window.scrollTo({ top: 0, left: 0, behavior: 'smooth' })
-  }, [pathname])
+  }, [pathname, state])
 
   return null
 }
