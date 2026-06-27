@@ -1,21 +1,48 @@
-import { Link } from 'react-router-dom'
+import { Link, useNavigate, useLocation } from 'react-router-dom'
 import { motion } from 'framer-motion'
 import { MessageCircle, Mail, Youtube, Facebook, Linkedin } from 'lucide-react'
 import { WHATSAPP_CTA_URL } from '../constants'
+import { scrollToSection } from '../utils/scrollToSection'
 
 // ─── Data ─────────────────────────────────────────────────────────────────────
 
-const QUICK_LINKS = [
+type QuickLink = {
+  label: string
+  to: string
+  sectionId?: string
+}
+
+const QUICK_LINKS: QuickLink[] = [
   { label: 'الرئيسية', to: '/' },
-  { label: 'المميزات', to: '/' },
-  { label: 'الأسعار',  to: '/' },
-] as const
+  { label: 'المميزات', to: '/', sectionId: 'features' },
+  { label: 'الأسعار',  to: '/', sectionId: 'pricing' },
+]
 
 const YEAR = new Date().getFullYear()
 
 // ─── Footer ───────────────────────────────────────────────────────────────────
 
 export default function Footer() {
+  const navigate = useNavigate()
+  const location = useLocation()
+
+  const handleQuickLinkClick = (e: React.MouseEvent, link: QuickLink) => {
+    if (link.sectionId) {
+      e.preventDefault()
+      if (location.pathname === '/') {
+        scrollToSection(link.sectionId)
+      } else {
+        navigate('/', { state: { scrollTo: link.sectionId } })
+      }
+      return
+    }
+
+    if (location.pathname === '/') {
+      e.preventDefault()
+      window.scrollTo({ top: 0, behavior: 'smooth' })
+    }
+  }
+
   return (
     <footer
       id="contact"
@@ -179,6 +206,7 @@ export default function Footer() {
                 <Link
                   key={link.to + link.label}
                   to={link.to}
+                  onClick={(e) => handleQuickLinkClick(e, link)}
                   className="
                     group inline-flex items-center gap-2
                     text-sm text-slate-400 hover:text-white
